@@ -1,17 +1,32 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+
 import './App.css'
-import Users from './Users'
+import Home from './Pages/Home/Home'
+import MeusProcessos from './Pages/MeusProcessos/MeusProcessos';
+import Users from './Pages/Users/Users'
+import { Routes, Route, Link } from 'react-router-dom';
 
 function App() {
-  const [count, setCount] = useState(0)
-
 
   return (
     <>
       <div className="App">
-        <Users/>
+        {/* <nav>
+          <ul>
+            <li>
+              <Link to="/">Início</Link>
+            </li>
+            <li>
+              <Link to="/usuarios">Usuários</Link>
+            </li>
+          </ul>
+        </nav> */}
+
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/usuarios" element={<Users />} />
+          <Route path="meus-processos" element={<MeusProcessos/>}/>
+          {/* <Route path="/usuarios/:userId" element={<UserDetail />}/>  */}
+        </Routes>
       </div>
     </>
   )

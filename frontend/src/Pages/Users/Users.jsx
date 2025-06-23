@@ -33,7 +33,10 @@ function Users(props)
     }, []);
 
     if (loading) {
-        return <div>Carregando...</div>;
+        return <>
+            <h1>Lista de Usuários</h1>
+            <div>Carregando...</div>;
+        </>
     }
 
     if (error) {
