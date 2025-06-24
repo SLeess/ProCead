@@ -1,15 +1,20 @@
 @font-face {
     font-family: 'Sora';
-    src: url('../../assets/Fonts/Sora/Sora-VariableFont_wght.ttf') format('ttf');
-    font-weight: normal; /* ou 400 */
-    font-style: normal;
+    src: url('../../assets/Fonts/Sora/Sora-VariableFont_wght.ttf') format('truetype');
 }
 
 h3.cardName{
     color: #000;
-    font-family: 'Sora';
-    font-size: 24px;
+    font-family: 'Sora', sans-serif;
+    font-size: 22px;
     font-style: normal;
-    font-weight: 700;
     line-height: 19px;
+}
+
+p.cardContent{
+    font-family: "Sora, sans-serif";
+    font-size: 16px;
+    font-style: normal; 
+    line-height: 20px; 
+    text-align: justify;
 }

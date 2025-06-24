@@ -4,39 +4,39 @@ import ProcessoCard from '../ProcessoCard/ProcessoCard';
 // Dados de exemplo. Em um aplicativo real, isso viria de uma API.
 const processosData = [
   {
-    id: 1,
-    edital: 'Edital 04/2025',
-    descricao: 'Processo de Seleção de Discentes para os Cursos de Especialização da Unimontes Modalidade Educação a Distância',
+    id: 102,
+    edital: 'Edital 08/2025',
+    descricao: 'Processo Seletivo para contratação de Professor Substituto de Direito',
     inscrito: true,
   },
   {
-    id: 2,
-    edital: 'Edital 05/2025',
-    descricao: 'Processo de Seleção de Discentes para os Cursos de Especialização da Unimontes Modalidade Educação a Distância',
+    id: 104,
+    edital: 'Edital 11/2024',
+    descricao: 'Processo de Seleção de Discentes para os Cursos de Especialização da Unimontes Modalidade Educação a DistânciaSeleção para o Programa de Pós-Graduação em Biotecnologia (PPGBiotec)',
+    inscrito: true,
+  },
+  {
+    id: 106,
+    edital: 'Edital 01/2025',
+    descricao: 'Seleção de tutores para cursos de Educação a Distância (EaD)',
+    inscrito: true,
+  },
+  {
+    id: 101,
+    edital: 'Edital 12/2024',
+    descricao: 'Seleção para Mestrado em Produção Vegetal no Semiárido',
     inscrito: false,
   },
   {
-    id: 3,
-    edital: 'Edital 07/2025',
-    descricao: 'Processo de Seleção de Discentes para os Cursos de Especialização da Unimontes Modalidade Educação a Distância',
+    id: 103,
+    edital: 'Edital 02/2025',
+    descricao: 'Vagas remanescentes para o curso de Especialização em Gestão Pública',
     inscrito: false,
   },
   {
-    id: 4,
-    edital: 'Edital 04/2025',
-    descricao: 'Processo de Seleção de Discentes para os Cursos de Especialização da Unimontes Modalidade Educação a Distância',
-    inscrito: false,
-  },
-  {
-    id: 5,
-    edital: 'Edital 04/2025',
-    descricao: 'Processo de Seleção de Discentes para os Cursos de Especialização da Unimontes Modalidade Educação a Distância',
-    inscrito: false,
-  },
-  {
-    id: 6,
-    edital: 'Edital 04/2025',
-    descricao: 'Processo de Seleção de Discentes para os Cursos de Especialização da Unimontes Modalidade Educação a Distância',
+    id: 105,
+    edital: 'Edital 09/2025',
+    descricao: 'Processo de Seleção de Discentes para o curso de Odontologia',
     inscrito: false,
   },
 ];

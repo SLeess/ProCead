@@ -22,9 +22,9 @@ function App() {
         </nav> */}
 
         <Routes>
-          <Route path="/" element={<Home />} />
+          {/* <Route path="/" element={<Home />} /> */}
           <Route path="/usuarios" element={<Users />} />
-          <Route path="meus-processos" element={<MeusProcessos/>}/>
+          <Route path="/" element={<MeusProcessos/>}/>
           {/* <Route path="/usuarios/:userId" element={<UserDetail />}/>  */}
         </Routes>
       </div>
