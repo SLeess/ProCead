@@ -28,3 +28,5 @@ npm install tailwindcss @tailwindcss/vite
 https://medium.com/@sumitnce1/setting-up-react-19-with-tailwind-css-v4-and-shadcn-ui-without-typescript-b47136d335da
 
 npm install react-icons
+
+npm install react-toastify

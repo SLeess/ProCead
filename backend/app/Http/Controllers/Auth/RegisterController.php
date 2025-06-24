@@ -18,7 +18,7 @@ class RegisterController extends ApiBaseController
         $validator = $this->validator($request->all());
 
         if($validator->fails()){
-            return $this->sendError('Validation Error.', $validator->errors());
+            return $this->sendError('Erro de validação.', $validator->errors());
         }
 
         $input = $request->all();

@@ -31,9 +31,10 @@ class ApiBaseController extends Controller
         $response = [
             'success' => false,
             'message' => $error,
+            'data' => [],
         ];
         if(!empty($errorMessages)){
-            $response['data'] = $errorMessages;
+            $response['errors'] = $errorMessages;
         }
         return response()->json($response, $code);
     }

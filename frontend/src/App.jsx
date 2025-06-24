@@ -1,31 +1,26 @@
 
-import './App.css'
-import Home from './Pages/Home/Home'
+// import './App.css'
+import Login from './Pages/Auth/Login';
+import Registro from './Pages/Auth/Registro';
+import Home from './Pages/Home/Home';
+import Layout from './Pages/Layout';
 import MeusProcessos from './Pages/MeusProcessos/MeusProcessos';
-import Users from './Pages/Users/Users'
+import Users from './Pages/Users/Users';
 import { Routes, Route, Link } from 'react-router-dom';
 
 function App() {
-
   return (
     <>
+    
       <div className="App">
-        {/* <nav>
-          <ul>
-            <li>
-              <Link to="/">Início</Link>
-            </li>
-            <li>
-              <Link to="/usuarios">Usuários</Link>
-            </li>
-          </ul>
-        </nav> */}
-
         <Routes>
-          {/* <Route path="/" element={<Home />} /> */}
-          <Route path="/usuarios" element={<Users />} />
-          <Route path="/" element={<MeusProcessos/>}/>
-          {/* <Route path="/usuarios/:userId" element={<UserDetail />}/>  */}
+          <Route path='/' element={<Layout/>}>
+            
+            <Route index element={<Home/>}/>
+            <Route path='/login' element={<Login/>}/>
+            <Route path='/registro' element={<Registro/>}/>
+            <Route path='/meus-processos' element={<MeusProcessos/>}/>
+          </Route>
         </Routes>
       </div>
     </>

@@ -4,7 +4,7 @@ import styles from './ProcessoCard.module.css';
 import { FaBookmark } from 'react-icons/fa';
 
 
-const ProcessoCard = ({ processo }) => {
+export default function ProcessoCard({ processo }){
   const { edital, descricao, inscrito } = processo;
 
   const cardBaseStyle = 'relative bg-white p-6 rounded-xl shadow-md border transition-transform transform hover:-translate-y-1 flex flex-col';
@@ -42,5 +42,3 @@ const ProcessoCard = ({ processo }) => {
     </div>
   );
 };
-
-export default ProcessoCard;
