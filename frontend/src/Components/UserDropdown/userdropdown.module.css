@@ -1,0 +1,17 @@
+@reference "../../index.css"; 
+
+@layer components{
+    .section_profile{
+        @apply bg-transparent;
+    }
+
+    a{
+        @apply flex w-full items-center justify-between px-4 py-2.5 text-sm font-medium text-black hover:bg-gray-50 dark:text-white dark:hover:bg-white/5;
+    }
+    .btnProfile{
+        @apply mb-3.5 inline-flex h-12 items-center justify-center gap-2 rounded-lg border border-s bg-white px-6 py-3 text-base font-medium text-black dark:text-white;
+    }
+    .logout{
+      @apply flex w-full items-center justify-between px-4 py-2.5 text-sm font-medium hover:bg-gray-50 dark:text-white dark:hover:bg-white/5 cursor-pointer;
+    }
+}

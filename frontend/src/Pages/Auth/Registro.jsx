@@ -16,7 +16,7 @@ export default function Registro(){
 
     const [errors, setErrors] = useState({});
 
-    const {token, setToken} = useContext(AppContext);
+    const { setToken } = useContext(AppContext);
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -67,7 +67,6 @@ export default function Registro(){
     return(
         <>
             <h1 className="title">Cadastre-se agora</h1>
-            <h3>{token}</h3>
             <form className="w-1/2 mx-auto space-y-8" onSubmit={handleRegister}>
                 <div>
                     <input type="text" id={`nome`} name={`nome`} placeholder="Nome" onChange={updateAttr} className={errors.nome ? 'input-error' : ''}/>

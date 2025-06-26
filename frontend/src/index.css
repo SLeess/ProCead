@@ -139,7 +139,7 @@ button:focus-visible {
     .cor-azul-1{
       @apply bg-blue-50;
     }
-}
+  }
 
 .input-error {
   border-color: red;
