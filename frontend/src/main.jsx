@@ -4,14 +4,14 @@ import { BrowserRouter } from 'react-router-dom';
 import './index.css'
 import App from './App.jsx'
 
-import jQuery from 'jquery';
-
-Object.assign(window, { $: jQuery, jQuery });
+import AppProvider from './Contexts/AppContext';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   // <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <AppProvider>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </AppProvider>
   ///* </React.StrictMode> */
 );

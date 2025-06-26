@@ -27,7 +27,7 @@ class RegisterController extends ApiBaseController
         $user = \App\Models\User::create($input);
 
         $success['token'] =  $user->createToken('MyApp')->plainTextToken;
-        $success['nome'] =  $user->nome;
+        $success['user'] =  $user;
         return $this->sendResponse($success, 'Usuário registrado com sucesso.');
     }
 
@@ -40,6 +40,11 @@ class RegisterController extends ApiBaseController
             'confirm_password' => 'required|same:password',
         ];
 
-        return \Illuminate\Support\Facades\Validator::make($data, $rules);
+        return \Illuminate\Support\Facades\Validator::make($data, $rules, [], [
+            'confirm_password' => 'de Confirmação de Senha',
+            'password' => 'de Senha',
+            'email' => 'Email',
+            'nome' => 'Nome'
+        ]);
     }
 }
