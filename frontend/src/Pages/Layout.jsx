@@ -1,5 +1,6 @@
 import { Link, Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import Sidebar from "./Sidebar/Sidebar";
 
 export default function Layout()
 {
@@ -14,7 +15,6 @@ export default function Layout()
                     </div>
                 </nav>
             </header>
-
             <main>
                 <ToastContainer
                     position="top-right"
