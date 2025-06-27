@@ -6,6 +6,7 @@
 @import "flowbite/src/themes/default";
 @plugin "flowbite/plugin";
 
+/**se nn tiver isso não funciona dark mode **/
 @custom-variant dark (&:where(.dark, .dark *));
 
 @layer base {
@@ -26,25 +27,12 @@
     label {
         @apply block text-sm font-medium leading-6 text-slate-900 first-letter:capitalize;
     }
-    header {
-        @apply text-white xl:mx-6 mx-8;
-    }
-    nav {
-      @apply container mx-auto px-6 py-2 flex justify-between items-center max-w-screen-xl rounded-2xl shadow-sm mt-2.5;
-      background: linear-gradient(90deg, #004DA9 0%, #2A83ED 100%);
-    }
-    nav ul{
-      @apply hidden md:flex items-center space-x-20 mx-10 w-full;
-    }
-    .logo-cead{
-      width: 120px;
-      height: 50px;
-    }
-    .link-page{
-      @apply text-white pb-2 font-semibold transition-colors duration-300 hover:bg-[#004DA9] rounded-t-sm px-2;
-    }
+
+
+    
+
     main {
-        @apply max-w-screen-lg mx-auto;
+        @apply max-w-screen-lg mx-auto pb-10;
     }
     .primary-btn {
         @apply flex w-full cursor-pointer justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-blue-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:bg-slate-400 disabled:cursor-wait;
@@ -61,6 +49,8 @@
     .error {
         @apply text-xs text-red-500 mt-1;
     }
+
+    /* START ------------------------------------- TABELAS CANDIDATO ------------------------------------- */
     table {
         @apply w-full text-sm text-left rounded-md shadow-lg overflow-hidden mb-6 table-auto bg-white;
     }
@@ -76,6 +66,9 @@
     td {
         @apply px-6 py-4 border-b border-slate-100;
     }
+
+    /* END ------------------------------------- TABELAS CANDIDATO ------------------------------------- */
+
     .avatar {
         @apply w-8 h-8 rounded-full overflow-hidden object-center object-cover;
     }

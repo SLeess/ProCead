@@ -45,7 +45,11 @@ export default function AppProvider({children}){
                 setLoading(false);
             }
         };
+        fetchUser();
+    }, [token]);
 
+
+    useEffect(() => {
         const root = window.document.documentElement;
         if (theme === 'dark'){
             root.classList.add('dark');
@@ -53,9 +57,8 @@ export default function AppProvider({children}){
             root.classList.remove('dark');
         }
         localStorage.setItem('theme', theme);
+    }, [theme]);
 
-        fetchUser();
-    }, [token]);
     const contextValue = { user, setUser, token, setToken, loading, toggleTheme, theme }; // Exponha o 'loading'
 
     return (

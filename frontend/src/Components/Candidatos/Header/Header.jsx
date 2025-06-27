@@ -4,14 +4,14 @@ import { FaChevronDown } from 'react-icons/fa'; // Ícone para o dropdown
 import { NavLink } from 'react-router-dom';
 import UserDropdown from '../UserDropdown/UserDropdown';
 import ThemeToggleBtn from '../../../Components/Global/ThemeToggleBtn/ThemeToggleBtn';
-
+import './Header.css';
 
 const Header = () => {
   
   const {user} = useContext(AppContext);
 
   return (
-    <header>
+    <header id='user'>
       <nav>
         <div className="flex items-center space-x-8 w-full">
           <img src="../../../public/img/logo_cead_bg_white.png" alt="" className="logo-cead"/>

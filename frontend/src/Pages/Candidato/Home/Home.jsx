@@ -2,8 +2,8 @@ export default function Home()
 {
     return (
         <>
-            <h1 className="title">Latests Posts</h1>
-            <div className="min-h-screen bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 transition-colors duration-300">
+            <h1 className="title dark:text-white">Latests Posts</h1>
+            <div className="min-h-10/12 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 transition-colors duration-300">
                 
                 <header className="bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm shadow-sm p-4 flex justify-between items-center sticky top-0">
                     <h1 className="text-xl font-bold">
