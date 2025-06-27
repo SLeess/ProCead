@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { AppContext } from "../../../Contexts/AppContext";
+import { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 
 export default function Registro(){
+
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         nome: '',
@@ -12,37 +16,52 @@ export default function Registro(){
 
     const [errors, setErrors] = useState({});
 
+    const { setToken } = useContext(AppContext);
+
     const handleRegister = async (e) => {
         e.preventDefault();
 
-        const res = await fetch('/api/register', {
-            method: 'post',
-            body: JSON.stringify(formData)
-        });
+        try {
+            const response = await fetch('/api/register', {
+                method: 'post',
+                body: JSON.stringify(formData)
+            });
 
-        const data = await res.json();
+            const result = await response.json();   
 
-        if (data.success) {
-            toast.success(data.message || "Registrado com sucesso!");
-        } else {
-            if (data.errors) {
-                setErrors(e => ({...e, ...data.errors}));
+            if (!result.success || !response.ok) {
+                if (result.errors) {
+                    setErrors(e => ({...e, ...result.errors}));
 
-                Object.values(data.errors).forEach(errorArray => {
-                    errorArray.forEach((errorMessage) => {
-                        return toast.error(errorMessage);
+                    Object.values(result.errors).forEach(errorArray => {
+                        errorArray.forEach((errorMessage) => {
+                            return toast.error(errorMessage);
+                        });
+
                     });
-
-                });
-            } else {
-                toast.error(data.message || "Ocorreu um erro desconhecido.");
+                } else {
+                    toast.error(result.message || "Ocorreu um erro desconhecido.");
+                }
+            } else{
+                toast.success(result.message || "Registrado com sucesso!");
+                localStorage.setItem('token', result.data.token);
+                setToken(result.data.token);
+                navigate('/');
             }
+        } catch (error) {
+            toast.error(error.toString());
         }
+
     };
 
     const updateAttr = (e) => {
         const attr = e.target.name;
         setFormData(f => ({...f, [attr]: e.target.value}));
+
+        setErrors(e => {
+            const {[attr]: _, ...remainErrors} = e;
+            return remainErrors;
+        });
     };
 
     return(
@@ -53,7 +72,7 @@ export default function Registro(){
                     <input type="text" id={`nome`} name={`nome`} placeholder="Nome" onChange={updateAttr} className={errors.nome ? 'input-error' : ''}/>
                     {
                         errors.nome && (
-                            <div className="invalid-feedback">{errors.nome}</div>
+                            <span id="nome-span" className="invalid-feedback">{errors.nome[0]}</span>
                         )
                     }
                 </div>
@@ -61,7 +80,7 @@ export default function Registro(){
                     <input type="text" id={`email`} name={`email`}  placeholder="Email" onChange={updateAttr} className={errors.email ? 'input-error' : ''}/>
                     {
                         errors.email && (
-                            <div className="invalid-feedback">{errors.email}</div>
+                            <span id="email-span" className="invalid-feedback">{errors.email[0]}</span>
                         )
                     }
                 </div>
@@ -69,7 +88,7 @@ export default function Registro(){
                     <input type="password" id={`password`} name={`password`} placeholder="Senha" onChange={updateAttr} className={errors.password || errors.confirm_password ? 'input-error' : ''}/>
                     {
                         errors.password && (
-                            <div className="invalid-feedback">{errors.password ?? errors.confirm_password}</div>
+                            <span id="password-span" className="invalid-feedback">{errors.password[0] ?? errors.confirm_password[0]}</span>
                         )
                     }
                 </div>
@@ -77,7 +96,7 @@ export default function Registro(){
                     <input type="password" id={`confirm_password`} name={`confirm_password`} placeholder="Confirme sua Senha" onChange={updateAttr} className={errors.password || errors.confirm_password ? 'input-error' : ''}/>
                     {
                         errors.confirm_password && (
-                            <div className="invalid-feedback">{errors.password ?? errors.confirm_password}</div>
+                            <span id="confirm_password-span" className="invalid-feedback">{errors.confirm_password[0]}</span>
                         )
                     }
                 </div>
