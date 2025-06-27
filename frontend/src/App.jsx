@@ -4,6 +4,7 @@ import Login from './Pages/Auth/Login';
 import Registro from './Pages/Auth/Registro';
 import Home from './Pages/Home/Home';
 import Layout from './Pages/Layout';
+import LayoutAdmin from './Pages/LayoutAdmin';
 import MeusProcessos from './Pages/MeusProcessos/MeusProcessos';
 import Sidebar from './Pages/Sidebar/Sidebar';
 import Users from './Pages/Users/Users';
@@ -21,7 +22,10 @@ function App() {
             <Route path='/registro' element={<Registro/>}/>
             <Route path='/meus-processos' element={<MeusProcessos/>}/>
           </Route>
-            <Route path='/sidebar' element={<Sidebar/>}/>
+
+          <Route path='/admin' element={<LayoutAdmin/>}>
+            
+          </Route>
         </Routes>
       </div>
     </>
