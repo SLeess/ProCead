@@ -1,13 +1,7 @@
 
 // import './App.css'
-import Login from './Pages/Auth/Login';
-import Registro from './Pages/Auth/Registro';
-import Home from './Pages/Home/Home';
-import Layout from './Pages/Layout';
-import LayoutAdmin from './Pages/LayoutAdmin';
-import MeusProcessos from './Pages/MeusProcessos/MeusProcessos';
 import Sidebar from './Pages/Sidebar/Sidebar';
-import Users from './Pages/Users/Users';
+
 import Login from './Pages/Candidato/Auth/Login';
 import Registro from './Pages/Candidato/Auth/Registro';
 import Home from './Pages/Candidato/Home/Home';
@@ -16,6 +10,7 @@ import MeusProcessos from './Pages/Candidato/MeusProcessos/MeusProcessos';
 import { Routes, Route, Link } from 'react-router-dom';
 import AuthCandidatoRoutes from './Routes/AuthCandidatoRoutes';
 import GuestRoutes from './Routes/GuestRoutes';
+import LayoutAdmin from './Pages/LayoutAdmin';
 
 function App() {
   return (
