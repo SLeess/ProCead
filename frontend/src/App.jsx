@@ -1,19 +1,14 @@
 
-// import './App.css'
-import { useContext } from 'react';
-import Login from './Pages/Auth/Login';
-import Registro from './Pages/Auth/Registro';
-import Home from './Pages/Home/Home';
-import Layout from './Pages/Layout';
-import MeusProcessos from './Pages/MeusProcessos/MeusProcessos';
-import Users from './Pages/Users/Users';
+import Login from './Pages/Candidato/Auth/Login';
+import Registro from './Pages/Candidato/Auth/Registro';
+import Home from './Pages/Candidato/Home/Home';
+import Layout from './Pages/Candidato/Layout';
+import MeusProcessos from './Pages/Candidato/MeusProcessos/MeusProcessos';
 import { Routes, Route, Link } from 'react-router-dom';
-import { AppContext } from './Contexts/AppContext';
 import AuthCandidatoRoutes from './Routes/AuthCandidatoRoutes';
 import GuestRoutes from './Routes/GuestRoutes';
 
 function App() {
-  const { user } = useContext(AppContext);
   return (
     <>
     

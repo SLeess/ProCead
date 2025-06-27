@@ -30,3 +30,7 @@ https://medium.com/@sumitnce1/setting-up-react-19-with-tailwind-css-v4-and-shadc
 npm install react-icons
 
 npm install react-toastify
+
+
+npx flowbite-react@latest init
+npm install flowbite

@@ -48,7 +48,7 @@ export default function UserDropdown({user}){
                     onClick={() => setDropdownOpen(!dropdownOpen)}
                     className={`${styles.btnProfile} dark:border-dark-3 dark:bg-dark-2`}
                     >
-                     {user.nome}
+                     {user.nome.split(" ")[0]}
                     <span
                         className={`duration-100 ${dropdownOpen ? "-scale-y-100" : ""}`}
                     >

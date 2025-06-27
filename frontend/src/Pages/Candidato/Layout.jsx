@@ -1,0 +1,39 @@
+import Header from "../../Components/Candidatos/Header/Header";
+import Loader from "../../Components/Candidatos/Loader/Loader";
+import UserDropdown from "../../Components/Candidatos/UserDropdown/UserDropdown";
+import { AppContext } from "../../Contexts/AppContext";
+import { useContext } from "react";
+import { Link, Outlet } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+
+export default function Layout()
+{
+    const {loading} = useContext(AppContext);
+    
+    if (!loading) {
+         return (
+            <>
+                <Header/>
+
+                <main>
+                    <ToastContainer
+                        position="top-right"
+                        autoClose={5000}
+                        hideProgressBar={false}
+                        newestOnTop={false}
+                        closeOnClick
+                        rtl={false}
+                        pauseOnFocusLoss
+                        draggable
+                        pauseOnHover
+                    />
+                    <Outlet />
+                </main>
+            </>
+        );
+    }
+
+    return(<Loader/>);
+}
+
+
