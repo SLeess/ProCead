@@ -90,7 +90,7 @@ const SidebarHeader = styled.div`
 const MenuListWrapper = styled.div`
   flex-grow: 1; 
   overflow-y: auto; 
-  &::-webkit-scrollbar { width: 6px; }
+  &::-webkit-scrollbar { width: 6px; }MainAdminContainer
   &::-webkit-scrollbar-track { background: transparent; }
   &::-webkit-scrollbar-thumb { background-color: #ffffff; border-radius: 10px; }
 `;
@@ -100,12 +100,12 @@ const MenuSection = styled.div`
 `;
 
 const SectionHeader = styled.div`
-  padding: 12px 16px;
+  padding: 10px 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
-  background-color: ${props => (props.isOpen ? '#003388' : 'transparent')};
+  background-color: ${props => (props.$isOpen ? '#003388' : 'transparent')};
   border-radius: 8px;
   margin: 4px 8px;
   transition: background-color 0.2s ease-in-out;
@@ -123,7 +123,7 @@ const SectionHeader = styled.div`
 
 const SubMenuList = styled.div`
   overflow: hidden;
-  max-height: ${props => (props.isOpen ? '500px' : '0')};
+  max-height: ${props => (props.$isOpen ? '500px' : '0')};
   transition: max-height 0.3s ease-in-out;
   padding-left: 16px;
 `;
@@ -132,7 +132,7 @@ const SubMenuItem = styled.a`
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 16px 12px 30px;
+  padding: 6px 16px 6px 30px;
   text-decoration: none;
   color: #c5cae9;
   cursor: pointer;
@@ -165,13 +165,13 @@ const Sidebar = () => {
   return (
     <SidebarContainer>
       <SidebarHeader>
-        <img src="img/logo_cead_bg_white.png" style={{marginRight: "10px"}} width={"50px"} />
+        <img src="/img/logo_cead_bg_white.png" style={{marginRight: "10px"}} width={"50px"} />
         PROCEAD
       </SidebarHeader>
       <MenuListWrapper>
         {menuData.map(section => (
           <MenuSection key={section.title}>
-            <SectionHeader isOpen={openSections[section.title]} onClick={() => handleToggleSection(section.title)}>
+            <SectionHeader $isOpen={openSections[section.title]} onClick={() => handleToggleSection(section.title)}>
               <span>
                 {section.icon}
                 {section.title}
@@ -182,7 +182,7 @@ const Sidebar = () => {
                 : <FiChevronDown color="white" />
               }
             </SectionHeader>
-            <SubMenuList isOpen={openSections[section.title]}>
+            <SubMenuList $isOpen={openSections[section.title]}>
               {section.items.map(item => (
                 <SubMenuItem 
                   key={item.name} 

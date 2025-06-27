@@ -7,11 +7,13 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "postinstall": "flowbite-react patch"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.10",
     "axios": "^1.10.0",
+    "flowbite-react": "^0.11.8",
     "framer-motion": "^12.19.1",
     "lucide-react": "^0.523.0",
     "react": "^19.1.0",

@@ -3,6 +3,7 @@
 import Login from './Pages/Auth/Login';
 import Registro from './Pages/Auth/Registro';
 import Home from './Pages/Home/Home';
+import Inscricoes from './Pages/Inscricoes/Inscricoes';
 import Layout from './Pages/Layout';
 import LayoutAdmin from './Pages/LayoutAdmin';
 import MeusProcessos from './Pages/MeusProcessos/MeusProcessos';
@@ -24,7 +25,7 @@ function App() {
           </Route>
 
           <Route path='/admin' element={<LayoutAdmin/>}>
-            
+            <Route path='/admin/inscricoes' element={<Inscricoes/>}/>
           </Route>
         </Routes>
       </div>
