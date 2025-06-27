@@ -92,7 +92,7 @@ const MenuListWrapper = styled.div`
   overflow-y: auto; 
   &::-webkit-scrollbar { width: 6px; }
   &::-webkit-scrollbar-track { background: transparent; }
-  &::-webkit-scrollbar-thumb { background-color: #003d99; border-radius: 10px; }
+  &::-webkit-scrollbar-thumb { background-color: #ffffff; border-radius: 10px; }
 `;
 
 const MenuSection = styled.div`
