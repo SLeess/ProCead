@@ -166,7 +166,7 @@ const Sidebar = () => {
   return (
     <SidebarContainer>
       <SidebarHeader>
-        <FiGrid size={28} style={{ marginRight: '12px' }} />
+        <img src="img/logo_cead_bg_white.png" style={{marginRight: "10px"}} width={"50px"} />
         PROCEAD
       </SidebarHeader>
       <MenuListWrapper>
