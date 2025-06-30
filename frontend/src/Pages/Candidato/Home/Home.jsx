@@ -1,3 +1,5 @@
+import Table from "../../../Components/Global/Table/Table";
+
 export default function Home()
 {
     return (
@@ -24,6 +26,9 @@ export default function Home()
                 </main>
                 
             </div>
+
+            <div className="mt-5"></div>
+            <Table></Table>
         </>
     );
 }

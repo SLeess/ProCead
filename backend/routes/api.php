@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\RelatorioController;
 use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -7,6 +8,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
+
+Route::view('/pdf', 'Relatorio');
 
 
 Route::get('/users', function(){
@@ -35,6 +38,8 @@ Route::middleware(['auth:sanctum', 'throttle:auth'])->group( function () {
     Route::get('/test', function(){
         return response()->json(['teste' => 'message']);
     });
+
+    Route::post('/export', [RelatorioController::class, 'export'])->name('export');
 
     Route::post('/logout', [RegisterController::class, 'logout'])->name('logout');
 });
