@@ -20,6 +20,7 @@ const BoxContainer = styled.div`
   padding: 20px;
   box-sizing: border-box; /* Ensures padding is included in the total width/height */
   margin: 3vh 2vh 2vh 0vh;
+  outline: 2px solid black
 `;
 
 /**

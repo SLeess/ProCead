@@ -4,7 +4,8 @@ import React from 'react'
 const Inscricoes = () => {
   return (
     <>
-    <h1>Inscrições</h1>
+    <h1>Tabela de Inscrições</h1>
+    <br />
     <MainTable/>
     </>
   )

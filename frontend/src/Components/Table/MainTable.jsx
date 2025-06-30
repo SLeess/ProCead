@@ -1,81 +1,184 @@
-import { Checkbox, Table, TableBody, TableCell, TableHead, TableHeadCell, TableRow } from "flowbite-react";
+"use client"
+ 
+import {
+  flexRender,
+  getCoreRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
+} from "@tanstack/react-table"
+ 
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
 
-export default function MainTable() {
+// import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
+import React, { useState } from 'react'
+import DATA from './data';
+import { Pagination } from "flowbite-react";
+import { ArrowUpDown } from "lucide-react";
+const MainTable = () => {
+  const [data, setData] = useState(DATA);
+  const columns = [
+    {
+      accessorKey: "id",
+      header: "#",
+      cell: (props) => <span>{props.getValue()}</span>
+    },
+    {
+      accessorKey: "inscricao",
+      // header: "Nº de Inscricao",
+      header: ({ column }) => {
+      return (
+        <button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Inscricao
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </button>
+      )
+    },
+      cell: (props) => <span>{props.getValue()}</span>
+    },
+    {
+      accessorKey: "nome",
+      header: ({ column }) => {
+      return (
+        <button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Nome
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </button>
+      )
+    },
+      cell: (props) => <span>{props.getValue()}</span>
+    },
+    {
+      accessorKey: "email",
+      header: ({ column }) => {
+      return (
+        <button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          E-mail
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </button>
+      )
+    },
+      cell: (props) => <span>{props.getValue()}</span>
+    },
+    {
+      accessorKey: "cpf",
+      header: ({ column }) => {
+      return (
+        <button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          CPF
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </button>
+      )
+    },
+      cell: (props) => <span>{props.getValue()}</span>
+    },
+    {
+      accessorKey: "modalidade",
+      header: ({ column }) => {
+      return (
+        <button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Modalidade
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </button>
+      )
+    },
+      cell: (props) => <span>{props.getValue()}</span>
+    },
+    {
+      accessorKey: "status",
+      header: ({ column }) => {
+      return (
+        <button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          Status
+          <ArrowUpDown className="ml-2 h-4 w-4" />
+        </button>
+      )
+    },
+      cell: (props) => <span>{props.getValue()}</span>
+    },
+  ];
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+  });
+  console.log(table.getHeaderGroups());
+
   return (
-    <div className="overflow-x-auto p-10">
-      <Table hoverable style={{textAlign: "center"}}>
-        <TableHead>
-          {/* A linha do cabeçalho agora tem uma borda inferior para separação visual */}
-          <TableRow className="border-b-2 border-gray-200">
-            {/* O fundo de cada célula do cabeçalho foi alterado para branco */}
-            
-            <TableHeadCell style={{backgroundColor: "white"}} className="bg-white text-gray-700">#</TableHeadCell>
-            <TableHeadCell style={{backgroundColor: "white"}} className="bg-white text-gray-700">Nº de Inscrição</TableHeadCell>
-            <TableHeadCell style={{backgroundColor: "white"}} className="bg-white text-gray-700">Nome do Candidato</TableHeadCell>
-            <TableHeadCell style={{backgroundColor: "white"}} className="bg-white text-gray-700">E-mail</TableHeadCell>
-            <TableHeadCell style={{backgroundColor: "white"}} className="bg-white text-gray-700">CPF</TableHeadCell>
-            <TableHeadCell style={{backgroundColor: "white"}} className="bg-white text-gray-700">Modalidade</TableHeadCell>
-            <TableHeadCell style={{backgroundColor: "white"}} className="bg-white text-gray-700">Status da Inscrição</TableHeadCell>
-            <TableHeadCell style={{backgroundColor: "white"}} className="bg-white text-gray-700">Ações</TableHeadCell>
-          </TableRow>
-        </TableHead>
-        <TableBody className="divide-y">
-          <TableRow className="bg-white">
-            <TableCell className="p-4">
-              1
-            </TableCell>
-            <TableCell className="whitespace-nowrap font-medium text-gray-900">
-              100035648
-            </TableCell>
-            <TableCell>Sliver</TableCell>
-            <TableCell>Laptop</TableCell>
-            <TableCell>$2999</TableCell>
-            <TableCell>$2999</TableCell>
-            <TableCell>$2999</TableCell>
-            <TableCell>
-              <a href="#" className="font-medium text-primary-600 hover:underline">
-                Edit
-              </a>
-            </TableCell>
-          </TableRow>
-          <TableRow className="bg-white">
-            <TableCell className="p-4">
-              2
-            </TableCell>
-            <TableCell className="whitespace-nowrap font-medium text-gray-900">
-              100035648
-            </TableCell>
-            <TableCell>White</TableCell>
-            <TableCell>Laptop PC</TableCell>
-            <TableCell>$1999</TableCell>
-            <TableCell>$1999</TableCell>
-            <TableCell>$1999</TableCell>
-            <TableCell>
-              <a href="#" className="font-medium text-primary-600 hover:underline">
-                Edit
-              </a>
-            </TableCell>
-          </TableRow>
-          <TableRow className="bg-white">
-            <TableCell className="p-4">
-              3
-            </TableCell>
-            <TableCell className="whitespace-nowrap font-medium text-gray-900">
-              100035648
-            </TableCell>
-            <TableCell>Black</TableCell>
-            <TableCell>Accessories</TableCell>
-            <TableCell>$99</TableCell>
-            <TableCell>$99</TableCell>
-            <TableCell>$99</TableCell>
-            <TableCell>
-              <a href="#" className="font-medium text-primary-600 hover:underline">
-                Edit
-              </a>
-            </TableCell>
-          </TableRow>
+    <div className="rounded-md border">
+      <Table>
+        <TableHeader>
+          {table.getHeaderGroups().map((headerGroup) => (
+            <TableRow key={headerGroup.id}>
+              {headerGroup.headers.map((header) => {
+                return (
+                  <TableHead key={header.id}>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                  </TableHead>
+                )
+              })}
+            </TableRow>
+          ))}
+        </TableHeader>
+        <TableBody>
+          {table.getRowModel().rows?.length ? (
+            table.getRowModel().rows.map((row) => (
+              <TableRow
+                key={row.id}
+                data-state={row.getIsSelected() && "selected"}
+              >
+                {row.getVisibleCells().map((cell) => (
+                  <TableCell key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </TableCell>
+                ))}
+              </TableRow>
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={columns.length} className="h-24 text-center">
+                No results.
+              </TableCell>
+            </TableRow>
+          )}
         </TableBody>
       </Table>
+      <button onClick={() => table.previousPage()}>previous page</button><br />
+      <button onClick={() => table.nextPage()}>next page</button>
     </div>
   );
-}
+};
+
+export default MainTable
