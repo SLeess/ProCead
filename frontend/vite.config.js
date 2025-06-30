@@ -1,3 +1,5 @@
+
+import path from 'path';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
@@ -17,5 +19,12 @@ export default defineConfig({
         },
       }
     }
+  },
+  resolve: {
+    alias: {
+      // Aqui estamos dizendo ao Vite: sempre que encontrar '@' no início de um import,
+      // substitua por 'caminho/absoluto/do/projeto/src'
+      '@': path.resolve(__dirname, './src'),
+    },
   },
 })

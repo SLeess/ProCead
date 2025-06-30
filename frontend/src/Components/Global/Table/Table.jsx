@@ -1,5 +1,3 @@
-// src/ProductTable.jsx
-
 import React, { useState, useMemo, useContext } from 'react';
 import {
   useReactTable,
@@ -9,74 +7,26 @@ import {
   getSortedRowModel,
   getFilteredRowModel,
 } from '@tanstack/react-table';
-import { PRODUCTS } from './DATA';
-import { COLUMNS } from './columns';
 import { FaSearch, FaChevronDown, FaSort, FaSortUp, FaSortDown } from 'react-icons/fa';
 import { toast } from 'react-toastify';
-import { AppContext } from '../../../Contexts/AppContext';
+import { AppContext } from '@/Contexts/AppContext';
 
-const Table = () => {
-//   const [errors, setErrors] = useState({});
-  const {token} = useContext(AppContext);
-
-
-  const handleRegister = async (visibleColumns, sortedRows) => {
- 
-         try {
-             const response = await fetch('/api/export', {
-                 method: 'post',
-                 body: JSON.stringify({
-                    columns: visibleColumns,
-                    rows: sortedRows,
-                    tableName: "Inventário de Produtos",
-                    titulo: 'Relatório de Itens Comprados',
-                }),
-                 headers:{
-                    'Content-Type': 'application/json', 
-                    'Accept': 'application/json, application/pdf', 
-                    'Authorization': `Bearer ${token}`
-                 },
-             });
- 
-             const contentType = response.headers.get('content-type');
-             if (contentType && contentType.includes('application/json')) {
-                const errorData = await response.json();
-                Object.values(errorData.errors).forEach((e) => {
-                    toast.error(e);
-                });
-             } else{
-                if (!response.ok) {
-                    throw new Error(`Erro na rede: ${response.status} ${response.statusText}`);
-                }
-
-                const blob = await response.blob();
-
-                const url = window.URL.createObjectURL(blob);
-                const link = document.createElement('a');
-                link.href = url;
-                link.setAttribute('download', 'relatorio-de-produtos.pdf');
-                document.body.appendChild(link);
-
-                link.click();
-                link.parentNode.removeChild(link);
-                window.URL.revokeObjectURL(url);
-             }
-
-         } catch (error) {
-             toast.error(error.toString());
-             console.log(error.toString());
-         }
- 
-     };
-
-
-
-  const data = useMemo(() => PRODUCTS, []);
-  const columns = useMemo(() => COLUMNS, []);
+// O componente Table agora recebe os dados e as colunas como props
+const Table = ({ rows, cols, tableName, titulo, details }) => {
+  const { token } = useContext(AppContext);
 
   const [sorting, setSorting] = useState([]);
   const [filtering, setFiltering] = useState('');
   const [columnVisibility, setColumnVisibility] = useState({});
+  const [isExporting, setIsExporting] = useState(false); // Estado para feedback de carregamento
+
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 10,
+  });
+
+  const data = useMemo(() => rows, [rows]);
+  const columns = useMemo(() => cols, [cols]);
 
   const table = useReactTable({
     data,
@@ -86,21 +36,88 @@ const Table = () => {
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     state: {
-      sorting: sorting,
+      sorting,
       globalFilter: filtering,
-      columnVisibility: columnVisibility,
+      columnVisibility,
+      pagination,
     },
     onSortingChange: setSorting,
     onGlobalFilterChange: setFiltering,
     onColumnVisibilityChange: setColumnVisibility,
+    onPaginationChange: setPagination,
   });
 
+ 
+  const handleExport = async () => {
+    setIsExporting(true);
+
+    const visibleColumns = table.getVisibleLeafColumns().map(col => ({
+        id: col.id,
+        header: col.columnDef.header,
+    }));
+
+    const sortedRows = table.getSelectedRowModel().rows.map(row => {
+        const filteredRowData = {};
+        table.getVisibleLeafColumns().forEach(column => {
+            if (column.id in row.original) {
+                filteredRowData[column.id] = row.original[column.id];
+            }
+        });
+        return filteredRowData;
+    });
+
+    try {
+        
+        const response = await fetch('/api/export', {
+            method: 'post',
+            body: JSON.stringify({
+               columns: visibleColumns.filter(chave => chave.id !== 'select'),
+               rows: sortedRows,
+               tableName: tableName,//"Inventário de Produtos",
+               titulo: titulo,//'Relatório de Itens Comprados',
+           }),
+            headers:{
+               'Content-Type': 'application/json', 
+               'Accept': 'application/json, application/pdf', 
+               'Authorization': `Bearer ${token}`
+            },
+        });
+
+        const contentType = response.headers.get('content-type');
+
+        if (contentType && contentType.includes('application/json')) {
+           const errorData = await response.json();
+           console.log(errorData);
+           const errorMessages = Object.values(errorData.errors || { general: [errorData.message || 'Erro desconhecido'] }).flat();
+           errorMessages.forEach((e) => toast.error(e));
+        } else {
+           if (!response.ok) {
+               throw new Error(`Erro na rede: ${response.status} ${response.statusText}`);
+           }
+           const blob = await response.blob();
+           const url = window.URL.createObjectURL(blob);
+           const link = document.createElement('a');
+           link.href = url;
+           link.setAttribute('download', 'relatorio.pdf');
+           document.body.appendChild(link);
+           link.click();
+           link.parentNode.removeChild(link);
+           window.URL.revokeObjectURL(url);
+        }
+    } catch (error) {
+        toast.error(error.message || 'Falha na comunicação com a API.');
+        console.error("Erro na exportação:", error);
+    } finally {
+        setIsExporting(false);
+    }
+  };
+
   return (
-    <div className="p-4 md:p-8 bg-slate-50 dark:bg-slate-950 min-h-screen">
-      <div className="max-w-7xl mx-auto bg-white dark:bg-slate-900 rounded-2xl shadow-lg overflow-hidden">
+    <div className="p-4 md:p-8 bg-white dark:bg-slate-950 min-h-screen">
+      <div className="max-w-7xl mx-auto bg-white dark:bg-slate-900  overflow-hidden">
         <div className="p-6 border-b border-slate-200 dark:border-slate-700">
-            <h2 className="text-xl font-bold text-slate-800 dark:text-white">Product Inventory</h2>
-            <p className="text-sm text-slate-500 dark:text-slate-400">These are details about all products.</p>
+            <h2 className="text-xl font-bold text-slate-800 dark:text-white">{ tableName }</h2>
+            <p className="text-sm text-slate-500 dark:text-slate-400">{ details }</p>
         </div>
 
         {/* --- Barra de Ferramentas: Busca, Filtro, Exportar --- */}
@@ -111,59 +128,36 @@ const Table = () => {
                     type="text"
                     value={filtering}
                     onChange={(e) => setFiltering(e.target.value)}
-                    placeholder="Search"
+                    placeholder="Buscar elemento"
                     className="pl-10 pr-4 py-2 w-full md:w-80 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
             </div>
             <div className="flex items-center gap-2">
-                {/* Seletor de Colunas */}
                 <details className="relative">
                     <summary className="cursor-pointer flex items-center gap-2 px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700">
-                        Filter <FaChevronDown size={12} />
+                        Filtros <FaChevronDown size={12} />
                     </summary>
                     <div className="absolute z-10 top-full right-0 mt-2 p-4 w-56 bg-white dark:bg-slate-800 rounded-lg shadow-xl border dark:border-slate-700">
-                        <p className="font-bold text-sm mb-2 text-slate-800 dark:text-slate-200">Toggle Columns</p>
+                        <p className="font-bold text-sm mb-2 text-slate-800 dark:text-slate-200">Exibir Colunas</p>
                         {table.getAllLeafColumns().map(column => (
                             <div key={column.id} className="flex items-center gap-2">
                                 <input
                                     type="checkbox"
                                     checked={column.getIsVisible()}
                                     onChange={column.getToggleVisibilityHandler()}
-                                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
                                 />
                                 <label className="text-sm text-slate-600 dark:text-slate-300">{column.id}</label>
                             </div>
                         ))}
                     </div>
                 </details>
-                <button onClick={() => {
-
-const visibleColumnDefs = table.getVisibleLeafColumns();
-
-const visibleColumns = visibleColumnDefs.map(col => ({
-    id: col.id,
-    header: col.columnDef.header,
-}));
-
-const sortedRowModels = table.getSortedRowModel().rows;
-
-const sortedRows = sortedRowModels.map(row => {
-    const filteredRowData = {};
-
-    visibleColumnDefs.forEach(column => {
-        if (column.id in row.original) {
-            filteredRowData[column.id] = row.original[column.id];
-        }
-    });
-
-    return filteredRowData;
-});
-
-
-handleRegister(visibleColumns, sortedRows);
-
-                }} className="px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700">
-                    Export
+                <button 
+                    onClick={handleExport}
+                    disabled={isExporting}
+                    className="px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-wait"
+                >
+                    {isExporting ? 'Exportando...' : 'Exportar'}
                 </button>
             </div>
         </div>
@@ -176,12 +170,18 @@ handleRegister(visibleColumns, sortedRows);
                         <tr key={headerGroup.id}>
                             {headerGroup.headers.map(header => (
                                 <th key={header.id} scope="col" className="px-6 py-3" onClick={header.column.getToggleSortingHandler()}>
-                                    <div className="flex items-center gap-2 cursor-pointer">
+                                    <div className="flex items-center gap-2 cursor-pointer select-none">
                                         {flexRender(header.column.columnDef.header, header.getContext())}
-                                        {{
-                                            asc: <FaSortUp />,
-                                            desc: <FaSortDown />,
-                                        }[header.column.getIsSorted()] ?? <FaSort className="opacity-30" />}
+                                        { 
+                                            (header.column.columnDef.header.id != 'select') ?
+
+                                                {
+                                                    asc: <FaSortUp />,
+                                                    desc: <FaSortDown />,
+                                                }[header.column.getIsSorted()] ?? <FaSort className="opacity-30" />
+                                            : <></>
+
+                                        }
                                     </div>
                                 </th>
                             ))}
@@ -191,11 +191,15 @@ handleRegister(visibleColumns, sortedRows);
                 <tbody>
                     {table.getRowModel().rows.map(row => (
                         <tr key={row.id} className="bg-white dark:bg-slate-900 border-b dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800">
-                            {row.getVisibleCells().map(cell => (
-                                <td key={cell.id} className="px-6 py-4 whitespace-nowrap">
-                                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                                </td>
-                            ))}
+                            {
+                                row.getVisibleCells().map(cell => {
+                                    return(
+                                        <td key={cell.id} className={`px-6 py-4 whitespace-nowrap ${cell.column.columnDef.alignText !== undefined ? `${cell.column.columnDef.alignText}` : ''}`}>
+                                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                        </td>
+                                    );
+                                })
+                            }
                         </tr>
                     ))}
                 </tbody>
@@ -205,37 +209,61 @@ handleRegister(visibleColumns, sortedRows);
         {/* --- Paginação --- */}
         <div className="flex flex-wrap items-center justify-between p-4 md:p-6 gap-4">
             <p className="text-sm text-slate-600 dark:text-slate-400">
-                Showing{' '}
-                <strong>{table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1}</strong>
-                -<strong>{Math.min((table.getState().pagination.pageIndex + 1) * table.getState().pagination.pageSize, table.getFilteredRowModel().rows.length)}</strong> of{' '}
+                Exibindo{' '}
+                <strong>{table.getRowModel().rows.length > 0 ? table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1 : 0}</strong>
+                -<strong>{Math.min((table.getState().pagination.pageIndex + 1) * table.getState().pagination.pageSize, table.getFilteredRowModel().rows.length)}</strong> de{' '}
                 <strong>{table.getFilteredRowModel().rows.length}</strong>
             </p>
             <div className="flex items-center gap-2">
-                <button 
-                    onClick={() => table.previousPage()} 
-                    disabled={!table.getCanPreviousPage()}
-                    className="px-3 py-1 border border-slate-300 rounded-md disabled:opacity-50 disabled:cursor-not-allowed dark:border-slate-600"
+                <span className="text-sm text-slate-600 dark:text-slate-400">Itens por página:</span>
+                {
+                /* <select
+                    value={table.getState().pagination.pageSize}
+                    onChange={e => table.setPageSize(Number(e.target.value))}
+                    className="p-1 pr-6 pl-3 border border-slate-300 dark:border-slate-600 rounded-md bg-white dark:bg-slate-800 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
                 >
-                    &lt; Prev
-                </button>
-                <span className="text-sm">
-                    {Array.from({ length: table.getPageCount() }, (_, i) => i + 1).map(page => (
-                        <button 
-                            key={page} 
-                            onClick={() => table.setPageIndex(page - 1)}
-                            className={`px-3 py-1 mx-1 rounded-md ${table.getState().pagination.pageIndex === page - 1 ? 'bg-blue-500 text-white' : 'bg-white dark:bg-slate-800'}`}
-                        >
-                            {page}
-                        </button>
+                    {[10, 20, 30, 40, 50].map(pageSize => (
+                        <option key={pageSize} value={pageSize}>
+                            {pageSize}
+                        </option>
                     ))}
-                </span>
-                <button 
-                    onClick={() => table.nextPage()} 
-                    disabled={!table.getCanNextPage()}
-                    className="px-3 py-1 border border-slate-300 rounded-md disabled:opacity-50 disabled:cursor-not-allowed dark:border-slate-600"
-                >
-                    Next &gt;
-                </button>
+                </select> */}
+                <input 
+                    type="number" 
+                    min={1}
+                    value={table.getState().pagination.pageSize}
+                    onChange={e => table.setPageSize(Number(e.target.value))}
+                    className="p-1 max-w-15 text-center border border-slate-300 dark:border-slate-600 rounded-md bg-white dark:bg-slate-800 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
+                />
+            </div>
+            <div className="flex items-center">
+                <div className="flex items-center gap-2">
+                    <button 
+                        onClick={() => table.previousPage()} 
+                        disabled={!table.getCanPreviousPage()}
+                        className="px-3 py-1 border border-slate-300 rounded-md disabled:opacity-50 disabled:cursor-not-allowed dark:border-slate-600"
+                    >
+                        &lt; Anterior
+                    </button>
+                    <span className="text-sm">
+                        {Array.from({ length: table.getPageCount() }, (_, i) => i + 1).map(page => (
+                            <button 
+                                key={page} 
+                                onClick={() => table.setPageIndex(page - 1)}
+                                className={`px-3 py-1 mx-1 rounded-md ${table.getState().pagination.pageIndex === page - 1 ? 'bg-blue-500 text-white' : 'bg-white dark:bg-slate-800'}`}
+                            >
+                                {page}
+                            </button>
+                        ))}
+                    </span>
+                    <button 
+                        onClick={() => table.nextPage()} 
+                        disabled={!table.getCanNextPage()}
+                        className="px-3 py-1 border border-slate-300 rounded-md disabled:opacity-50 disabled:cursor-not-allowed dark:border-slate-600"
+                    >
+                        Próximo &gt;
+                    </button>
+                </div>
             </div>
         </div>
       </div>

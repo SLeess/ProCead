@@ -39,24 +39,28 @@
 <body>
     @include('cabecalho', ['title' => $titulo ?? 'Teste'])
     <h2 style="font-size:1.06rem;margin-top: 0px; margin-bottom: 15px;">{{ $tableName ?? 'NON NAME SET'}}</h2>
-    <table class="table-content" style="margin-bottom: 10px;width: 100%;text-align: center;">
-        <thead>
-            <tr>
-                @foreach ($columns as $column)
-                    <th style="width: 10%">{{ $column['header'] }}</th>
-                @endforeach
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($rows as $row)
+    @if(sizeof($rows) == 0)
+        <p>Nenhum registro enviado ou encontrado</p>
+    @else
+        <table class="table-content" style="margin-bottom: 10px;width: 100%;text-align: center;">
+            <thead>
                 <tr>
                     @foreach ($columns as $column)
-                        <td style="width: 10%;">{{$row[$column["id"]]}}</td>
+                        <th style="width: 10%">{{ $column['header'] }}</th>
                     @endforeach
                 </tr>
-            @endforeach
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach ($rows as $row)
+                    <tr>
+                        @foreach ($columns as $column)
+                            <td style="width: 10%;">{{$row[$column["id"]]}}</td>
+                        @endforeach
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @endif
 
     <script type="text/php">
         if ( isset($pdf) ) {
