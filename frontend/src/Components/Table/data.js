@@ -148,6 +148,76 @@ const DATA = [
         modalidade: " AC",
         status: " INDEFERIDO"
     },
+    {
+        id: 16,
+        inscricao: 252400007,
+        nome: "IAGO LEAL DE FREITAS",
+        email: " eusouiagoleal@gmail.com 	",
+        cpf: " 104.021.836 - 90",
+        modalidade: " AC",
+        status: " INDEFERIDO"
+    },
 
+    {
+        id: 17,
+        inscricao: 252400009,
+        nome: "NEIDE DA ROCHA DO NASCIMENTO",
+        email: "	neidedarochadonascimento @gmail.com 	",
+        cpf: " 185.200.998 - 58",
+        modalidade: " AC",
+        status: " INDEFERIDO"
+    },
+
+    {
+        id: 18,
+        inscricao: 252400015,
+        nome: "LUCIMARLY TAVARES DA FONSECA",
+        email: " 	lucimarlytavaresfonseca @gmail.com 	",
+        cpf: " 041.167.326 - 21",
+        modalidade: " AC",
+        status: " INDEFERIDO"
+    },
+
+    {
+        id: 19,
+        inscricao: 252400021,
+        nome: "MARIA DA CONCEIÇÃO VIEIRA DE SOUZA",
+        email: " maria.souza189@educacao.mg.gov.br 	",
+        cpf: " 672.740.486-00",
+        modalidade: " AC",
+        status: " INDEFERIDO"
+    },
+
+    {
+        id: 20,
+        inscricao: 252400023,
+        nome: "SARAH DE OLIVEIRA VIEIRA",
+        email: " sarah.oliveira.vieira.eng@gmail.com 	",
+        cpf: " 146.057.157 - 62",
+        modalidade: " AC",
+        status: " INDEFERIDO"
+    },
+
+    {
+        id: 21,
+        inscricao: 252400031,
+        nome: "ROSANGELA PRICILA DE OLIVEIRA",
+        email: " 	rosapricila16 @yahoo.com.br 	",
+        cpf: " 036.992.126 - 70",
+        modalidade: " AC",
+        status: " INDEFERIDO"
+    },
+
+    {
+        id:22 ,
+        inscricao: 252400036,
+        nome: "DAIANE FRANCINE GONÇALVES FREITAS",
+        email: " 	manu31032017 @gmail.com 	",
+        cpf: " 098.954.686 - 10",
+        modalidade: " AC",
+        status: " INDEFERIDO"
+    },
+
+    
 ];
 export default DATA;

@@ -15,6 +15,7 @@ const BoxContainer = styled.div`
     - A very light black color (rgba(0, 0, 0, 0.05)) for the shadow
   */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  overflow-y: auto; /* Add this line to enable vertical scrolling when content overflows */
   
   /* Optional: Add some padding so content doesn't touch the edges */
   padding: 20px;
