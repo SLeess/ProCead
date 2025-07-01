@@ -12,21 +12,21 @@ class ApiBaseController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function sendResponse($result, $message)
+    public function sendResponse($result, $message, $code = Response::HTTP_OK)
     {
      $response = [
             'success' => true,
             'data'    => $result,
             'message' => $message,
         ];
-        return response()->json($response, Response::HTTP_OK);
+        return response()->json($response, $code);
     }
     /**
      * return error response.
      *
      * @return \Illuminate\Http\Response
      */
-    public function sendError($error, $errorMessages = [], $code = 404)
+    public function sendError($error, $errorMessages = [], $code = Response::HTTP_NOT_FOUND)
     {
         $response = [
             'success' => false,

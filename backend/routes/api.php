@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Admin\RelatorioController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\LogOutController;
 use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -34,11 +36,10 @@ Route::get('/users', function(){
     ]);
 });
 
-
-Route::controller(RegisterController::class)->group(function(){
-    Route::post('/register', 'register')->name('register');
-    Route::post('/login', 'login')->name('login');
-})->middleware(['throttle:global']);
+Route::middleware(['throttle:global'])->group(function(){
+    Route::post('/register', [RegisterController::class, 'register'])->name('register');
+    Route::post('/login', [LoginController::class, 'login'])->name('login');
+});
 
 
 
@@ -193,5 +194,5 @@ Route::middleware(['auth:sanctum', 'throttle:auth'])->group( function () {
 
     Route::post('/export', [RelatorioController::class, 'export'])->name('export');
 
-    Route::post('/logout', [RegisterController::class, 'logout'])->name('logout');
+    Route::post('/logout', [LogOutController::class, 'logout'])->name('logout');
 });

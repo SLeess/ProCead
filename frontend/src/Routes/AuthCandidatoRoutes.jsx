@@ -5,6 +5,6 @@ import { useContext } from "react";
 export default function AuthCandidatoRoutes(){
     const { user } = useContext(AppContext);
 
-    return user.email != undefined ? <Outlet/> : <Navigate to="/login" />;
+    return user ? <Outlet/> : <Navigate to="/login" />;
 }
 

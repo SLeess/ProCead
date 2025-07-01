@@ -5,6 +5,6 @@ import { useContext } from "react";
 export default function GuestRoutes(){
     const { user } = useContext(AppContext);
 
-    return !user.email ? <Outlet/> : <Navigate to="/" />;
+    return !user ? <Outlet/> : <Navigate to="/" />;
 }
 

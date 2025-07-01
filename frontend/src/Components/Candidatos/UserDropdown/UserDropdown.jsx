@@ -1,7 +1,13 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import styles from './userDropdown.module.css';
+import { AppContext } from "@/Contexts/AppContext";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export default function UserDropdown({user}){
+    const navigate = useNavigate();
+    const { token, logout } = useContext(AppContext);
+    
     const [dropdownOpen, setDropdownOpen] = useState(false);
     
     const trigger = useRef(null);
@@ -27,15 +33,29 @@ export default function UserDropdown({user}){
     // close if the esc key is pressed
     useEffect(() => {
         const keyHandler = ({ keyCode }) => {
-        if (!dropdownOpen || keyCode !== 27) return;
-        setDropdownOpen(false);
+            if (!dropdownOpen || keyCode !== 27) return;
+            setDropdownOpen(false);
         };
         document.addEventListener("keydown", keyHandler);
         return () => document.removeEventListener("keydown", keyHandler);
     });
 
-    function handlerLogOut(){
-        
+    async function handlerLogOut(){
+        const res = await fetch('/api/logout', {
+            method: 'post',
+            headers:{
+                "Authorization": `Bearer ${token}`,
+            }
+        });
+
+        try {
+            const result = await res.json();
+            toast.success(result.message);
+            logout();
+            navigate('/login');
+        } catch (error) {
+            toast.error(error);
+        }
     }
 
     return (

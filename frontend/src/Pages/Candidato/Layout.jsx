@@ -8,12 +8,14 @@ import { ToastContainer } from "react-toastify";
 
 export default function Layout()
 {
-    const {loading} = useContext(AppContext);
+    const {loading, user} = useContext(AppContext);
     
     if (!loading) {
          return (
             <>
-                <Header/>
+                { user &&
+                    <Header/>
+                }
 
                 <main>
                     <ToastContainer

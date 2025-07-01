@@ -16,5 +16,6 @@
     }
     .callDropDown{
         @apply mt-1 absolute border-slate-800 border-1 right-0 top-full w-[240px] divide-y-1 divide-black overflow-hidden rounded-lg bg-white dark:divide-white dark:bg-black;
+        z-index: 100;
     }
 }

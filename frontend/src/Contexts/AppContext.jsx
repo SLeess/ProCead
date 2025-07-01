@@ -4,7 +4,7 @@ export const AppContext = createContext();
 
 export default function AppProvider({children}){
     const [token, setToken] = useState(localStorage.getItem('token'));
-    const [user, setUser] = useState({});
+    const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [theme, setTheme] = useState(() => {
         const savedTheme = localStorage.getItem('theme');
@@ -13,6 +13,13 @@ export default function AppProvider({children}){
         }
         return 'light';
     });
+
+    const logout = () => {
+        localStorage.removeItem('token');
+        setToken(null);
+        setUser(null);
+    };
+    
 
     const toggleTheme = () => {
         setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
@@ -59,7 +66,7 @@ export default function AppProvider({children}){
         localStorage.setItem('theme', theme);
     }, [theme]);
 
-    const contextValue = { user, setUser, token, setToken, loading, toggleTheme, theme }; // Exponha o 'loading'
+    const contextValue = { user, setUser, token, setToken, loading, toggleTheme, theme, logout }; // Exponha o 'loading'
 
     return (
         <AppContext.Provider value={contextValue}>
