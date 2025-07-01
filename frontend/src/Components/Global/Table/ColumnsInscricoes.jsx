@@ -1,4 +1,3 @@
-import { redirect } from "react-router-dom";
 import CpfPill from "../CpfPill";
 import { Checkbox } from "@/Components/ui/checkbox";
 

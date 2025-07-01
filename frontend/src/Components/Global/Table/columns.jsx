@@ -1,7 +1,7 @@
 // src/columns.js
 import StatusPill from "./StatusPill";
 
-export const COLUMNS = [
+export const COLUMNSS = [
   {
     accessorKey: "name",
     header: "Name",

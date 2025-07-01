@@ -14,7 +14,7 @@ const Header = () => {
     <header id='user'>
       <nav>
         <div className="flex items-center space-x-8 w-full">
-          <img src="../../../public/img/logo_cead_bg_white.png" alt="" className="logo-cead"/>
+          <img src="/img/logo_cead_bg_white.png" alt="" className="logo-cead"/>
           <ul className={ user.email ? ``:`flex flex-row-reverse`}>
             {
               user.email ? 

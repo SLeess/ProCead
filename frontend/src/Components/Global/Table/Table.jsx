@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useContext } from 'react';
+import React, { useState, useMemo, useContext, useEffect, useRef } from 'react';
 import {
   useReactTable,
   getCoreRowModel,
@@ -22,6 +22,23 @@ export default function Table({ rows, cols, tableName, titulo, details, visibleD
     const [columnVisibility, setColumnVisibility] = useState(visibleDefaultColumns);
     const [isExporting, setIsExporting] = useState(false); // Estado para feedback de carregamento
 
+    const [filterOpen, setFilterOpen] = useState(false);
+    const filterDropdownRef  = useRef(null);
+
+    useEffect(() => {
+        if (!filterOpen) return;
+
+        const handleClickOutside = (event) => {
+            if (filterDropdownRef.current && !filterDropdownRef.current.contains(event.target)) {
+                setFilterOpen(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [filterOpen]);
+
     const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 10,
@@ -31,26 +48,26 @@ export default function Table({ rows, cols, tableName, titulo, details, visibleD
     const columns = useMemo(() => cols, [cols]);
 
     const table = useReactTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    state: {
-      sorting,
-      globalFilter: filtering,
-      columnVisibility,
-      pagination,
-    },
-    onSortingChange: setSorting,
-    onGlobalFilterChange: setFiltering,
-    onColumnVisibilityChange: setColumnVisibility,
-    onPaginationChange: setPagination,
+        data,
+        columns,
+        getCoreRowModel: getCoreRowModel(),
+        getPaginationRowModel: getPaginationRowModel(),
+        getSortedRowModel: getSortedRowModel(),
+        getFilteredRowModel: getFilteredRowModel(),
+        state: {
+        sorting,
+        globalFilter: filtering,
+        columnVisibility,
+        pagination,
+        },
+        enableRowSelection: true,
+        onSortingChange: setSorting,
+        onGlobalFilterChange: setFiltering,
+        onColumnVisibilityChange: setColumnVisibility,
+        onPaginationChange: setPagination,
     });
 
-
-  /**
+    /**
      * Lida com a troca de visibilidade de uma coluna, garantindo
      * que pelo menos uma coluna permaneça sempre visível.
      * @param {import('@tanstack/react-table').Column} column A coluna a ser alterada.
@@ -76,7 +93,20 @@ export default function Table({ rows, cols, tableName, titulo, details, visibleD
             header: col.columnDef.header,
         }));
 
-        const sortedRows = table.getSelectedRowModel().rows.map(row => {
+        var RowModels;
+        
+        RowModels = table.getSortedRowModel().rows;
+
+        if(columns.some(col=> col.id === 'select')){
+            RowModels = RowModels.filter(row => row.getIsSelected());
+            if(RowModels.length == 0){
+                toast.error('Selecione pelo menos uma linha antes de gerar o relatório.');
+                return;
+            }
+        }
+
+
+        const sortedRows = RowModels.map(row => {
             const filteredRowData = {};
             table.getVisibleLeafColumns().forEach(column => {
                 if (column.id in row.original) {
@@ -85,6 +115,9 @@ export default function Table({ rows, cols, tableName, titulo, details, visibleD
             });
             return filteredRowData;
         });
+
+        console.log(RowModels, sortedRows);
+
 
         try {
             const response = await fetch('/api/export', {
@@ -152,36 +185,42 @@ export default function Table({ rows, cols, tableName, titulo, details, visibleD
                     />
                 </div>
                 <div className="flex items-center gap-2">
-                    <details className="relative">
-                        <summary className="cursor-pointer flex items-center gap-2 px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700">
+                    <div className="relative" ref={filterDropdownRef}>
+                        <button
+                            onClick={() => setFilterOpen(!filterOpen)}
+                            className="cursor-pointer flex items-center gap-2 px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700"
+                        >
                             Filtros <FaChevronDown size={12} />
-                        </summary>
-                        <div className="absolute z-10 top-full right-0 mt-2 p-4 w-56 bg-white dark:bg-slate-800 rounded-lg shadow-xl border dark:border-slate-700">
+                        </button>
+
+                        {filterOpen && (
+                            <div className="absolute z-10 top-full right-0 mt-2 p-4 w-56 bg-white dark:bg-slate-800 rounded-lg shadow-xl border dark:border-slate-700">
                             <p className="font-bold text-sm mb-2 text-slate-800 dark:text-slate-200">Exibir Colunas</p>
                             {table.getAllLeafColumns()
-                                .filter(column => column.getCanHide()) 
-                                .map(column => 
-                                    (
-                                        <div key={column.id} className="flex items-center gap-2">
-                                            <input
-                                                type="checkbox"
-                                                checked={column.getIsVisible()}
-                                                onChange={() => handleColumnToggle(column)}
-                                                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
-                                            />
-                                            <label className="text-sm text-slate-600 dark:text-slate-300">{column.columnDef.header}</label>
-                                        </div>
-                                    )
-                                )
+                                .filter(column => column.getCanHide())
+                                .map(column => (
+                                <div key={column.id} className="flex items-center gap-2">
+                                    <input
+                                    type="checkbox"
+                                    checked={column.getIsVisible()}
+                                    onChange={() => handleColumnToggle(column)}
+                                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                                    />
+                                    <label className="text-sm text-slate-600 dark:text-slate-300">
+                                    {typeof column.columnDef.header === 'string' ? column.columnDef.header : column.id}
+                                    </label>
+                                </div>
+                                ))
                             }
+                            </div>
+                        )}
                         </div>
-                    </details>
                     <button 
                         onClick={handleExport}
                         disabled={isExporting}
-                        className="px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-wait"
+                        className="px-4 hover:cursor-pointer py-2 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-wait"
                     >
-                        {isExporting ? 'Exportando...' : 'Exportar'}
+                        {isExporting ? 'Exportando...' : 'Exportar para PDF'}
                     </button>
                 </div>
             </div>
