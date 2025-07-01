@@ -1,5 +1,5 @@
-import CpfPill from "../CpfPill";
-import { Checkbox } from "@/Components/ui/checkbox";
+import CpfPill from "./CpfPill";
+import { Checkbox } from "@/Components/Global/ui/checkbox";
 
 export const visibleDefaultColumns = ({
     cpf: false,

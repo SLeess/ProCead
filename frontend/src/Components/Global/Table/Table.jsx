@@ -10,6 +10,7 @@ import {
 import { FaSearch, FaChevronDown, FaSort, FaSortUp, FaSortDown } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { AppContext } from '@/Contexts/AppContext';
+import './Table.css';
 
 export default function Table({ rows, cols, tableName, titulo, details, visibleDefaultColumns = {}, className = `` , minColumns = 1}){
     const { token } = useContext(AppContext);
@@ -86,16 +87,12 @@ export default function Table({ rows, cols, tableName, titulo, details, visibleD
     };
  
     const handleExport = async () => {
-        setIsExporting(true);
-
         const visibleColumns = table.getVisibleLeafColumns().map(col => ({
             id: col.id,
             header: col.columnDef.header,
         }));
 
-        var RowModels;
-        
-        RowModels = table.getSortedRowModel().rows;
+        var RowModels = table.getSortedRowModel().rows;
 
         if(columns.some(col=> col.id === 'select')){
             RowModels = RowModels.filter(row => row.getIsSelected());
@@ -105,6 +102,7 @@ export default function Table({ rows, cols, tableName, titulo, details, visibleD
             }
         }
 
+        setIsExporting(true);
 
         const sortedRows = RowModels.map(row => {
             const filteredRowData = {};
@@ -116,17 +114,14 @@ export default function Table({ rows, cols, tableName, titulo, details, visibleD
             return filteredRowData;
         });
 
-        console.log(RowModels, sortedRows);
-
-
         try {
             const response = await fetch('/api/export', {
                 method: 'post',
                 body: JSON.stringify({
                 columns: visibleColumns.filter(chave => chave.id !== 'select' && chave.id !== 'acoes'),
                 rows: sortedRows,
-                tableName: tableName,//"Inventário de Produtos",
-                titulo: titulo,//'Relatório de Itens Comprados',
+                tableName: tableName,
+                titulo: titulo,
             }),
                 headers:{
                 'Content-Type': 'application/json', 
@@ -165,15 +160,14 @@ export default function Table({ rows, cols, tableName, titulo, details, visibleD
     };
 
     return (
-        <div className={`p-4 md:p-8 bg-white dark:bg-slate-950 min-h-screen ${className}`}>
-        <div className="max-w-7xl mx-auto bg-white dark:bg-slate-900  overflow-hidden">
+        <div className={`${className} p-5 max-w-7xl mx-auto bg-white dark:bg-slate-900 overflow-hidden`}>
             <div className="p-6 border-b border-slate-200 dark:border-slate-700">
-                <h2 className="text-xl font-bold text-slate-800 dark:text-white">{ tableName }</h2>
-                <p className="text-sm text-slate-500 dark:text-slate-400">{ details }</p>
+                <h2 className="table-name">{ tableName }</h2>
+                <p className="table-details">{ details }</p>
             </div>
 
             {/* --- Barra de Ferramentas: Busca, Filtro, Exportar --- */}
-            <div className="flex flex-wrap items-center justify-between p-4 md:p-6 gap-4">
+            <div className="table-tools">
                 <div className="relative">
                     <FaSearch className="absolute top-1/2 left-3 -translate-y-1/2 text-slate-400" />
                     <input
@@ -181,44 +175,44 @@ export default function Table({ rows, cols, tableName, titulo, details, visibleD
                         value={filtering}
                         onChange={(e) => setFiltering(e.target.value)}
                         placeholder="Buscar elemento"
-                        className="pl-10 pr-4 py-2 w-full md:w-80 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="buscar-elemento"
                     />
                 </div>
                 <div className="flex items-center gap-2">
                     <div className="relative" ref={filterDropdownRef}>
                         <button
                             onClick={() => setFilterOpen(!filterOpen)}
-                            className="cursor-pointer flex items-center gap-2 px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700"
+                            className="table-filters"
                         >
                             Filtros <FaChevronDown size={12} />
                         </button>
 
                         {filterOpen && (
-                            <div className="absolute z-10 top-full right-0 mt-2 p-4 w-56 bg-white dark:bg-slate-800 rounded-lg shadow-xl border dark:border-slate-700">
-                            <p className="font-bold text-sm mb-2 text-slate-800 dark:text-slate-200">Exibir Colunas</p>
-                            {table.getAllLeafColumns()
-                                .filter(column => column.getCanHide())
-                                .map(column => (
-                                <div key={column.id} className="flex items-center gap-2">
-                                    <input
-                                    type="checkbox"
-                                    checked={column.getIsVisible()}
-                                    onChange={() => handleColumnToggle(column)}
-                                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
-                                    />
-                                    <label className="text-sm text-slate-600 dark:text-slate-300">
-                                    {typeof column.columnDef.header === 'string' ? column.columnDef.header : column.id}
-                                    </label>
-                                </div>
-                                ))
-                            }
+                            <div className="modal-filtros">
+                                <p>Exibir Colunas</p>
+                                {table.getAllLeafColumns()
+                                    .filter(column => column.getCanHide())
+                                    .map(column => (
+                                    <div key={column.id} className="flex items-center gap-2">
+                                        <input
+                                        type="checkbox"
+                                        checked={column.getIsVisible()}
+                                        onChange={() => handleColumnToggle(column)}
+                                        className="filtro-checkbox"
+                                        />
+                                        <label className="text-sm text-slate-600 dark:text-slate-300">
+                                        {typeof column.columnDef.header === 'string' ? column.columnDef.header : column.id}
+                                        </label>
+                                    </div>
+                                    ))
+                                }
                             </div>
                         )}
                         </div>
                     <button 
                         onClick={handleExport}
                         disabled={isExporting}
-                        className="px-4 hover:cursor-pointer py-2 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-wait"
+                        className="export"
                     >
                         {isExporting ? 'Exportando...' : 'Exportar para PDF'}
                     </button>
@@ -226,9 +220,9 @@ export default function Table({ rows, cols, tableName, titulo, details, visibleD
             </div>
 
             {/* --- Tabela --- */}
-            <div className="overflow-x-auto">
-                <table className="w-full text-sm text-left text-slate-500 dark:text-slate-400">
-                    <thead className="text-xs text-slate-700 uppercase bg-slate-100 dark:bg-slate-800 dark:text-slate-300">
+            <div className="overflow-x-auto"> {/** Div pra permitir o scroll lateral**/}
+                <table className="component">
+                    <thead>
                         {table.getHeaderGroups().map(headerGroup => (
                             <tr key={headerGroup.id}>
                                 {headerGroup.headers.map(header => (
@@ -236,7 +230,7 @@ export default function Table({ rows, cols, tableName, titulo, details, visibleD
                                         <div className="flex items-center gap-2 cursor-pointer select-none">
                                             {flexRender(header.column.columnDef.header, header.getContext())}
                                             { 
-                                                (header.column.columnDef.header.id != 'select') ?
+                                                (header.column.columnDef.enableSorting != false) ?
 
                                                     {
                                                         asc: <FaSortUp />,
@@ -253,11 +247,11 @@ export default function Table({ rows, cols, tableName, titulo, details, visibleD
                     </thead>
                     <tbody>
                         {table.getRowModel().rows.map(row => (
-                            <tr key={row.id} className="bg-white dark:bg-slate-900 border-b dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800">
+                            <tr key={row.id}>
                                 {
                                     row.getVisibleCells().map(cell => {
                                         return(
-                                            <td key={cell.id} className={`px-6 py-4 whitespace-nowrap ${cell.column.columnDef.alignText !== undefined ? `${cell.column.columnDef.alignText}` : ''}`}>
+                                            <td key={cell.id} className={`${cell.column.columnDef.alignText !== undefined ? `${cell.column.columnDef.alignText}` : ''}`}>
                                                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                             </td>
                                         );
@@ -270,7 +264,7 @@ export default function Table({ rows, cols, tableName, titulo, details, visibleD
             </div>
 
             {/* --- Paginação --- */}
-            <div className="flex flex-wrap items-center justify-between p-4 md:p-6 gap-4">
+            <div className="table-paginate">
                 <p className="text-sm text-slate-600 dark:text-slate-400">
                     Exibindo{' '}
                     <strong>{table.getRowModel().rows.length > 0 ? table.getState().pagination.pageIndex * table.getState().pagination.pageSize + 1 : 0}</strong>
@@ -279,24 +273,12 @@ export default function Table({ rows, cols, tableName, titulo, details, visibleD
                 </p>
                 <div className="flex items-center gap-2">
                     <span className="text-sm text-slate-600 dark:text-slate-400">Itens por página:</span>
-                    {
-                    /* <select
-                        value={table.getState().pagination.pageSize}
-                        onChange={e => table.setPageSize(Number(e.target.value))}
-                        className="p-1 pr-6 pl-3 border border-slate-300 dark:border-slate-600 rounded-md bg-white dark:bg-slate-800 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
-                    >
-                        {[10, 20, 30, 40, 50].map(pageSize => (
-                            <option key={pageSize} value={pageSize}>
-                                {pageSize}
-                            </option>
-                        ))}
-                    </select> */}
                     <input 
                         type="number" 
                         min={1}
                         value={table.getState().pagination.pageSize}
                         onChange={e => table.setPageSize(Number(e.target.value))}
-                        className="p-1 max-w-15 text-center border border-slate-300 dark:border-slate-600 rounded-md bg-white dark:bg-slate-800 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
+                        className="itens-pagina"
                     />
                 </div>
                 <div className="flex items-center">
@@ -304,7 +286,7 @@ export default function Table({ rows, cols, tableName, titulo, details, visibleD
                         <button 
                             onClick={() => table.previousPage()} 
                             disabled={!table.getCanPreviousPage()}
-                            className="px-3 py-1 border border-slate-300 rounded-md disabled:opacity-50 disabled:cursor-not-allowed dark:border-slate-600"
+                            className="last-page"
                         >
                             &lt; Anterior
                         </button>
@@ -322,14 +304,15 @@ export default function Table({ rows, cols, tableName, titulo, details, visibleD
                         <button 
                             onClick={() => table.nextPage()} 
                             disabled={!table.getCanNextPage()}
-                            className="px-3 py-1 border border-slate-300 rounded-md disabled:opacity-50 disabled:cursor-not-allowed dark:border-slate-600"
+                            className="next-page"
                         >
                             Próximo &gt;
                         </button>
                     </div>
                 </div>
             </div>
+            <hr />
         </div>
-        </div>
+    // </div>
     );
 };

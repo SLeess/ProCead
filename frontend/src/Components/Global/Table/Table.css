@@ -1,0 +1,76 @@
+@reference "@/index.css"; 
+
+/* START ------------------------------------- TABLE STYLE ------------------------------------- */
+
+.table-name{
+    @apply text-xl font-bold text-slate-800 dark:text-white;
+}
+
+.table-details{
+    @apply text-sm text-slate-500 dark:text-slate-400;
+}
+
+.table-tools{
+    @apply flex flex-wrap items-center justify-between p-4 md:p-6 gap-4;
+}
+
+.table-tools .buscar-elemento{
+    @apply pl-10 pr-4 py-2 w-full md:w-80 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500;
+}
+
+/**  --------- Modal de Filtros e BTN --------- **/
+    button.table-filters{
+        @apply cursor-pointer flex items-center gap-2 px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700;
+    }
+    .table-tools .modal-filtros{
+        @apply absolute z-10 top-full right-0 mt-2 p-4 w-56 bg-white dark:bg-slate-800 rounded-lg shadow-xl border dark:border-slate-700;
+    }
+
+    .table-tools .modal-filtros{
+        @apply font-bold text-sm mb-2 text-slate-800 dark:text-slate-200;
+    }
+
+    input.filtro-checkbox{
+        @apply w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500;
+    }
+/** ----------------------------------------- **/
+
+button.export{
+    @apply px-4 hover:cursor-pointer py-2 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-700 dark:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-wait;
+}
+
+table.component{
+    @apply w-full text-sm text-left text-slate-700 dark:text-slate-400;
+}
+
+table.component thead{
+    @apply text-xs text-slate-700 uppercase bg-slate-100 dark:bg-slate-800 dark:text-slate-300 border-y-2 border-slate-200;
+}
+
+table.component tbody tr{
+    @apply bg-white dark:bg-slate-900 border-b dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800;
+}
+table.component tbody tr td{
+    @apply px-6 py-4 whitespace-nowrap;
+}
+
+/**  --------- Table paginate --------- **/
+
+.table-paginate{
+    @apply flex flex-wrap items-center justify-between p-4 md:p-6 gap-4;
+}
+
+input.itens-pagina{
+    @apply p-1 max-w-15 text-center border border-slate-300 dark:border-slate-600 rounded-md bg-white dark:bg-slate-800 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500;
+}
+
+button.last-page{
+    @apply px-3 py-1 border border-slate-300 rounded-md disabled:opacity-50 disabled:cursor-not-allowed dark:border-slate-600;
+}
+button.next-page{
+    @apply px-3 py-1 border border-slate-300 rounded-md disabled:opacity-50 disabled:cursor-not-allowed dark:border-slate-600;
+}
+
+/** ----------------------------------------- **/
+
+/* END ------------------------------------- TABLE STYLE ------------------------------------- */
