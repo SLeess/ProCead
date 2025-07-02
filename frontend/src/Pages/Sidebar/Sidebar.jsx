@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import styled from 'styled-components';import { Link } from 'react-router-dom';
 // Ícones importados para os MENUS e submenus
 import { 
   FiGrid, FiChevronDown, FiChevronUp, FiSettings, FiFilePlus, 
@@ -78,7 +77,7 @@ const SidebarContainer = styled.div`
 `;
 
 const SidebarHeader = styled.div`
-  padding: 20px 24px;
+  padding: 20px 2vh;
   font-size: 1.5rem;
   font-weight: bold;
   color: white;
@@ -131,6 +130,7 @@ const SubMenuList = styled.div`
 
 const SubMenuItem = styled(Link)`
   display: flex;
+  justify-content: flex-start;
   align-items: center;
   gap: 12px;
   padding: 6px 16px 6px 30px;
