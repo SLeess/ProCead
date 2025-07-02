@@ -41,16 +41,15 @@ export default function UserDropdown({user}){
     });
 
     async function handlerLogOut(){
-        const res = await fetch('/api/logout', {
-            method: 'post',
-            headers:{
-                "Authorization": `Bearer ${token}`,
-            }
-        });
-
         try {
-            const result = await res.json();
-            toast.success(result.message);
+            const res = await fetch('/api/logout', {
+                method: 'post',
+                headers:{
+                    "Authorization": `Bearer ${token}`,
+                }
+            });
+
+            toast.success('Sessão encerrada.');
             logout();
             navigate('/login');
         } catch (error) {

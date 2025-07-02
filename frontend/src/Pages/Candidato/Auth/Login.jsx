@@ -62,7 +62,8 @@ export default function Login() {
     };
 
     return (
-        <div className="min-h-screen flex justify-center" style={{alignItems: "center"}}>
+        // min-h-screen
+        <div className="flex justify-center" style={{alignItems: "center", minHeight: "94.3vh"}}>
             <div className="login-container flex flex-col items-center">
                 <div className="mb-12">
                     <img src="/img/img_logo.png" alt="CEAD Unimontes Logo" className="h-[155px] w-[345px]"/>
@@ -117,7 +118,7 @@ export default function Login() {
                     </div>
 
                     <div className="text-center mb-6">
-                        <a href="#" className="justify-center text-[12px] text-[#000000b2] hover:underline">Esqueceu sua Senha?</a>
+                        <a href="#" className="justify-center text-[12px] text-[#000000b2] hover:underline hover:bg-transparent">Esqueceu sua Senha?</a>
                     </div>
                 </form>
 
@@ -125,7 +126,8 @@ export default function Login() {
                     <p className="text-[15px] text-[#000000e5] mb-2">Ainda não tem uma conta?</p>
                     <button 
                         id="createAccountBtn" 
-                        className="h-[40px] w-[255px] bg-white rounded-[4px] text-[15px] font-medium shadow-md hover:bg-gray-50 transition-all duration-200 hover:cursor-pointer"
+                        onClick={() => {navigate('/registro')}}
+                        className="h-[40px] w-[255px] bg-white rounded-[4px] hover:bg-[#5a5c96] hover:text-white text-[15px] font-medium shadow-md transition-all duration-200 hover:cursor-pointer"
                     >
                         Criar Conta
                     </button>

@@ -1,7 +1,7 @@
 
 // import './App.css'
 import Login from './Pages/Candidato/Auth/Login';
-import Registro from './Pages/Candidato/Auth/Registro';
+import Registro from './Pages/Candidato/Auth/Registro/Registro';
 import Home from './Pages/Candidato/Home/Home';
 import Inscricoes from './Pages/Admin/Inscricoes/Inscricoes';
 import Layout from './Pages/Layout';

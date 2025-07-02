@@ -6,6 +6,7 @@ use App\Http\Controllers\API\ApiBaseController;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 
 class LoginController extends ApiBaseController
@@ -43,12 +44,22 @@ class LoginController extends ApiBaseController
 
      public function login(Request $request): Response
     {
-        if($user = Auth::attempt(['email' => $request->email, 'password' => $request->password])){
-            $user = Auth::user();
-            $success['token'] =  $user->createToken('MyApp', ['*'], Carbon::now()->addMinutes(1))->plainTextToken;
-            $success['nome'] =  $user->nome;
-            return $this->sendResponse($success, 'Login efetuado com sucesso.');
+        DB::beginTransaction();
+        try {
+            if($user = Auth::attempt(['email' => $request->email, 'password' => $request->password])){
+                $user = Auth::user();
+
+                $user->tokens()->delete();
+
+                $success['token'] =  $user->createToken('MyApp', ['*'], Carbon::now()->addMinutes(30))->plainTextToken;
+                $success['nome'] =  $user->nome;
+                DB::commit();
+                return $this->sendResponse($success, 'Login efetuado com sucesso.');
+            }
+            return $this->sendError('Credenciais não encontradas no sistema', ['error' => 'Unauthorised'], Response::HTTP_UNAUTHORIZED);
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            return $this->sendError('Erro na hora de autenticar ao sistema', ["authentication_failed" => $exception->__tostring()], Response::HTTP_BAD_GATEWAY);
         }
-        return $this->sendError('Credenciais não encontradas no sistema', ['error' => 'Unauthorised'], Response::HTTP_UNAUTHORIZED);
     }
 }

@@ -4,15 +4,12 @@ import { COLUMNS, visibleDefaultColumns } from "@/Components/Global/Table/Column
 import { PRODUCTS } from "@/Components/Global/Table/DATA";
 import { AppContext } from "@/Contexts/AppContext";
 import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 export default function Home()
-{
-    const navigate = useNavigate();
-    
+{   
     const [Inscricoes, setInscricoes] = useState([]);
-    const { token, logout } = useContext(AppContext);
+    const { token } = useContext(AppContext);
 
     useEffect(() => {
         const handleTable = async () => {
@@ -25,19 +22,10 @@ export default function Home()
                         "Content-Type": "application/json",
                     }
                 });
-    
-                // if (!res.ok) {
-                    // if (res.status === 401) {
-                    //     toast.info("Login inválido ou expirado. Redirecionando para a tela de Login...");
-                    //     logout();
-                    // }
-                    // throw new Error('Falha ao buscar dados.');
-                // }
-
                 const response = await res.json();
                 setInscricoes(response.data || []);
             } catch (error) {
-                // navigate('/login');
+                toast.error(error)
             }
         }
         handleTable();
