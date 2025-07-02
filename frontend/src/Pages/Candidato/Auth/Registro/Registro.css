@@ -1,0 +1,26 @@
+@reference "@/index.css";
+
+div#container-form{
+    @apply mt-4 sm:mx-auto sm:w-full sm:max-w-sm bg-gray-50 px-6 py-2 shadow-xl border-2 border-b-gray-100 rounded-[13px];
+}
+
+#container-form #alert-form{
+    @apply p-2 bg-[#333A56] items-center text-indigo-100 leading-none lg:rounded-full flex lg:inline-flex mt-3 mb-5;
+}
+
+form#register{
+    @apply space-y-4;
+}
+
+
+/* START ------------------------------------- INPUTS REGISTRO ------------------------------------- */
+
+form#register input{
+    @apply block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6;
+}
+
+/* END ------------------------------------- INPUTS REGISTRO ------------------------------------- */
+
+form#register label{
+    @apply block text-sm/6 font-medium text-gray-900;
+}

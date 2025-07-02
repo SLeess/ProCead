@@ -1,6 +1,6 @@
 
 import Login from './Pages/Candidato/Auth/Login';
-import Registro from './Pages/Candidato/Auth/Registro';
+import Registro from './Pages/Candidato/Auth/Registro/Registro';
 import Home from './Pages/Candidato/Home/Home';
 import Layout from './Pages/Candidato/Layout';
 import MeusProcessos from './Pages/Candidato/MeusProcessos/MeusProcessos';

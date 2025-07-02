@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\API\ApiBaseController;
+use App\Rules\Cpf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 class RegisterController extends ApiBaseController
 {
@@ -36,12 +38,18 @@ class RegisterController extends ApiBaseController
         $rules = [
             'nome' => 'required',
             'email' => 'required|email',
+            'cpf' => [
+                'required',
+                new Cpf,
+                Rule::unique('users', 'cpf'),
+            ],
             'password' => ['required', \Illuminate\Validation\Rules\Password::min(8),],
             'confirm_password' => 'required|same:password',
         ];
 
         return \Illuminate\Support\Facades\Validator::make($data, $rules, [], [
             'confirm_password' => 'de Confirmação de Senha',
+            'cpf' => 'CPF',
             'password' => 'de Senha',
             'email' => 'Email',
             'nome' => 'Nome'
