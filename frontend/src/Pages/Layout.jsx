@@ -1,20 +1,19 @@
 import { Link, Outlet } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import Sidebar from "./Sidebar/Sidebar";
+import Header from "@/Components/Candidatos/Header/Header";
+import { useContext } from "react";
+import { AppContext } from "@/Contexts/AppContext";
 
 export default function Layout()
 {
+    const { user } = useContext(AppContext);
+
     return (
         <>
-            <header>
-                <nav>
-                    <Link to="/" className="nav-link">Home</Link>
-                    <div className="space-x-4">
-                        <Link to="/registro" className="nav-link">Registro</Link>
-                        <Link to="/login" className="nav-link">Login</Link>
-                    </div>
-                </nav>
-            </header>
+            {
+                user && <Header/>
+            }
             <main>
                 <ToastContainer
                     position="top-right"

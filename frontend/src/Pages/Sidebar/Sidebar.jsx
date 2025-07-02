@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 // Ícones importados para os MENUS e submenus
 import { 
   FiGrid, FiChevronDown, FiChevronUp, FiSettings, FiFilePlus, 
@@ -15,8 +16,8 @@ const menuData = [
     icon: <FiFileText size={20} />,
     isInitiallyOpen: false, 
     items: [
-      { name: 'Configurações', icon: <FiSettings size={16} /> },
-      { name: 'Novo Edital', icon: <FiFilePlus size={16} /> }
+      { name: 'Configurações', icon: <FiSettings size={16} />, href: '/admin/configuracoes' },
+      { name: 'Novo Edital', icon: <FiFilePlus size={16} />, href: '/admin/novo-edital' }
     ] 
   },
   { 
@@ -24,11 +25,11 @@ const menuData = [
     icon: <FiDatabase size={20} />,
     isInitiallyOpen: true, 
     items: [
-      { name: 'Logs', icon: <FiTerminal size={16} /> },
-      { name: 'Usuários', icon: <FiUsers size={16} /> },
-      { name: 'Administradores', icon: <FiShield size={16} /> },
-      { name: 'Perfis', icon: <FiUserCheck size={16} /> },
-      { name: 'Permissões', icon: <FiKey size={16} /> }
+      { name: 'Logs', icon: <FiTerminal size={16} />, href: '/admin/logs' },
+      { name: 'Usuários', icon: <FiUsers size={16} />, href: '/admin/usuarios' },
+      { name: 'Administradores', icon: <FiShield size={16} />, href: '/admin/administradores' },
+      { name: 'Perfis', icon: <FiUserCheck size={16} />, href: '/admin/perfis' },
+      { name: 'Permissões', icon: <FiKey size={16} />, href: '/admin/permissoes' }
     ] 
   },
   { 
@@ -36,10 +37,10 @@ const menuData = [
     icon: <FiHome size={20} />,
     isInitiallyOpen: true, 
     items: [
-      { name: 'Campi', icon: <FiMapPin size={16} /> },
-      { name: 'Modalidades', icon: <FiLayers size={16} /> },
-      { name: 'Cursos', icon: <FiBookOpen size={16} /> },
-      { name: 'Quadro de Vagas', icon: <FiClipboard size={16} /> }
+      { name: 'Campi', icon: <FiMapPin size={16} />, href: '/admin/campi' },
+      { name: 'Modalidades', icon: <FiLayers size={16} />, href: '/admin/modalidades' },
+      { name: 'Cursos', icon: <FiBookOpen size={16} />, href: '/admin/cursos' },
+      { name: 'Quadro de Vagas', icon: <FiClipboard size={16} />, href: '/admin/quadro-de-vagas' }
     ] 
   },
   { 
@@ -47,10 +48,10 @@ const menuData = [
     icon: <FiCheckSquare size={20} />,
     isInitiallyOpen: true, 
     items: [
-      { name: 'Alocação', icon: <FiArchive size={16} /> },
-      { name: 'Inscrições', icon: <FiEdit size={16} /> },
-      { name: 'Cotas', icon: <FiPieChart size={16} /> },
-      { name: 'Recursos', icon: <FiHelpCircle size={16} /> }
+      { name: 'Alocação', icon: <FiArchive size={16} />, href: '/admin/alocacao' },
+      { name: 'Inscrições', icon: <FiEdit size={16} />, href: '/admin/inscricoes' },
+      { name: 'Cotas', icon: <FiPieChart size={16} />, href: '/admin/cotas' },
+      { name: 'Recursos', icon: <FiHelpCircle size={16} />, href: '/admin/recursos' }
     ] 
   },
   { 
@@ -58,9 +59,9 @@ const menuData = [
     icon: <FiFlag size={20} />,
     isInitiallyOpen: true, 
     items: [
-      { name: 'Classificação', icon: <FiAward size={16} /> },
-      { name: 'Chamadas', icon: <FiBell size={16} /> },
-      { name: 'Matrículas', icon: <FiUserPlus size={16} /> }
+      { name: 'Classificação', icon: <FiAward size={16} />, href: '/admin/classificacao' },
+      { name: 'Chamadas', icon: <FiBell size={16} />, href: '/admin/chamadas' },
+      { name: 'Matrículas', icon: <FiUserPlus size={16} />, href: '/admin/matriculas' }
     ] 
   },
 ];
@@ -128,7 +129,7 @@ const SubMenuList = styled.div`
   padding-left: 16px;
 `;
 
-const SubMenuItem = styled.a`
+const SubMenuItem = styled(Link)`
   display: flex;
   align-items: center;
   gap: 12px;
@@ -186,9 +187,9 @@ const Sidebar = () => {
               {section.items.map(item => (
                 <SubMenuItem 
                   key={item.name} 
-                  href="#" 
+                  to={item.href} 
                   className={activeItem === item.name ? 'active' : ''} 
-                  onClick={(e) => { e.preventDefault(); handleItemClick(item.name); }}
+                  onClick={() => handleItemClick(item.name)}
                 >
                   {item.icon}
                   {item.name}

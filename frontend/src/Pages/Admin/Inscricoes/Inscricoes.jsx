@@ -1,4 +1,4 @@
-import MainTable from '../../Components/Table/MainTable'
+import MainTable from '../../../Components/Table/MainTable'
 import React from 'react'
 
 const Inscricoes = () => {
