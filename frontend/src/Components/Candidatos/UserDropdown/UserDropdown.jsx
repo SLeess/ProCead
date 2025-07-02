@@ -50,7 +50,7 @@ export default function UserDropdown({user}){
 
         try {
             const result = await res.json();
-            toast.success(result.message);
+            // toast.success(result.message);
             logout();
             navigate('/login');
         } catch (error) {

@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 export const AppContext = createContext();
 
@@ -38,13 +39,15 @@ export default function AppProvider({children}){
                         const userData = await response.json();
                         setUser(userData);
                     } else {
-                        localStorage.removeItem('token');
-                        setToken(null);
-                        setUser(null);
+                        if (response.status === 401) {
+                            toast.info("Login inválido ou expirado. Redirecionando para a tela de Login...");
+                            localStorage.removeItem('token');
+                            setToken(null);
+                            setUser(null);
+                        }
                     }
                 } catch (error) {
                     console.error("Erro ao validar token:", error);
-                    setUser(null);
                 } finally {
                     setLoading(false);
                 }
