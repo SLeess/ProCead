@@ -1,5 +1,5 @@
 
-import path from 'path';
+import { fileURLToPath, URL } from 'node:url';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
@@ -24,7 +24,7 @@ export default defineConfig({
     alias: {
       // Aqui estamos dizendo ao Vite: sempre que encontrar '@' no início de um import,
       // substitua por 'caminho/absoluto/do/projeto/src'
-      '@': path.resolve(__dirname, './src'),
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
 })
