@@ -1,0 +1,26 @@
+@reference "../../../index.css"; 
+
+/* START ------------------------------------- HEADER CANDIDATO ------------------------------------- */
+
+header#user {
+    @apply text-white xl:mx-6 mx-8;
+}
+#user nav {
+  @apply container mx-auto px-6 py-2 flex justify-between items-center max-w-screen-xl rounded-2xl shadow-sm mt-2.5 dark:bg-slate-900 dark:bg-none bg-gradient-to-r from-[#004DA9] to-[#2A83ED];
+}
+#user nav ul{
+  @apply hidden md:flex items-center space-x-20 mx-10 w-full;
+}
+.logo-cead{
+  width: 120px;
+  height: 50px;
+}
+#user .link-page{
+  @apply text-white pb-2 font-semibold transition-colors duration-300 hover:bg-[#004DA9] hover:shadow-2xs rounded-t-sm px-2;
+}
+
+#user .link-page:hover{
+  box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+}
+
+/* END ------------------------------------- HEADER CANDIDATO ------------------------------------- */

@@ -2,21 +2,17 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\API\ApiBaseController;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class LoginController extends Controller
+class LoginController extends ApiBaseController
 {
-    public function showLoginForm()
-    {
-        return view('auth.login');
-    }
-
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        $this->middleware('guest');
     }
 
     protected function validateLogin(Request $request)
@@ -45,20 +41,11 @@ class LoginController extends Controller
         return 'email';
     }
 
-    public function logout(Request $request)
-    {
-        $request->user()->currentAccessToken()->delete();
-
-         return response()->json([
-            'message' => 'Deslogado com sucesso'
-        ], Response::HTTP_ACCEPTED);
-    }
-
      public function login(Request $request): Response
     {
         if($user = Auth::attempt(['email' => $request->email, 'password' => $request->password])){
             $user = Auth::user();
-            $success['token'] =  $user->createToken('MyApp')->plainTextToken;
+            $success['token'] =  $user->createToken('MyApp', ['*'], Carbon::now()->addMinutes(1))->plainTextToken;
             $success['nome'] =  $user->nome;
             return $this->sendResponse($success, 'Login efetuado com sucesso.');
         }
