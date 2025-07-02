@@ -28,6 +28,30 @@ const MainTable = () => {
   const [columnFilters, setColumnFilters] = React.useState([]);
   const columns = [
     {
+      id: "select",
+      header: ({ table }) => (
+        <input
+          type="checkbox"
+          {...{
+            checked: table.getIsAllRowsSelected(),
+            indeterminate: table.getIsSomeRowsSelected(),
+            onChange: table.getToggleAllRowsSelectedHandler(),
+          }}
+        />
+      ),
+      cell: ({ row }) => (
+        <input
+          type="checkbox"
+          {...{
+            checked: row.getIsSelected(),
+            disabled: !row.getCanSelect(),
+            indeterminate: row.getIsSomeSelected(),
+            onChange: row.getToggleSelectedHandler(),
+          }}
+        />
+      ),
+    },
+    {
       accessorKey: "id",
       header: "#",
       cell: (props) => <span>{props.getValue()}</span>
@@ -124,6 +148,7 @@ const MainTable = () => {
       cell: (props) => <span>{props.getValue()}</span>
     },
   ];
+  const [rowSelection, setRowSelection] = React.useState({});
   const [globalFilter, setGlobalFilter] = React.useState('');
   const [pagination, setPagination] = React.useState({
     pageIndex: 0, //initial page index
@@ -140,10 +165,12 @@ const MainTable = () => {
     getFilteredRowModel: getFilteredRowModel(),
     onPaginationChange: setPagination,
     onGlobalFilterChange: setGlobalFilter,
+    onRowSelectionChange: setRowSelection,
     state: {
       columnFilters,
       pagination,
       globalFilter,
+      rowSelection,
     },
   });
 
@@ -210,7 +237,10 @@ const MainTable = () => {
 
       {/* Controles de Paginação Estilizados */}
       <div className="flex items-center justify-between p-4">
-        <div className="flex-1"></div> {/* Empty spacer */}
+        <div className="flex-1 text-sm text-muted-foreground">
+          {table.getFilteredSelectedRowModel().rows.length} de{" "}
+          {table.getFilteredRowModel().rows.length} linha(s) selecionada(s).
+        </div>
         <div className="flex items-center space-x-4">
             {/* --- Previous Button --- */}
             <button
