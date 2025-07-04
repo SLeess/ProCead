@@ -2,7 +2,7 @@ import { AppContext } from "@/Contexts/AppContext";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { loginSchema } from '@/zod/loginSchema';
+import { loginSchema } from './loginSchema';
 
 export default function Login() {
     const { setToken } = useContext(AppContext);

@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "./Registro.css";
-import { maskCPF, registerSchema } from "./loginSchema";
+import { maskCPF, registerSchema } from "./registroSchema";
 
 export default function Registro(){
 

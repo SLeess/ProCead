@@ -1,5 +1,5 @@
 
-import Login from './Pages/Candidato/Auth/Login';
+import Login from './Pages/Candidato/Auth/Login/Login';
 import Registro from './Pages/Candidato/Auth/Registro/Registro';
 import Home from './Pages/Candidato/Home/Home';
 import Layout from './Pages/Candidato/Layout';
