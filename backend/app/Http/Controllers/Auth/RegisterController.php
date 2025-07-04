@@ -26,8 +26,7 @@ class RegisterController extends ApiBaseController
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
 
-        $user = \App\Models\User::create($input);
-
+        $user = \App\Models\User::create($input)->assignRole('candidate');
         $success['token'] =  $user->createToken('MyApp')->plainTextToken;
         $success['user'] =  $user;
         return $this->sendResponse($success, 'Usuário registrado com sucesso.');

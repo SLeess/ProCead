@@ -23,8 +23,8 @@ function App() {
             </Route>
 
             <Route element={<AuthCandidatoRoutes/>}>
-              <Route index element={<ProcessosAtivos/>}/>
-              {/* <Route index element={<Home/>}/> */}
+              {/* <Route index element={<ProcessosAtivos/>}/> */}
+              <Route index element={<Home/>}/>
               <Route path='/meus-processos' element={<MeusProcessos/>}/>
             </Route>
 

@@ -38,12 +38,13 @@ Route::get('/users', function(){
 
 Route::middleware(['throttle:global'])->group(function(){
     Route::post('/register', [RegisterController::class, 'register'])->name('register');
-    Route::post('/login', [LoginController::class, 'login'])->name('login');
+    Route::post('/login', [LoginController::class, 'loginCandidate']);
+    Route::post('/admin/login', [LoginController::class, 'loginAdmin']);
 });
 
 
 
-Route::middleware(['auth:sanctum', 'throttle:auth'])->group( function () {
+Route::middleware(['auth:sanctum', 'throttle:auth', 'ability:access:candidate'])->group( function () {
     Route::get('/data', function(){
         return response()->json(['data' =>
             [
@@ -185,11 +186,13 @@ Route::middleware(['auth:sanctum', 'throttle:auth'])->group( function () {
 
             ]
         ], 200);
-    })
-    // ->middleware('permission:editar-inscricoes')
-    ;
+    })->middleware('permission:editar-inscricoes');
 
     Route::post('/export', [RelatorioController::class, 'export'])->name('export');
 
     Route::post('/logout', [LogOutController::class, 'logout'])->name('logout');
+});
+
+Route::middleware(['auth:sanctum', 'ability:access:admin'])->group(function(){
+
 });

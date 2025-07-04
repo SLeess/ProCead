@@ -42,17 +42,23 @@ class LoginController extends ApiBaseController
         return 'email';
     }
 
-     public function login(Request $request): Response
+    public function loginCandidate(Request $request): Response
     {
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
         DB::beginTransaction();
         try {
-            if($user = Auth::attempt(['email' => $request->email, 'password' => $request->password])){
-                $user = Auth::user();
+            if(Auth::attempt($credentials)){
+                $user = $request->user();
 
                 $user->tokens()->delete();
 
-                $success['token'] =  $user->createToken('MyApp', ['*'])->plainTextToken;
-                $success['nome'] =  $user->nome;
+                $success['token'] =  $user->createToken('MyApp', ['access:candidate'])->plainTextToken;
+                $success['token_type'] = 'Bearer';
+                // $success['nome'] =  $user->nome;
+                $success['user'] = $user->load('roles');
                 DB::commit();
                 return $this->sendResponse($success, 'Login efetuado com sucesso.');
             }
@@ -61,5 +67,36 @@ class LoginController extends ApiBaseController
             DB::rollBack();
             return $this->sendError('Erro na hora de autenticar ao sistema', ["authentication_failed" => $exception->__tostring()], Response::HTTP_BAD_GATEWAY);
         }
+    }
+
+    public function loginAdmin(Request $request){
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        if (!Auth::attempt($credentials)) {
+            return $this->sendError('Credenciais inválidas', Response::HTTP_UNAUTHORIZED);
+        }
+
+        $user = $request->user();
+
+        if (!$user->hasRole('admin')) {
+            return $this->sendError('Acesso não autorizado.', Response::HTTP_UNAUTHORIZED);
+        }
+
+        $user->tokens()->delete();
+        $token = $user->createToken('auth_token_admin', ['access:admin'])->plainTextToken;
+
+        return $this->sendResponse([
+            'access_token' => $token,
+            'token_type' => 'Bearer',
+            'user' => $user->load('roles')
+        ], 'Login efetuado com sucesso.');
+    }
+
+    public function me(Request $request)
+    {
+        return $request->user()->load('roles', 'permissions');
     }
 }

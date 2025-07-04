@@ -26,7 +26,7 @@ export default function ProcessoCard({ processo }){
     <div className={`${cardBaseStyle} ${cardBorderStyle} min-h-[200px]`}>
       {
         inscrito && (
-          <div className="absolute right-0 px-2 pb-2 text-yellow-500 top-0">
+          <div className="absolute right-0 px-2 pb-2 text-yellow-500 top-[-3px]">
            <FaBookmark size="1.75em" />
           </div>
         )

@@ -28,9 +28,11 @@
     label {
         @apply block text-sm font-medium leading-6 text-slate-900 first-letter:capitalize;
     }
-
+    .app{
+        @apply mb-[60px] sm:mb-0;
+    }
     main {
-        @apply max-w-screen-xl md:mx-auto mr-6 ml-2 pb-10;
+        @apply mx-4 sm:mx-10 pb-10;
     }
     .primary-btn {
         @apply flex w-full cursor-pointer justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-blue-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:bg-slate-400 disabled:cursor-wait;

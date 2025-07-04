@@ -3,10 +3,10 @@
 /* START ------------------------------------- HEADER CANDIDATO ------------------------------------- */
 
 header#user {
-    @apply text-white xl:mx-6 mx-8;
+    @apply text-white mx-4 sm:mx-10
 }
 #user nav {
-  @apply container relative mx-auto px-6 py-2 flex justify-between items-center max-w-screen-xl shadow-sm mt-2.5 dark:bg-slate-900 bg-gradient-to-r from-[#004DA9] to-[#2A83ED] transition-all duration-700 ease-in-out;
+  @apply container relative mx-auto px-6 py-2 flex justify-between items-center min-w-[300px] max-w-screen-xl shadow-sm mt-2.5 dark:bg-slate-900 bg-gradient-to-r from-[#004DA9] to-[#2A83ED] transition-all duration-700 ease-in-out;
 }
 #user nav ul#desktop{
   @apply flex items-center md:space-x-20 md:mx-10;

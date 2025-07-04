@@ -1,0 +1,7 @@
+@reference "@/index.css";
+
+input#filtrar_editais{
+    @apply inline-flex p-[0px_0px_0x_10px] justify-end border-[10px] gap-[258px] bg-[#F2F5F7];
+    align-items: center;
+    border: 0.4px solid rgba(0, 0, 0, 0.50);
+}
