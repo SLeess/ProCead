@@ -44,11 +44,6 @@ Route::middleware(['throttle:global'])->group(function(){
 
 
 Route::middleware(['auth:sanctum', 'throttle:auth'])->group( function () {
-    Route::get('/test', function(){
-        return response()->json(['teste' => 'message']);
-    });
-
-
     Route::get('/data', function(){
         return response()->json(['data' =>
             [
@@ -190,7 +185,7 @@ Route::middleware(['auth:sanctum', 'throttle:auth'])->group( function () {
 
             ]
         ], 200);
-    });
+    })->middleware('permission:editar-inscricoes');
 
     Route::post('/export', [RelatorioController::class, 'export'])->name('export');
 
