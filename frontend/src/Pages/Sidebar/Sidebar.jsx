@@ -1,69 +1,16 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';import { Link } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import styled from 'styled-components'; import { Link } from 'react-router-dom';
+import { AppContext } from '@/Contexts/AppContext'; // Importando a função can do contexto
 // Ícones importados para os MENUS e submenus
-import { 
-  FiGrid, FiChevronDown, FiChevronUp, FiSettings, FiFilePlus, 
-  FiTerminal, FiUsers, FiShield, FiUserCheck, FiKey, FiMapPin, 
-  FiLayers, FiBookOpen, FiClipboard, FiArchive, FiEdit, 
+import {
+  FiGrid, FiChevronDown, FiChevronUp, FiSettings, FiFilePlus,
+  FiTerminal, FiUsers, FiShield, FiUserCheck, FiKey, FiMapPin,
+  FiLayers, FiBookOpen, FiClipboard, FiArchive, FiEdit,
   FiPieChart, FiHelpCircle, FiAward, FiBell, FiUserPlus,
   FiFileText, FiDatabase, FiHome, FiCheckSquare, FiFlag
 } from 'react-icons/fi';
 
-const menuData = [
-  { 
-    title: 'Edital',
-    icon: <FiFileText size={20} />,
-    isInitiallyOpen: false, 
-    items: [
-      { name: 'Configurações', icon: <FiSettings size={16} />, href: '/admin/configuracoes' },
-      { name: 'Novo Edital', icon: <FiFilePlus size={16} />, href: '/admin/novo-edital' }
-    ] 
-  },
-  { 
-    title: 'Dados Globais',
-    icon: <FiDatabase size={20} />,
-    isInitiallyOpen: true, 
-    items: [
-      { name: 'Logs', icon: <FiTerminal size={16} />, href: '/admin/logs' },
-      { name: 'Usuários', icon: <FiUsers size={16} />, href: '/admin/usuarios' },
-      { name: 'Administradores', icon: <FiShield size={16} />, href: '/admin/administradores' },
-      { name: 'Perfis', icon: <FiUserCheck size={16} />, href: '/admin/perfis' },
-      { name: 'Permissões', icon: <FiKey size={16} />, href: '/admin/permissoes' }
-    ] 
-  },
-  { 
-    title: 'Início',
-    icon: <FiHome size={20} />,
-    isInitiallyOpen: true, 
-    items: [
-      { name: 'Campi', icon: <FiMapPin size={16} />, href: '/admin/campi' },
-      { name: 'Modalidades', icon: <FiLayers size={16} />, href: '/admin/modalidades' },
-      { name: 'Cursos', icon: <FiBookOpen size={16} />, href: '/admin/cursos' },
-      { name: 'Quadro de Vagas', icon: <FiClipboard size={16} />, href: '/admin/quadro-de-vagas' }
-    ] 
-  },
-  { 
-    title: 'Avaliação',
-    icon: <FiCheckSquare size={20} />,
-    isInitiallyOpen: true, 
-    items: [
-      { name: 'Alocação', icon: <FiArchive size={16} />, href: '/admin/alocacao' },
-      { name: 'Inscrições', icon: <FiEdit size={16} />, href: '/admin/inscricoes' },
-      { name: 'Cotas', icon: <FiPieChart size={16} />, href: '/admin/cotas' },
-      { name: 'Recursos', icon: <FiHelpCircle size={16} />, href: '/admin/recursos' }
-    ] 
-  },
-  { 
-    title: 'Finalização',
-    icon: <FiFlag size={20} />,
-    isInitiallyOpen: true, 
-    items: [
-      { name: 'Classificação', icon: <FiAward size={16} />, href: '/admin/classificacao' },
-      { name: 'Chamadas', icon: <FiBell size={16} />, href: '/admin/chamadas' },
-      { name: 'Matrículas', icon: <FiUserPlus size={16} />, href: '/admin/matriculas' }
-    ] 
-  },
-];
+
 
 const SidebarContainer = styled.div`
   width: 240px;
@@ -147,11 +94,74 @@ const SubMenuItem = styled(Link)`
 `;
 
 const Sidebar = () => {
+  
+  const { can } = useContext(AppContext);
+   const menuData = [
+  {
+    title: 'Edital',
+    icon: <FiFileText size={20} />,
+    isInitiallyOpen: false,
+    items: [
+      { name: 'Configurações', icon: <FiSettings size={16} />, href: '/admin/configuracoes' },
+      { name: 'Novo Edital', icon: <FiFilePlus size={16} />, href: '/admin/novo-edital' }
+    ]
+  },
+  {
+    title: 'Dados Globais',
+    icon: <FiDatabase size={20} />,
+    isInitiallyOpen: true,
+    items: [
+      { name: 'Logs', icon: <FiTerminal size={16} />, href: '/admin/logs' },
+      { name: 'Usuários', icon: <FiUsers size={16} />, href: '/admin/usuarios' },
+      { name: 'Administradores', icon: <FiShield size={16} />, href: '/admin/administradores' },
+      { name: 'Perfis', icon: <FiUserCheck size={16} />, href: '/admin/perfis' },
+      { name: 'Permissões', icon: <FiKey size={16} />, href: '/admin/permissoes' }
+    ]
+  },
+  {
+    title: 'Início',
+    icon: <FiHome size={20} />,
+    isInitiallyOpen: true,
+    items: [
+      { name: 'Campi', icon: <FiMapPin size={16} />, href: '/admin/campi' },
+      { name: 'Modalidades', icon: <FiLayers size={16} />, href: '/admin/modalidades' },
+      { name: 'Cursos', icon: <FiBookOpen size={16} />, href: '/admin/cursos' },
+      { name: 'Quadro de Vagas', icon: <FiClipboard size={16} />, href: '/admin/quadro-de-vagas' }
+    ]
+  },
+  {
+    title: 'Avaliação',
+    icon: <FiCheckSquare size={20} />,
+    isInitiallyOpen: true,
+    items: [
+      { name: 'Alocação', icon: <FiArchive size={16} />, href: '/admin/alocacao' },
+      
+      can('visualizar-inscricoes') ?
+        { name: 'Inscrições', icon: <FiEdit size={16} />, href: '/admin/inscricoes' }
+        : null,
+
+      { name: 'Cotas', icon: <FiPieChart size={16} />, href: '/admin/cotas' },
+      { name: 'Recursos', icon: <FiHelpCircle size={16} />, href: '/admin/recursos' }
+    ]
+
+  },
+  {
+    title: 'Finalização',
+    icon: <FiFlag size={20} />,
+    isInitiallyOpen: true,
+    items: [
+      { name: 'Classificação', icon: <FiAward size={16} />, href: '/admin/classificacao' },
+      { name: 'Chamadas', icon: <FiBell size={16} />, href: '/admin/chamadas' },
+      { name: 'Matrículas', icon: <FiUserPlus size={16} />, href: '/admin/matriculas' }
+    ]
+  },
+];
   const [openSections, setOpenSections] = useState(() => {
     const initialState = {};
     menuData.forEach(section => { initialState[section.title] = section.isInitiallyOpen; });
     return initialState;
   });
+
 
   const [activeItem, setActiveItem] = useState('Campi');
 
@@ -166,7 +176,7 @@ const Sidebar = () => {
   return (
     <SidebarContainer>
       <SidebarHeader>
-        <img src="/img/logo_cead_bg_white.png" style={{marginRight: "10px"}} width={"50px"} />
+        <img src="/img/logo_cead_bg_white.png" style={{ marginRight: "10px" }} width={"50px"} />
         PROCEAD
       </SidebarHeader>
       <MenuListWrapper>
@@ -178,17 +188,17 @@ const Sidebar = () => {
                 {section.title}
               </span>
               {/* LÓGICA ATUALIZADA AQUI: Adicionado color="white" */}
-              {openSections[section.title] 
-                ? <FiChevronUp color="white" /> 
+              {openSections[section.title]
+                ? <FiChevronUp color="white" />
                 : <FiChevronDown color="white" />
               }
             </SectionHeader>
             <SubMenuList $isOpen={openSections[section.title]}>
-              {section.items.map(item => (
-                <SubMenuItem 
-                  key={item.name} 
-                  to={item.href} 
-                  className={activeItem === item.name ? 'active' : ''} 
+              {section.items.filter((link) => link !== null).map(item => (
+                <SubMenuItem
+                  key={item.name}
+                  to={item.href}
+                  className={activeItem === item.name ? 'active' : ''}
                   onClick={() => handleItemClick(item.name)}
                 >
                   {item.icon}

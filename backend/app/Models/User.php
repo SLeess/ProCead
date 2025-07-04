@@ -10,10 +10,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasPermissions;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasApiTokens, HasUuids;
+    use HasFactory, Notifiable, HasApiTokens, HasUuids, HasRoles, HasPermissions;
 
     protected $primaryKey = 'uuid';
     protected $keyType = 'string';

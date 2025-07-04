@@ -1,12 +1,21 @@
 import MainTable from '../../../Components/Table/MainTable'
-import React from 'react'
+import React, { useContext } from 'react'
+import { AppContext } from '@/Contexts/AppContext';
+import AccessDenied from '../../../Components/AccessDenied';
 
 const Inscricoes = () => {
-  return (
-    <>
-    <MainTable/>
-    </>
-  )
+  const { can } = useContext(AppContext);
+  if(can('visualizar-inscricoes'))
+    return (
+      <>
+      <MainTable/>
+      </>
+    )
+  else {
+    return (
+      <AccessDenied />
+    )
+  }
 }
 
 export default Inscricoes
