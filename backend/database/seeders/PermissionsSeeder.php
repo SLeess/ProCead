@@ -39,12 +39,16 @@ class PermissionsSeeder extends Seeder
 
         // create role & give it permissions
         Role::create(["name" => "admin"])->givePermissionTo(Permission::all());
-        // Role::create(["name" => "cotas"])->givePermissionTo(['editar-cotas',"editar-cotas"]);
+        Role::create(["name" => "cotas"])->givePermissionTo(['editar-cotas',"editar-cotas"]);
 
         // Assign roles to users (in this case for user id -> 1 & 2)
         $user = User::first();
         if ($user) {
             $user->assignRole('admin');
+        }
+        $user = User::where('email', 'cotas@asd.com')->first();
+        if ($user) {
+            $user->assignRole('cotas');
         }
         // $cotasUser = User::where('email','cotas@cotas.com')->first();
         // if($cotasUser) {

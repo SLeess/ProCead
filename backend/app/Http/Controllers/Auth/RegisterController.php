@@ -19,7 +19,7 @@ class RegisterController extends ApiBaseController
     {
         $validator = $this->validator($request->all());
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return $this->sendError('Erro de validação.', $validator->errors());
         }
 
@@ -36,7 +36,7 @@ class RegisterController extends ApiBaseController
     {
         $rules = [
             'nome' => 'required',
-            'email' => 'required|email',
+            'email' => ['required', 'email', Rule::unique('users', 'email'),],
             'cpf' => [
                 'required',
                 new Cpf,
@@ -46,7 +46,9 @@ class RegisterController extends ApiBaseController
             'confirm_password' => 'required|same:password',
         ];
 
-        return \Illuminate\Support\Facades\Validator::make($data, $rules, [], [
+        return \Illuminate\Support\Facades\Validator::make($data, $rules, [
+            'email.unique' => 'O email já está em uso.',
+        ], [
             'confirm_password' => 'de Confirmação de Senha',
             'cpf' => 'CPF',
             'password' => 'de Senha',
