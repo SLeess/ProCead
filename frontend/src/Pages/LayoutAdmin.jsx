@@ -3,6 +3,7 @@ import styled from 'styled-components'; // 1. Importar styled-components
 import { ToastContainer } from "react-toastify";
 import Sidebar from "./Sidebar/Sidebar";
 import MainAdminContainer from "./MainAdminContainer/MainAdminContainer";
+import TopBar from "./TopBar/TopBar";
 
 // 2. Criar um container principal com Flexbox
 const LayoutWrapper = styled.div`
@@ -21,6 +22,7 @@ export default function LayoutAdmin() {
             
             {/* 4. Colocar o Outlet e o ToastContainer DENTRO do MainAdminContainer */}
             <MainAdminContainer>
+                
                 <ToastContainer
                     position="top-right"
                     autoClose={5000}
@@ -32,6 +34,7 @@ export default function LayoutAdmin() {
                     draggable
                     pauseOnHover
                 />
+                <TopBar />
                 <Outlet />
             </MainAdminContainer>
         </LayoutWrapper>

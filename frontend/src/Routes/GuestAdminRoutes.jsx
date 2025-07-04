@@ -3,8 +3,9 @@ import { AppContext } from "../Contexts/AppContext";
 import { useContext } from "react";
 
 export default function GuestRoutes(){
-    const { user, isAdmin } = useContext(AppContext);
+    const { isAdmin, token } = useContext(AppContext);
+    // console.log("isAdmin:", isAdmin(), "token "+ token);
+    return (token != null && isAdmin()) ?  <Navigate to="/admin" />: <Outlet/>;
 
-    return (!user && !isAdmin()) ? <Outlet/> : <Navigate to="/admin" />;
 }
 
