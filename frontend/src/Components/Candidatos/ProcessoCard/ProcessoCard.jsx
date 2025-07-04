@@ -11,8 +11,8 @@ export default function ProcessoCard({ processo }){
   const cardBorderStyle = inscrito ? 'border-yellow-400 border-2' : 'border-gray-200';
   
   const buttonStyle = inscrito 
-    ? 'bg-yellow-500 hover:bg-yellow-600 focus:ring-yellow-400' 
-    : 'bg-green-600 hover:bg-green-700 focus:ring-green-500';
+    ? 'bg-[#FFC107] text-white hover:bg-yellow-600 focus:ring-yellow-400' 
+    : 'bg-[#28A745] text-white hover:bg-green-700 focus:ring-green-500';
 
   const limitarString = (text, maxLength) => {
     if(text.length <= maxLength){
@@ -23,7 +23,7 @@ export default function ProcessoCard({ processo }){
 
 
   return (
-    <div className={`${cardBaseStyle} ${cardBorderStyle}`}>
+    <div className={`${cardBaseStyle} ${cardBorderStyle} min-h-[200px]`}>
       {
         inscrito && (
           <div className="absolute right-0 px-2 pb-2 text-yellow-500 top-0">
@@ -36,7 +36,7 @@ export default function ProcessoCard({ processo }){
         <p className={`${styles.cardContent} text-gray-500 text-sm mb-6`} >{ limitarString(descricao, 115) }</p>
       </div>
 
-      <button className={`${buttonStyle} bg-[#FFC107] w-fit mx-auto`}>
+      <button className={`${buttonStyle} rounded-[15px] px-3 py-2 w-fit mx-auto hover:cursor-pointer`}>
         {inscrito ? 'Ver Inscrição' : 'Inscreva-se'}
       </button>
     </div>

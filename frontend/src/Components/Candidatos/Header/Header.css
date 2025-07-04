@@ -6,10 +6,13 @@ header#user {
     @apply text-white xl:mx-6 mx-8;
 }
 #user nav {
-  @apply container mx-auto px-6 py-2 flex justify-between items-center max-w-screen-xl rounded-2xl shadow-sm mt-2.5 dark:bg-slate-900 dark:bg-none bg-gradient-to-r from-[#004DA9] to-[#2A83ED];
+  @apply container relative mx-auto px-6 py-2 flex justify-between items-center max-w-screen-xl shadow-sm mt-2.5 dark:bg-slate-900 bg-gradient-to-r from-[#004DA9] to-[#2A83ED];
 }
-#user nav ul{
-  @apply hidden md:flex items-center space-x-20 mx-10 w-full;
+#user nav ul#desktop{
+  @apply flex items-center md:space-x-20 md:mx-10;
+}
+#user nav ul#mobile{
+  
 }
 .logo-cead{
   width: 120px;

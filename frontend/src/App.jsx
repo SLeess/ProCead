@@ -7,6 +7,7 @@ import MeusProcessos from './Pages/Candidato/MeusProcessos/MeusProcessos';
 import { Routes, Route, Link } from 'react-router-dom';
 import AuthCandidatoRoutes from './Routes/AuthCandidatoRoutes';
 import GuestRoutes from './Routes/GuestRoutes';
+import ProcessosAtivos from './Pages/Candidato/ProcessosAtivos/ProcessosAtivos';
 
 function App() {
   return (
@@ -22,7 +23,8 @@ function App() {
             </Route>
 
             <Route element={<AuthCandidatoRoutes/>}>
-              <Route index element={<Home/>}/>
+              <Route index element={<ProcessosAtivos/>}/>
+              {/* <Route index element={<Home/>}/> */}
               <Route path='/meus-processos' element={<MeusProcessos/>}/>
             </Route>
 
