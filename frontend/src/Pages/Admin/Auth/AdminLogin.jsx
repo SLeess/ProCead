@@ -1,11 +1,11 @@
 import { AppContext } from "@/Contexts/AppContext";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import { loginSchema } from '@/zod/loginSchema';
+import { toast, ToastContainer } from "react-toastify";
+import { loginSchema } from "@/Pages/Candidato/Auth/Login/loginSchema";
 
 export default function Login() {
-    const { setToken, setPermissions } = useContext(AppContext);
+    const { setToken, setPermissions, setRoles } = useContext(AppContext);
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
@@ -34,13 +34,13 @@ export default function Login() {
         }
 
         try{
-            const res = await fetch('/api/login', {
+            const res = await fetch('/api/admin/login', {
                 method: 'post',
                 body: JSON.stringify(formData),
             });
 
-            const result = await res.json();
             
+            const result = await res.json();
             if (!result.success || !res.ok) {
                 if (result.errors) {
                     toast.error(result.message);
@@ -48,7 +48,8 @@ export default function Login() {
             } else{
                 localStorage.setItem('token', result.data.token);
                 setToken(result.data.token);
-                setPermissions(result.data.permissions || []);
+                setPermissions(result.data.permissions);
+                setRoles(result.data.roles);
                 navigate('/admin');
                 toast.success(result.message || "Autenticado com sucesso!");
             }
@@ -63,8 +64,18 @@ export default function Login() {
     };
 
     return (
-        // min-h-screen
         <div className="flex justify-center" style={{alignItems: "center", minHeight: "94.3vh"}}>
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
             <div className="login-container flex flex-col items-center">
                 <div className="mb-12">
                     <img src="/img/img_logo.png" alt="CEAD Unimontes Logo" className="h-[155px] w-[345px]"/>
@@ -122,17 +133,6 @@ export default function Login() {
                         <a href="#" className="justify-center text-[12px] text-[#000000b2] hover:underline hover:bg-transparent">Esqueceu sua Senha?</a>
                     </div>
                 </form>
-
-                <div className="text-center">
-                    <p className="text-[15px] text-[#000000e5] mb-2">Ainda não tem uma conta?</p>
-                    <button 
-                        id="createAccountBtn" 
-                        onClick={() => {navigate('/registro')}}
-                        className="h-[40px] w-[255px] bg-white rounded-[4px] hover:bg-[#5a5c96] hover:text-white text-[15px] font-medium shadow-md transition-all duration-200 hover:cursor-pointer"
-                    >
-                        Criar Conta
-                    </button>
-                </div>
             </div>
         </div>
     );

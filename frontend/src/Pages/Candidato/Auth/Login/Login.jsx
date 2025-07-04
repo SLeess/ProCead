@@ -1,11 +1,11 @@
 import { AppContext } from "@/Contexts/AppContext";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 import { loginSchema } from './loginSchema';
 
 export default function Login() {
-    const { setToken } = useContext(AppContext);
+    const { setToken, setPermissions, setRoles } = useContext(AppContext);
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
@@ -48,6 +48,8 @@ export default function Login() {
             } else{
                 localStorage.setItem('token', result.data.token);
                 setToken(result.data.token);
+                setPermissions(result.data.permissions || []);
+                setRoles(result.data.roles || []);
                 navigate('/');
                 toast.success(result.message || "Autenticado com sucesso!");
             }
@@ -62,8 +64,18 @@ export default function Login() {
     };
 
     return (
-        // min-h-screen
         <div className="flex justify-center" style={{alignItems: "center", minHeight: "94.3vh"}}>
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
             <div className="login-container flex flex-col items-center">
                 <div className="mb-12">
                     <img src="/img/img_logo.png" alt="CEAD Unimontes Logo" className="h-[155px] w-[345px]"/>

@@ -16,7 +16,7 @@ class UserPermissionController extends ApiBaseController
 
         // Fetch user permissions
         $permissions = $user->getPermissionsViaRoles()->pluck('name');
-        $roles = $user->getRoleNames()[0];
+        $roles = $user->getRoleNames();
 
         // Return the response
         return $this->sendResponse([

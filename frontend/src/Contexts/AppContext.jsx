@@ -29,7 +29,6 @@ export default function AppProvider({ children }) {
     }
 
     function isAdmin() {
-        console.log(permissions)
         return permissions.length > 0;
     }
     const toggleTheme = () => {
@@ -47,7 +46,6 @@ export default function AppProvider({ children }) {
                     });
                     if (response.ok) {
                         const userData = await response.json();
-                        // console.log("Dados do usuário:", userData);
                         setUser(userData.data.user);
                         setPermissions(userData.data.permissions);
                         setRoles(userData.data.roles);

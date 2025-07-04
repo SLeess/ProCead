@@ -1,6 +1,5 @@
 import { Outlet } from "react-router-dom";
 import styled from 'styled-components'; // 1. Importar styled-components
-import { ToastContainer } from "react-toastify";
 import Sidebar from "./Sidebar/Sidebar";
 import MainAdminContainer from "./MainAdminContainer/MainAdminContainer";
 
@@ -21,17 +20,6 @@ export default function LayoutAdmin() {
             
             {/* 4. Colocar o Outlet e o ToastContainer DENTRO do MainAdminContainer */}
             <MainAdminContainer>
-                <ToastContainer
-                    position="top-right"
-                    autoClose={5000}
-                    hideProgressBar={false}
-                    newestOnTop={false}
-                    closeOnClick
-                    rtl={false}
-                    pauseOnFocusLoss
-                    draggable
-                    pauseOnHover
-                />
                 <Outlet />
             </MainAdminContainer>
         </LayoutWrapper>

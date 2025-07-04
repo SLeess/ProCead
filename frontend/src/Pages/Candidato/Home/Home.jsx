@@ -24,7 +24,6 @@ export default function Home()
                 });
                 const response = await res.json();
                 setInscricoes(response.data || []);
-                console.log(response);
             } catch (error) {
                 toast.error(error)
             }

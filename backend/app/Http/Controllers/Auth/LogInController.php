@@ -56,9 +56,8 @@ class LoginController extends ApiBaseController
                 $user->tokens()->delete();
 
                 $success['token'] =  $user->createToken('MyApp', ['access:candidate'])->plainTextToken;
-                $success['token_type'] = 'Bearer';
-                // $success['nome'] =  $user->nome;
-                $success['user'] = $user->load('roles');
+                $success['permissions'] = $user->getPermissionNames();
+                $success['roles'] = $user->getRoleNames();
                 DB::commit();
                 return $this->sendResponse($success, 'Login efetuado com sucesso.');
             }
@@ -76,22 +75,22 @@ class LoginController extends ApiBaseController
         ]);
 
         if (!Auth::attempt($credentials)) {
-            return $this->sendError('Credenciais inválidas', Response::HTTP_UNAUTHORIZED);
+            return $this->sendError('Credenciais inválidas', ["credentials_error" => "Credenciais não encontradas no sistema."], Response::HTTP_UNAUTHORIZED);
         }
 
         $user = $request->user();
 
         if (!$user->hasRole('admin')) {
-            return $this->sendError('Acesso não autorizado.', Response::HTTP_UNAUTHORIZED);
+            return $this->sendError('Acesso não autorizado.', ["authorization_error" => "Acesso não autorizado."], Response::HTTP_UNAUTHORIZED);
         }
 
         $user->tokens()->delete();
         $token = $user->createToken('auth_token_admin', ['access:admin'])->plainTextToken;
 
         return $this->sendResponse([
-            'access_token' => $token,
-            'token_type' => 'Bearer',
-            'user' => $user->load('roles')
+            'token' => $token,
+            'permissions' => $user->getPermissionNames(),
+            'roles' => $user->getRoleNames(),
         ], 'Login efetuado com sucesso.');
     }
 

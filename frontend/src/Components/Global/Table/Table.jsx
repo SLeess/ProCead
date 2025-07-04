@@ -134,7 +134,9 @@ export default function Table({ rows, cols, tableName, titulo, details, visibleD
 
             if (contentType && contentType.includes('application/json')) {
             const errorData = await response.json();
+            
             console.log(errorData);
+
             const errorMessages = Object.values(errorData.errors || { general: [errorData.message || 'Erro desconhecido'] }).flat();
             errorMessages.forEach((e) => toast.error(e));
             } else {

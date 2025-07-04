@@ -1,5 +1,5 @@
 import Header from "../../Components/Candidatos/Header/Header";
-import Loader from "../../Components/Candidatos/Loader/Loader";
+import Loader from "../../Components/Global/Loader/Loader";
 import UserDropdown from "../../Components/Candidatos/UserDropdown/UserDropdown";
 import { AppContext } from "../../Contexts/AppContext";
 import { useContext } from "react";
