@@ -51,7 +51,7 @@ class LoginController extends ApiBaseController
 
                 $user->tokens()->delete();
 
-                $success['token'] =  $user->createToken('MyApp', ['*'], Carbon::now()->addMinutes(30))->plainTextToken;
+                $success['token'] =  $user->createToken('MyApp', ['*'])->plainTextToken;
                 $success['nome'] =  $user->nome;
                 DB::commit();
                 return $this->sendResponse($success, 'Login efetuado com sucesso.');
