@@ -50,9 +50,10 @@ class LoginController extends ApiBaseController
                 $user = Auth::user();
 
                 $user->tokens()->delete();
-
+                $permissions = $user->getPermissionsViaRoles()->pluck('name');
                 $success['token'] =  $user->createToken('MyApp', ['*'])->plainTextToken;
                 $success['nome'] =  $user->nome;
+                $success['permissions'] =  $permissions;
                 DB::commit();
                 return $this->sendResponse($success, 'Login efetuado com sucesso.');
             }

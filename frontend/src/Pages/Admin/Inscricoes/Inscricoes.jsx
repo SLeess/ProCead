@@ -4,8 +4,8 @@ import { AppContext } from '@/Contexts/AppContext';
 import AccessDenied from '../../../Components/AccessDenied';
 
 const Inscricoes = () => {
-  const { can } = useContext(AppContext);
-  if(can('visualizar-inscricoes'))
+  const { can, isAdmin } = useContext(AppContext);
+  if(can('visualizar-inscricoes') && isAdmin())
     return (
       <>
       <MainTable/>

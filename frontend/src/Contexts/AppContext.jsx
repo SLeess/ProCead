@@ -4,8 +4,8 @@ import { set } from "zod/v4";
 
 export const AppContext = createContext();
 
-export default function AppProvider({children}){
-    const [token, setToken] = useState(localStorage.getItem('token'));
+export default function AppProvider({ children }) {
+    const [token, setToken] = useState(localStorage.getItem('token') || localStorage.getItem('tokenAdmin'));
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [permissions, setPermissions] = useState([]);
@@ -23,10 +23,15 @@ export default function AppProvider({children}){
         setToken(null);
         setUser(null);
     };
-    
-    function can (permission) {
-        (permissions || []).find((p) => p == permission) ? true : false;
-}
+
+    function can(permission) {
+        return !!permissions.find((p) => p == permission);
+    }
+
+    function isAdmin() {
+        console.log(permissions)
+        return permissions.length > 0;
+    }
     const toggleTheme = () => {
         setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
     };
@@ -69,15 +74,15 @@ export default function AppProvider({children}){
 
     useEffect(() => {
         const root = window.document.documentElement;
-        if (theme === 'dark'){
+        if (theme === 'dark') {
             root.classList.add('dark');
-        } else{
+        } else {
             root.classList.remove('dark');
         }
         localStorage.setItem('theme', theme);
     }, [theme]);
 
-    const contextValue = { user, setUser, token, setToken, loading, toggleTheme, theme, logout, permissions, roles, can }; // Exponha o 'loading'
+    const contextValue = { user, setUser, token, setToken, loading, toggleTheme, theme, logout, permissions, roles, can, isAdmin, setPermissions, setRoles }; // Exponha o 'loading'
 
     return (
         <AppContext.Provider value={contextValue}>

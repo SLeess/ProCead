@@ -5,7 +5,7 @@ import styled from 'styled-components';
 const BoxContainer = styled.div`
   width: 100%;
   height: 94vh;
-  background-color: #ffffff; /* Sets the background to white */
+  background-color: #f0f2f5; /* Sets the background to white */
   border-radius: 15px; /* Rounds the corners */
   
   /* Adds a subtle shadow to give it some depth.
@@ -14,14 +14,14 @@ const BoxContainer = styled.div`
     - 12px blur radius
     - A very light black color (rgba(0, 0, 0, 0.05)) for the shadow
   */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  // box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
   overflow-y: auto; /* Add this line to enable vertical scrolling when content overflows */
   
   /* Optional: Add some padding so content doesn't touch the edges */
   padding: 20px;
   box-sizing: border-box; /* Ensures padding is included in the total width/height */
   margin: 3vh 2vh 2vh 0vh;
-  outline: 2px solid black
+  // outline: 2px solid black
 `;
 
 /**

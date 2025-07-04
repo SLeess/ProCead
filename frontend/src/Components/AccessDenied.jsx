@@ -15,7 +15,7 @@ const AccessDenied = () => {
   // }, [navigate]);
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-300 dark:bg-gray-900">
+    <div className="flex items-center justify-center h-11/12 dark:bg-gray-900">
       <Card className="max-w-md text-center">
         <div className="flex flex-col items-center">
           <AlertTriangle className="w-16 h-16 text-red-500 mb-4" />

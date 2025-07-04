@@ -11,7 +11,6 @@ import {
 } from 'react-icons/fi';
 
 
-
 const SidebarContainer = styled.div`
   width: 240px;
   height: 100vh;
@@ -96,6 +95,7 @@ const SubMenuItem = styled(Link)`
 const Sidebar = () => {
   
   const { can } = useContext(AppContext);
+  const { user } = useContext(AppContext);
    const menuData = [
   {
     title: 'Edital',
