@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\API\ApiBaseController;
+use App\Http\Controllers\API\APIController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class LogOutController extends ApiBaseController
+class LogOutController extends APIController
 {
     public function __construct()
     {

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
-class ApiBaseController extends Controller
+class APIController extends Controller
 {
     /**
      * success response method.

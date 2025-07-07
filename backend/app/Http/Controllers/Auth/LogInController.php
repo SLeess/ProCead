@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\API\ApiBaseController;
+use App\Http\Controllers\API\APIController;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 
-class LoginController extends ApiBaseController
+class LoginController extends APIController
 {
     public function __construct()
     {

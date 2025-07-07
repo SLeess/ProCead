@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 use App\Http\Resources\UserDataPermissionsAndRoles;
 use Symfony\Component\HttpFoundation\Response;
-use App\Http\Controllers\API\ApiBaseController;
+use App\Http\Controllers\API\APIController;
 use Illuminate\Http\Request;
 
-class UserPermissionController extends ApiBaseController
+class UserPermissionController extends APIController
 {
     public function userPermissions(Request $request)
     {

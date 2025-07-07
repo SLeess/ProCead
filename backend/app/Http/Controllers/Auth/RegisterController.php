@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\API\ApiBaseController;
+use App\Http\Controllers\API\APIController;
 use App\Rules\Cpf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 
-class RegisterController extends ApiBaseController
+class RegisterController extends APIController
 {
     public function __construct()
     {
