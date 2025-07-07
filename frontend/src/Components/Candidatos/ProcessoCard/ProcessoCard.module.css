@@ -1,10 +1,5 @@
 @reference "@/index.css"; 
 
-@font-face {
-    font-family: 'Sora';
-    src: url('@/assets/Fonts/Sora/Sora-VariableFont_wght.ttf') format('truetype');
-}
-
 h3.cardName{
     @apply text-black text-[24px];
     font-family: "Sora", sans-serif;
