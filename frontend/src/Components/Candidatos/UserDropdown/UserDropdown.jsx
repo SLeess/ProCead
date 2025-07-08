@@ -2,10 +2,10 @@ import { useContext, useEffect, useRef, useState } from "react";
 import styles from './userDropdown.module.css';
 import { AppContext } from "@/Contexts/AppContext";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { NavigationContext } from "@/Contexts/NavigationContext";
 
 export default function UserDropdown({user}){
-    const navigate = useNavigate();
+    const { navigate } = useContext(NavigationContext);
     const { token, logout } = useContext(AppContext);
     
     const [dropdownOpen, setDropdownOpen] = useState(false);

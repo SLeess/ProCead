@@ -1,0 +1,25 @@
+@reference '@/index.css';
+
+/* START ------------------------------------- LOGIN FORM STYLE ------------------------------------- */
+
+/*--------------- Inputs ---------------*/
+
+input.login{
+    @apply border-2 border-[#004da9] w-full h-full px-3 py-2 text-black bg-transparent focus-within:outline-0 focus-within:outline-[#02397c];
+}
+
+label[for=email].loginLabel, label[for=password].loginLabel{
+    @apply absolute left-[10px] top-[11px] text-[15px] text-[#000000b2] font-medium pointer-events-none transition-all duration-200 transform;
+}
+
+
+/*--------------------------------------*/
+
+button[type=submit].login{
+    @apply bg-[#2e3192] h-[40px] w-[161px] text-[#f2f5f7] rounded-[4px] font-bold text-[15px] shadow-md hover:bg-[#4448b4] transition-all duration-200 hover:cursor-pointer;
+}
+
+button#createAccountBtn{
+    @apply h-[40px] w-[255px] bg-white rounded-[4px] hover:bg-[#5a5c96] hover:text-white text-[15px] font-medium shadow-md transition-all duration-200 hover:cursor-pointer;
+}
+/* END ------------------------------------- LOGIN FORM STYLE ------------------------------------- */

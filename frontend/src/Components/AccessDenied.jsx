@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useContext, useEffect } from 'react';
 import { Button, Card } from 'flowbite-react';
 import { AlertTriangle } from 'lucide-react';
+import { NavigationContext } from '@/Contexts/NavigationContext';
 
 const AccessDenied = () => {
-  const navigate = useNavigate();
+  const { navigate } = useContext(NavigationContext);
 
   // useEffect(() => {
   //   const timer = setTimeout(() => {

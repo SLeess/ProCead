@@ -1,12 +1,12 @@
 import { AppContext } from "@/Contexts/AppContext";
 import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { loginSchema } from "@/Pages/Candidato/Auth/Login/loginSchema";
+import { NavigationContext } from "@/Contexts/NavigationContext";
 
 export default function Login() {
     const { setToken, setPermissions, setRoles } = useContext(AppContext);
-    const navigate = useNavigate();
+    const { navigate } = useContext(NavigationContext);
 
     const [formData, setFormData] = useState({
         email: '',

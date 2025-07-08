@@ -1,12 +1,14 @@
 import { AppContext } from "@/Contexts/AppContext";
-import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useContext, useRef, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import { loginSchema } from './loginSchema';
+import styles from './Login.module.css';
+import { NavigationContext } from "@/Contexts/NavigationContext";
 
 export default function Login() {
     const { setToken, setPermissions, setRoles } = useContext(AppContext);
-    const navigate = useNavigate();
+    const { navigate } = useContext(NavigationContext);
+    const { inputRef } = useRef(`border-[#004da9]`);
 
     const [formData, setFormData] = useState({
         email: '',
@@ -87,14 +89,16 @@ export default function Login() {
                             <input 
                                 type="text" 
                                 id="email" 
-                                name="email" 
-                                className="border-2 border-[#004da9] w-full h-full px-3 py-2 text-black bg-transparent input-field focus-within:outline-0 focus-within:outline-[#02397c]" 
+                                name="email"
+                                ref={inputRef} 
+                                className={`${styles.login} input-field`} 
                                 required
+                                autoComplete="on"
                                 onChange={updateAttr}
                                 onFocus={() => setFocusedField('email')}
                                 onBlur={() => setFocusedField(null)}
                             />
-                            <label htmlFor="username" className={`absolute left-[10px] top-[10px] text-[15px] text-[#000000b2] font-medium pointer-events-none transition-all duration-200 transform ${(focusedField === 'email' || formData.email.length > 0) 
+                            <label htmlFor="email" className={`${styles.loginLabel} ${(focusedField === 'email' || formData.email.length > 0) 
                                     ? 'text-xs -translate-y-5 bg-white px-0.5 rounded-xl'
                                     : ''}`}>
                                 Email
@@ -108,13 +112,15 @@ export default function Login() {
                                 type="password" 
                                 id="password" 
                                 name="password" 
-                                className="border-2 border-[#004da9] w-full h-full px-3 py-2 text-black bg-transparent input-field focus-within:outline-0 focus-within:outline-[#02397c]" 
+                                ref={inputRef}
+                                className={`${styles.login} input-field`} 
                                 required
+                                autoComplete="on"
                                 onChange={updateAttr}
                                 onFocus={() => setFocusedField('password')}
                                 onBlur={() => setFocusedField(null)}
                             />
-                            <label htmlFor="password" className={`absolute left-[10px] top-[11px] text-[15px] text-[#000000b2] font-medium pointer-events-none transition-all duration-200 transform
+                            <label htmlFor="password" className={`${styles.loginLabel}
                                 ${(focusedField === 'password' || formData.password.length != 0) 
                                     ? 'text-xs -translate-y-5 bg-white px-0.5 rounded-xl'
                                     : ''}`}>
@@ -124,7 +130,7 @@ export default function Login() {
                     </div>
 
                     <div className="flex justify-center mb-3">
-                        <button type="submit" className="bg-[#2e3192] h-[40px] w-[161px] text-[#f2f5f7] rounded-[4px] font-bold text-[15px] shadow-md hover:bg-[#4448b4] transition-all duration-200 hover:cursor-pointer">
+                        <button type="submit" className={`${styles.login}`}>
                             Entrar
                         </button>
                     </div>
@@ -137,9 +143,8 @@ export default function Login() {
                 <div className="text-center">
                     <p className="text-[15px] text-[#000000e5] mb-2">Ainda não tem uma conta?</p>
                     <button 
-                        id="createAccountBtn" 
+                        id={`${styles.createAccountBtn}`}
                         onClick={() => {navigate('/registro')}}
-                        className="h-[40px] w-[255px] bg-white rounded-[4px] hover:bg-[#5a5c96] hover:text-white text-[15px] font-medium shadow-md transition-all duration-200 hover:cursor-pointer"
                     >
                         Criar Conta
                     </button>

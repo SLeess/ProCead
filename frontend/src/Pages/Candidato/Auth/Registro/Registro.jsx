@@ -1,13 +1,13 @@
 import { AppContext } from "../../../../Contexts/AppContext";
 import { useContext, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import "./Registro.css";
 import { maskCPF, registerSchema } from "./registroSchema";
+import { NavigationContext } from "@/Contexts/NavigationContext";
 
 export default function Registro(){
 
-    const navigate = useNavigate();
+    const { navigate } = useContext(NavigationContext);
 
     const [formData, setFormData] = useState({
         nome: '',
@@ -218,10 +218,10 @@ export default function Registro(){
                         <div>
                         <button 
                             type="submit" 
-                            className="flex w-full justify-center rounded-md bg-[#333A56] px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 hover:cursor-pointer">Cadastrar-se</button>
+                            id="cadastroBtn">Cadastrar-se</button>
                         </div>
                         <div className="w-10-12 text-center">
-                            <a href="#" className="text-sm mx-auto w-fit font-semibold text-[#333A56] hover:text-indigo-500">Já possui uma conta? Faça login!</a>
+                            <a onClick={() => navigate("/login")} id="already_have_account">Já possui uma conta? Faça login!</a>
                         </div>
                     </form>
                 </div>

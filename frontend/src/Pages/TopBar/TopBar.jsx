@@ -3,8 +3,8 @@ import { useContext } from 'react';
 import { AppContext } from '../../Contexts/AppContext';
 import styled from 'styled-components';
 import { FaUserCircle, FaSignOutAlt } from 'react-icons/fa';
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { NavigationContext } from '@/Contexts/NavigationContext';
 
 const TopBarContainer = styled.div`
   display: flex;
@@ -64,40 +64,40 @@ const LogoutButton = styled.a`
 `;
 
 export default function TopBar() {
-  const navigate = useNavigate();
-    const { logout, token, user } = useContext(AppContext);
-    async function handlerLogOut(){
-            try {
-                const res = await fetch('/api/logout', {
-                    method: 'post',
-                    headers:{
-                        "Authorization": `Bearer ${token}`,
-                    }
-                });
-    
-                toast.success('Sessão encerrada.');
-                logout();
-                navigate('/admin/login');
-                // window.location.reload();
-            } catch (error) {
-                toast.error(error);
-            }
-        }
+  const { navigate } = useContext(NavigationContext);
+  const { logout, token, user } = useContext(AppContext);
+  async function handlerLogOut(){
+          try {
+              const res = await fetch('/api/logout', {
+                  method: 'post',
+                  headers:{
+                      "Authorization": `Bearer ${token}`,
+                  }
+              });
+  
+              toast.success('Sessão encerrada.');
+              logout();
+              navigate('/admin/login');
+              // window.location.reload();
+          } catch (error) {
+              toast.error(error);
+          }
+      }
 
-    return (
-        <TopBarContainer>
-            <DropdownMenu>
-                <DropdownButton>
-                    <FaUserCircle />
-                    <span>{user ? user.nome : ''}</span>
-                </DropdownButton>
-                <DropdownContent className="dropdown-content">
-                    <LogoutButton to="/admin/login" onClick={() => handlerLogOut()}>
-                        <FaSignOutAlt />
-                        <span>Logout</span>
-                    </LogoutButton>
-                </DropdownContent>
-            </DropdownMenu>
-        </TopBarContainer>
-    );
+  return (
+      <TopBarContainer>
+          <DropdownMenu>
+              <DropdownButton>
+                  <FaUserCircle />
+                  <span>{user ? user.nome : ''}</span>
+              </DropdownButton>
+              <DropdownContent className="dropdown-content">
+                  <LogoutButton to="/admin/login" onClick={() => handlerLogOut()}>
+                      <FaSignOutAlt />
+                      <span>Logout</span>
+                  </LogoutButton>
+              </DropdownContent>
+          </DropdownMenu>
+      </TopBarContainer>
+  );
 }
