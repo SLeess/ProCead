@@ -21,7 +21,7 @@ class LogOutController extends APIController
             $this->authService->logoutUser($request->user());
             return $this->sendResponse([], 'Logout efetuado com sucesso.', Response::HTTP_OK);
         } catch (\Exception $e) {
-            return $this->sendError($e->getMessage(), [], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->sendError('Erro de logout.', [0 => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }

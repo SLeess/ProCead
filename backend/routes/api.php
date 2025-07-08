@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\RelatorioController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogOutController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -9,22 +10,22 @@ use Illuminate\Support\Facades\Route;
 
 
 /* ---------- USUÁRIO ---------- */
-Route::name('usuario.')->group(function(){
+Route::middleware(['throttle:global'])->name('usuario.')->group(function(){
     Route::post('/register', [RegisterController::class, 'register'])->name('register');
     Route::post('/login', [LoginController::class, 'loginCandidate'])->name('login');
-    // Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
-    // Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
-})->middleware(['throttle:global']);
+    Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+    // Route::post('/reset-password', [ResetPasswordController::class, 'reset'])->name('password.update');
+});
 
 
 
-Route::name('candidato.')->group( function () {
+Route::middleware(['auth:sanctum', 'role:candidato'])->name('candidato.')->group( function () {
     Route::name('usuario.')->group(function() {
         Route::get('/user', [UserPermissionController::class, 'userPermissions'])->name('dados');
         Route::post('/logout', [LogOutController::class, 'logout'])->name('logout');
     });
 
-    Route::get('/data', function(){
+    Route::middleware('permission:editar-inscricoes')->get('/data', function(){
         return response()->json(['data' =>
             [
                 [
@@ -165,17 +166,17 @@ Route::name('candidato.')->group( function () {
 
             ]
         ], 200);
-    })->middleware('permission:editar-inscricoes');
+    });
     Route::post('/export', [RelatorioController::class, 'export'])->name('export');
 
-})->middleware(['auth:sanctum', 'role:candidate']);
+});
 /* ---------- FIM - CANDIDATO ---------- */
 
 
 /* ------------- ADMINISTRADOR ------------- */
 /* Rotas de Login do Administrador */
-Route::prefix('admin')->name('admin.')->group(function(){
-    Route::post('/admin/login', [LoginController::class, 'loginAdmin']);
+Route::prefix('/admin')->name('admin.')->group(function(){
+    Route::post('/login', [LoginController::class, 'loginAdmin']);
 })->middleware(['auth:sanctum', 'permission:admin']);
 /* ---------- FIM - ADMINISTRADOR ---------- */
 

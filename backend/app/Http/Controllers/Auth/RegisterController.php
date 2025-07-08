@@ -21,7 +21,7 @@ class RegisterController extends APIController
             $result = $this->authService->registerUser($request->validated());
             return $this->sendResponse($result, 'Usuário registrado com sucesso.', Response::HTTP_ACCEPTED);
         } catch (\Exception $e) {
-            return $this->sendError($e->getMessage(), [], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->sendError('Erro genérico.', [0 => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
     }

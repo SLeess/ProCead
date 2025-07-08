@@ -9,6 +9,7 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 
 class AuthService
 {
@@ -101,5 +102,23 @@ class AuthService
     public function logoutUser(User $user): void
     {
         $user->currentAccessToken()->delete();
+    }
+
+    public function sendResetLinkEmail(array $data): array
+    {
+        DB::beginTransaction();
+        try {
+            $status = Password::broker()->sendResetLink(
+                $data['email'],
+            );
+
+            if($status == Password::RESET_LINK_SENT){
+                return ['status' => $status];
+            }
+
+            throw new Exception('Link de reset de senha não foi enviado.');
+        } catch (Exception $e) {
+            throw new Exception($e->__toString());
+        }
     }
 }

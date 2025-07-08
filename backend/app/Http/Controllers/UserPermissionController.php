@@ -11,7 +11,6 @@ class UserPermissionController extends APIController
 {
     public function userPermissions(Request $request)
     {
-        dd($request->user(), Auth::user());
         return $this->sendResponse(
             UserDataPermissionsAndRoles::make($request->user()),
             'User permissions retrieved successfully.',

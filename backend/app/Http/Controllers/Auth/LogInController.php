@@ -34,9 +34,9 @@ class LoginController extends APIController
             $result = $this->authService->loginUser($request->validated());
             return $this->sendResponse($result, 'Login efetuado com sucesso.');
         } catch (AuthenticationException $e) {
-            return $this->sendError($e->getMessage(), [], Response::HTTP_UNAUTHORIZED);
+            return $this->sendError('Erro de Autenticação.', [0 => $e->getMessage()], Response::HTTP_UNAUTHORIZED);
         } catch (\Exception $e) {
-            return $this->sendError($e->getMessage(), [], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->sendError('Erro genérico.', [0 => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -45,11 +45,11 @@ class LoginController extends APIController
             $result = $this->authService->loginAdmin($request->validated());
             return $this->sendResponse($result, 'Login efetuado com sucesso.', Response::HTTP_OK);
         } catch (AuthenticationException $e) {
-            return $this->sendError($e->getMessage(), [], Response::HTTP_UNAUTHORIZED);
+            return $this->sendError('Erro de Autenticação.', [0 => $e->getMessage()], Response::HTTP_UNAUTHORIZED);
         } catch (AuthorizationException $e) {
-            return $this->sendError($e->getMessage(), [], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->sendError('Erro de Autorização.', [0 => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         } catch (\Exception $e) {
-            return $this->sendError($e->getMessage(), [], Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->sendError('Erro genérico.', [$e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }

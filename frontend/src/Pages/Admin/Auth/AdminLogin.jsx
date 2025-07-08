@@ -43,7 +43,7 @@ export default function Login() {
             const result = await res.json();
             if (!result.success || !res.ok) {
                 if (result.errors) {
-                    toast.error(result.message);
+                    Object(result.errors).forEach((er) => toast.error(er));
                 }
             } else{
                 localStorage.setItem('token', result.data.token);

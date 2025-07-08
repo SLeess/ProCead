@@ -14,7 +14,6 @@ class UserDataPermissionsAndRoles extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        dd($this, $request);
         $roles = $this->getRoleNames();
         $permissions = $this->getPermissionsViaRoles()->pluck('name');
 
