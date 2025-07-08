@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\API\APIController;
+use App\Http\Requests\LoginRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,14 +17,6 @@ class LoginController extends APIController
         $this->middleware('guest');
     }
 
-    protected function validateLogin(Request $request)
-    {
-        $request->validate([
-            $this->username() => 'required|email',
-            'password' => 'required|string',
-        ]);
-    }
-
     protected function authenticated(Request $request, $user)
     {
         // $contexto = Contexto::findOrFail($request->contexto_id);
@@ -32,22 +25,10 @@ class LoginController extends APIController
         // $request->session()->put('contextoEdital', $contexto->edital);
     }
 
-    /**
-     * Get the login username to be used by the controller.
-     *
-     * @return string
-     */
-    public function username()
+    public function loginCandidate(LoginRequest $request): Response
     {
-        return 'email';
-    }
+        $credentials = $request->validated();
 
-    public function loginCandidate(Request $request): Response
-    {
-        $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
         DB::beginTransaction();
         try {
             if(Auth::attempt($credentials)){
@@ -68,11 +49,8 @@ class LoginController extends APIController
         }
     }
 
-    public function loginAdmin(Request $request){
-        $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+    public function loginAdmin(LoginRequest $request){
+        $credentials = $request->validated();
 
         if (!Auth::attempt($credentials)) {
             return $this->sendError('Credenciais inválidas', ["credentials_error" => "Credenciais não encontradas no sistema."], Response::HTTP_UNAUTHORIZED);

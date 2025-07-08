@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\API\APIController;
-use App\Rules\Cpf;
-use Illuminate\Http\Request;
+use App\Http\Requests\RegisterRequest;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rule;
 
 class RegisterController extends APIController
 {
@@ -15,9 +13,9 @@ class RegisterController extends APIController
         $this->middleware('guest');
     }
 
-    public function register(Request $request)
+    public function register(RegisterRequest $request)
     {
-        $validator = $this->validator($request->all());
+        $validator = $request->validated();
 
         if ($validator->fails()) {
             return $this->sendError('Erro de validação.', $validator->errors());
@@ -30,30 +28,5 @@ class RegisterController extends APIController
         $success['token'] =  $user->createToken('MyApp')->plainTextToken;
         $success['user'] =  $user;
         return $this->sendResponse($success, 'Usuário registrado com sucesso.');
-    }
-
-    protected function validator(array $data)
-    {
-        $rules = [
-            'nome' => 'required',
-            'email' => ['required', 'email', Rule::unique('users', 'email'),],
-            'cpf' => [
-                'required',
-                new Cpf,
-                Rule::unique('users', 'cpf'),
-            ],
-            'password' => ['required', \Illuminate\Validation\Rules\Password::min(8),],
-            'confirm_password' => 'required|same:password',
-        ];
-
-        return \Illuminate\Support\Facades\Validator::make($data, $rules, [
-            'email.unique' => 'O email já está em uso.',
-        ], [
-            'confirm_password' => 'de Confirmação de Senha',
-            'cpf' => 'CPF',
-            'password' => 'de Senha',
-            'email' => 'Email',
-            'nome' => 'Nome'
-        ]);
     }
 }

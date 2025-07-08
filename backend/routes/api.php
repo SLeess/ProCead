@@ -7,42 +7,23 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\UserPermissionController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', [UserPermissionController::class, 'userPermissions'])->middleware('auth:sanctum');
 
-Route::view('/pdf', 'Relatorio', ['columns' => [
-["id" => 'n_inscricao', "header" => 'Número de Inscrição'],
-["id" => 'nome', "header" => 'Nome Completo'],
-["id" => 'email', "header" => 'Email'],
-["id" => 'cpf', "header" => 'CPF'],
-["id" => 'modalidade', "header" => 'Modalidade'],
-["id" => 'status', "header" => 'Status'],
-
-], 'rows' => []]);
-
-
-Route::get('/users', function(){
-    return response()->json([
-        'success' => true,
-        'data' => [
-            "users" => App\Models\User::all()
-        ],
-        // 'success' => false,
-        // 'error' => 'Not found Exception',
-        // 'data' => [
-            // "users" => App\Models\User::all()
-        // ],
-    ]);
-});
-
-Route::middleware(['throttle:global'])->group(function(){
+/* ---------- USUÁRIO ---------- */
+Route::name('usuario.')->group(function(){
     Route::post('/register', [RegisterController::class, 'register'])->name('register');
-    Route::post('/login', [LoginController::class, 'loginCandidate']);
-    Route::post('/admin/login', [LoginController::class, 'loginAdmin']);
-});
+    Route::post('/login', [LoginController::class, 'loginCandidate'])->name('login');
+    // Route::post('password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+    // Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
+})->middleware(['throttle:global']);
 
 
 
-Route::middleware(['auth:sanctum', 'throttle:auth', 'ability:access:candidate'])->group( function () {
+Route::name('candidato.')->group( function () {
+    Route::name('usuario.')->group(function() {
+        Route::get('/user', [UserPermissionController::class, 'userPermissions'])->name('dados');
+        Route::post('/logout', [LogOutController::class, 'logout'])->name('logout');
+    });
+
     Route::get('/data', function(){
         return response()->json(['data' =>
             [
@@ -185,12 +166,25 @@ Route::middleware(['auth:sanctum', 'throttle:auth', 'ability:access:candidate'])
             ]
         ], 200);
     })->middleware('permission:editar-inscricoes');
-
     Route::post('/export', [RelatorioController::class, 'export'])->name('export');
 
-    Route::post('/logout', [LogOutController::class, 'logout'])->name('logout');
-});
+})->middleware(['auth:sanctum', 'role:candidate']);
+/* ---------- FIM - CANDIDATO ---------- */
 
-Route::middleware(['auth:sanctum', 'ability:access:admin'])->group(function(){
 
-});
+/* ------------- ADMINISTRADOR ------------- */
+/* Rotas de Login do Administrador */
+Route::prefix('admin')->name('admin.')->group(function(){
+    Route::post('/admin/login', [LoginController::class, 'loginAdmin']);
+})->middleware(['auth:sanctum', 'permission:admin']);
+/* ---------- FIM - ADMINISTRADOR ---------- */
+
+
+
+/* ------------- SUPER-ADMINISTRADOR ------------- */
+/* Rotas de Login do Administrador */
+Route::name('superAdmin')->group(function(){
+
+})->middleware(['auth:sanctum', 'role:super-Admin']);
+/* ---------- FIM - SUPER-ADMINISTRADOR ---------- */
+
