@@ -43,7 +43,7 @@
         @apply mb-[60px] sm:mb-0;
     }
     main {
-        @apply mt-24 mx-8 sm:mx-10 pb-10;
+        @apply mt-10 mx-8 sm:mx-10 pb-10;
     }
     .primary-btn {
         @apply flex w-full cursor-pointer justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-blue-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:bg-slate-400 disabled:cursor-wait;

@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasPermissions;
 use Spatie\Permission\Traits\HasRoles;
+use App\Notifications\UserResetPassword;
 
 class User extends Authenticatable
 {
@@ -60,5 +61,12 @@ class User extends Authenticatable
         static::creating(function($model){
             $model->uuid = Str::uuid();
         });
+    }
+
+    public function sendPasswordResetNotification($token)
+    {
+        $url = env('FRONTEND_URL') . 'reset-password?token=' . $token . '&email=' . urlencode($this->email);
+
+        $this->notify(new UserResetPassword($url));
     }
 }

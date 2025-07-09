@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import "./Registro.css";
 import { maskCPF, registerSchema } from "./registroSchema";
 import { NavigationContext } from "@/Contexts/NavigationContext";
+import z from 'zod/v4';
 
 export default function Registro(){
 
@@ -19,7 +20,7 @@ export default function Registro(){
 
     const [errors, setErrors] = useState({});
 
-    const { setToken } = useContext(AppContext);
+    const { setToken, theme } = useContext(AppContext);
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -27,14 +28,13 @@ export default function Registro(){
         try {
             const validatedData = registerSchema.safeParse(formData);
             if (!validatedData.success) {
-                const formattedErrors = validatedData.error.format();
-
-                Object.values(formattedErrors).forEach(fieldErrors => {
-                    if(fieldErrors._errors) {
-                        fieldErrors._errors.forEach(err => toast.error(err));
+                const formattedErrors = z.treeifyError(validatedData.error);
+                                        
+                Object.values(formattedErrors.properties).forEach(fieldErrors => {
+                    if(fieldErrors.errors) {
+                        fieldErrors.errors.forEach(err => toast.error(err));
                     }
                 });
-
                 return;
             }
 
@@ -61,10 +61,15 @@ export default function Registro(){
                     toast.error(result.message || "Ocorreu um erro desconhecido.");
                 }
             } else{
-                toast.success(result.message || "Registrado com sucesso!");
-                localStorage.setItem('token', result.data.token);
-                setToken(result.data.token);
-                navigate('/');
+                toast.success((result.message ||  "Registrado com sucesso!") + " Redirecionando a página...", {
+                    autoClose: 1500,
+                    closeOnClick: false,
+                    theme: theme,
+                    onClose: () => {
+                        localStorage.setItem('token', result.data.token);
+                        setToken(result.data.token);
+                    }
+                });
             }
         } catch (error) {
             toast.error(error.toString());
@@ -91,9 +96,9 @@ export default function Registro(){
 
     return(
         <>
-            <div className="flex min-h-full flex-col px-6 py-5 lg:px-8 justify-center">
+            <div className="flex min-w-[300px] min-h-[95vh] flex-col px-6 py-5 lg:px-8 justify-center">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm mt-14 sm:mt-0">
-                    <img className="mx-auto h-25 w-auto" src="img/logo_cead_bg.png" alt="Unimontes logo"/>
+                    <img className="mx-auto h-25 w-auto" src={`${theme === 'light' ? "/img/img_logo.png" : '/img/logo_cead_bg_white_full.png'}`} alt="Unimontes logo"/>
                 </div>
                 <div id="container-form">
                     <div id="alert-form" role="alert">
@@ -216,9 +221,9 @@ export default function Registro(){
                         </div>
 
                         <div>
-                        <button 
-                            type="submit" 
-                            id="cadastroBtn">Cadastrar-se</button>
+                            <button type="submit" id="cadastroBtn">
+                                    Cadastrar-se
+                            </button>
                         </div>
                         <div className="w-10-12 text-center">
                             <a onClick={() => navigate("/login")} id="already_have_account">Já possui uma conta? Faça login!</a>

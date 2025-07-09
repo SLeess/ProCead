@@ -36,4 +36,11 @@ class ForgotPasswordRequest extends FormRequest
             'email' => 'Email',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'email.exists' => 'O email informado não está vinculado a um usuário no sistema.',
+        ];
+    }
 }

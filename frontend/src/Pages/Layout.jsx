@@ -14,7 +14,9 @@ export default function Layout()
                 user && <Header/>
             }
             <main>
-                <Outlet />
+                <div className="min-w-[300px] container relative max-w-screen-xl mx-auto">
+                    <Outlet />
+                </div>
             </main>
         </>
     );

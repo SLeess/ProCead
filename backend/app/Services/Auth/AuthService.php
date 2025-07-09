@@ -6,10 +6,12 @@ use App\Models\User;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Str;
 
 class AuthService
 {
@@ -107,17 +109,27 @@ class AuthService
     public function sendResetLinkEmail(array $data): array
     {
         DB::beginTransaction();
+
         try {
             $status = Password::broker()->sendResetLink(
-                $data['email'],
+                ['email' => $data['email']],
+                function ($user, $password) {
+                            $user->forceFill([
+                                'password' => Hash::make($password)
+                            ])->setRememberToken(Str::random(60));
+
+                            $user->save();
+                        }
             );
 
             if($status == Password::RESET_LINK_SENT){
+                DB::commit();
                 return ['status' => $status];
             }
 
             throw new Exception('Link de reset de senha não foi enviado.');
         } catch (Exception $e) {
+            DB::rollBack();
             throw new Exception($e->__toString());
         }
     }

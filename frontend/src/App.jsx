@@ -18,22 +18,17 @@ import Inscricoes from './Pages/Admin/Inscricoes/Inscricoes';
 import ProtectedRoute from './Routes/ProtectedRoute';
 import GuestRoutes from './Routes/GuestRoutes';
 import GuestAdminRoutes from './Routes/GuestAdminRoutes';
-import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+// Nossas novas páginas de exemplo
+import HomePage from './Pages/HomePage';
+import EditalPage from './Pages/EditalPage';
+import ProcessosAtivos from './Pages/Candidato/ProcessosAtivos/ProcessosAtivos';
+import RecuperarSenha from './Pages/Candidato/Auth/RecuperarSenha/RecuperarSenha';
 
 function App() {
   return (
     <div className="App">
-      <ToastContainer
-          position="top-right"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-      />
       <Routes>
         {/* ======================================= */}
         {/* ========= ROTAS PÚBLICAS/GUEST ======== */}
@@ -43,6 +38,7 @@ function App() {
         <Route element={<GuestRoutes />}>
           <Route path='/login' element={<Login />} />
           <Route path='/registro' element={<Registro />} />
+          <Route path='/recuperar-senha' element={<RecuperarSenha />} />
         </Route>
 
         {/* Rota para convidados da área de Admin */}
@@ -56,12 +52,14 @@ function App() {
         <Route 
           path='/' 
           element={
-            <ProtectedRoute role="candidate">
+            <ProtectedRoute role="candidato">
               <Layout />
             </ProtectedRoute>
           }
         >
-          <Route index element={<Home />} />
+          <Route index element={<ProcessosAtivos />} />
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/edital/:editalId" element={<EditalPage />} />
           <Route path='meus-processos' element={<MeusProcessos />} />
         </Route>
 

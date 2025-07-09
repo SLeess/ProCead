@@ -17,7 +17,7 @@ const Header = () => {
 
           {/* Menu para Desktop */}
           <div className={`hidden md:flex items-center`}>
-             <img src="/img/logo_cead_bg_white.png" alt="Logo CEAD" className="w-[120px] h-[50px]"/>
+             <img src="/img/logo_cead_bg_white_full.png" alt="Logo CEAD" className="w-[120px] h-[50px]"/>
              <ul id='desktop'>
                <li>
                   <NavLink to="/" end className={({ isActive }) => `link-page ${isActive ? "border-b-2 border-white" : ""}`}>
@@ -27,6 +27,11 @@ const Header = () => {
                <li>
                   <NavLink to="meus-processos" end className={({ isActive }) => `link-page ${isActive ? "border-b-2 border-white" : ""}`}>
                     Meus Processos
+                  </NavLink>
+               </li>
+               <li>
+                  <NavLink to="/home" end className={({ isActive }) => `link-page ${isActive ? "border-b-2 border-white" : ""}`}>
+                    Teste Pages
                   </NavLink>
                </li>
              </ul>
@@ -40,7 +45,7 @@ const Header = () => {
 
           {/* Botão Sanduíche */}
           <div className="md:hidden flex flex-row justify-center items-center">
-             <img src="/img/logo_cead_bg_white.png" alt="Logo CEAD" className="w-[120px] h-[50px]"/>
+             <img src="/img/logo_cead_bg_white.png" alt="Logo CEAD" className="w-[70px] h-[35px] my-2"/>
           </div>
           <div className="md:hidden flex flex-row justify-center">
              <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="text-white focus:outline-none">
@@ -66,6 +71,11 @@ const Header = () => {
           <li>
             <NavLink to="meus-processos" end onClick={() => setIsMenuOpen(false)} className={({ isActive }) => `link-page ${isActive ? "bg-white/10 rounded-md" : "hover:bg-white/5"}`}>
               Meus Processos
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/home" end onClick={() => setIsMenuOpen(false)} className={({ isActive }) => `link-page ${isActive ? "bg-white/10 rounded-md" : "hover:bg-white/5"}`}>
+              Teste Pages
             </NavLink>
           </li>
         </ul>

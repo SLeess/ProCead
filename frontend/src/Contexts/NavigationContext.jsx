@@ -6,8 +6,12 @@ export const NavigationContext = createContext(null);
 export const NavigationProvider = ({ children }) => {
     const navigate = useNavigate();
 
+    const navigationExportValue = { 
+        navigate
+    };
+
     return (
-    <NavigationContext.Provider value={navigate}>
+    <NavigationContext.Provider value={navigationExportValue}>
         {children}
     </NavigationContext.Provider>
     );
