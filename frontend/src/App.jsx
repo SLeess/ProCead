@@ -24,6 +24,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import HomePage from './Pages/HomePage';
 import EditalPage from './Pages/EditalPage';
 import ProcessosAtivos from './Pages/Candidato/ProcessosAtivos/ProcessosAtivos';
+import EsqueceuSenha from './Pages/Candidato/Auth/EsqueceuSenha/EsqueceuSenha';
 import RecuperarSenha from './Pages/Candidato/Auth/RecuperarSenha/RecuperarSenha';
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
         <Route element={<GuestRoutes />}>
           <Route path='/login' element={<Login />} />
           <Route path='/registro' element={<Registro />} />
+          <Route path='/esqueceu-senha' element={<EsqueceuSenha />} />
           <Route path='/recuperar-senha' element={<RecuperarSenha />} />
         </Route>
 

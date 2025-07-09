@@ -54,7 +54,7 @@ export default function Login() {
                 toast.success((result.message || "Autenticado com sucesso!")  + " Redirecionando a página...", {
                     autoClose: 1500,
                     closeOnClick: false,
-                    theme: theme,
+                    // theme: theme,
                     onClose: () => {
                         localStorage.setItem('token', result.data.token);
                         setToken(result.data.token);
@@ -138,7 +138,7 @@ export default function Login() {
                         </div>
 
                         <div className="text-center mb-6">
-                            <a onClick={()=> navigate('/recuperar-senha')} className="hover:cursor-pointer justify-center text-[12px] text-[#000000b2] dark:text-white hover:underline hover:bg-transparent">Esqueceu sua Senha?</a>
+                            <a onClick={()=> navigate('/esqueceu-senha')} className="hover:cursor-pointer justify-center text-[12px] text-[#000000b2] dark:text-white hover:underline hover:bg-transparent">Esqueceu sua Senha?</a>
                         </div>
                     </form>
 

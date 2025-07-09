@@ -1,26 +1,46 @@
-import { toast } from 'react-toastify';
+import LoaderPages from "@/Components/Global/LoaderPages/LoaderPages";
+import ThemeToggleBtn from "@/Components/Global/ThemeToggleBtn/ThemeToggleBtn";
+import { useAppContext } from "@/Contexts/AppContext";
+import { NavigationContext } from "@/Contexts/NavigationContext";
+import { useContext, useEffect, useRef, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import './RecuperarSenha.css';
-import { recuperarSenhaSchema } from './recuperarSenhaSchema';
-import { NavigationContext } from '@/Contexts/NavigationContext';
-import { useContext, useRef, useState } from 'react';
-import z from 'zod/v4';
-import LoaderPages from '@/Components/Global/LoaderPages/LoaderPages';
-import { useAppContext } from '@/Contexts/AppContext';
-import ThemeToggleBtn from '@/Components/Global/ThemeToggleBtn/ThemeToggleBtn';
+import { recuperarSenhaSchema } from "./recuperarSenhaSchema";
+import z from "zod/v4";
+import { toast } from "react-toastify";
 
-export default function RecuperarSenha(){
-    const { navigate } = useContext(NavigationContext);
+export default function RecuperarSenha()
+{
     const { theme } = useAppContext();
+    const [ searchParams ] = useSearchParams();
+    const { navigate } = useContext(NavigationContext);
+    const inputRef = useRef(null);
+
     const [ loading, setLoading ] = useState(false);
-    const [ email, setEmail ] = useState("");
+    const [errors, setErrors] = useState({});
     const [ focusedField, setFocusedField ] = useState(null);
-    const { inputRef } = useRef(`border-[#004da9]`);
+    const [formData, setFormData] = useState({
+        token: '',
+        email: '',
+        password: '',
+        confirm_password: '',
+    });
 
-    const handleRecoverPassword = async (e) => {
+    useEffect(() => {
+        setFormData(f => (
+            {
+                ...f,
+                token: searchParams.get('token'),
+                email: searchParams.get('email'),
+            }
+        ));
+
+        setErrors({});
+    }, [searchParams]);
+
+    async function handleChangePassword(e){
         e.preventDefault();
-
-        setLoading(true);
-        const validation = recuperarSenhaSchema.safeParse({ email });
+        const validation = recuperarSenhaSchema.safeParse( formData );
         
         if (!validation.success) {
             const formattedErrors = z.treeifyError(validation.error);
@@ -34,17 +54,25 @@ export default function RecuperarSenha(){
             return;
         }
 
+        setLoading(true);
         try{
-            const res = await fetch('/api/forgot-password', {
+            const res = await fetch('/api/reset-password', {
                 method: 'post',
-                body: JSON.stringify({'email': email}),
+                body: JSON.stringify(formData),
             });
 
             const result = await res.json();
             if (!result.success || !res.ok) {
                 result.errors ? toast.error(result.message) : toast.warning(result.message);
             } else {
-                toast.success(result.message);
+                toast.success(result.message  + " Redirecionando a página de Login...", {
+                    autoClose: 1500,
+                    closeOnClick: false,
+                    // theme: theme,
+                    onClose: () => {
+                        navigate('/login')
+                    }
+                });
             }
         } catch (error) {
             toast.error(error.toString());
@@ -53,9 +81,19 @@ export default function RecuperarSenha(){
         }
     };
 
-    const handleChangeEmail = (e) => {
-        setEmail(e.target.value);
+    const handleChangeAttr = (e) => {
+        const attr = e.target.name;
+        const value = e.target.value;
+
+        setFormData(f => ({...f, [attr]: value}));
+        setErrors(
+            er => {
+                const {[attr]: _, ...remainErrors} = er;
+                return remainErrors;
+            }
+        )
     };
+
     return (
         <>
             <div className={`absolute top-2 right-2`}>
@@ -71,38 +109,59 @@ export default function RecuperarSenha(){
                 </div>
                 <div id="container-recover-pass-form">
                     <div id="alert-password-form" role="alert">
-                        <span className="font-normal text-md">Informe abaixo o seu e-mail para receber um link para redefinir a sua senha de acesso.</span>
+                        <span className="font-normal text-md">Informe abaixo uma nova senha para sua conta.</span>
                     </div>
 
-                    <form className="w-full" id="recuperarSenhaForm" onSubmit={handleRecoverPassword}>
+                    <form className="w-full" id="recuperarSenhaForm" onSubmit={handleChangePassword}>
                         <div className="mb-3 mt-5">
                             <div className="mx-auto relative h-[45px] w-[332px] max-w-full">
                                 <input 
-                                    type="email" 
-                                    id="recoverPass" 
-                                    name="email"
+                                    type="password" 
+                                    id="password" 
+                                    name="password"
                                     ref={inputRef} 
-                                    className={`input-field`} 
+                                    className={`input-field recoverPass`} 
                                     required
                                     autoComplete="on"
-                                    onChange={handleChangeEmail}
-                                    onFocus={() => setFocusedField('email')}
+                                    onChange={handleChangeAttr}
+                                    onFocus={() => setFocusedField('password')}
                                     onBlur={() => setFocusedField(null)}
                                 />
-                                <label htmlFor="recoverPass" className={`${(focusedField === 'email' || email.length > 0) 
+                                <label htmlFor="recoverPass" className={`${(focusedField === 'password' || formData.password.length > 0) 
                                         ? 'text-xs -translate-y-5 bg-gray-50 px-1' // ⬅️ Alteração aqui
                                         : 'text-[15px] font-medium'}`}>
-                                    E-mail de recuperação
+                                    Senha
+                                </label>
+                            </div>
+                        </div>
+                        <div className="mb-3 mt-5">
+                            <div className="mx-auto relative h-[45px] w-[332px] max-w-full">
+                                <input 
+                                    type="password" 
+                                    id="confirm_password" 
+                                    name="confirm_password"
+                                    ref={inputRef} 
+                                    className={`input-field recoverPass`} 
+                                    required
+                                    autoComplete="on"
+                                    onChange={handleChangeAttr}
+                                    onFocus={() => setFocusedField('confirm_password')}
+                                    onBlur={() => setFocusedField(null)}
+                                />
+                                <label htmlFor="recoverPass" className={`${(focusedField === 'confirm_password' || formData.confirm_password.length > 0) 
+                                        ? 'text-xs -translate-y-5 bg-gray-50 px-1' // ⬅️ Alteração aqui
+                                        : 'text-[15px] font-medium'}`}>
+                                    Confirme sua Senha
                                 </label>
                             </div>
                         </div>
                         <div className="flex justify-center mb-3">
                             <button type="submit" id={`novaSenha`}>
-                                Solicitar nova senha
+                                Alterar a Senha
                             </button>
                         </div>
                         <div className="w-10-12 text-center">
-                            <a onClick={() => navigate("/login")} id="voltarLoginPage">Voltar para o formulário de login!</a>
+                            <a onClick={() => navigate("/login")} id="voltarLoginPageRecoverPass">Voltar para o formulário de login!</a>
                         </div>
                     </form>
                 </div>

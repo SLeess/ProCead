@@ -112,14 +112,7 @@ class AuthService
 
         try {
             $status = Password::broker()->sendResetLink(
-                ['email' => $data['email']],
-                function ($user, $password) {
-                            $user->forceFill([
-                                'password' => Hash::make($password)
-                            ])->setRememberToken(Str::random(60));
-
-                            $user->save();
-                        }
+                ['email' => $data['email']]
             );
 
             if($status == Password::RESET_LINK_SENT){
@@ -127,10 +120,34 @@ class AuthService
                 return ['status' => $status];
             }
 
-            throw new Exception('Link de reset de senha não foi enviado.');
+            throw new Exception('Não foi possível enviar o link de reset de senha. Status: ' . $status);
         } catch (Exception $e) {
             DB::rollBack();
-            throw new Exception($e->__toString());
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    /**
+     * Faz a troca para a senha nova resetada do usuário
+     */
+    public function resetPassword(array $data)
+    {
+        DB::beginTransaction();
+
+        try {
+            $user = User::where('email', $data['email'])->first();
+            $user->password = Hash::make($data['password']);
+            $user->save();
+
+            DB::table('password_reset_tokens')
+                ->where('email', $data['email'])
+                ->delete();
+
+            DB::commit();
+            return 'Senha alterada com sucesso!';
+        } catch (Exception $exception) {
+            DB::rollBack();
+            throw new Exception('Erro ao tentar trocar a senha: '. $exception->__tostring());
         }
     }
 }

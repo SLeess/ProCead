@@ -25,7 +25,7 @@ class UserResetPassword extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('Redefinição de Senha do Sistema de ' + env('APP_NAME'))
+            ->subject('Redefinição de Senha do Sistema de ' . env('APP_NAME'))
             ->success()
             ->greeting('Prezado (a),')
             ->line('Você está recebendo este e-mail porque recebemos uma solicitação de redefinição de senha de sua conta.')

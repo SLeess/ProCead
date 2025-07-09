@@ -65,7 +65,7 @@ export default function Registro(){
                 toast.success((result.message ||  "Registrado com sucesso!") + " Redirecionando a página...", {
                     autoClose: 1500,
                     closeOnClick: false,
-                    theme: theme,
+                    // theme: theme,
                     onClose: () => {
                         localStorage.setItem('token', result.data.token);
                         setToken(result.data.token);
@@ -89,8 +89,8 @@ export default function Registro(){
         
         setFormData(f => ({...f, [attr]: finalValue}));
 
-        setErrors(e => {
-            const {[attr]: _, ...remainErrors} = e;
+        setErrors(er => {
+            const {[attr]: _, ...remainErrors} = er;
             return remainErrors;
         });
     };
