@@ -5,9 +5,12 @@ import { NavigationContext } from '@/Contexts/NavigationContext';
 import { useContext, useRef, useState } from 'react';
 import z from 'zod/v4';
 import LoaderPages from '@/Components/Global/LoaderPages/LoaderPages';
+import { useAppContext } from '@/Contexts/AppContext';
+import ThemeToggleBtn from '@/Components/Global/ThemeToggleBtn/ThemeToggleBtn';
 
 export default function RecuperarSenha(){
     const { navigate } = useContext(NavigationContext);
+    const { theme } = useAppContext();
     const [ loading, setLoading ] = useState(false);
     const [ email, setEmail ] = useState("");
     const [ focusedField, setFocusedField ] = useState(null);
@@ -55,13 +58,16 @@ export default function RecuperarSenha(){
     };
     return (
         <>
+            <div className={`absolute top-2 right-2`}>
+                <ThemeToggleBtn/>
+            </div>
             {
                 loading &&
                 <LoaderPages/>
             }
             <div className="flex min-w-[300px] min-h-[95vh] flex-col px-6 py-5 lg:px-8 justify-center">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm mt-14 sm:mt-0">
-                    <img className="mx-auto h-25 w-auto" src="img/logo_cead_bg.png" alt="Unimontes logo"/>
+                    <img className="mx-auto h-25 w-auto" src={`${theme === 'light' ? "/img/img_logo.png" : '/img/logo_cead_bg_white_full.png'}`} alt="Unimontes logo"/>
                 </div>
                 <div id="container-recover-pass-form">
                     <div id="alert-password-form" role="alert">

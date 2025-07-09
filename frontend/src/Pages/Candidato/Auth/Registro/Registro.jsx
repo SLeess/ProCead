@@ -5,6 +5,7 @@ import "./Registro.css";
 import { maskCPF, registerSchema } from "./registroSchema";
 import { NavigationContext } from "@/Contexts/NavigationContext";
 import z from 'zod/v4';
+import ThemeToggleBtn from "@/Components/Global/ThemeToggleBtn/ThemeToggleBtn";
 
 export default function Registro(){
 
@@ -96,6 +97,9 @@ export default function Registro(){
 
     return(
         <>
+            <div className={`absolute top-2 right-2`}>
+                <ThemeToggleBtn/>
+            </div>
             <div className="flex min-w-[300px] min-h-[95vh] flex-col px-6 py-5 lg:px-8 justify-center">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm mt-14 sm:mt-0">
                     <img className="mx-auto h-25 w-auto" src={`${theme === 'light' ? "/img/img_logo.png" : '/img/logo_cead_bg_white_full.png'}`} alt="Unimontes logo"/>
