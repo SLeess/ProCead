@@ -41,10 +41,11 @@ export default function EsqueceuSenha(){
             });
 
             const result = await res.json();
-            console.log(result);
             if (!result.success || !res.ok) {
-                if(Array.isArray(result.errors) && result.errors.length > 0){
-                    Object(result.errors).forEach((er) => toast.error(er));
+                if((typeof result.errors === 'object'), Object.values(result.errors).length > 0){
+                    result.errors.forEach(errorMessage => {
+                        toast.error(errorMessage);
+                    });
                 } else{
                     result.errors ? toast.error(result.message) : toast.warning(result.message);
                 }

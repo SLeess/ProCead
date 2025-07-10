@@ -63,12 +63,21 @@ export default function RecuperarSenha()
 
             const result = await res.json();
             if (!result.success || !res.ok) {
-                result.errors ? toast.error(result.message) : toast.warning(result.message);
+                if((typeof result.errors === 'object'), Object.values(result.errors).length > 0){
+                    Object.values(result.errors).forEach(errorArray => {
+                        errorArray.forEach(errorMessage => {
+                            toast.error(errorMessage);
+                        });
+                    });
+                } else{
+                    result.errors ? toast.error(result.message) : toast.warning(result.message);
+                }
             } else {
                 toast.success(result.message  + " Redirecionando a página de Login...", {
                     autoClose: 1500,
                     closeOnClick: false,
-                    // theme: theme,
+                    pauseOnFocusLoss: false,
+
                     onClose: () => {
                         navigate('/login')
                     }

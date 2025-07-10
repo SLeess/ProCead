@@ -47,7 +47,11 @@ export default function Login() {
             
             if (!result.success || !res.ok) {
                 if(result.errors){
-                    Object(result.errors).forEach((er) => toast.error(er));
+                    Object.values(result.errors).forEach(errorArray => {
+                        errorArray.forEach(errorMessage => {
+                            toast.error(errorMessage);
+                        });
+                    });
                 }
             } else{
                 
@@ -89,7 +93,7 @@ export default function Login() {
                         <div className="mb-4">
                             <div className="mx-auto relative h-[45px] w-[352px]">
                                 <input 
-                                    type="text" 
+                                    type="email" 
                                     id="email" 
                                     name="email"
                                     ref={inputRef} 
