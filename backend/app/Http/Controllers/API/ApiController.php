@@ -14,7 +14,7 @@ class APIController extends Controller
      */
     public function sendResponse($result, $message, $code = Response::HTTP_OK)
     {
-     $response = [
+        $response = [
             'success' => true,
             'data'    => $result,
             'message' => $message,
