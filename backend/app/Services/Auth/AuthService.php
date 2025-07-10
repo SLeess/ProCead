@@ -120,6 +120,10 @@ class AuthService
                 return ['status' => $status];
             }
 
+            if($status == Password::RESET_THROTTLED){
+                throw new Exception('Não foi possível enviar outro link de recuperação, pois já existe um pendente. O tempo entre cada solicitação deve ser de pelo menos '. config('auth.passwords.users.throttle'). ' segundos.');
+            }
+
             throw new Exception('Não foi possível enviar o link de reset de senha. Status: ' . $status);
         } catch (Exception $e) {
             DB::rollBack();
