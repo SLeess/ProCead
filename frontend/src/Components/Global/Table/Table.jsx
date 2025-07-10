@@ -41,8 +41,8 @@ export default function Table({ rows, cols, tableName, titulo, details, visibleD
     }, [filterOpen]);
 
     const [pagination, setPagination] = useState({
-    pageIndex: 0,
-    pageSize: 10,
+        pageIndex: 0,
+        pageSize: 10,
     });
 
     const data = useMemo(() => rows, [rows]);
@@ -118,11 +118,11 @@ export default function Table({ rows, cols, tableName, titulo, details, visibleD
             const response = await fetch('/api/export', {
                 method: 'post',
                 body: JSON.stringify({
-                columns: visibleColumns.filter(chave => chave.id !== 'select' && chave.id !== 'acoes'),
-                rows: sortedRows,
-                tableName: tableName,
-                titulo: titulo,
-            }),
+                    columns: visibleColumns.filter(chave => chave.id !== 'select' && chave.id !== 'acoes'),
+                    rows: sortedRows,
+                    tableName: tableName,
+                    titulo: titulo,
+                }),
                 headers:{
                 'Content-Type': 'application/json', 
                 'Accept': 'application/json, application/pdf', 
