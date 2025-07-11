@@ -101,7 +101,7 @@ export default function AppProvider({ children }) {
         setPermissions, 
         setRoles,
         hasPermissionForEdital,
-    }; // Exponha o 'loading'
+    };
 
     return (
         <AppContext.Provider value={contextValue}>
