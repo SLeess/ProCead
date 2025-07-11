@@ -151,7 +151,7 @@ class AuthService
             return 'Senha alterada com sucesso!';
         } catch (Exception $exception) {
             DB::rollBack();
-            throw new Exception('Erro ao tentar trocar a senha: '. $exception->__tostring());
+            throw new Exception('Erro ao tentar trocar a senha: '. $exception->getMessage());
         }
     }
 }
