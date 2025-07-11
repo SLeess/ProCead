@@ -198,13 +198,13 @@ function MeusProcessos() {
 
   return (
     <>
-    <section className='mx-auto min-h-[75vh] px-2 md:px-6 mt-10 py-12 bg-white rounded-2xl shadow-[-1px_0px_2px_0px_rgba(0,0,0,0.25),1px_1px_2px_0px_rgba(0,0,0,0.25)]'>
-      <form className='max-w-5xl mx-auto' onSubmit={handleFormSubmit}>
-        <header className="flex flex-col md:flex-row items-center md:justify-between mb-12 mx-2 space-y-4 md:space-y-0">
-          <h1 className="text-3xl text-center sm:text-4xl text-gray-800 font-normal">Meus Processos Seletivos</h1>
+    <section id='MeusProcessos'>
+      <form onSubmit={handleFormSubmit}>
+        <header>
+          <h1>Meus Processos Seletivos</h1>
           <div className='flex flex-col items-center sm:flex-row gap-2'>
-            <div className="relative max-w-[250px] md:max-w-[350px] w-full mx-0 md:mx-2">
-              <div className="absolute top-3 left-0 flex items-center pl-3 pointer-events-none">
+            <div className="searchInputDiv">
+              <div className="divFaSearchIcon">
                 <FaSearch className="text-gray-400" />
               </div>
               <input
@@ -212,28 +212,16 @@ function MeusProcessos() {
                 placeholder="Pesquisar..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="h-[40px] w-full md:w-[350px] p-2 pl-10 text-sm text-gray-900 border-solid border-[rgba(0,0,0,0.50)] border-[0.4px] rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-200 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
               />
-              <button className='absolute top-0 right-0 flex items-center bg-[#095ec5] hover:bg-[#0751ac] text-white h-[40px] p-[10px_12px] justify-center rounded-r-lg'>
-                Buscar
-              </button>
+              <button>Buscar</button>
             </div>
-            <div className='' ref={filterDropdownRef}>
-              <button 
-                  className={`h-[40px] max-w-30 
-                    hover:cursor-pointer 
-                    inline-flex items-center gap-3 justify-items-end sm:justify-items-normal 
-                    bg-[white] shadow-[0px_0px_0px_1px_rgba(0,0,0,0.08),0px_6px_24px_0px_rgba(0,0,0,0.05)] 
-                    pt-[11px] pb-2.5 px-[15px] rounded-[10px]
-                    focus:border-2
-                  `}
-                  onClick={() => setFilterOpen(!filterOpen)}
-              >
+            <div className='filterContent' ref={filterDropdownRef}>
+              <button onClick={() => setFilterOpen(!filterOpen)}>
                 <IoIosFunnel/>
                 Filtros
               </button>
               {filterOpen && (
-                    <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-700 rounded-md shadow-lg z-10 p-2">
+                    <div className="filtersModal">
                       <p className="text-sm font-semibold text-gray-800 dark:text-white mb-2">Filtrar por Status</p>
                       {['Todos', 'Em andamento', 'Encerrado'].map(statusOption => (
                           <div key={statusOption} className="flex items-center mb-1">
