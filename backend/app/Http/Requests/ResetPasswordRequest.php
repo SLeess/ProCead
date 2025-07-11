@@ -29,4 +29,18 @@ class ResetPasswordRequest extends FormRequest
             'confirm_password' => 'required|same:password',
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'email.exists' => 'O :attribute da requisição é inválido.',
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'email' => 'Email',
+        ];
+    }
 }
