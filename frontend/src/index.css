@@ -108,6 +108,39 @@
   border-color: red;
 }
 
+
+/* START ------------------------------------- Componente de exibição de que não foram encontrados itens de CRUDs ------------------------------------- */
+
+div.info-not-found-itens{
+    @apply flex flex-col items-center justify-center;
+    @apply pb-25;
+
+    /* White Mode */
+    @apply text-gray-500;
+
+    /* Dark Mode */
+    @apply dark:text-gray-400;
+}
+
+div.info-not-found-itens .ICON{
+    @apply w-24 h-24 mb-4;
+    
+   /* White Mode */
+    @apply text-gray-400;
+    
+    /* Dark Mode */
+    @apply dark:text-gray-500;
+}
+
+div.info-not-found-itens p#first{
+    @apply text-xl font-semibold mb-2;
+}
+
+div.info-not-found-itens p#second{
+    @apply text-base text-center max-w-md;
+}
+/* END   ----------------------------------------------------------------------------------------------------------------------- */
+
 /*---break---*/
 
 @theme inline {

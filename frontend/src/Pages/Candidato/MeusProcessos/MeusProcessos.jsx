@@ -222,7 +222,7 @@ function MeusProcessos() {
               </button>
               {filterOpen && (
                     <div className="filtersModal">
-                      <p className="text-sm font-semibold text-gray-800 dark:text-white mb-2">Filtrar por Status</p>
+                      <p>Filtrar por Status</p>
                       {['Todos', 'Em andamento', 'Encerrado'].map(statusOption => (
                           <div key={statusOption} className="flex items-center mb-1">
                               <input
@@ -248,7 +248,7 @@ function MeusProcessos() {
         {
         loading ?
             <LoaderPages/> : 
-          paginatedAndFilteredRows.length > 0 ?
+            paginatedAndFilteredRows.length > 0 ?
               (           
                 <ul className='grid grid-cols-1 gap-6'>
                   {
@@ -261,15 +261,15 @@ function MeusProcessos() {
                   }
                 </ul>
               )
-            :
-            <div className='flex flex-col items-center justify-center pb-25 text-gray-500 dark:text-gray-400'>
-                <CiInboxIn className="w-24 h-24 mb-4 text-gray-400 dark:text-gray-500" />
-                <p className="text-xl font-semibold mb-2">Ops! Nenhum processo foi encontrado.</p>
-                <p className="text-base text-center max-w-md">
-                    Não encontramos nenhum processo seletivo que corresponda aos seus critérios de busca ou filtros os quais você tenha participado.
-                    Tente ajustar sua pesquisa ou limpar os filtros para ver mais opções.
-                </p>
-            </div>
+              :
+              <div className='info-not-found-itens'>
+                  <CiInboxIn className="ICON" />
+                  <p id='first'>Ops! Nenhum processo foi encontrado.</p>
+                  <p id='second'>
+                      Não encontramos nenhum processo seletivo que corresponda aos seus critérios de busca ou filtros os quais você tenha participado.
+                      Tente ajustar sua pesquisa ou limpar os filtros para ver mais opções.
+                  </p>
+              </div>
         }
         {
           paginatedAndFilteredRows.length > 0 && 

@@ -80,6 +80,16 @@ section#MeusProcessos{
     @apply dark:bg-gray-700 dark:text-white;
 }
 
+#MeusProcessos header div.filterContent div.filtersModal p{
+    @apply mb-2;
+    @apply text-sm font-semibold;
+    
+    /* White Mode */
+    @apply text-gray-800;
+
+    /* Dark Mode */
+    @apply dark:text-white;
+}
 #MeusProcessos header div.filterContent div.filtersModal{
     @apply absolute right-0 z-10 mt-2;
     @apply w-48 p-2; 

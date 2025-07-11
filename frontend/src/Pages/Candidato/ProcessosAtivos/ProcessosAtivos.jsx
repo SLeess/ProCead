@@ -64,10 +64,10 @@ export default function ProcessosAtivos(){
             </div>
           )
           :
-            <div className='flex flex-col items-center justify-center pb-25 text-gray-500 dark:text-gray-400'>
-                <CiInboxIn className="w-24 h-24 mb-4 text-gray-400 dark:text-gray-500" />
-                <p className="text-xl font-semibold mb-2">Ops! Nenhum processo em andamento foi encontrado.</p>
-                <p className="text-base text-center max-w-md">
+            <div className='info-not-found-itens'>
+                <CiInboxIn className="ICON"/>
+                <p id="first">Ops! Nenhum processo em andamento foi encontrado.</p>
+                <p id="second">
                     Não encontramos nenhum processo seletivo que esteja em andamento hoje.
                     Aguarde o início de novos processos.
                 </p>
