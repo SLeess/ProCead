@@ -28,7 +28,7 @@ function MeusProcessos() {
       setLoading(true);
       setErrors([]);
       /** pra testar o loading com demora */
-      await new Promise(resolve => setTimeout(resolve, 5000));
+      // await new Promise(resolve => setTimeout(resolve, 5000));
       try {
           const res = await fetch('/api/user/meus-processos', { // Substitua pela URL real da sua API
               method: 'GET',
@@ -101,21 +101,22 @@ function MeusProcessos() {
       },
       onGlobalFilterChange: setFiltro,
       onPaginationChange: setPagination,
-      // Adiciona um filtro de coluna personalizado pelo status e pelo campo de Pesquisa
+      //  filtro de coluna personalizado pelo status e pelo campo de Pesquisa
       globalFilterFn: (row, columnId, filterValue) => {
-          // Primeiro, o filtro de busca global (se houver um valor de busca)
-          var infoReturn = false;
-          if (search) {
-              const cellValue = row.getValue(columnId);
-              if (typeof cellValue === 'string' && cellValue.toLowerCase().includes(filterValue.toLowerCase())) {
-                  infoReturn = true;
-              }
-          }
-          // Se não houver busca global, ou se a busca global passou, aplique o filtro de status
-          if (filtro && (filtro === row.original.status)) {
-              infoReturn = false;
-          }
-          return infoReturn;
+            const searchTerm = filterValue ? filterValue.toLowerCase() : '';
+            const currentFiltroStatus = filtro; // 'filtro' é o estado do radio button ('Todos', 'Em andamento', 'Encerrado')
+
+            // Lógica para busca textual (se houver um termo de busca)
+            let textMatches = true;
+            if (searchTerm) {
+                const rowValues = Object.values(row.original).join(' ').toLowerCase();
+                textMatches = rowValues.includes(searchTerm);
+            }
+
+            // Lógica para filtro de status
+            const statusMatches = (currentFiltroStatus === 'Todos' || row.original.status === currentFiltroStatus);
+
+            return textMatches && statusMatches;
       },
   });
 
@@ -197,10 +198,6 @@ function MeusProcessos() {
 
   return (
     <>
-    {/* {
-        loading &&
-        <LoaderPages/>
-    } */}
     <section className='mx-auto min-h-[75vh] px-2 md:px-6 mt-10 py-12 bg-white rounded-2xl shadow-[-1px_0px_2px_0px_rgba(0,0,0,0.25),1px_1px_2px_0px_rgba(0,0,0,0.25)]'>
       <form className='max-w-5xl mx-auto' onSubmit={handleFormSubmit}>
         <header className="flex flex-col md:flex-row items-center md:justify-between mb-12 mx-2 space-y-4 md:space-y-0">
