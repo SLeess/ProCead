@@ -1,5 +1,6 @@
 import React from 'react';
-import styles from "./ProcessoPessoalCard.module.css"
+import styles from "./ProcessoPessoalCard.module.css";
+import { HiOutlineArchiveBoxXMark } from "react-icons/hi2";
 import { HiOutlineCheckCircle } from 'react-icons/hi';
 
 export default function ProcessoPessoalCard({ processo }: ProcessoPessoalCardProps ){
@@ -17,10 +18,22 @@ export default function ProcessoPessoalCard({ processo }: ProcessoPessoalCardPro
                     </p>
                     <div className="flex-grow"></div>
                     <div className={`mt-7 ${styles.status}`}>
-                        <HiOutlineCheckCircle className={` ${processo.status === "Em andamento" ? 'text-[#FFC107]' : 'text-gray-700'}`} size={22}/>
-                        <span className={` ${processo.status === "Em andamento" ? 'text-[#FFC107]' : 'text-gray-700'}`}>
-                            {processo.status}
-                        </span>
+                        {
+                            processo.status === "Em andamento" ? 
+                            <>
+                                <HiOutlineCheckCircle className={`text-[#FFC107]`} size={22}/>
+                                <span className={`text-[#FFC107]`}>
+                                    {processo.status}
+                                </span>
+                            </>
+                            :
+                            <>
+                                <HiOutlineArchiveBoxXMark className={`text-gray-700`} size={22}/>
+                                <span className={`text-gray-700`}>
+                                    {processo.status}
+                                </span>
+                            </>
+                        }
                         <div className={`w-full flex flex-row-reverse`}>
                             <button className={`cursor-pointer p-2 rounded-lg bg-[#095ec5] text-white dark:bg-white dark:text-[#29166F]`}>
                                 Entrar no edital
