@@ -47,24 +47,19 @@ export default function Login() {
             
             if (!result.success || !res.ok) {
                 if(result.errors){
-                    Object.values(result.errors).forEach(errorArray => {
-                        errorArray.forEach(errorMessage => {
-                            toast.error(errorMessage);
-                        });
+                    result.errors.forEach(errorMessage => {
+                        toast.error(errorMessage);
                     });
                 }
             } else{
-                
-                toast.success((result.message || "Autenticado com sucesso!")  + " Redirecionando a página...", {
+                localStorage.setItem('token', result.data.token);
+                setToken(result.data.token);
+                setPermissions(result.data.permissions || []);
+                setRoles(result.data.roles || []);
+
+                toast.success((result.message || "Autenticado com sucesso!") + " Redirecionando a página...", {
+                    closeOnClick: true,
                     autoClose: 1500,
-                    closeOnClick: false,
-                    // theme: theme,
-                    onClose: () => {
-                        localStorage.setItem('token', result.data.token);
-                        setToken(result.data.token);
-                        setPermissions(result.data.permissions || []);
-                        setRoles(result.data.roles || []);
-                    }
                 });
             }
         } catch (error) {
