@@ -21,8 +21,8 @@ import GuestAdminRoutes from './Routes/GuestAdminRoutes';
 import 'react-toastify/dist/ReactToastify.css';
 
 // Nossas novas páginas de exemplo
-import HomePage from './Pages/HomePage';
-import EditalPage from './Pages/EditalPage';
+// import HomePage from './Pages/HomePage';
+// import EditalPage from './Pages/EditalPage';
 import ProcessosAtivos from './Pages/Candidato/ProcessosAtivos/ProcessosAtivos';
 import EsqueceuSenha from './Pages/Candidato/Auth/EsqueceuSenha/EsqueceuSenha';
 import RecuperarSenha from './Pages/Candidato/Auth/RecuperarSenha/RecuperarSenha';
@@ -73,8 +73,8 @@ function App() {
             }
           >
             <Route index element={<ProcessosAtivos />} />
-            <Route path="/home" element={<HomePage />} />
-            <Route path="/edital/:editalId" element={<EditalPage />} />
+            <Route path="/home" element={<></>} />
+            <Route path="/edital/:editalId" element={<></>} />
             <Route path='meus-processos' element={<MeusProcessos />} />
           </Route>
 

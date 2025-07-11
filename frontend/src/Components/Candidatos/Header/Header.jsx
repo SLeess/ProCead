@@ -29,11 +29,11 @@ const Header = () => {
                     Meus Processos
                   </NavLink>
                </li>
-               <li>
+               {/* <li>
                   <NavLink to="/home" end className={({ isActive }) => `link-page ${isActive ? "border-b-2 border-white" : ""}`}>
                     Teste Pages
                   </NavLink>
-               </li>
+               </li> */}
              </ul>
           </div>
           <div className="hidden md:flex items-center">
@@ -73,11 +73,11 @@ const Header = () => {
               Meus Processos
             </NavLink>
           </li>
-          <li>
+          {/* <li>
             <NavLink to="/home" end onClick={() => setIsMenuOpen(false)} className={({ isActive }) => `link-page ${isActive ? "bg-white/10 rounded-md" : "hover:bg-white/5"}`}>
               Teste Pages
             </NavLink>
-          </li>
+          </li> */}
         </ul>
         <div className="flex justify-end items-center space-x-4 mt-6 pt-4 border-t border-white/20">
           <ThemeToggleBtn />
