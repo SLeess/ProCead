@@ -21,11 +21,18 @@ import {
 // import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import React, { useState } from 'react'
 import DATA from './data';
-import { Pagination } from "flowbite-react";
-import { ArrowUpDown } from "lucide-react";
+import { Modal, Button, Pagination } from "flowbite-react";
+import { ArrowUpDown, Check, Eye, Pencil } from "lucide-react";
 const MainTable = () => {
   const [data, setData] = useState(DATA);
   const [columnFilters, setColumnFilters] = React.useState([]);
+  const [openModal, setOpenModal] = useState(false);
+  const [modalContent, setModalContent] = useState({ title: '', content: null });
+
+  const handleOpenModal = (title, content) => {
+    setModalContent({ title, content });
+    setOpenModal(true);
+  };
   const columns = [
     {
       id: "select",
@@ -53,7 +60,17 @@ const MainTable = () => {
     },
     {
       accessorKey: "id",
-      header: "#",
+      header: ({ column }) => {
+      return (
+        <div className="flex cursor-pointer items-center"
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          #
+          <ArrowUpDown className={`ml-2 h-4 w-4 ${column.getIsSorted() ? 'text-blue-500' : ''}`} />
+        </div>
+      )
+    },
       cell: (props) => <span>{props.getValue()}</span>
     },
     {
@@ -66,7 +83,7 @@ const MainTable = () => {
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Inscricao
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown className={`ml-2 h-4 w-4 ${column.getIsSorted() ? 'text-blue-500' : ''}`} />
         </div>
       )
     },
@@ -81,7 +98,7 @@ const MainTable = () => {
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Nome
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown className={`ml-2 h-4 w-4 ${column.getIsSorted() ? 'text-blue-500' : ''}`} />
         </div>
       )
     },
@@ -96,7 +113,7 @@ const MainTable = () => {
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           E-mail
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown className={`ml-2 h-4 w-4 ${column.getIsSorted() ? 'text-blue-500' : ''}`} />
         </div>
       )
     },
@@ -111,7 +128,7 @@ const MainTable = () => {
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           CPF
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown className={`ml-2 h-4 w-4 ${column.getIsSorted() ? 'text-blue-500' : ''}`} />
         </div>
       )
     },
@@ -126,7 +143,7 @@ const MainTable = () => {
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Modalidade
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown className={`ml-2 h-4 w-4 ${column.getIsSorted() ? 'text-blue-500' : ''}`} />
         </div>
       )
     },
@@ -141,11 +158,28 @@ const MainTable = () => {
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Status
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          <ArrowUpDown className={`ml-2 h-4 w-4 ${column.getIsSorted() ? 'text-blue-500' : ''}`} />
         </div>
       )
     },
       cell: (props) => <span>{props.getValue()}</span>
+    },
+    {
+      id: "actions",
+      header: "Ações",
+      cell: ({ row }) => (
+        <div className="flex items-center space-x-2">
+          <button className="p-1 hover:bg-gray-200 rounded-full">
+            <Eye className="h-5 w-5 text-blue-500" />
+          </button>
+          <button className="p-1 hover:bg-gray-200 rounded-full">
+            <Pencil className="h-5 w-5 text-yellow-500" />
+          </button>
+          <button className="p-1 hover:bg-gray-200 rounded-full">
+            <Check className="h-5 w-5 text-green-500" />
+          </button>
+        </div>
+      ),
     },
   ];
   const [rowSelection, setRowSelection] = React.useState({});
@@ -282,6 +316,7 @@ const MainTable = () => {
                     Mostrar {pageSize}
                 </option>
                 ))}
+                <option value={data.length} key={data.length}>Mostrar Todos</option>
             </select>
         </div>
     </div>
