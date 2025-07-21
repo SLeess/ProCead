@@ -88,6 +88,12 @@ function MeusProcessos() {
       { accessorKey: 'status', header: 'Status', cell: info => info.getValue() },
       { accessorKey: 'obs', header: 'Observação', cell: info => info.getValue() },
   ], []);
+  
+  /** */
+  const memoizedGlobalFilter = useMemo(() => ({
+    search,
+    filtro,
+  }), [search, filtro]);
 
   const table = useReactTable({
       data,
@@ -96,15 +102,15 @@ function MeusProcessos() {
       getPaginationRowModel: getPaginationRowModel(),
       getFilteredRowModel: getFilteredRowModel(),
       state: {
-          globalFilter: search,
+          globalFilter: memoizedGlobalFilter,
+          // globalFilter: search || filtro,
           pagination,
       },
-      onGlobalFilterChange: setFiltro,
       onPaginationChange: setPagination,
       //  filtro de coluna personalizado pelo status e pelo campo de Pesquisa
       globalFilterFn: (row, columnId, filterValue) => {
-            const searchTerm = filterValue ? filterValue.toLowerCase() : '';
-            const currentFiltroStatus = filtro; // 'filtro' é o estado do radio button ('Todos', 'Em andamento', 'Encerrado')
+            const searchTerm = filterValue.search  ? filterValue.search.toLowerCase() : '';
+            console.log(filtro);
 
             // Lógica para busca textual (se houver um termo de busca)
             let textMatches = true;
@@ -114,25 +120,11 @@ function MeusProcessos() {
             }
 
             // Lógica para filtro de status
-            const statusMatches = (currentFiltroStatus === 'Todos' || row.original.status === currentFiltroStatus);
+            const statusMatches = (filterValue.filtro === 'Todos' || row.original.status === filterValue.filtro);
 
             return textMatches && statusMatches;
       },
   });
-
-  const getFilteredAndPaginatedRows = () => {
-      const rows = table.getRowModel().rows;
-
-      if (filtro === 'Todos') {
-          return rows;
-      }
-      return rows.filter(row => {
-        return filtro === row.original.status;
-      });
-  };
-
-  const paginatedAndFilteredRows = getFilteredAndPaginatedRows();
-
 
   const renderPageNumbers = () => {
     const totalPages = table.getPageCount();
@@ -248,11 +240,11 @@ function MeusProcessos() {
         {
         loading ?
             <LoaderPages/> : 
-            paginatedAndFilteredRows.length > 0 ?
+            table.getRowModel().rows.length > 0 ?
               (           
                 <ul className='grid grid-cols-1 gap-6'>
                   {
-                    paginatedAndFilteredRows.map((processo) => 
+                    table.getRowModel().rows.map((processo) => 
                         <ProcessoPessoalCard 
                           key={processo.original.id} 
                           processo={processo.original}
@@ -271,9 +263,9 @@ function MeusProcessos() {
                   </p>
               </div>
         }
-        {
-          paginatedAndFilteredRows.length > 0 && 
-            <div className="flex flex-col sm:flex-row justify-center items-center mt-8 px-2 md:px-0 text-sm">
+        { 
+          table.getRowModel().rows.length > 0 &&
+          <div className="flex flex-col sm:flex-row justify-center items-center mt-8 px-2 md:px-0 text-sm">
               <div className="flex items-center space-x-2 shadow-[0px_0px_0px_1px_rgba(0,0,0,0.08),0px_6px_24px_0px_rgba(0,0,0,0.05)] bg-white">
                   <button
                       onClick={() => table.previousPage()}
