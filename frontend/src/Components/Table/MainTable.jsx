@@ -23,6 +23,9 @@ import React, { useState } from 'react'
 import DATA from './data';
 import { Modal, Button, Pagination } from "flowbite-react";
 import { ArrowUpDown, Check, Eye, Pencil } from "lucide-react";
+import InscricaoShowModal from "../Modals/Inscricoes/InscricaoShowModal";
+import InscricaoEditModal from "../Modals/Inscricoes/InscricaoEditModal";
+import InscricaoAvaliarModal from "../Modals/Inscricoes/InscricaoAvaliarModal";
 const MainTable = () => {
   const [data, setData] = useState(DATA);
   const [columnFilters, setColumnFilters] = React.useState([]);
@@ -169,15 +172,9 @@ const MainTable = () => {
       header: "Ações",
       cell: ({ row }) => (
         <div className="flex items-center space-x-2">
-          <button className="p-1 hover:bg-gray-200 rounded-full">
-            <Eye className="h-5 w-5 text-blue-500" />
-          </button>
-          <button className="p-1 hover:bg-gray-200 rounded-full">
-            <Pencil className="h-5 w-5 text-yellow-500" />
-          </button>
-          <button className="p-1 hover:bg-gray-200 rounded-full">
-            <Check className="h-5 w-5 text-green-500" />
-          </button>
+          <InscricaoShowModal/>
+          <InscricaoEditModal/>
+          <InscricaoAvaliarModal/>
         </div>
       ),
     },
