@@ -95,9 +95,8 @@ const SubMenuItem = styled(Link)`
 
 const Sidebar = () => {
   
-  const { can } = useContext(AppContext);
-  const { user } = useContext(AppContext);
-   const menuData = [
+  const { hasGlobalPermission, user } = useContext(AppContext);
+  const menuData = [
   {
     title: 'Edital',
     icon: <FiFileText size={20} />,
@@ -137,7 +136,7 @@ const Sidebar = () => {
     items: [
       { name: 'Alocação', icon: <FiArchive size={16} />, href: '/admin/alocacao' },
       
-      can('visualizar-inscricoes') ?
+      hasGlobalPermission('visualizar-inscricoes') ?
         { name: 'Inscrições', icon: <FiEdit size={16} />, href: '/admin/inscricoes' }
         : null,
 

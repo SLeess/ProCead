@@ -19,6 +19,9 @@ export default function AppProvider({ children }) {
     const [loading, setLoading] = useState(true);
     const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
 
+    /**
+     * Função para fazer o logout da aplicação em todos os esquemas e useStates
+     */
     const logout = () => {
         localStorage.removeItem('token');
         setToken(null);
@@ -38,12 +41,12 @@ export default function AppProvider({ children }) {
     }
 
     /**
-     * Verifica se o usuário tem uma permissão global específica.
+     * Verifica se o usuário tem uma permissão global específica ou se ele é um super-Admin.
      * @param {string} permissionName
      * @returns {boolean}
      */
     function hasGlobalPermission(permissionName) {
-        return globalPermissions.includes(permissionName);
+        return globalPermissions.includes(permissionName) || globalRoles.includes('super-Admin');
     }
 
     /**
@@ -57,7 +60,7 @@ export default function AppProvider({ children }) {
     }
 
      /**
-     * Verifica se o usuário tem uma permissão para um edital específico.
+     * Verifica se o usuário tem uma permissão para um edital específico ou se ele é um super-Admin.
      * Considera permissões diretas E herdadas de cargos para aquele edital.
      * @param {string} permissionName
      * @param {number} editalId
@@ -67,7 +70,7 @@ export default function AppProvider({ children }) {
         const editalData = permissionsWithRolesByEdital[editalId];
         if (!editalData) return false;
         // Verifica se a permissão está na lista final de permissões efetivas para o edital
-        return (editalData.permissions || []).includes(permissionName);
+        return (editalData.permissions || []).includes(permissionName) || globalRoles.includes('super-Admin');
     }
 
     /**
@@ -97,6 +100,9 @@ export default function AppProvider({ children }) {
         return hasGlobalRole('super-Admin');
     }
 
+    /**
+     * Função para trocar o tema da aplicação de modo global
+     */
     const toggleTheme = () => {
         setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
     };
@@ -117,13 +123,14 @@ export default function AppProvider({ children }) {
                 });
                 if (response.ok) {
                     const res = await response.json();
-                    console.log(res)
-                    setUser(res.data.user);
+                    const data = res.data;
 
-                    if (res.data.admin_access) {
-                        setGlobalPermissions(res.data.admin_access.global_permissions || []);
-                        setGlobalRoles(res.data.admin_access.global_roles || []);
-                        setPermissionsWithRolesByEdital(res.data.admin_access.editais || {});
+                    setUser(data.user);
+
+                    if (data.admin_access) {
+                        setGlobalPermissions(data.admin_access.global_permissions || []);
+                        setGlobalRoles(data.admin_access.global_roles || []);
+                        setPermissionsWithRolesByEdital(data.admin_access.editals_access || {});
                     }
 
                 } else {
@@ -157,11 +164,11 @@ export default function AppProvider({ children }) {
         localStorage.setItem('theme', theme);
     }, [theme]);
 
-    console.log(token);
-    console.log(user);
-    console.log(globalRoles);
-    console.log(globalPermissions);
-    console.log(permissionsWithRolesByEdital);
+    // console.log(token);
+    // console.log(user);
+    // console.log(globalRoles);
+    // console.log(globalPermissions);
+    // console.log(permissionsWithRolesByEdital);
     const contextValue = { 
         user, 
         setUser, 

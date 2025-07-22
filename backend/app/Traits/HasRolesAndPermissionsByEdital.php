@@ -25,39 +25,34 @@ trait HasRolesAndPermissionsByEdital
         $min = collect($rawPermissionsData->keys())->merge($rawRoleData->keys())->unique()->values()->sort();
 
         return $min->mapWithKeys(function(int $edital_id) use ($rawPermissionsData, $rawRoleData){
-            $permissions = $roles = $aditional_permissions = collect();
+            $roles = $rolesNames = $inherited_permissions = $direct_permissions = $effective_permissions = collect();
 
             if($rawRoleData->has($edital_id))
             {
-                $roles = $rawRoleData[$edital_id]
-                    ->map(function($data){
-                        return Role::find($data->role_id)->name;
-                    })
-                    ->unique()
-                    ->values();
+                $roles = $rawRoleData[$edital_id];
+                $rolesNames = $roles->map(fn($e) => Role::find($e->role_id)->name)->values();
 
-                $permissions = $rawRoleData[$edital_id]
-                    ->flatMap(function($data){
-                        $role = Role::find($data->role_id);
-                        return $role->getAllPermissions()->pluck('name');
-                    })
+                $inherited_permissions = $roles
+                    ->flatMap(fn($e) => Role::find($e->role_id)->getAllPermissions()->pluck('name'))
                     ->unique()
                     ->values();
             }
 
             if($rawPermissionsData->has($edital_id)){
-                $permissionsByUserByEdital = $rawPermissionsData[$edital_id]
+                $direct_permissions = $rawPermissionsData[$edital_id]
                                             ->map(fn($item)=> Permission::find($item->permission_id)->name)
-                                            ->filter(fn($e) => $e !== null);
-
-                $aditional_permissions = $permissionsByUserByEdital->unique();
+                                            ->filter(fn($e) => $e !== null)
+                                            ->unique();
             }
+
+            $effective_permissions = $inherited_permissions->merge($direct_permissions)->unique();
 
             return [
                     $edital_id => [
-                        'permissions' => $permissions->toArray(),
-                        'aditional_permissions' => $aditional_permissions->toArray(),
-                        'roles' => $roles->toArray()
+                        'roles' => $rolesNames->toArray(),
+                        "direct_permissions" => $direct_permissions->toArray(),
+                        "inherited_permissions" => $inherited_permissions->toArray(),
+                        "effective_permissions" => $effective_permissions->toArray(),
                     ]
                 ];
         })->toArray();

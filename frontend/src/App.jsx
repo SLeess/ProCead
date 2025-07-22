@@ -45,6 +45,9 @@ function App() {
       />
       <div className="App">
         <Routes>
+
+
+          
           {/* ======================================= */}
           {/* ========= ROTAS PÚBLICAS/GUEST ======== */}
           {/* ======================================= */}
@@ -63,13 +66,16 @@ function App() {
             <Route path='/admin/login' element={<AdminLogin />} />
           </Route>
 
+
+
+
           {/* ============================================== */}
           {/* ========= ROTAS PROTEGIDAS (CANDIDATO) ========= */}
           {/* ============================================== */}
           <Route 
             path='/' 
             element={
-              <ProtectedRoute role="candidato">
+              <ProtectedRoute area="candidato">
                 <Layout />
               </ProtectedRoute>
             }
@@ -80,13 +86,16 @@ function App() {
             <Route path='meus-processos' element={<MeusProcessos />} />
           </Route>
 
+
+
+
           {/* =========================================== */}
           {/* ========= ROTAS PROTEGIDAS (ADMIN) ======== */}
           {/* =========================================== */}
           <Route 
             path='/admin' 
             element={
-              <ProtectedRoute role="admin">
+              <ProtectedRoute area="admin">
                 <LayoutAdmin />
               </ProtectedRoute>
             }

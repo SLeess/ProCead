@@ -30,8 +30,6 @@ class AuthService
             $user->tokens()->delete();
 
             $data['token'] = $user->createToken('auth_token', ['access:candidate'])->plainTextToken;
-            $data['permissions'] = $user->getPermissionNames();
-            $data['roles'] = $user->getRoleNames();
 
             DB::commit();
             return $data;
@@ -61,8 +59,6 @@ class AuthService
 
             $user->tokens()->delete();
             $data['token'] = $user->createToken('auth_token_admin', ['access:admin'])->plainTextToken;
-            $data['permissions'] = $user->getPermissionNames();
-            $data['roles'] = $user->getRoleNames();
 
             DB::commit();
             return $data;

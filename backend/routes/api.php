@@ -17,12 +17,6 @@ Route::middleware(['throttle:global'])->name('usuario.')->group(function(){
     Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword'])->name('password.update');
 });
 
-Route::get('/test-permissions', function(){
-    $user = Illuminate\Support\Facades\Auth::attempt(['email' => 'leandro.freitas@edu.unimontes.br', 'password'=> 'asdasdasd']);
-    $CONTROLLER = new UserPermissionController();
-    return $CONTROLLER->userPermissions(new Illuminate\Http\Request([], ['user' => Illuminate\Support\Facades\Auth::user()]));
-});
-
 Route::middleware(['auth:sanctum'])->name('candidato.')->group( function () {
     Route::name('usuario.')->group(function() {
         Route::get('/user', [UserPermissionController::class, 'userPermissions'])->name('dados');
@@ -293,12 +287,46 @@ Route::middleware(['auth:sanctum'])->name('candidato.')->group( function () {
 /* ---------- FIM - CANDIDATO ---------- */
 
 
+
 /* ------------- ADMINISTRADOR ------------- */
 /* Rotas de Login do Administrador */
 Route::prefix('/admin')->name('admin.')->group(function(){
     Route::post('/login', [LoginController::class, 'loginAdmin']);
-})->middleware(['auth:sanctum']);
+});
+
+
+Route::prefix('/admin')->middleware(['auth:sanctum', 'admin-Access'])->name('admin.')->group( function () {
+    Route::get('/teste', function(){
+        return response()->json(['atumalaca' => 'tome'], 202);
+    });
+});
+
+
 /* ---------- FIM - ADMINISTRADOR ---------- */
+
+
+/* ------------- SUPER-ADMINISTRADOR ------------- */
+/* Rotas de Login do Administrador */
+Route::name('superAdmin')->group(function(){
+
+})->middleware(['auth:sanctum', 'role:super-Admin']);
+/* ---------- FIM - SUPER-ADMINISTRADOR ---------- */
+
+
+
+
+
+
+
+
+
+Route::get('/test-permissions', function(){
+    $user = Illuminate\Support\Facades\Auth::attempt(['email' => 'leandro.freitas@edu.unimontes.br', 'password'=> 'asdasdasd']);
+    $CONTROLLER = new UserPermissionController();
+    return $CONTROLLER->userPermissions(new Illuminate\Http\Request([], ['user' => Illuminate\Support\Facades\Auth::user()]));
+});
+
+
 
 Route::get('/admin/editais', function(){
     return response()->json(
@@ -313,12 +341,3 @@ Route::get('/admin/editais', function(){
         ]
     );
 });
-
-
-/* ------------- SUPER-ADMINISTRADOR ------------- */
-/* Rotas de Login do Administrador */
-Route::name('superAdmin')->group(function(){
-
-})->middleware(['auth:sanctum', 'role:super-Admin']);
-/* ---------- FIM - SUPER-ADMINISTRADOR ---------- */
-

@@ -35,12 +35,12 @@ class UserDataPermissionsAndRoles extends JsonResource
             ],
         ];
 
-        if(count($permissionsByEdital)){
+        if(count($permissionsByEdital) || $global_permissions->count() || $global_roles->count()){
             return array_merge($response, [
                 'admin_access' => [
-                    'editais' => (object) $permissionsByEdital,
-                    'global_roles' => $specialRoles,
-                    'global_permissions' => $specialPermissions,
+                    'global_roles' => $specialRoles ?? [],
+                    'global_permissions' => $specialPermissions ?? [],
+                    'editals_access' => (object) $permissionsByEdital,
                 ]
             ]);
         }
