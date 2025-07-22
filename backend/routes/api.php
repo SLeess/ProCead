@@ -1,12 +1,14 @@
 <?php
 
 use App\Http\Controllers\Admin\RelatorioController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogOutController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\UserPermissionController;
+use App\Http\Controllers\Admin\UserPermissionController as ManageUserPermissionsController;
 use Illuminate\Support\Facades\Route;
 
 /* ---------- USUÁRIO ---------- */
@@ -296,6 +298,25 @@ Route::prefix('/admin')->name('admin.')->group(function(){
 
 
 Route::prefix('/admin')->middleware(['auth:sanctum', 'admin-Access'])->name('admin.')->group( function () {
+
+    // Gerenciamento geral de usuários
+    Route::prefix('/users')->name('users.')->group(function(){
+        Route::get("", [UserController::class, 'index'])->name('index');
+
+        // Gerenciamento de permissões dos usuários
+        Route::prefix('{userId}/permissions')->name('permissions.')->group(function () {
+            Route::get('', [ManageUserPermissionsController::class, 'show'])->name('show');
+            Route::put('', [ManageUserPermissionsController::class, 'update'])->name('update');
+        });
+    });
+
+
+    Route::prefix('editais')->name('editais.')->group(function(){
+        Route::prefix('{edital}')->name('manage.')->group(function(){
+            // Route::get('inscricoes', [InscricaoController::class, 'index'])->name('inscricoes.index');
+        });
+    });
+
     Route::get('/teste', function(){
         return response()->json(['atumalaca' => 'tome'], 202);
     });

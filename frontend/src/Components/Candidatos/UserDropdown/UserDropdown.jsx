@@ -1,8 +1,8 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import styles from './userDropdown.module.css';
 import { AppContext } from "@/Contexts/AppContext";
 import { toast } from "react-toastify";
 import { NavigationContext } from "@/Contexts/NavigationContext";
+import './userDropdown.css';
 
 export default function UserDropdown({user}){
     const { navigate } = useContext(NavigationContext);
@@ -42,7 +42,7 @@ export default function UserDropdown({user}){
 
     async function handlerLogOut(){
         try {
-            const res = await fetch('/api/logout', {
+            await fetch('/api/logout', {
                 method: 'post',
                 headers:{
                     "Authorization": `Bearer ${token}`,
@@ -58,18 +58,18 @@ export default function UserDropdown({user}){
     }
 
     return (
-        <section className={styles.section_profile}>
+        <section className={`section_profile`}>
             <div className="container">
                 <div className="flex justify-center">
                 <div className="relative inline-block">
                     <button
+                    id={`btnProfile`}
                     ref={trigger}
                     onClick={() => setDropdownOpen(!dropdownOpen)}
-                    className={`${styles.btnProfile} dark:border-dark-3 dark:bg-dark-2`}
                     >
                         {user.nome.split(" ")[0]}
-                        <span
-                            className={`duration-100 ${dropdownOpen ? "-scale-y-100" : ""}`}
+                        <span id="arrowIcon"
+                            className={`${dropdownOpen ? "-scale-y-100" : ""}`}
                         >
                             <svg
                             width="20"
@@ -90,7 +90,7 @@ export default function UserDropdown({user}){
                         ref={dropdown}
                         onFocus={() => setDropdownOpen(true)}
                         onBlur={() => setDropdownOpen(false)}
-                        className={`${styles.callDropDown} dark:bg-slate-900 ${dropdownOpen ? "block" : "hidden"}`}
+                        className={`callDropDown ${dropdownOpen ? "block" : "hidden"}`}
                     >
                     <div className="flex items-center gap-3 px-4 py-3 ">
                         <div className="relative aspect-square w-10 rounded-full">
@@ -111,23 +111,23 @@ export default function UserDropdown({user}){
                         </div>
                     </div>
                     <div>
-                        <a href="#0">
+                        <a className={`linksUserDropdown`} href="#0">
                         Ver perfil
                         </a>
-                        <a href="#0">
+                        <a className={`linksUserDropdown`} href="#0">
                         Configurações
                         </a>
                     </div>
                     <div>
-                        <a href="#0">
+                        <a className={`linksUserDropdown`} href="#0">
                         Support
                         </a>
-                        <a href="#0">
+                        <a className={`linksUserDropdown`} href="#0">
                         API
                         </a>
                     </div>
                     <div>
-                        <button onClick={() => handlerLogOut()} className={`${styles.logout} text-black`}>
+                        <button onClick={() => handlerLogOut()} className={`logout text-black`}>
                             Sair
                         </button>
                     </div>

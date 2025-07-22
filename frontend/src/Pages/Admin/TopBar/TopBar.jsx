@@ -1,6 +1,6 @@
 
 import { useContext } from 'react';
-import { AppContext } from '../../Contexts/AppContext';
+import { AppContext } from '../../../Contexts/AppContext';
 import styled from 'styled-components';
 import { FaUserCircle, FaSignOutAlt } from 'react-icons/fa';
 import { toast } from "react-toastify";
@@ -68,7 +68,7 @@ export default function TopBar() {
   const { logout, token, user } = useContext(AppContext);
   async function handlerLogOut(){
           try {
-              const res = await fetch('/api/logout', {
+              await fetch('/api/logout', {
                   method: 'post',
                   headers:{
                       "Authorization": `Bearer ${token}`,

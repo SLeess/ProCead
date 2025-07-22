@@ -1,33 +1,47 @@
-import { Routes, Route } from 'react-router-dom';
-import Layout from './Pages/Layout';
-import LayoutAdmin from './Pages/LayoutAdmin';
+import { Routes, Route, Outlet } from 'react-router-dom';
 
-// Páginas Públicas
+import Layout from './Layouts/Layout';
+import LayoutAdmin from './Layouts/LayoutAdmin';
+import LayoutAdminInsideEdital from './Layouts/LayoutAdminInsideEdital';
+
+/** ------------------------------------ Páginas Públicas ------------------------------------ */
 import Login from './Pages/Candidato/Auth/Login/Login';
 import Registro from './Pages/Candidato/Auth/Registro/Registro';
 import AdminLogin from './Pages/Admin/Auth/AdminLogin';
+import EsqueceuSenha from './Pages/Candidato/Auth/EsqueceuSenha/EsqueceuSenha';
+import RecuperarSenha from './Pages/Candidato/Auth/RecuperarSenha/RecuperarSenha';
 
-// Páginas de Candidato
-import Home from './Pages/Candidato/Home/Home';
+
+/** ---------------------------------- Páginas de Candidato ---------------------------------- */
+import HomeCandidato from './Pages/Candidato/Home/Home';
 import MeusProcessos from './Pages/Candidato/MeusProcessos/MeusProcessos';
+import HomePage from './Pages/Test/HomePage';
+import EditalPage from './Pages/Test/EditalPage';
+import ProcessosAtivos from './Pages/Candidato/ProcessosAtivos/ProcessosAtivos';
+import UserManagePage from './Pages/Test/UserManagePage';
+/** ------------------------------------------------------------------------------------------ */
 
-// Páginas de Admin
+
+/** ------------------------------------ Páginas de Admin ------------------------------------ */
+import HomeAdmin from './Pages/Admin/Home/Home';
+import UsuariosAdminList from './Pages/Admin/Usuarios/Usuarios';
 import Inscricoes from './Pages/Admin/Inscricoes/Inscricoes';
+
+/** ------------------------------------ Páginas Adm de Edital ---------------------------- */
+
+
+/** --------------------------------------------------------------------------------------- */
+
+/** ------------------------------------------------------------------------------------------ */
 
 // Componentes de Rota
 import ProtectedRoute from './Routes/ProtectedRoute';
 import GuestRoutes from './Routes/GuestRoutes';
 import GuestAdminRoutes from './Routes/GuestAdminRoutes';
-import 'react-toastify/dist/ReactToastify.css';
 
-// Nossas novas páginas de exemplo
-import HomePage from './Pages/HomePage';
-import EditalPage from './Pages/EditalPage';
-import ProcessosAtivos from './Pages/Candidato/ProcessosAtivos/ProcessosAtivos';
-import EsqueceuSenha from './Pages/Candidato/Auth/EsqueceuSenha/EsqueceuSenha';
-import RecuperarSenha from './Pages/Candidato/Auth/RecuperarSenha/RecuperarSenha';
+// ToastFy
 import { ToastContainer } from 'react-toastify';
-import UserManagePage from './Pages/UserManagePage';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
@@ -92,14 +106,26 @@ function App() {
           {/* =========================================== */}
           {/* ========= ROTAS PROTEGIDAS (ADMIN) ======== */}
           {/* =========================================== */}
-          <Route 
-            path='/admin' 
+          <Route path='/admin/'
             element={
               <ProtectedRoute area="admin">
                 <LayoutAdmin />
               </ProtectedRoute>
             }
           >
+              <Route index element={<HomeAdmin />} />
+              <Route path='usuarios' element={<UsuariosAdminList />} />
+              <Route path='manejar-usuarios/:userId' element={<UserManagePage />} />
+          </Route>
+
+          <Route path='/admin/edital/:editalId/'
+            element={
+              <ProtectedRoute area="admin">
+                <LayoutAdminInsideEdital />
+              </ProtectedRoute>
+            }
+          >
+            <Route index element={<Inscricoes />} />
             <Route path='inscricoes' element={<Inscricoes />} />
           </Route>
 

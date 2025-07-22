@@ -110,7 +110,6 @@ function MeusProcessos() {
       //  filtro de coluna personalizado pelo status e pelo campo de Pesquisa
       globalFilterFn: (row, columnId, filterValue) => {
             const searchTerm = filterValue.search  ? filterValue.search.toLowerCase() : '';
-            console.log(filtro);
 
             // Lógica para busca textual (se houver um termo de busca)
             let textMatches = true;

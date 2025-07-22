@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { useAppContext } from '../Contexts/AppContext';
+import { useAppContext } from '../../Contexts/AppContext';
 
 const AdminDashboard = ({ editalId }) => (
     <div style={{ border: '2px solid green', padding: '20px', marginTop: '20px' }}>

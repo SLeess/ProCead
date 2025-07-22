@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useAppContext } from '../Contexts/AppContext';
+import { useAppContext } from '../../Contexts/AppContext';
 
 export default function HomePage() {
     const { user, logout } = useAppContext();

@@ -1,8 +1,8 @@
 import { Outlet } from "react-router-dom";
 import styled from 'styled-components'; // 1. Importar styled-components
-import Sidebar from "./Sidebar/Sidebar";
-import MainAdminContainer from "./MainAdminContainer/MainAdminContainer";
-import TopBar from "./TopBar/TopBar";
+import Sidebar from "../Pages/Admin/Sidebar/Sidebar";
+import MainAdminContainer from "../Pages/Admin/MainAdminContainer/MainAdminContainer";
+import TopBar from "../Pages/Admin/TopBar/TopBar";
 
 // 2. Criar um container principal com Flexbox
 const LayoutWrapper = styled.div`
@@ -12,7 +12,7 @@ const LayoutWrapper = styled.div`
   gap: 20px; /* Adiciona um espaço entre a Sidebar e o MainAdminContainer */
 `;
 
-export default function LayoutAdmin() {
+export default function LayoutAdminInsideEdital() {
     return (
         // 3. Usar o novo Wrapper como o container principal
         <>
