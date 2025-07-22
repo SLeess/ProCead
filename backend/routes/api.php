@@ -9,7 +9,6 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\UserPermissionController;
 use Illuminate\Support\Facades\Route;
 
-
 /* ---------- USUÁRIO ---------- */
 Route::middleware(['throttle:global'])->name('usuario.')->group(function(){
     Route::post('/register', [RegisterController::class, 'register'])->name('register');
@@ -18,9 +17,13 @@ Route::middleware(['throttle:global'])->name('usuario.')->group(function(){
     Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword'])->name('password.update');
 });
 
+Route::get('/test-permissions', function(){
+    $user = Illuminate\Support\Facades\Auth::attempt(['email' => 'leandro.freitas@edu.unimontes.br', 'password'=> 'asdasdasd']);
+    $CONTROLLER = new UserPermissionController();
+    return $CONTROLLER->userPermissions(new Illuminate\Http\Request([], ['user' => Illuminate\Support\Facades\Auth::user()]));
+});
 
-
-Route::middleware(['auth:sanctum', 'role:candidato'])->name('candidato.')->group( function () {
+Route::middleware(['auth:sanctum'])->name('candidato.')->group( function () {
     Route::name('usuario.')->group(function() {
         Route::get('/user', [UserPermissionController::class, 'userPermissions'])->name('dados');
         Route::post('/logout', [LogOutController::class, 'logout'])->name('logout');
@@ -31,36 +34,110 @@ Route::middleware(['auth:sanctum', 'role:candidato'])->name('candidato.')->group
         Route::get('/user/meus-processos', function(){
             $response = [
                 'success' => true,
-                'data'    => [
+                'data'    =>
+                collect(
+                [
                     [
                         "id" => 102,
                         "edital" => 'EDITAL N.° 08/2025',
                         "descricao" => 'Processo de Seleção de Discentes para os Cursos de Especialização da Unimontes Modalidade Educação a Distância',
                         "status" => "Em andamento",
                         "obs" => "",
+                        // "obs" => "Inscrições abertas até 30/07/2025.",
                     ],
                     [
                         "id" => 104,
                         "edital" => 'EDITAL N.° 11/2024',
-                        "descricao" => 'Processo de Seleção de Discentes para os Cursos de Especialização da Unimontes Modalidade Educação a DistânciaSeleção para o Programa de Pós-Graduação em Biotecnologia (PPGBiotec)',
+                        "descricao" => 'Processo de Seleção de Discentes para o Programa de Pós-Graduação em Biotecnologia (PPGBiotec)',
                         "status" => "Em andamento",
+                        // "obs" => "Resultado da primeira fase previsto para 15/07/2025.",
                         "obs" => "",
                     ],
                     [
                         "id" => 106,
                         "edital" => 'EDITAL N.° 01/2025',
-                        "descricao" => 'Seleção de tutores para cursos de Educação a Distância (EaD)',
+                        "descricao" => 'Seleção de tutores para cursos de Educação a Distância (EaD) - Área de Tecnologia',
                         "status" => "Encerrado",
+                        // "obs" => "Inscrições finalizadas em 01/06/2025. Aguardando resultado final.",
                         "obs" => "",
                     ],
                     [
                         "id" => 101,
                         "edital" => 'EDITAL N.° 12/2024',
-                        "descricao" => 'Seleção para Mestrado em Produção Vegetal no Semiárido',
+                        "descricao" => 'Seleção para Mestrado em Produção Vegetal no Semiárido - Turma 2025',
                         "status" => "Encerrado",
+                        // "obs" => "Processo concluído. Matrículas realizadas.",
                         "obs" => "",
                     ],
-                ],
+                    [
+                        "id" => 108,
+                        "edital" => 'EDITAL N.° 03/2025',
+                        "descricao" => 'Concurso Público para Professor Efetivo - Área de Direito',
+                        "status" => "Em andamento",
+                        // "obs" => "Provas objetivas agendadas para 20/08/2025.",
+                        "obs" => "",
+                    ],
+                    [
+                        "id" => 110,
+                        "edital" => 'EDITAL N.° 05/2024',
+                        "descricao" => 'Processo Seletivo Simplificado para Coordenador de Curso de Engenharia Civil',
+                        "status" => "Encerrado",
+                        // "obs" => "Candidato aprovado e empossado.",
+                        "obs" => "",
+                    ],
+                    [
+                        "id" => 112,
+                        "edital" => 'EDITAL N.° 07/2025',
+                        "descricao" => 'Residência Médica em Cirurgia Geral - Ano 2026',
+                        "status" => "Em andamento",
+                        // "obs" => "Período de recurso para a prova teórica. Resultado final em Setembro.",
+                        "obs" => "",
+                    ],
+                    [
+                        "id" => 114,
+                        "edital" => 'EDITAL N.° 02/2025',
+                        "descricao" => 'Bolsas de Pós-Doutorado PNPD/CAPES - Ciências Humanas',
+                        "status" => "Encerrado",
+                        // "obs" => "Seleção finalizada. Início das atividades em 01/08/2025.",
+                        "obs" => "",
+                    ],
+                    [
+                        "id" => 116,
+                        "edital" => 'EDITAL N.° 09/2025',
+                        "descricao" => 'Curso de Extensão em Marketing Digital - Turma de Verão',
+                        "status" => "Em andamento",
+                        // "obs" => "Últimas vagas disponíveis. Início das aulas em 05/08/2025.",
+                        "obs" => "",
+                    ],
+                    [
+                        "id" => 118,
+                        "edital" => 'EDITAL N.° 04/2024',
+                        "descricao" => 'Seleção de Professores Temporários - Licenciatura em Química',
+                        "status" => "Encerrado",
+                        // "obs" => "Edital homologado e classificados divulgados.",
+                        "obs" => "",
+                    ],
+                    [
+                        "id" => 120,
+                        "edital" => 'EDITAL N.° 06/2025',
+                        "descricao" => 'Processo de Seleção para Auxiliar Administrativo - Cursinho Popular',
+                        "status" => "Em andamento",
+                        // "obs" => "Entrevistas agendadas para a próxima semana.",
+                        "obs" => "",
+                    ],
+                    [
+                        "id" => 122,
+                        "edital" => 'EDITAL N.° 10/2025',
+                        "descricao" => 'Chamada Pública para Atores para Peça Teatral Universitária',
+                        "status" => "Em andamento",
+                        // "obs" => "Audições abertas até 25/07/2025.",
+                        "obs" => "",
+                    ],
+                ]) ->sort(function($a, $b){
+                    return
+                        $a['status'] <=> $b['status'];
+                })->values()
+                ->toArray(),
                 'message' => 'Processos seletivos pessoais encaminhados com sucesso.',
             ];
             return response()->json($response, 200);
@@ -220,9 +297,22 @@ Route::middleware(['auth:sanctum', 'role:candidato'])->name('candidato.')->group
 /* Rotas de Login do Administrador */
 Route::prefix('/admin')->name('admin.')->group(function(){
     Route::post('/login', [LoginController::class, 'loginAdmin']);
-})->middleware(['auth:sanctum', 'permission:admin']);
+})->middleware(['auth:sanctum']);
 /* ---------- FIM - ADMINISTRADOR ---------- */
 
+Route::get('/admin/editais', function(){
+    return response()->json(
+        [
+            'editais' => App\Models\Edital::all()->toArray(),
+            'roles' => App\Models\Roles::all()->map(function($role) {
+                return ['id' => $role->id, 'name' => $role->name];
+            })->toArray(),
+            'permissions' => Spatie\Permission\Models\Permission::all()->map(function($permission) {
+                return ['id' => $permission->id, 'name' => $permission->name];
+            })->toArray(),
+        ]
+    );
+});
 
 
 /* ------------- SUPER-ADMINISTRADOR ------------- */

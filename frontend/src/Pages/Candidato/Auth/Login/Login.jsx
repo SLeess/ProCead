@@ -8,7 +8,7 @@ import z from 'zod/v4';
 import ThemeToggleBtn from "@/Components/Global/ThemeToggleBtn/ThemeToggleBtn";
 
 export default function Login() {
-    const { setToken, setPermissions, setRoles, theme } = useContext(AppContext);
+    const { setToken, theme } = useContext(AppContext);
     const { navigate } = useContext(NavigationContext);
     const { inputRef } = useRef(`border-[#004da9]`);
 
@@ -54,8 +54,6 @@ export default function Login() {
             } else{
                 localStorage.setItem('token', result.data.token);
                 setToken(result.data.token);
-                setPermissions(result.data.permissions || []);
-                setRoles(result.data.roles || []);
 
                 toast.success((result.message || "Autenticado com sucesso!") + " Redirecionando a página...", {
                     closeOnClick: true,

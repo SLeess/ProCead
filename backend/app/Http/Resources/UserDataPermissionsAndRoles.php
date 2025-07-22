@@ -14,20 +14,37 @@ class UserDataPermissionsAndRoles extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $roles = $this->getRoleNames();
-        $permissions = $this->getPermissionsViaRoles()->pluck('name');
+        $user = $request->user();
 
-        return [
-            "user" => [
-                "uuid" => $this->uuid,
-                "nome" => $this->nome,
-                "cpf" => $this->cpf,
-                "email" => $this->email,
-                "created_at" => $this->created_at->format('Y-m-d H:i:s'),
-                "updated_at" => $this->updated_at->format('Y-m-d H:i:s'),
+        $permissionsByEdital = $user->getAllRolesAndPermissionsByEdital();
+
+        $global_roles = $user->getRoleNames();
+        $global_permissions = $user->getAllPermissions();
+
+        $specialRoles =  !$global_roles->isEmpty() ? $global_roles: null;
+        $specialPermissions = !$global_permissions->isEmpty() ? $global_permissions->pluck('name') : null;
+
+        $response = [
+             "user" => [
+                "uuid" => $user->uuid,
+                "nome" => $user->nome,
+                "cpf" => $user->cpf,
+                "email" => $user->email,
+                "created_at" => $user->created_at->format('Y-m-d H:i:s'),
+                "updated_at" => $user->updated_at->format('Y-m-d H:i:s'),
             ],
-            'permissions' => $permissions,
-            'roles' => $roles,
         ];
+
+        if(count($permissionsByEdital)){
+            return array_merge($response, [
+                'admin_access' => [
+                    'editais' => (object) $permissionsByEdital,
+                    'global_roles' => $specialRoles,
+                    'global_permissions' => $specialPermissions,
+                ]
+            ]);
+        }
+
+        return $response;
     }
 }

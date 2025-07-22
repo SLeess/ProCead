@@ -6,12 +6,10 @@ use App\Models\User;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
-use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Str;
 
 class AuthService
 {
@@ -54,8 +52,7 @@ class AuthService
 
         $user = Auth::user();
 
-        /** @var \App\Models\User $user */
-        if (!$user->hasRole('admin')) {
+        if ($user->dontHaveAnyPermissionOrRole()) {
             throw new AuthorizationException('Acesso não autorizado.');
         }
 
@@ -85,7 +82,7 @@ class AuthService
         DB::beginTransaction();
         try {
             $user = User::create($data);
-            $user->assignRole('candidato');
+            // $user->assignRole('candidato');
 
             $success['token'] =  $user->createToken('MyApp')->plainTextToken;
             $success['user'] =  $user;

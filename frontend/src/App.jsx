@@ -21,12 +21,13 @@ import GuestAdminRoutes from './Routes/GuestAdminRoutes';
 import 'react-toastify/dist/ReactToastify.css';
 
 // Nossas novas páginas de exemplo
-// import HomePage from './Pages/HomePage';
-// import EditalPage from './Pages/EditalPage';
+import HomePage from './Pages/HomePage';
+import EditalPage from './Pages/EditalPage';
 import ProcessosAtivos from './Pages/Candidato/ProcessosAtivos/ProcessosAtivos';
 import EsqueceuSenha from './Pages/Candidato/Auth/EsqueceuSenha/EsqueceuSenha';
 import RecuperarSenha from './Pages/Candidato/Auth/RecuperarSenha/RecuperarSenha';
 import { ToastContainer } from 'react-toastify';
+import UserManagePage from './Pages/UserManagePage';
 
 function App() {
   return (
@@ -54,6 +55,7 @@ function App() {
             <Route path='/registro' element={<Registro />} />
             <Route path='/esqueceu-senha' element={<EsqueceuSenha />} />
             <Route path='/recuperar-senha' element={<RecuperarSenha />} />
+            <Route path='/permissions' element={<UserManagePage userId={1}/>}/>
           </Route>
 
           {/* Rota para convidados da área de Admin */}
@@ -73,8 +75,8 @@ function App() {
             }
           >
             <Route index element={<ProcessosAtivos />} />
-            <Route path="/home" element={<></>} />
-            <Route path="/edital/:editalId" element={<></>} />
+            <Route path="/home" element={<HomePage />} />
+            <Route path="/edital/:editalId" element={<EditalPage />} />
             <Route path='meus-processos' element={<MeusProcessos />} />
           </Route>
 
