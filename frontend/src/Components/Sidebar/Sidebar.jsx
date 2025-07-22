@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
-import styled from 'styled-components'; 
-import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 import { AppContext } from '@/Contexts/AppContext'; // Importando a função can do contexto
+import { useNavigate } from 'react-router-dom';
 // Ícones importados para os MENUS e submenus
 import {
   FiGrid, FiChevronDown, FiChevronUp, FiSettings, FiFilePlus,
@@ -75,7 +75,7 @@ const SubMenuList = styled.div`
   padding-left: 16px;
 `;
 
-const SubMenuItem = styled(Link)`
+const SubMenuItem = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -94,7 +94,7 @@ const SubMenuItem = styled(Link)`
 `;
 
 const Sidebar = () => {
-  
+  const navigate = useNavigate();
   const { can } = useContext(AppContext);
   const { user } = useContext(AppContext);
    const menuData = [
@@ -127,7 +127,7 @@ const Sidebar = () => {
       { name: 'Campi', icon: <FiMapPin size={16} />, href: '/admin/campi' },
       { name: 'Modalidades', icon: <FiLayers size={16} />, href: '/admin/modalidades' },
       { name: 'Cursos', icon: <FiBookOpen size={16} />, href: '/admin/cursos' },
-      { name: 'Quadro de Vagas', icon: <FiClipboard size={16} />, href: '/admin/quadro-de-vagas' }
+      { name: 'Quadro de Vagas', icon: <FiClipboard size={16} />, href: '/admin/quadro-vagas' }
     ]
   },
   {
@@ -170,8 +170,9 @@ const Sidebar = () => {
     setOpenSections(prev => ({ ...prev, [title]: !prev[title] }));
   };
 
-  const handleItemClick = (itemName) => {
+  const handleItemClick = (itemName, path) => {
     setActiveItem(itemName);
+    navigate(path);
   }
 
   return (
@@ -198,9 +199,8 @@ const Sidebar = () => {
               {section.items.filter((link) => link !== null).map(item => (
                 <SubMenuItem
                   key={item.name}
-                  to={item.href}
                   className={activeItem === item.name ? 'active' : ''}
-                  onClick={() => handleItemClick(item.name)}
+                  onClick={() => handleItemClick(item.name, item.href)}
                 >
                   {item.icon}
                   {item.name}

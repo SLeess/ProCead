@@ -27,6 +27,7 @@ import ProcessosAtivos from './Pages/Candidato/ProcessosAtivos/ProcessosAtivos';
 import EsqueceuSenha from './Pages/Candidato/Auth/EsqueceuSenha/EsqueceuSenha';
 import RecuperarSenha from './Pages/Candidato/Auth/RecuperarSenha/RecuperarSenha';
 import { ToastContainer } from 'react-toastify';
+import QuadroVagas from './Pages/Admin/QuadroVagas/QuadroVagas';
 
 function App() {
   return (
@@ -90,6 +91,7 @@ function App() {
             }
           >
             <Route path='inscricoes' element={<Inscricoes />} />
+            <Route path='quadro-vagas' element={<QuadroVagas />} />
           </Route>
 
         </Routes>

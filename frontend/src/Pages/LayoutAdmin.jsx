@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import styled from 'styled-components'; // 1. Importar styled-components
-import Sidebar from "./Sidebar/Sidebar";
+import Sidebar from "../Components/Sidebar/Sidebar";
 import MainAdminContainer from "./MainAdminContainer/MainAdminContainer";
 import TopBar from "./TopBar/TopBar";
 
