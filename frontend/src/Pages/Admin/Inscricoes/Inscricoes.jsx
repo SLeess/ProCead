@@ -2,6 +2,8 @@ import MainTable from '../../../Components/Table/MainTable'
 import React, { useContext } from 'react'
 import { AppContext } from '@/Contexts/AppContext';
 import AccessDenied from '../../../Components/AccessDenied';
+import data from './data'
+import columns from './columns';
 
 const Inscricoes = () => {
   const { can, isAdmin } = useContext(AppContext);
@@ -13,7 +15,7 @@ const Inscricoes = () => {
           <p className="text-gray-600">nº de inscrições</p>
           <p className="text-2xl font-bold">123</p>
         </div>
-        <MainTable/>
+        <MainTable data = {data} columns = {columns}/>
       </div>
     )
   else {
