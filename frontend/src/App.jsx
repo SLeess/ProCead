@@ -29,6 +29,7 @@ import RecuperarSenha from './Pages/Candidato/Auth/RecuperarSenha/RecuperarSenha
 import { ToastContainer } from 'react-toastify';
 import QuadroVagas from './Pages/Admin/QuadroVagas/QuadroVagas';
 import Cursos from './Pages/Admin/Cursos/Cursos';
+import Polos from './Pages/Admin/Polos/Polos';
 
 function App() {
   return (
@@ -94,6 +95,7 @@ function App() {
             <Route path='inscricoes' element={<Inscricoes />} />
             <Route path='quadro-vagas' element={<QuadroVagas />} />
             <Route path='cursos' element={<Cursos />} />
+            <Route path='polos' element={<Polos />} />
           </Route>
 
         </Routes>

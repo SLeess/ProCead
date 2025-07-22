@@ -2,7 +2,7 @@ import { Modal, ModalBody, ModalHeader } from 'flowbite-react';
 import { Trash, TriangleAlert } from 'lucide-react';
 import React, { useState } from 'react'
 
-const CursoDeleteModal = () => {
+const PoloDeleteModal = () => {
 
     const [isOpen] = useState(true);
     const [openModal, setOpenModal] = useState(false);
@@ -51,4 +51,4 @@ const CursoDeleteModal = () => {
     );
 }
 
-export default CursoDeleteModal
+export default PoloDeleteModal

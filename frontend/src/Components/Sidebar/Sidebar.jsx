@@ -124,7 +124,7 @@ const Sidebar = () => {
     icon: <FiHome size={20} />,
     isInitiallyOpen: true,
     items: [
-      { name: 'Campi', icon: <FiMapPin size={16} />, href: '/admin/campi' },
+      { name: 'Polos', icon: <FiMapPin size={16} />, href: '/admin/polos' },
       { name: 'Modalidades', icon: <FiLayers size={16} />, href: '/admin/modalidades' },
       { name: 'Cursos', icon: <FiBookOpen size={16} />, href: '/admin/cursos' },
       { name: 'Quadro de Vagas', icon: <FiClipboard size={16} />, href: '/admin/quadro-vagas' }
