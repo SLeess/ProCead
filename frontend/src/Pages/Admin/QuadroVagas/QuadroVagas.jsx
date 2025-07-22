@@ -24,7 +24,7 @@ const QuadroVagas = () => {
             <UserRoundPen className="absolute top-4 right-4 text-gray-500" />
           </div>
         </div>
-        <MainTable data={data} columns={columns} />
+        <MainTable data={data} columns={columns} title={"Quadro de Vagas"}/>
       </div>
     )
   else {
