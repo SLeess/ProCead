@@ -41,5 +41,12 @@ const AnexoButton = ({ label }) => (
     </div>
 );
 
+const Checkbox = ({ label, checked, readOnly }) => (
+    <label className="flex items-center space-x-2 text-gray-700">
+        <input type="checkbox" checked={checked} disabled={readOnly} className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
+        <span>{label}</span>
+    </label>
+);
 
-export { FormField, TextInput, SelectInput, AnexoButton };
+
+export { FormField, TextInput, SelectInput, AnexoButton, Checkbox };

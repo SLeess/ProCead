@@ -30,6 +30,7 @@ import { ToastContainer } from 'react-toastify';
 import QuadroVagas from './Pages/Admin/QuadroVagas/QuadroVagas';
 import Cursos from './Pages/Admin/Cursos/Cursos';
 import Polos from './Pages/Admin/Polos/Polos';
+import Modalidades from './Pages/Admin/Modalidades/Modalidades';
 
 function App() {
   return (
@@ -96,6 +97,7 @@ function App() {
             <Route path='quadro-vagas' element={<QuadroVagas />} />
             <Route path='cursos' element={<Cursos />} />
             <Route path='polos' element={<Polos />} />
+            <Route path='modalidades' element={<Modalidades />} />
           </Route>
 
         </Routes>
