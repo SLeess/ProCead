@@ -1,5 +1,5 @@
-import CursoDeleteModal from "@/Components/Modals/Cursos/CursoDeleteModal";
-import CursoEditModal from "@/Components/Modals/Cursos/CursoEditModal";
+import CursoDeleteModal from "@/Components/Admin/InsideEdital/Modais/Cursos/CursoDeleteModal";
+import CursoEditModal from "@/Components/Admin/InsideEdital/Modais/Cursos/CursoEditModal";
 import { ArrowUpDown } from "lucide-react";
 
 const columns = [

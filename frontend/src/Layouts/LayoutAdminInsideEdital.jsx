@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import styled from 'styled-components'; // 1. Importar styled-components
-import Sidebar from "../Components/Admin/Sidebar/Sidebar";
+import Sidebar from "../Components/Admin/InsideEdital/Sidebar/Sidebar";
 
 // 2. Criar um container principal com Flexbox
 const LayoutWrapper = styled.div`

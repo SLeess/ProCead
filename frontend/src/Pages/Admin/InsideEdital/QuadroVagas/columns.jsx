@@ -1,8 +1,8 @@
-import InscricaoAvaliarModal from "@/Components/Modals/Inscricoes/InscricaoAvaliarModal";
-import InscricaoEditModal from "@/Components/Modals/Inscricoes/InscricaoEditModal";
-import InscricaoShowModal from "@/Components/Modals/Inscricoes/InscricaoShowModal";
-import QuadroVagasEditModal from "@/Components/Modals/QuadroVagas/QuadroVagasEditModal";
-import QuadroVagasShowModal from "@/Components/Modals/QuadroVagas/QuadroVagasShowModal";
+import InscricaoAvaliarModal from "@/Components/Admin/InsideEdital/Modais/Inscricoes/InscricaoAvaliarModal";
+import InscricaoEditModal from "@/Components/Admin/InsideEdital/Modais/Inscricoes/InscricaoEditModal";
+import InscricaoShowModal from "@/Components/Admin/InsideEdital/Modais/Inscricoes/InscricaoShowModal";
+import QuadroVagasEditModal from "@/Components/Admin/InsideEdital/Modais/QuadroVagas/QuadroVagasEditModal";
+import QuadroVagasShowModal from "@/Components/Admin/InsideEdital/Modais/QuadroVagas/QuadroVagasShowModal";
 import { ArrowUpDown } from "lucide-react";
 
 const columns = [

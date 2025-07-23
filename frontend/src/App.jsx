@@ -25,16 +25,15 @@ import UserManagePage from './Pages/Test/UserManagePage';
 /** ------------------------------------ Páginas de Admin ------------------------------------ */
 import HomeAdmin from './Pages/Admin/Home/Home';
 import UsuariosAdminList from './Pages/Admin/Usuarios/Usuarios';
-import Inscricoes from './Pages/Admin/Inscricoes/Inscricoes';
+import Inscricoes from './Pages/Admin/InsideEdital/Inscricoes/Inscricoes';
 
 
-/** ------------------------------------ Páginas Adm de Edital ---------------------------- */
-import QuadroVagas from './Pages/Admin/QuadroVagas/QuadroVagas';
-import Cursos from './Pages/Admin/Cursos/Cursos';
-import Polos from './Pages/Admin/Polos/Polos';
-import Modalidades from './Pages/Admin/Modalidades/Modalidades';
-
-/** --------------------------------------------------------------------------------------- */
+  /** ------------------------------------ Páginas Adm de Edital ---------------------------- */
+    import QuadroVagas from './Pages/Admin/InsideEdital/QuadroVagas/QuadroVagas';
+    import Cursos from './Pages/Admin/Cursos/Cursos';
+    import Polos from './Pages/Admin/InsideEdital/Polos/Polos';
+    import Modalidades from './Pages/Admin/InsideEdital/Modalidades/Modalidades';
+  /** --------------------------------------------------------------------------------------- */
 
 /** ------------------------------------------------------------------------------------------ */
 

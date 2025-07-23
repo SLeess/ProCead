@@ -1,8 +1,8 @@
-import CursoDeleteModal from "@/Components/Modals/Cursos/CursoDeleteModal";
-import CursoEditModal from "@/Components/Modals/Cursos/CursoEditModal";
-import ModalidadeDeleteModal from "@/Components/Modals/Modalidades/ModalidadeDeleteModal";
-import ModalidadeEditModal from "@/Components/Modals/Modalidades/ModalidadeEditModal";
-import ModalidadeShowModal from "@/Components/Modals/Modalidades/ModalidadeShowModal";
+import CursoDeleteModal from "@/Components/Admin/InsideEdital/Modais/Cursos/CursoDeleteModal";
+import CursoEditModal from "@/Components/Admin/InsideEdital/Modais/Cursos/CursoEditModal";
+import ModalidadeDeleteModal from "@/Components/Admin/InsideEdital/Modais/Modalidades/ModalidadeDeleteModal";
+import ModalidadeEditModal from "@/Components/Admin/InsideEdital/Modais/Modalidades/ModalidadeEditModal";
+import ModalidadeShowModal from "@/Components/Admin/InsideEdital/Modais/Modalidades/ModalidadeShowModal";
 import { ArrowUpDown } from "lucide-react";
 
 const columns = [

@@ -4,7 +4,7 @@ import data from './data'
 import columns from './columns';
 import { GraduationCap, Plus } from 'lucide-react';
 import MainTable from '@/Components/Table/MainTable';
-import CursoCreateModal from '@/Components/Modals/Cursos/CursoCreateModal';
+import CursoCreateModal from '@/Components/Admin/InsideEdital/Modais/Cursos/CursoCreateModal';
 import { useParams } from 'react-router-dom';
 
 const Cursos = () => {
