@@ -1,7 +1,7 @@
-import PerfilDeleteModal from "@/Components/Modals/Perfis/PerfilDeleteModal";
-import PerfilEditModal from "@/Components/Modals/Perfis/PerfilEditModal";
-import PerfilShowModal from "@/Components/Modals/Perfis/PerfilShowModal";
-import PerfilAlterarPermissoesModal from "@/Components/Modals/Perfis/PerfilAlterarPermissoesModal";
+import PerfilDeleteModal from "@/Components/Admin/InsideEdital/Modais/Perfis/PerfilDeleteModal";
+import PerfilEditModal from "@/Components/Admin/InsideEdital/Modais/Perfis/PerfilEditModal";
+import PerfilShowModal from "@/Components/Admin/InsideEdital/Modais/Perfis/PerfilShowModal";
+import PerfilAlterarPermissoesModal from "@/Components/Admin/InsideEdital/Modais/Perfis/PerfilAlterarPermissoesModal";
 import { ArrowUpDown } from "lucide-react";
 
 const columns = [

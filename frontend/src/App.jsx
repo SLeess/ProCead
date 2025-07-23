@@ -49,7 +49,7 @@ import 'react-toastify/dist/ReactToastify.css';
 // Nossas novas páginas de exemplo
 // import HomePage from './Pages/HomePage';
 // import EditalPage from './Pages/EditalPage';
-import Perfis from './Pages/Admin/Perfis/Perfis';
+import Perfis from './Pages/Admin/InsideEdital/Perfis/Perfis';
 
 function App() {
   return (
@@ -139,6 +139,7 @@ function App() {
               <Route path='cursos' element={<Cursos />} />
               <Route path='polos' element={<Polos />} />
               <Route path='modalidades' element={<Modalidades />} />
+              <Route path='perfis' element={<Perfis />} />
           </Route>
 
         </Routes>

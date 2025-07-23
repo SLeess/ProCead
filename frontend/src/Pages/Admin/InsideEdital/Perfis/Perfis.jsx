@@ -2,14 +2,17 @@ import { AppContext } from '@/Contexts/AppContext';
 import React, { useContext } from 'react'
 import data from './data';
 import columns from './columns';
-import PerfilCreateModal from '@/Components/Modals/Perfis/PerfilCreateModal';
+import PerfilCreateModal from '@/Components/Admin/InsideEdital/Modais/Perfis/PerfilCreateModal';
 import { Component } from 'lucide-react';
 import MainTable from '@/Components/Table/MainTable';
+import { useParams } from 'react-router-dom';
 
 const Perfis = () => {
   
-  const { can, isAdmin } = useContext(AppContext);
-  if (can('visualizar-inscricoes') && isAdmin())
+  const { editalId } = useParams();
+  const { hasPermissionForEdital } = useContext(AppContext);
+
+  if (hasPermissionForEdital('visualizar-inscricoes', editalId))
     return (
       <div className="p-4">
         <div className="flex items-center justify-between mb-4">
