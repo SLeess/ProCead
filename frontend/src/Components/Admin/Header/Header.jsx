@@ -25,8 +25,13 @@ const Header = () => {
                   </NavLink>
                </li>
                <li>
+                  <NavLink to="/admin/edital/create" end className={({ isActive }) => `link-page ${isActive ? "border-b-2 border-white" : ""}`}>
+                    Novo Edital
+                  </NavLink>
+               </li>
+               <li>
                   <NavLink to="/admin/usuarios" end className={({ isActive }) => `link-page ${isActive ? "border-b-2 border-white" : ""}`}>
-                    Usuários
+                    Gerenciar Usuários
                   </NavLink>
                </li>
              </ul>
@@ -64,8 +69,13 @@ const Header = () => {
             </NavLink>
           </li>
           <li>
+            <NavLink to="/admin/edital/create" end onClick={() => setIsMenuOpen(false)} className={({ isActive }) => `link-page ${isActive ? "bg-white/10 rounded-md" : "hover:bg-white/5"}`}>
+              Novo Edital
+            </NavLink>
+          </li>
+          <li>
             <NavLink to="/admin/usuarios" end onClick={() => setIsMenuOpen(false)} className={({ isActive }) => `link-page ${isActive ? "bg-white/10 rounded-md" : "hover:bg-white/5"}`}>
-              Usuários
+              Gerenciar Usuários
             </NavLink>
           </li>
         </ul>

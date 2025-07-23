@@ -1,23 +1,23 @@
 import React from 'react';
-import styles from "./ProcessoPessoalCard.module.css";
+import "./ProcessoPessoalCard.css";
 import { HiOutlineArchiveBoxXMark } from "react-icons/hi2";
 import { HiOutlineCheckCircle } from 'react-icons/hi';
 
 export default function ProcessoPessoalCard({ processo }: ProcessoPessoalCardProps ){
 
     return (
-        <li className={`${styles.ProcessoPessoalCard}`}>
-            <article className="flex flex-row border p-4 rounded-lg shadow-md bg-gray-50 space-x-3">
-                <aside className={`${styles.lateralBar} ${processo.status === 'Em andamento' ? `bg-[#FFC107]`: `bg-[#6C757D]`}`}></aside>
-                <div className='flex flex-col h-full w-full justify-around'>
-                    <h3 className={`${styles.descricao}`}>
+        <li className={`ProcessoPessoalCard`}>
+            <article>
+                <aside className={`lateralBar ${processo.status === 'Em andamento' ? `bg-[#FFC107]`: `bg-[#6C757D]`}`}></aside>
+                <div>
+                    <h3 className={`descricao`}>
                         {processo.descricao}
                     </h3>
-                    <p className={`${styles.edital}`}>
+                    <p className={`edital`}>
                         {processo.edital}
                     </p>
                     <div className="flex-grow"></div>
-                    <div className={`mt-7 ${styles.status}`}>
+                    <div className={`status`}>
                         {
                             processo.status === "Em andamento" ? 
                             <>
@@ -34,8 +34,8 @@ export default function ProcessoPessoalCard({ processo }: ProcessoPessoalCardPro
                                 </span>
                             </>
                         }
-                        <div className={`w-full flex flex-row-reverse`}>
-                            <button className={`cursor-pointer p-2 rounded-lg bg-[#095ec5] text-white dark:bg-white dark:text-[#29166F]`}>
+                        <div>
+                            <button className={`entrarBtn`}>
                                 Entrar no edital
                             </button>
                         </div>

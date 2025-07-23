@@ -49,7 +49,7 @@ export default function UserManagePage() {
 
           console.log(res);
 
-          const responseEditais = await fetch(`/api/admin/editais`,{
+          const responseEditais = await fetch(`/api/teste/admin/editais`,{
               method: 'GET',
               headers: {
                   // 'Authorization': `Bearer ${token}`,
