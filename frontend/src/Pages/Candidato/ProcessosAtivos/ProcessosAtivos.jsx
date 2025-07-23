@@ -42,7 +42,7 @@ const processosData = [
 
 export default function ProcessosAtivos(){
   return (
-    <section className="min-h-[75vh] px-6 mt-10 py-12 bg-white rounded-2xl" style={{boxShadow: "-1px 0px 2px 0px rgba(0, 0, 0, 0.25), 1px 1px 2px 0px rgba(0, 0, 0, 0.25)",}}>
+    <section>
         <div className="text-center mb-12">
           <h1 className="text-3xl sm:text-4xl text-gray-800 font-normal">Processos em Andamento</h1>
           <p className="text-gray-600 mt-2">Confira aqui todos os processo em andamento atualmente.</p>

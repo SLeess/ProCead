@@ -50,7 +50,7 @@ export default function Login() {
                 setToken(result.data.token);
                 setPermissions(result.data.permissions);
                 setRoles(result.data.roles);
-                navigate('/admin/inscricoes');
+                navigate('/admin/');
                 toast.success(result.message || "Autenticado com sucesso!");
             }
         } catch (error) {

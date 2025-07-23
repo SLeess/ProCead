@@ -1,36 +1,55 @@
-import { Routes, Route } from 'react-router-dom';
-import Layout from './Pages/Layout';
-import LayoutAdmin from './Pages/LayoutAdmin';
+import { Routes, Route, Outlet } from 'react-router-dom';
 
-// Páginas Públicas
+import Layout from './Layouts/Layout';
+import LayoutAdmin from './Layouts/LayoutAdmin';
+import LayoutAdminInsideEdital from './Layouts/LayoutAdminInsideEdital';
+
+/** ------------------------------------ Páginas Públicas ------------------------------------ */
 import Login from './Pages/Candidato/Auth/Login/Login';
 import Registro from './Pages/Candidato/Auth/Registro/Registro';
 import AdminLogin from './Pages/Admin/Auth/AdminLogin';
+import EsqueceuSenha from './Pages/Candidato/Auth/EsqueceuSenha/EsqueceuSenha';
+import RecuperarSenha from './Pages/Candidato/Auth/RecuperarSenha/RecuperarSenha';
 
-// Páginas de Candidato
-import Home from './Pages/Candidato/Home/Home';
+
+/** ---------------------------------- Páginas de Candidato ---------------------------------- */
+import HomeCandidato from './Pages/Candidato/Home/Home';
 import MeusProcessos from './Pages/Candidato/MeusProcessos/MeusProcessos';
+import HomePage from './Pages/Test/HomePage';
+import EditalPage from './Pages/Test/EditalPage';
+import ProcessosAtivos from './Pages/Candidato/ProcessosAtivos/ProcessosAtivos';
+import UserManagePage from './Pages/Test/UserManagePage';
+/** ------------------------------------------------------------------------------------------ */
 
-// Páginas de Admin
+
+/** ------------------------------------ Páginas de Admin ------------------------------------ */
+import HomeAdmin from './Pages/Admin/Home/Home';
+import UsuariosAdminList from './Pages/Admin/Usuarios/Usuarios';
 import Inscricoes from './Pages/Admin/Inscricoes/Inscricoes';
+
+
+/** ------------------------------------ Páginas Adm de Edital ---------------------------- */
+import QuadroVagas from './Pages/Admin/QuadroVagas/QuadroVagas';
+import Cursos from './Pages/Admin/Cursos/Cursos';
+import Polos from './Pages/Admin/Polos/Polos';
+import Modalidades from './Pages/Admin/Modalidades/Modalidades';
+
+/** --------------------------------------------------------------------------------------- */
+
+/** ------------------------------------------------------------------------------------------ */
 
 // Componentes de Rota
 import ProtectedRoute from './Routes/ProtectedRoute';
 import GuestRoutes from './Routes/GuestRoutes';
 import GuestAdminRoutes from './Routes/GuestAdminRoutes';
+
+// ToastFy
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 // Nossas novas páginas de exemplo
 // import HomePage from './Pages/HomePage';
 // import EditalPage from './Pages/EditalPage';
-import ProcessosAtivos from './Pages/Candidato/ProcessosAtivos/ProcessosAtivos';
-import EsqueceuSenha from './Pages/Candidato/Auth/EsqueceuSenha/EsqueceuSenha';
-import RecuperarSenha from './Pages/Candidato/Auth/RecuperarSenha/RecuperarSenha';
-import { ToastContainer } from 'react-toastify';
-import QuadroVagas from './Pages/Admin/QuadroVagas/QuadroVagas';
-import Cursos from './Pages/Admin/Cursos/Cursos';
-import Polos from './Pages/Admin/Polos/Polos';
-import Modalidades from './Pages/Admin/Modalidades/Modalidades';
 import Perfis from './Pages/Admin/Perfis/Perfis';
 
 function App() {
@@ -49,6 +68,9 @@ function App() {
       />
       <div className="App">
         <Routes>
+
+
+          
           {/* ======================================= */}
           {/* ========= ROTAS PÚBLICAS/GUEST ======== */}
           {/* ======================================= */}
@@ -59,6 +81,7 @@ function App() {
             <Route path='/registro' element={<Registro />} />
             <Route path='/esqueceu-senha' element={<EsqueceuSenha />} />
             <Route path='/recuperar-senha' element={<RecuperarSenha />} />
+            <Route path='/permissions' element={<UserManagePage userId={1}/>}/>
           </Route>
 
           {/* Rota para convidados da área de Admin */}
@@ -66,40 +89,57 @@ function App() {
             <Route path='/admin/login' element={<AdminLogin />} />
           </Route>
 
+
+
+
           {/* ============================================== */}
           {/* ========= ROTAS PROTEGIDAS (CANDIDATO) ========= */}
           {/* ============================================== */}
           <Route 
             path='/' 
             element={
-              <ProtectedRoute role="candidato">
+              <ProtectedRoute area="candidato">
                 <Layout />
               </ProtectedRoute>
             }
           >
             <Route index element={<ProcessosAtivos />} />
-            <Route path="/home" element={<></>} />
-            <Route path="/edital/:editalId" element={<></>} />
+            <Route path="/home" element={<HomePage />} />
+            <Route path="/edital/:editalId" element={<EditalPage />} />
             <Route path='meus-processos' element={<MeusProcessos />} />
           </Route>
+
+
+
 
           {/* =========================================== */}
           {/* ========= ROTAS PROTEGIDAS (ADMIN) ======== */}
           {/* =========================================== */}
-          <Route 
-            path='/admin' 
+          <Route path='/admin/'
             element={
-              <ProtectedRoute role="admin">
+              <ProtectedRoute area="admin">
                 <LayoutAdmin />
               </ProtectedRoute>
             }
           >
-            <Route path='inscricoes' element={<Inscricoes />} />
-            <Route path='quadro-vagas' element={<QuadroVagas />} />
-            <Route path='cursos' element={<Cursos />} />
-            <Route path='polos' element={<Polos />} />
-            <Route path='modalidades' element={<Modalidades />} />
-            <Route path='perfis' element={<Perfis />} />
+              <Route index element={<HomeAdmin />} />
+              <Route path='usuarios' element={<UsuariosAdminList />} />
+              <Route path='manejar-usuarios/:userId' element={<UserManagePage />} />
+          </Route>
+
+          <Route path='/admin/edital/:editalId/'
+            element={
+              <ProtectedRoute area="admin">
+                <LayoutAdminInsideEdital />
+              </ProtectedRoute>
+            }
+          >
+              <Route index element={<Inscricoes />} />
+              <Route path='inscricoes' element={<Inscricoes />} />
+              <Route path='quadro-vagas' element={<QuadroVagas />} />
+              <Route path='cursos' element={<Cursos />} />
+              <Route path='polos' element={<Polos />} />
+              <Route path='modalidades' element={<Modalidades />} />
           </Route>
 
         </Routes>

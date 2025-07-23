@@ -1,4 +1,4 @@
-import { AppContext } from '@/Contexts/AppContext';
+import { AppContext } from "@/Contexts/AppContext";
 import React, { useContext, useState } from 'react';
 import { FaBars, FaChevronDown, FaTimes } from 'react-icons/fa'; // Ícone para o dropdown
 import { NavLink } from 'react-router-dom';
@@ -12,7 +12,7 @@ const Header = () => {
    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
    return (
-     <header id='user' className="">
+     <header id='admin' className="">
         <nav className={`${isMenuOpen ? `rounded-t-2xl` : `rounded-2xl`}`}>
 
           {/* Menu para Desktop */}
@@ -20,18 +20,13 @@ const Header = () => {
              <img src="/img/logo_cead_bg_white_full.png" alt="Logo CEAD" className="w-[120px] h-[50px]"/>
              <ul id='desktop'>
                <li>
-                  <NavLink to="/" end className={({ isActive }) => `link-page ${isActive ? "border-b-2 border-white" : ""}`}>
-                    Processos Ativos
+                  <NavLink to="/admin" end className={({ isActive }) => `link-page ${isActive ? "border-b-2 border-white" : ""}`}>
+                    Lista de Editais
                   </NavLink>
                </li>
                <li>
-                  <NavLink to="meus-processos" end className={({ isActive }) => `link-page ${isActive ? "border-b-2 border-white" : ""}`}>
-                    Meus Processos
-                  </NavLink>
-               </li>
-               <li>
-                  <NavLink to="/home" end className={({ isActive }) => `link-page ${isActive ? "border-b-2 border-white" : ""}`}>
-                    Teste Pages
+                  <NavLink to="/admin/usuarios" end className={({ isActive }) => `link-page ${isActive ? "border-b-2 border-white" : ""}`}>
+                    Usuários
                   </NavLink>
                </li>
              </ul>
@@ -57,25 +52,20 @@ const Header = () => {
       {/* Menu Mobile com Animação */}
       <div 
         className={`
-          md:hidden absolute top-full left-0 w-full rounded-b-2xl bg-gradient-to-r from-[#004DA9] to-[#2A83ED] shadow-lg p-4 z-20
+          md:hidden absolute top-full left-0 w-full rounded-b-2xl bg-[#29166F] shadow-lg p-4 z-20
           transition-all duration-300 ease-in-out
           ${isMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}
         `}
       >
         <ul id='mobile' className="flex flex-col flex-1/2 space-y-4 items-center">
           <li>
-            <NavLink to="/" end onClick={() => setIsMenuOpen(false)} className={({ isActive }) => `link-page ${isActive ? "bg-white/10 rounded-md" : "hover:bg-white/5"}`}>
-              Processos Ativos
+            <NavLink to="/admin" end onClick={() => setIsMenuOpen(false)} className={({ isActive }) => `link-page ${isActive ? "bg-white/10 rounded-md" : "hover:bg-white/5"}`}>
+              Lista de Editais
             </NavLink>
           </li>
           <li>
-            <NavLink to="meus-processos" end onClick={() => setIsMenuOpen(false)} className={({ isActive }) => `link-page ${isActive ? "bg-white/10 rounded-md" : "hover:bg-white/5"}`}>
-              Meus Processos
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/home" end onClick={() => setIsMenuOpen(false)} className={({ isActive }) => `link-page ${isActive ? "bg-white/10 rounded-md" : "hover:bg-white/5"}`}>
-              Teste Pages
+            <NavLink to="/admin/usuarios" end onClick={() => setIsMenuOpen(false)} className={({ isActive }) => `link-page ${isActive ? "bg-white/10 rounded-md" : "hover:bg-white/5"}`}>
+              Usuários
             </NavLink>
           </li>
         </ul>

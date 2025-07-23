@@ -6,12 +6,10 @@ use App\Models\User;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
-use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Str;
 
 class AuthService
 {
@@ -32,8 +30,6 @@ class AuthService
             $user->tokens()->delete();
 
             $data['token'] = $user->createToken('auth_token', ['access:candidate'])->plainTextToken;
-            $data['permissions'] = $user->getPermissionNames();
-            $data['roles'] = $user->getRoleNames();
 
             DB::commit();
             return $data;
@@ -54,8 +50,7 @@ class AuthService
 
         $user = Auth::user();
 
-        /** @var \App\Models\User $user */
-        if (!$user->hasRole('admin')) {
+        if ($user->dontHaveAnyPermissionOrRole()) {
             throw new AuthorizationException('Acesso não autorizado.');
         }
 
@@ -64,8 +59,6 @@ class AuthService
 
             $user->tokens()->delete();
             $data['token'] = $user->createToken('auth_token_admin', ['access:admin'])->plainTextToken;
-            $data['permissions'] = $user->getPermissionNames();
-            $data['roles'] = $user->getRoleNames();
 
             DB::commit();
             return $data;
@@ -85,7 +78,7 @@ class AuthService
         DB::beginTransaction();
         try {
             $user = User::create($data);
-            $user->assignRole('candidato');
+            // $user->assignRole('candidato');
 
             $success['token'] =  $user->createToken('MyApp')->plainTextToken;
             $success['user'] =  $user;

@@ -11,7 +11,7 @@ export default function ThemeToggleBtn(){
             onClick={toggleTheme}
             type="button"
             className="
-                dark:bg-slate-900 text-[#004DA9] hover:text-white border-1 bg-whit
+                dark:bg-slate-800 text-[#004DA9] hover:text-white border-1 bg-whit
                 dark:text-white hover:bg-[#004DA9]
                 hover:cursor-pointer 
                 dark:hover:bg-gray-700 focus:outline-none 

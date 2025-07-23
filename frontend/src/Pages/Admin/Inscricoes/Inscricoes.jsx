@@ -1,14 +1,17 @@
 import MainTable from '../../../Components/Table/MainTable'
 import React, { useContext } from 'react'
 import { AppContext } from '@/Contexts/AppContext';
-import AccessDenied from '../../../Components/AccessDenied';
+import AccessDenied from '../../../Components/Global/AccessDenied/AccessDenied';
 import data from './data'
 import columns from './columns';
 import { UserRoundPen } from 'lucide-react';
+import { useParams } from 'react-router-dom';
 
 const Inscricoes = () => {
-  const { can, isAdmin } = useContext(AppContext);
-  if(can('visualizar-inscricoes') && isAdmin())
+  const { editalId } = useParams();
+  const { hasPermissionForEdital } = useContext(AppContext);
+
+  if (hasPermissionForEdital('visualizar-inscricoes', editalId))
     return (
       <div className="p-4">
         <h1 className="text-2xl font-bold mb-4">Gerenciamento de Inscrições</h1>

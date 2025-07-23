@@ -5,10 +5,13 @@ import columns from './columns';
 import { Building2, GraduationCap, Plus } from 'lucide-react';
 import MainTable from '@/Components/Table/MainTable';
 import PoloCreateModal from '@/Components/Modals/Polos/PoloCreateModal';
+import { useParams } from 'react-router-dom';
 
 const Polos = () => {
-  const { can, isAdmin } = useContext(AppContext);
-  if (can('visualizar-inscricoes') && isAdmin())
+  const { editalId } = useParams();
+  const { hasPermissionForEdital } = useContext(AppContext);
+
+  if (hasPermissionForEdital('visualizar-inscricoes', editalId))
     return (
       <div className="p-4">
         <div className="flex items-center justify-between mb-4">
