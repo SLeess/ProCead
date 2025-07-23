@@ -1,9 +1,9 @@
-import { FormField, TextInput } from '@/Components/ui/modals';
+import { FormField, TextInput, Checkbox, SelectInput, MultiSelectTags } from '@/Components/ui/modals';
 import { Modal, ModalBody, ModalHeader } from 'flowbite-react';
-import { Eye } from 'lucide-react';
+import { Eye, Plus } from 'lucide-react';
 import React, { useState } from 'react'
 
-const PerfilShowModal = () => {
+const UserShowModal = () => {
     const [openModal, setOpenModal] = useState(false);
     function onCloseModal() {
         setOpenModal(false);
@@ -18,8 +18,8 @@ const PerfilShowModal = () => {
                 <ModalBody >
                     {/* Header */}
                     <div className="flex justify-between items-center mb-4">
-                        <h1 className="text-2xl font-bold text-gray-800">Visualizar Pefil</h1>
-                        
+                        <h1 className="text-2xl font-bold text-gray-800">Visualizar Usuário</h1>
+
                     </div>
 
                     {/* Sub-header */}
@@ -28,23 +28,46 @@ const PerfilShowModal = () => {
                     </p>
                     <div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 mb-6">
-                            <FormField label="Nome do Perfil">
-                                <TextInput readOnly={true} className="md:col-span-1" value="controle-acadêmico" />
+                            <FormField label="Nome Completo">
+                                <TextInput readOnly={true} className="md:col-span-1" value="João da Silva" />
+                            </FormField>
+                            <FormField label="E-mail">
+                                <TextInput readOnly={true} className="md:col-span-2" value="joão.silva@edu.unimontes.br" />
+                            </FormField>
+                        </div>
+                    </div>
+                    <div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 mb-6">
+                            <FormField label="Perfil">
+                                <SelectInput value="Perfil" readOnly={true} options={['admin', 'super-admin', 'candidato']} />
                             </FormField>
                             <FormField label="Tipo">
                                 <TextInput readOnly={true} className="md:col-span-2" value="Administrador" />
                             </FormField>
                         </div>
                     </div>
+                    <div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 mb-6">
+                            <FormField label="Editais" className="md:col-span-2">
+                                <MultiSelectTags />
+                            </FormField>
+
+                        </div>
+                    </div>
 
                     {/* Action Buttons */}
                     <div className="mt-10 flex justify-end items-center space-x-4">
-                        
+                        <button
+                            onClick={onCloseModal}
+                            className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50"
+                        >
+                            Cancelar
+                        </button>
                         <button
                             onClick={onCloseModal}
                             className="px-8 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700"
                         >
-                            Fechar
+                            Salvar
                         </button>
                     </div>
                 </ModalBody>
@@ -53,4 +76,4 @@ const PerfilShowModal = () => {
     )
 }
 
-export default PerfilShowModal
+export default UserShowModal
