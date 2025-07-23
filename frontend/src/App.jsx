@@ -31,6 +31,7 @@ import QuadroVagas from './Pages/Admin/QuadroVagas/QuadroVagas';
 import Cursos from './Pages/Admin/Cursos/Cursos';
 import Polos from './Pages/Admin/Polos/Polos';
 import Modalidades from './Pages/Admin/Modalidades/Modalidades';
+import Perfis from './Pages/Admin/Perfis/Perfis';
 
 function App() {
   return (
@@ -98,6 +99,7 @@ function App() {
             <Route path='cursos' element={<Cursos />} />
             <Route path='polos' element={<Polos />} />
             <Route path='modalidades' element={<Modalidades />} />
+            <Route path='perfis' element={<Perfis />} />
           </Route>
 
         </Routes>
