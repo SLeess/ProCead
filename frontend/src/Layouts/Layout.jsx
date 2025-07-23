@@ -1,5 +1,4 @@
 import { Link, Outlet } from "react-router-dom";
-import Sidebar from "../Pages/Admin/Sidebar/Sidebar";
 import Header from "@/Components/Candidatos/Header/Header";
 import { useContext } from "react";
 import { AppContext } from "@/Contexts/AppContext";

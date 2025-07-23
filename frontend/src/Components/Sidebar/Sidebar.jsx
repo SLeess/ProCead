@@ -94,16 +94,11 @@ const SubMenuItem = styled.div`
 `;
 
 const Sidebar = () => {
-<<<<<<<< HEAD:frontend/src/Pages/Admin/Sidebar/Sidebar.jsx
   
   const { hasGlobalPermission, user } = useContext(AppContext);
-  const menuData = [
-========
   const navigate = useNavigate();
   const { can } = useContext(AppContext);
-  const { user } = useContext(AppContext);
    const menuData = [
->>>>>>>> dev_henrique:frontend/src/Components/Sidebar/Sidebar.jsx
   {
     title: 'Edital',
     icon: <FiFileText size={20} />,

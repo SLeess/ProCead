@@ -20,134 +20,10 @@ import {
 
 // import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import React, { useState } from 'react'
-import DATA from './data';
-import { Pagination } from "flowbite-react";
-import { ArrowUpDown } from "lucide-react";
-const MainTable = () => {
-  const [data, setData] = useState(DATA);
+import { Search } from "lucide-react";
+
+const MainTable = ({data, columns, title}) => {
   const [columnFilters, setColumnFilters] = React.useState([]);
-  const columns = [
-    {
-      id: "select",
-      header: ({ table }) => (
-        <input
-          type="checkbox"
-          {...{
-            checked: table.getIsAllRowsSelected(),
-            indeterminate: table.getIsSomeRowsSelected(),
-            onChange: table.getToggleAllRowsSelectedHandler(),
-          }}
-        />
-      ),
-      cell: ({ row }) => (
-        <input
-          type="checkbox"
-          {...{
-            checked: row.getIsSelected(),
-            disabled: !row.getCanSelect(),
-            indeterminate: row.getIsSomeSelected(),
-            onChange: row.getToggleSelectedHandler(),
-          }}
-        />
-      ),
-    },
-    {
-      accessorKey: "id",
-      header: "#",
-      cell: (props) => <span>{props.getValue()}</span>
-    },
-    {
-      accessorKey: "inscricao",
-      // header: "Nº de Inscricao",
-      header: ({ column }) => {
-      return (
-        <div className="flex cursor-pointer items-center"
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Inscricao
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </div>
-      )
-    },
-      cell: (props) => <span>{props.getValue()}</span>
-    },
-    {
-      accessorKey: "nome",
-      header: ({ column }) => {
-      return (
-        <div className="flex cursor-pointer items-center"
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Nome
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </div>
-      )
-    },
-      cell: (props) => <span>{props.getValue()}</span>
-    },
-    {
-      accessorKey: "email",
-      header: ({ column }) => {
-      return (
-        <div className="flex cursor-pointer items-center"
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          E-mail
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </div>
-      )
-    },
-      cell: (props) => <span>{props.getValue()}</span>
-    },
-    {
-      accessorKey: "cpf",
-      header: ({ column }) => {
-      return (
-        <div className="flex cursor-pointer items-center"
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          CPF
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </div>
-      )
-    },
-      cell: (props) => <span>{props.getValue()}</span>
-    },
-    {
-      accessorKey: "modalidade",
-      header: ({ column }) => {
-      return (
-        <div className="flex cursor-pointer items-center"
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Modalidade
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </div>
-      )
-    },
-      cell: (props) => <span>{props.getValue()}</span>
-    },
-    {
-      accessorKey: "status",
-      header: ({ column }) => {
-      return (
-        <div className="flex cursor-pointer items-center"
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Status
-          <ArrowUpDown className="ml-2 h-4 w-4" />
-        </div>
-      )
-    },
-      cell: (props) => <span>{props.getValue()}</span>
-    },
-  ];
   const [rowSelection, setRowSelection] = React.useState({});
   const [globalFilter, setGlobalFilter] = React.useState('');
   const [pagination, setPagination] = React.useState({
@@ -158,6 +34,7 @@ const MainTable = () => {
   const table = useReactTable({
     data,
     columns,
+    title,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -176,17 +53,22 @@ const MainTable = () => {
 
   return (
    <div className="rounded-sm border border-gray-200 bg-white px-5 pt-6 pb-2.5 shadow-md sm:px-7.5 xl:pb-1">
-      <div className="mb-6">
+      <div className="mb-6 flex justify-between">
         <h4 className="text-xl font-semibold text-black mb-2">
-          Inscrições
+          {title}
         </h4>
-        <input
-          type="text"
-          value={globalFilter ?? ''}
-          onChange={e => setGlobalFilter(e.target.value)}
-          className="w-1/3 rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          placeholder="Pesquisar..."
-        />
+        <div className="relative w-1/3">
+          <input
+            type="text"
+            value={globalFilter ?? ''}
+            onChange={e => setGlobalFilter(e.target.value)}
+            className="w-full rounded-md border border-gray-300 bg-white py-2 pl-10 pr-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            placeholder="Pesquisar..."
+          />
+          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
+            <Search/>
+          </span>
+        </div>
       </div>
 
       {/* Tabela Shadcn/ui */}
@@ -282,6 +164,7 @@ const MainTable = () => {
                     Mostrar {pageSize}
                 </option>
                 ))}
+                <option value={data.length} key={data.length}>Mostrar Todos</option>
             </select>
         </div>
     </div>

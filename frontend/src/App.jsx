@@ -27,8 +27,12 @@ import HomeAdmin from './Pages/Admin/Home/Home';
 import UsuariosAdminList from './Pages/Admin/Usuarios/Usuarios';
 import Inscricoes from './Pages/Admin/Inscricoes/Inscricoes';
 
-/** ------------------------------------ Páginas Adm de Edital ---------------------------- */
 
+/** ------------------------------------ Páginas Adm de Edital ---------------------------- */
+import QuadroVagas from './Pages/Admin/QuadroVagas/QuadroVagas';
+import Cursos from './Pages/Admin/Cursos/Cursos';
+import Polos from './Pages/Admin/Polos/Polos';
+import Modalidades from './Pages/Admin/Modalidades/Modalidades';
 
 /** --------------------------------------------------------------------------------------- */
 
@@ -42,6 +46,7 @@ import GuestAdminRoutes from './Routes/GuestAdminRoutes';
 // ToastFy
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 
 function App() {
   return (
@@ -127,6 +132,10 @@ function App() {
           >
             <Route index element={<Inscricoes />} />
             <Route path='inscricoes' element={<Inscricoes />} />
+            <Route path='quadro-vagas' element={<QuadroVagas />} />
+            <Route path='cursos' element={<Cursos />} />
+            <Route path='polos' element={<Polos />} />
+            <Route path='modalidades' element={<Modalidades />} />
           </Route>
 
         </Routes>
