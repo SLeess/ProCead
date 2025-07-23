@@ -130,12 +130,12 @@ function App() {
               </ProtectedRoute>
             }
           >
-            <Route index element={<Inscricoes />} />
-            <Route path='inscricoes' element={<Inscricoes />} />
-            <Route path='quadro-vagas' element={<QuadroVagas />} />
-            <Route path='cursos' element={<Cursos />} />
-            <Route path='polos' element={<Polos />} />
-            <Route path='modalidades' element={<Modalidades />} />
+              <Route index element={<Inscricoes />} />
+              <Route path='inscricoes' element={<Inscricoes />} />
+              <Route path='quadro-vagas' element={<QuadroVagas />} />
+              <Route path='cursos' element={<Cursos />} />
+              <Route path='polos' element={<Polos />} />
+              <Route path='modalidades' element={<Modalidades />} />
           </Route>
 
         </Routes>

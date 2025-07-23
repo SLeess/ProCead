@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 import { AppContext } from '@/Contexts/AppContext'; // Importando a função can do contexto
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 // Ícones importados para os MENUS e submenus
 import {
   FiGrid, FiChevronDown, FiChevronUp, FiSettings, FiFilePlus,
@@ -94,23 +94,18 @@ const SubMenuItem = styled.div`
 `;
 
 const Sidebar = () => {
-<<<<<<<< HEAD:frontend/src/Pages/Admin/Sidebar/Sidebar.jsx
   
   const { hasGlobalPermission, user } = useContext(AppContext);
-  const menuData = [
-========
+  const { editalId } = useParams();
   const navigate = useNavigate();
-  const { can } = useContext(AppContext);
-  const { user } = useContext(AppContext);
-   const menuData = [
->>>>>>>> dev_henrique:frontend/src/Components/Sidebar/Sidebar.jsx
+  const menuData = [
   {
     title: 'Edital',
     icon: <FiFileText size={20} />,
     isInitiallyOpen: false,
     items: [
-      { name: 'Configurações', icon: <FiSettings size={16} />, href: '/admin/configuracoes' },
-      { name: 'Novo Edital', icon: <FiFilePlus size={16} />, href: '/admin/novo-edital' }
+      { name: 'Configurações', icon: <FiSettings size={16} />, href: `/admin/edital/${editalId}/configuracoes` },
+      { name: 'Novo Edital', icon: <FiFilePlus size={16} />, href: `/admin/edital/${editalId}/novo-edital` }
     ]
   },
   {
@@ -118,11 +113,11 @@ const Sidebar = () => {
     icon: <FiDatabase size={20} />,
     isInitiallyOpen: true,
     items: [
-      { name: 'Logs', icon: <FiTerminal size={16} />, href: '/admin/logs' },
-      { name: 'Usuários', icon: <FiUsers size={16} />, href: '/admin/usuarios' },
-      { name: 'Administradores', icon: <FiShield size={16} />, href: '/admin/administradores' },
-      { name: 'Perfis', icon: <FiUserCheck size={16} />, href: '/admin/perfis' },
-      { name: 'Permissões', icon: <FiKey size={16} />, href: '/admin/permissoes' }
+      { name: 'Logs', icon: <FiTerminal size={16} />, href: `/admin/edital/${editalId}/logs` },
+      { name: 'Usuários', icon: <FiUsers size={16} />, href: `/admin/edital/${editalId}/usuarios` },
+      { name: 'Administradores', icon: <FiShield size={16} />, href: `/admin/edital/${editalId}/administradores` },
+      { name: 'Perfis', icon: <FiUserCheck size={16} />, href: `/admin/edital/${editalId}/perfis` },
+      { name: 'Permissões', icon: <FiKey size={16} />, href: `/admin/edital/${editalId}/permissoes` }
     ]
   },
   {
@@ -130,10 +125,10 @@ const Sidebar = () => {
     icon: <FiHome size={20} />,
     isInitiallyOpen: true,
     items: [
-      { name: 'Polos', icon: <FiMapPin size={16} />, href: '/admin/polos' },
-      { name: 'Modalidades', icon: <FiLayers size={16} />, href: '/admin/modalidades' },
-      { name: 'Cursos', icon: <FiBookOpen size={16} />, href: '/admin/cursos' },
-      { name: 'Quadro de Vagas', icon: <FiClipboard size={16} />, href: '/admin/quadro-vagas' }
+      { name: 'Polos', icon: <FiMapPin size={16} />, href: `/admin/edital/${editalId}/polos` },
+      { name: 'Modalidades', icon: <FiLayers size={16} />, href: `/admin/edital/${editalId}/modalidades` },
+      { name: 'Cursos', icon: <FiBookOpen size={16} />, href: `/admin/edital/${editalId}/cursos` },
+      { name: 'Quadro de Vagas', icon: <FiClipboard size={16} />, href: `/admin/edital/${editalId}/quadro-vagas` }
     ]
   },
   {
@@ -141,14 +136,14 @@ const Sidebar = () => {
     icon: <FiCheckSquare size={20} />,
     isInitiallyOpen: true,
     items: [
-      { name: 'Alocação', icon: <FiArchive size={16} />, href: '/admin/alocacao' },
+      { name: 'Alocação', icon: <FiArchive size={16} />, href: `/admin/edital/${editalId}/alocacao` },
       
       hasGlobalPermission('visualizar-inscricoes') ?
-        { name: 'Inscrições', icon: <FiEdit size={16} />, href: '/admin/inscricoes' }
+        { name: 'Inscrições', icon: <FiEdit size={16} />, href: `/admin/edital/${editalId}/inscricoes` }
         : null,
 
-      { name: 'Cotas', icon: <FiPieChart size={16} />, href: '/admin/cotas' },
-      { name: 'Recursos', icon: <FiHelpCircle size={16} />, href: '/admin/recursos' }
+      { name: 'Cotas', icon: <FiPieChart size={16} />, href: `/admin/edital/${editalId}/cotas` },
+      { name: 'Recursos', icon: <FiHelpCircle size={16} />, href: `/admin/edital/${editalId}/recursos` }
     ]
 
   },
@@ -157,9 +152,9 @@ const Sidebar = () => {
     icon: <FiFlag size={20} />,
     isInitiallyOpen: true,
     items: [
-      { name: 'Classificação', icon: <FiAward size={16} />, href: '/admin/classificacao' },
-      { name: 'Chamadas', icon: <FiBell size={16} />, href: '/admin/chamadas' },
-      { name: 'Matrículas', icon: <FiUserPlus size={16} />, href: '/admin/matriculas' }
+      { name: 'Classificação', icon: <FiAward size={16} />, href: `/admin/edital/${editalId}/classificacao` },
+      { name: 'Chamadas', icon: <FiBell size={16} />, href: `/admin/edital/${editalId}/chamadas` },
+      { name: 'Matrículas', icon: <FiUserPlus size={16} />, href: `/admin/edital/${editalId}/matriculas` }
     ]
   },
 ];

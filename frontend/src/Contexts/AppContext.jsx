@@ -46,7 +46,7 @@ export default function AppProvider({ children }) {
      * @returns {boolean}
      */
     function hasGlobalPermission(permissionName) {
-        return globalPermissions.includes(permissionName) || globalRoles.includes('super-Admin');
+        return globalPermissions.includes(permissionName) || isSuperAdmin();
     }
 
     /**
@@ -68,9 +68,10 @@ export default function AppProvider({ children }) {
      */
     function hasPermissionForEdital(permissionName, editalId) {
         const editalData = permissionsWithRolesByEdital[editalId];
+
         if (!editalData) return false;
-        // Verifica se a permissão está na lista final de permissões efetivas para o edital
-        return (editalData.permissions || []).includes(permissionName) || globalRoles.includes('super-Admin');
+
+        return (editalData.effective_permissions || []).includes(permissionName) || isSuperAdmin();
     }
 
     /**

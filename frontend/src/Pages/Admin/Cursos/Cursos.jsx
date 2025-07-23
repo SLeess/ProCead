@@ -5,10 +5,13 @@ import columns from './columns';
 import { GraduationCap, Plus } from 'lucide-react';
 import MainTable from '@/Components/Table/MainTable';
 import CursoCreateModal from '@/Components/Modals/Cursos/CursoCreateModal';
+import { useParams } from 'react-router-dom';
 
 const Cursos = () => {
-  const { can, isAdmin } = useContext(AppContext);
-  if (can('visualizar-inscricoes') && isAdmin())
+  const { editalId } = useParams();
+  const { hasPermissionForEdital } = useContext(AppContext);
+
+  if (hasPermissionForEdital('visualizar-inscricoes', editalId))
     return (
       <div className="p-4">
         <div className="flex items-center justify-between mb-4">
