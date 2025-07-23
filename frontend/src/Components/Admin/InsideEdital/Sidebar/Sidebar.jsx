@@ -95,7 +95,7 @@ const SubMenuItem = styled.div`
 
 const Sidebar = () => {
   
-  const { hasGlobalPermission, user } = useContext(AppContext);
+  const { hasGlobalPermission } = useContext(AppContext);
   const { editalId } = useParams();
   const navigate = useNavigate();
   const menuData = [

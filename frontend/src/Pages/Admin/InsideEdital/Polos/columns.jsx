@@ -1,5 +1,5 @@
-import PoloDeleteModal from "@/Components/Modals/Polos/PoloDeleteModal";
-import PoloEditModal from "@/Components/Modals/Polos/PoloEditModal";
+import PoloDeleteModal from "@/Components/Admin/InsideEdital/Modais/Polos/PoloDeleteModal";
+import PoloEditModal from "@/Components/Admin/InsideEdital/Modais/Polos/PoloEditModal";
 import { ArrowUpDown } from "lucide-react";
 
 const columns = [

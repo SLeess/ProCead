@@ -1,6 +1,6 @@
-import InscricaoAvaliarModal from "@/Components/Modals/Inscricoes/InscricaoAvaliarModal";
-import InscricaoEditModal from "@/Components/Modals/Inscricoes/InscricaoEditModal";
-import InscricaoShowModal from "@/Components/Modals/Inscricoes/InscricaoShowModal";
+import InscricaoAvaliarModal from "@/Components/Admin/InsideEdital/Modais/Inscricoes/InscricaoAvaliarModal";
+import InscricaoEditModal from "@/Components/Admin/InsideEdital/Modais/Inscricoes/InscricaoEditModal";
+import InscricaoShowModal from "@/Components/Admin/InsideEdital/Modais/Inscricoes/InscricaoShowModal";
 import { ArrowUpDown } from "lucide-react";
 
 const columns = [
