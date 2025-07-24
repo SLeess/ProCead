@@ -3,13 +3,13 @@
 import { Modal, ModalBody, ModalHeader, } from "flowbite-react";
 import { Eye } from "lucide-react";
 import { useState } from "react";
-import { FormField, SelectInput, AnexoButton, TextInput } from "@/Components/ui/modals";
+import { FormField, SelectInput, AnexoButton, TextInput, DetailRow, AlterationRow } from "@/Components/ui/modals";
 
 export default function LogsShowModal() {
 
     const [openModal, setOpenModal] = useState(false);
-    const [activeTab, setActiveTab] = useState('Informações Básicas');
-    const tabs = ['Dados','Alterações'];
+    const [activeTab, setActiveTab] = useState('Dados');
+    const tabs = ['Dados', 'Alterações'];
 
     const logData = [
         { field: 'ID', value: '20000' },
@@ -88,134 +88,47 @@ export default function LogsShowModal() {
                     </div>
 
                     {/* Form Content - Only showing the active tab's content */}
-                    {activeTab === 'Informações Básicas' && (
-                        <div>
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-6">
-                                {/* Row 1 */}
-                                <FormField label="Nome Completo" className="md:col-span-1">
-                                    <TextInput readOnly={true} value="Daniel Damasceno Meira" />
-                                </FormField>
-                                <FormField label="CPF">
-                                    <TextInput readOnly={true} value="000.000.000-00" />
-                                </FormField>
-                                <FormField label="Data de Nascimento">
-                                    <TextInput readOnly={true} value="05/10/2004" />
-                                </FormField>
-
-                                {/* Row 2 */}
-                                <FormField label="E-mail" className="md:col-span-1">
-                                    <TextInput readOnly={true} value="dandamasceno04@gmail.com" />
-                                </FormField>
-                                <FormField label="Estado Civil">
-                                    <SelectInput readOnly={true} value="Solteiro" options={['Solteiro', 'Casado', 'Divorciado', 'Viúvo']} />
-                                </FormField>
-                                <FormField label="Gênero">
-                                    <SelectInput readOnly={true} value="Masculino" options={['Masculino', 'Feminino', 'Outro']} />
-                                </FormField>
-
-                                {/* Row 3 */}
-                                <FormField label="Identidade de Gênero">
-                                    <SelectInput readOnly={true} value="Transgênero" options={['Cisgênero', 'Transgênero', 'Não-binário']} />
-                                </FormField>
-                                <FormField label="Nome Social" className="md:col-span-2">
-                                    <TextInput readOnly={true} value="Danielly Vitória Damasceno Meira" />
-                                </FormField>
-
-                                {/* Row 4 */}
-                                <FormField label="RG">
-                                    <TextInput readOnly={true} value="MG-00.000.000" />
-                                </FormField>
-                                <FormField label="Telefone">
-                                    <TextInput readOnly={true} value="38999999999" />
-                                </FormField>
-                                <FormField label="Naturalidade">
-                                    <TextInput readOnly={true} value="Montes Claros" />
-                                </FormField>
-
-                                {/* Row 5 */}
-                                <FormField label="Nacionalidade">
-                                    <TextInput readOnly={true} value="Brasileira" />
-                                </FormField>
-                                <FormField label="UF">
-                                    <SelectInput readOnly={true} value="MG" options={['MG', 'SP', 'RJ', 'BA']} />
-                                </FormField>
+                    {/* Tab Content */}
+                    {activeTab === 'Dados' && (
+                        <div className="border border-gray-200 rounded-lg overflow-hidden">
+                            <DetailRow field="Campo" value="Valor" isHeader={true} />
+                            <div className="bg-white">
+                                {logData.map((item, index) => (
+                                    <div key={index} className={`${index !== logData.length - 1 ? 'border-b border-gray-200' : ''}`}>
+                                        <DetailRow field={item.field} value={item.value} />
+                                    </div>
+                                ))}
                             </div>
-
                             {/* Action Buttons */}
                             <div className="mt-10 flex justify-end items-center space-x-4">
                                 <button onClick={onCloseModal} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">
                                     Cancelar
                                 </button>
                                 <button onClick={handleNext} className="px-6 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                                    Próximo: Endereço
+                                    Próximo: Alterações
                                 </button>
                             </div>
                         </div>
                     )}
-                    {activeTab === 'Endereço' && (
-                        <div>
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-6">
-                                <FormField label="CEP"><TextInput readOnly={true} value="39401-001" /></FormField>
-                                <FormField label="Rua"><TextInput readOnly={true} value="Daniel Damasceno Meira" /></FormField>
-                                <FormField label="Número"><TextInput readOnly={true} value="1012" /></FormField>
-                                <FormField label="Complemento"><TextInput readOnly={true} value="Bloco C, Ap. 701" /></FormField>
-                                <FormField label="Bairro"><TextInput readOnly={true} value="Morada do Parque" /></FormField>
-                                <FormField label="UF"><SelectInput readOnly={true} value="MG" options={['MG', 'SP', 'RJ', 'BA']} /></FormField>
-                                <FormField label="Cidade" className="md:col-span-3"><TextInput readOnly={true} value="São João da Ponte" /></FormField>
-                            </div>
-                            <div className="mt-10 flex justify-end items-center space-x-4">
-                                <button onClick={handleBack} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">Voltar</button>
-                                <button onClick={handleNext} className="px-6 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Próximo: Vaga</button>
-                            </div>
-                        </div>
-                    )}
-                    {activeTab === 'Vaga' && (
-                        <div className="flex flex-col items-center">
-                            <div className="w-full max-w-lg border border-gray-200 rounded-lg p-6">
-                                <h3 className="text-lg font-semibold text-gray-800">Lato Sensu em Alfabetização e Multiletramentos</h3>
-                                <p className="text-sm text-gray-500 mb-6">Montes Claros | MG</p>
-                                <div className="space-y-4">
-                                    <TextInput readOnly={true} value="Modalidade 3: Negros e Pardos" />
-                                    <TextInput readOnly={true} value="Categoria 3: Comunidade em Geral" />
-                                </div>
-                            </div>
-                            <div className="mt-10 flex justify-end items-center w-full max-w-lg space-x-4">
-                                <button onClick={handleBack} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">Voltar</button>
-                                <button onClick={handleNext} className="px-6 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Próximo: Anexos</button>
-                            </div>
-                        </div>
-                    )}
-                    {activeTab === 'Anexos e Situação' && (
-                        <div>
-                            <h2 className="text-xl font-semibold text-gray-800 mb-4">Anexos</h2>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-8">
-                                <AnexoButton label="Identidade:" />
-                                <AnexoButton label="Comprovante:" />
-                                <AnexoButton label="Histórico:" />
-                                <AnexoButton label="Auto Declaração:" />
-                            </div>
 
-                            <h2 className="text-xl font-semibold text-gray-800 mb-4">Situação</h2>
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-6">
-                                <FormField label="Status" className="md:col-span-1">
-                                    <SelectInput readOnly={true} value="Deferido" options={['Deferido', 'Indeferido', 'Em Análise']} />
-                                </FormField>
-                                <FormField label="Observações" className="md:col-span-3">
-                                    <textarea
-                                        readOnly
-                                        rows="4"
-                                        className="bg-gray-100 border border-gray-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
-                                        value="Informamos que a inscrição de Vossa Senhoria no presente processo seletivo foi indeferida em razão do não atendimento aos requisitos formais estabelecidos no edital, especificamente pela ausência da documentação comprobatória exigida para a função pretendida, inviabilizando a devida análise e homologação da candidatura."
-                                    />
-                                </FormField>
+                    {activeTab === 'Alterações' && (
+                        <div className="border border-gray-200 rounded-lg overflow-hidden">
+                            <AlterationRow attribute="Atributo" oldValue="Valor Antigo" newValue="Valor Novo" isHeader={true} />
+                            <div className="bg-white">
+                                {alterationsData.map((item, index) => (
+                                    <div key={index} className={`${index !== alterationsData.length - 1 ? 'border-b border-gray-200' : ''}`}>
+                                        <AlterationRow attribute={item.attribute} oldValue={item.oldValue} newValue={item.newValue} />
+                                    </div>
+                                ))}
                             </div>
-
                             <div className="mt-10 flex justify-end items-center space-x-4">
                                 <button onClick={handleBack} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">Voltar</button>
                                 <button onClickCapture={onCloseModal} className="px-8 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700">Fechar</button>
                             </div>
                         </div>
                     )}
+
+                   
 
                 </ModalBody>
             </Modal>

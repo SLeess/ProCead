@@ -1,6 +1,7 @@
 import InscricaoAvaliarModal from "@/Components/Admin/InsideEdital/Modais/Inscricoes/InscricaoAvaliarModal";
 import InscricaoEditModal from "@/Components/Admin/InsideEdital/Modais/Inscricoes/InscricaoEditModal";
 import InscricaoShowModal from "@/Components/Admin/InsideEdital/Modais/Inscricoes/InscricaoShowModal";
+import LogsShowModal from "@/Components/Admin/InsideEdital/Modais/LogsDoSistema/LogsShowModal";
 import { ArrowUpDown } from "lucide-react";
 
 const columns = [
@@ -102,6 +103,7 @@ const columns = [
       header: "Ações",
       cell: () => (
         <div className="flex items-center space-x-2">
+          <LogsShowModal />
         </div>
       ),
     },
