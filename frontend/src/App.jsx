@@ -51,6 +51,9 @@ import 'react-toastify/dist/ReactToastify.css';
 // import EditalPage from './Pages/EditalPage';
 import Perfis from './Pages/Admin/InsideEdital/Perfis/Perfis';
 import Usuarios from './Pages/Admin/InsideEdital/Usuarios/Usuarios';
+import Logs from './Pages/Admin/InsideEdital/LogsDoSistema/Logs';
+import NotFound from './Components/Global/NotFound/NotFound';
+import Disciplinas from './Pages/Admin/InsideEdital/Disciplinas/Disciplinas';
 
 function App() {
   return (
@@ -138,11 +141,15 @@ function App() {
               <Route path='inscricoes' element={<Inscricoes />} />
               <Route path='quadro-vagas' element={<QuadroVagas />} />
               <Route path='cursos' element={<Cursos />} />
+              <Route path='disciplinas' element={<Disciplinas />} />
               <Route path='polos' element={<Polos />} />
               <Route path='modalidades' element={<Modalidades />} />
               <Route path='perfis' element={<Perfis />} />
               <Route path='usuarios' element={<Usuarios />} />
+              <Route path='logs' element={<Logs />} />
           </Route>
+
+          <Route path='*' element={<NotFound />} />
 
         </Routes>
       </div>
