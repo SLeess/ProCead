@@ -6,12 +6,13 @@ import { GraduationCap, Plus } from 'lucide-react';
 import MainTable from '@/Components/Table/MainTable';
 import CursoCreateModal from '@/Components/Admin/InsideEdital/Modais/Cursos/CursoCreateModal';
 import { useParams } from 'react-router-dom';
+import AccessDenied from '@/Components/Global/AccessDenied/AccessDenied';
 
 const Cursos = () => {
   const { editalId } = useParams();
-  const { hasPermissionForEdital } = useContext(AppContext);
+  const { hasPermissionForEdital, isSuperAdmin } = useContext(AppContext);
 
-  if (hasPermissionForEdital('visualizar-inscricoes', editalId))
+  if (hasPermissionForEdital('visualizar-cursos', editalId) || isSuperAdmin())
     return (
       <div className="p-4">
         <div className="flex items-center justify-between mb-4">

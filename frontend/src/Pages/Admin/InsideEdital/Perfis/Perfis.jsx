@@ -10,9 +10,9 @@ import { useParams } from 'react-router-dom';
 const Perfis = () => {
   
   const { editalId } = useParams();
-  const { hasPermissionForEdital } = useContext(AppContext);
+  const { hasPermissionForEdital, isSuperAdmin } = useContext(AppContext);
 
-  if (hasPermissionForEdital('visualizar-inscricoes', editalId))
+  if (hasPermissionForEdital('visualizar-perfis', editalId) || isSuperAdmin())
     return (
       <div className="p-4">
         <div className="flex items-center justify-between mb-4">

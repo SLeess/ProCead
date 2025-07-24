@@ -30,7 +30,7 @@ import Inscricoes from './Pages/Admin/InsideEdital/Inscricoes/Inscricoes';
 
   /** ------------------------------------ Páginas Adm de Edital ---------------------------- */
     import QuadroVagas from './Pages/Admin/InsideEdital/QuadroVagas/QuadroVagas';
-    import Cursos from './Pages/Admin/Cursos/Cursos';
+    import Cursos from './Pages/Admin/InsideEdital/Cursos/Cursos';
     import Polos from './Pages/Admin/InsideEdital/Polos/Polos';
     import Modalidades from './Pages/Admin/InsideEdital/Modalidades/Modalidades';
   /** --------------------------------------------------------------------------------------- */

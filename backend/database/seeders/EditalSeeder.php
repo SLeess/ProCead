@@ -39,14 +39,14 @@ class EditalSeeder extends Seeder
         ]);
 
         $permAdmin1 = "administrar-edital:{$edital1->id}";
-        Permission::findOrCreate($permAdmin1, 'web');
+        Permission::Create(["name" => $permAdmin1, "guard_name" => 'local']);
         $userAdmin->givePermissionTo($permAdmin1);
         $userAmbos->givePermissionTo($permAdmin1);
 
         $permInscricao2 = "inscrever-se-edital:{$edital2->id}";
         $permPainel2 = "visualizar-painel-candidato-edital:{$edital2->id}";
-        Permission::findOrCreate($permInscricao2, 'web');
-        Permission::findOrCreate($permPainel2, 'web');
+        Permission::Create(["name" => $permInscricao2, "guard_name" => 'local']);
+        Permission::Create(["name" => $permPainel2, "guard_name" => 'local']);
         $userCandidato->givePermissionTo($permInscricao2);
         $userCandidato->givePermissionTo($permPainel2);
         $userAmbos->givePermissionTo($permInscricao2);

@@ -10,9 +10,9 @@ import AdminCreateModal from '@/Components/Admin/InsideEdital/Modais/Usuario/Adm
 const Usuarios = () => {
   
   const { editalId } = useParams();
-  const { hasPermissionForEdital } = useContext(AppContext);
+  const { hasPermissionForEdital , isSuperAdmin} = useContext(AppContext);
 
-  if (hasPermissionForEdital('visualizar-inscricoes', editalId))
+  if (hasPermissionForEdital('visualizar-usuarios', editalId) || isSuperAdmin())
     return (
       <div className="p-4">
         <div className="flex items-center justify-between mb-4">
