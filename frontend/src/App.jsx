@@ -51,6 +51,7 @@ import 'react-toastify/dist/ReactToastify.css';
 // import EditalPage from './Pages/EditalPage';
 import Perfis from './Pages/Admin/InsideEdital/Perfis/Perfis';
 import Usuarios from './Pages/Admin/InsideEdital/Usuarios/Usuarios';
+import Logs from './Pages/Admin/InsideEdital/LogsDoSistema/Logs';
 
 function App() {
   return (
@@ -142,6 +143,7 @@ function App() {
               <Route path='modalidades' element={<Modalidades />} />
               <Route path='perfis' element={<Perfis />} />
               <Route path='usuarios' element={<Usuarios />} />
+              <Route path='logs' element={<Logs />} />
           </Route>
 
         </Routes>

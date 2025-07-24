@@ -17,6 +17,21 @@ const TextInput = ({ value, readOnly, placeholder }) => (
     />
 );
 
+const DetailRow = ({ field, value, isHeader = false }) => (
+    <div className={`flex px-6 py-3 ${isHeader ? 'bg-blue-50' : ''}`}>
+        <div className="w-1/2 font-medium text-sm text-gray-800">{field}</div>
+        <div className="w-1/2 text-sm text-gray-600">{value}</div>
+    </div>
+);
+
+const AlterationRow = ({ attribute, oldValue, newValue, isHeader = false }) => (
+    <div className={`flex px-6 py-3 ${isHeader ? 'bg-blue-50' : ''}`}>
+        <div className="w-1/3 font-medium text-sm text-gray-800">{attribute}</div>
+        <div className="w-1/3 text-sm text-gray-600">{oldValue}</div>
+        <div className="w-1/3 text-sm text-gray-600">{newValue}</div>
+    </div>
+);
+
 const MultiSelectTags = () => {
     const [selectedItems, setSelectedItems] = useState(['Edital 1', 'Edital 2']);
 
@@ -78,4 +93,4 @@ const Checkbox = ({ label, checked, readOnly }) => (
 );
 
 
-export { FormField, TextInput, SelectInput, AnexoButton, Checkbox, MultiSelectTags };
+export { FormField, TextInput, SelectInput, AnexoButton, Checkbox, MultiSelectTags, DetailRow, AlterationRow };

@@ -3,12 +3,31 @@
 import { Modal, ModalBody, ModalHeader, } from "flowbite-react";
 import { Eye } from "lucide-react";
 import { useState } from "react";
-import { FormField, SelectInput, AnexoButton, TextInput} from "@/Components/ui/modals";
+import { FormField, SelectInput, AnexoButton, TextInput } from "@/Components/ui/modals";
 
-export default function InscricaoShowModal() {
+export default function LogsShowModal() {
+
     const [openModal, setOpenModal] = useState(false);
     const [activeTab, setActiveTab] = useState('Informações Básicas');
-    const tabs = ['Informações Básicas', 'Endereço', 'Vaga', 'Anexos e Situação'];
+    const tabs = ['Dados','Alterações'];
+
+    const logData = [
+        { field: 'ID', value: '20000' },
+        { field: 'Descrição', value: 'Criação' },
+        { field: 'ID do objeto', value: '2000' },
+        { field: 'Tipo do objeto', value: 'Inscrição' },
+        { field: 'ID do responsável', value: '160' },
+        { field: 'Tipo do usuário', value: 'Candidato' },
+        { field: 'Nome do responsável', value: 'JESSICA ELOIZA RODRIGUES' },
+        { field: 'Data do registro', value: '22/07/2025 14:36:40' },
+    ];
+
+    // Data for the "Alterações" tab
+    const alterationsData = [
+        { attribute: 'identidade', oldValue: 'MG-16.971.110', newValue: 'MG-16.971.110' },
+        { attribute: 'cpf', oldValue: '000.000.000-00', newValue: '000.000.000-00' },
+        { attribute: 'nome', oldValue: 'JESSICA ELOIZA RODRIGUES', newValue: 'JESSICA ELOIZA RODRIGUES' },
+    ];
 
     const handleNext = () => {
         const currentIndex = tabs.indexOf(activeTab);
@@ -43,10 +62,9 @@ export default function InscricaoShowModal() {
                     {/* Header */}
                     <div className="flex justify-between items-start mb-6">
                         <div>
-                            <h1 className="text-2xl font-bold text-gray-800">Visualizar Inscrição</h1>
+                            <h1 className="text-2xl font-bold text-gray-800">Ver Registro de Log</h1>
                             <div className="flex items-center mt-2">
-                                <p className="text-sm text-gray-500">Data de Inscrição: 04/07/2025</p>
-                                <span className="ml-4 bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full">Deferido</span>
+                                <p className="text-sm text-gray-500">Edital Referente: Processo de Seleção de Discentes para os Cursos de Especialização da Unimontes – Modalidade Educação a Distância – Sistema Universidade Aberta do Brasil (UAB) – Edital Nº 08/2025</p>
                             </div>
                         </div>
                     </div>
