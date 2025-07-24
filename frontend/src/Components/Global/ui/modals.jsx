@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const FormField = ({ label, children, className = '' }) => (
     <div className={`flex flex-col ${className}`}>
         <label className="mb-1 text-sm font-medium text-gray-600">{label}</label>
@@ -14,6 +16,32 @@ const TextInput = ({ value, readOnly, placeholder }) => (
         placeholder={placeholder}
     />
 );
+
+const MultiSelectTags = () => {
+    const [selectedItems, setSelectedItems] = useState(['Edital 1', 'Edital 2']);
+
+    const removeItem = (itemToRemove) => {
+        setSelectedItems(selectedItems.filter(item => item !== itemToRemove));
+    };
+
+    return (
+        <div className="relative w-full">
+            <div className="flex flex-wrap items-center gap-2 p-2 border border-gray-300 rounded-lg min-h-[42px]">
+                {selectedItems.map(item => (
+                    <div key={item} className="flex items-center bg-gray-200 text-gray-700 text-sm font-medium px-2 py-1 rounded-md">
+                        <span>{item}</span>
+                        <button onClick={() => removeItem(item)} className="ml-2 text-gray-500 hover:text-gray-800">
+                            &times;
+                        </button>
+                    </div>
+                ))}
+                 <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                </div>
+            </div>
+        </div>
+    );
+};
 
 const SelectInput = ({ value, options, readOnly }) => (
     <div className="relative">
@@ -50,4 +78,4 @@ const Checkbox = ({ label, checked, readOnly }) => (
 );
 
 
-export { FormField, TextInput, SelectInput, AnexoButton, Checkbox };
+export { FormField, TextInput, SelectInput, AnexoButton, Checkbox, MultiSelectTags };

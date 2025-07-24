@@ -9,9 +9,9 @@ import { useParams } from 'react-router-dom';
 
 const QuadroVagas = () => {
   const { editalId } = useParams();
-  const { hasPermissionForEdital } = useContext(AppContext);
+  const { hasPermissionForEdital , isSuperAdmin} = useContext(AppContext);
 
-  if (hasPermissionForEdital('visualizar-inscricoes', editalId))
+  if (hasPermissionForEdital('visualizar-campi-cursos', editalId) || isSuperAdmin())
     return (
       <div className="p-4">
         <h1 className="text-2xl font-bold mb-4">Quadro de Vagas</h1>

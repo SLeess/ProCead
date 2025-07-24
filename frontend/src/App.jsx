@@ -24,13 +24,13 @@ import UserManagePage from './Pages/Test/UserManagePage';
 
 /** ------------------------------------ Páginas de Admin ------------------------------------ */
 import HomeAdmin from './Pages/Admin/Home/Home';
-import UsuariosAdminList from './Pages/Admin/Usuarios/Usuarios';
+// import UsuariosAdminList from './Pages/Admin/Usuarios/Usuarios';
 import Inscricoes from './Pages/Admin/InsideEdital/Inscricoes/Inscricoes';
 
 
   /** ------------------------------------ Páginas Adm de Edital ---------------------------- */
     import QuadroVagas from './Pages/Admin/InsideEdital/QuadroVagas/QuadroVagas';
-    import Cursos from './Pages/Admin/Cursos/Cursos';
+    import Cursos from './Pages/Admin/InsideEdital/Cursos/Cursos';
     import Polos from './Pages/Admin/InsideEdital/Polos/Polos';
     import Modalidades from './Pages/Admin/InsideEdital/Modalidades/Modalidades';
   /** --------------------------------------------------------------------------------------- */
@@ -50,6 +50,7 @@ import 'react-toastify/dist/ReactToastify.css';
 // import HomePage from './Pages/HomePage';
 // import EditalPage from './Pages/EditalPage';
 import Perfis from './Pages/Admin/InsideEdital/Perfis/Perfis';
+import Usuarios from './Pages/Admin/InsideEdital/Usuarios/Usuarios';
 
 function App() {
   return (
@@ -122,7 +123,7 @@ function App() {
             }
           >
               <Route index element={<HomeAdmin />} />
-              <Route path='usuarios' element={<UsuariosAdminList />} />
+              {/* <Route path='usuarios' element={<UsuariosAdminList />} /> */}
               <Route path='manejar-usuarios/:userId' element={<UserManagePage />} />
           </Route>
 
@@ -140,6 +141,7 @@ function App() {
               <Route path='polos' element={<Polos />} />
               <Route path='modalidades' element={<Modalidades />} />
               <Route path='perfis' element={<Perfis />} />
+              <Route path='usuarios' element={<Usuarios />} />
           </Route>
 
         </Routes>

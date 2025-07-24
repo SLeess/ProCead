@@ -14,7 +14,7 @@ return [
     */
 
     'defaults' => [
-        'guard' => env('AUTH_GUARD', 'web'),
+        'guard' => env('AUTH_GUARD', 'global'),
         'passwords' => env('AUTH_PASSWORD_BROKER', 'users'),
     ],
 
@@ -40,11 +40,11 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-        'global' => [
+        'local' => [
             'driver' => 'session',
             'provider' => 'users',
         ],
-        'local' => [
+        'global' => [
             'driver' => 'session',
             'provider' => 'users',
         ],

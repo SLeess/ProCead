@@ -178,7 +178,7 @@ const Sidebar = () => {
 
   return (
     <SidebarContainer>
-      <SidebarHeader>
+      <SidebarHeader onClick={() => navigate(`/admin`)} style={{ cursor: 'pointer' }}>
         <img src="/img/logo_cead_bg_white.png" style={{ marginRight: "10px" }} width={"50px"} />
         PROCEAD
       </SidebarHeader>
