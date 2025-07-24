@@ -11,17 +11,17 @@ export default function ThemeToggleBtn(){
             onClick={toggleTheme}
             type="button"
             className="
-                dark:bg-slate-800 text-[#004DA9] hover:text-white border-1 bg-whit
-                dark:text-white hover:bg-[#004DA9]
                 hover:cursor-pointer 
-                dark:hover:bg-gray-700 focus:outline-none 
-                focus:ring-4 focus:ring-gray-200 
-                dark:focus:ring-gray-700 
                 rounded-lg text-sm p-2.5
+                focus:ring-0
             "
             aria-label="Toggle dark mode"
             >
-            {theme === 'light' ? <HiMoon className="h-6 w-6" /> : <HiSun className="h-6 w-6" />}
+            {
+                theme === 'light' ? 
+                <HiMoon className="h-6 w-6 text-white hover:text-[#81b4f1]" /> : 
+                <HiSun className="h-6 w-6 dark:text-white dark:hover:text-[#81b4f1]" />
+            }
         </button>
     );
 }
