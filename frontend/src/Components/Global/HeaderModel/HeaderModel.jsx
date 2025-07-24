@@ -20,7 +20,7 @@ export default function HeaderModel({ headerid, children }){
                 <div className="flex md:order-2 space-x-2">
                 <ThemeToggleBtn />
                 <UserDropdown/>
-                <NavbarToggle />
+                <NavbarToggle className="text-white"/>
                 </div>
                 <NavbarCollapse className="md:hidden">
                     { children }

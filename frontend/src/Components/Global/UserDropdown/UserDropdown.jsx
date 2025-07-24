@@ -36,15 +36,15 @@ export default function UserDropdown()
                 <Avatar alt="User settings" img="https://flowbite.com/docs/images/people/profile-picture-5.jpg" rounded />
             }
         >
-            <DropdownHeader>
+            <DropdownHeader className="w-[250px]">
                 <span className="block text-sm">{user.nome}</span>
-                <span className="block truncate text-sm font-medium">{user.email}</span>
+                <span className="block truncate text-sm font-medium line-clamp-2 leading-7">{user.email}</span>
             </DropdownHeader>
             <DropdownItem>Ver Perfil</DropdownItem>
             <DropdownItem>Configurações</DropdownItem>
                 <DropdownDivider />
             <DropdownItem>Suporte</DropdownItem>
-            <DropdownItem>Api</DropdownItem>
+            <DropdownItem>API</DropdownItem>
                 <DropdownDivider />
             <DropdownItem onClick={handlerLogOut}>Sair</DropdownItem>
         </Dropdown>
