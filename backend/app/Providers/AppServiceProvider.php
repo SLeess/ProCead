@@ -7,6 +7,10 @@ use Carbon\Carbon;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Sanctum\Sanctum;
 
+use App\Models\Edital;
+use App\Policies\EditalPolicy;
+use Illuminate\Support\Facades\Gate;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -22,6 +26,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Gate::policy(Edital::class, EditalPolicy::class);
+
         Carbon::setlocale(LC_TIME);
 
         Sanctum::usePersonalAccessTokenModel(PersonalAccessToken::class);

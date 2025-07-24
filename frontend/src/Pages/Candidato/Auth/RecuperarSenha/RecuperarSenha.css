@@ -1,0 +1,27 @@
+@reference "@/index.css";
+
+div#container-recover-pass-form{
+    @apply mt-4 sm:mx-auto sm:w-full sm:max-w-sm bg-gray-50 px-6 py-2 shadow-xl border-2 border-b-gray-100 rounded-[13px];
+}
+
+input.recoverPass{
+    @apply border-2 border-[#004da9] w-full h-full px-3 py-2 text-black bg-transparent focus-within:outline-0 focus-within:outline-[#02397c];
+}
+
+label[for=recoverPass]{
+    @apply absolute left-[10px] top-[10px] text-[#000000b2] font-medium pointer-events-none transition-all duration-200 transform;
+}
+
+a#voltarLoginPageRecoverPass{
+    @apply hover:cursor-pointer text-sm mx-auto w-fit font-semibold text-[#333A56] hover:text-indigo-500;
+}
+
+button#novaSenha{
+    @apply h-[40px] w-[178px];
+    @apply bg-[#095ec5] text-[#f2f5f7] rounded-[4px] font-bold text-[15px] shadow-md transition-all duration-200;
+    @apply hover:bg-[#0751ac] hover:cursor-pointer;
+}
+
+div#alert-password-form{
+    @apply p-2 text-black mt-3 mb-5 text-center;
+}

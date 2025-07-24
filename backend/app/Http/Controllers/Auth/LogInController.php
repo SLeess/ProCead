@@ -2,29 +2,22 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\API\APIController;
+use App\Http\Requests\LoginRequest;
+use App\Services\Auth\AuthService;
+use Carbon\Carbon;
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 
-class LoginController extends Controller
+class LoginController extends APIController
 {
-    public function showLoginForm()
+    public function __construct(protected AuthService $authService)
     {
-        return view('auth.login');
-    }
-
-    public function __construct()
-    {
-        $this->middleware('guest')->except('logout');
-    }
-
-    protected function validateLogin(Request $request)
-    {
-        $request->validate([
-            $this->username() => 'required|email',
-            'password' => 'required|string',
-        ]);
+        $this->middleware('guest');
     }
 
     protected function authenticated(Request $request, $user)
@@ -35,33 +28,28 @@ class LoginController extends Controller
         // $request->session()->put('contextoEdital', $contexto->edital);
     }
 
-    /**
-     * Get the login username to be used by the controller.
-     *
-     * @return string
-     */
-    public function username()
+    public function loginCandidate(LoginRequest $request): Response
     {
-        return 'email';
-    }
-
-    public function logout(Request $request)
-    {
-        $request->user()->currentAccessToken()->delete();
-
-         return response()->json([
-            'message' => 'Deslogado com sucesso'
-        ], Response::HTTP_ACCEPTED);
-    }
-
-     public function login(Request $request): Response
-    {
-        if($user = Auth::attempt(['email' => $request->email, 'password' => $request->password])){
-            $user = Auth::user();
-            $success['token'] =  $user->createToken('MyApp')->plainTextToken;
-            $success['nome'] =  $user->nome;
-            return $this->sendResponse($success, 'Login efetuado com sucesso.');
+        try {
+            $result = $this->authService->loginUser($request->validated());
+            return $this->sendResponse($result, 'Login efetuado com sucesso.');
+        } catch (AuthenticationException $e) {
+            return $this->sendError('Erro de Autenticação.', [0 => $e->getMessage()], Response::HTTP_UNAUTHORIZED);
+        } catch (\Exception $e) {
+            return $this->sendError('Erro genérico.', [0 => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
-        return $this->sendError('Credenciais não encontradas no sistema', ['error' => 'Unauthorised'], Response::HTTP_UNAUTHORIZED);
+    }
+
+    public function loginAdmin(LoginRequest $request){
+        try {
+            $result = $this->authService->loginAdmin($request->validated());
+            return $this->sendResponse($result, 'Login efetuado com sucesso.', Response::HTTP_OK);
+        } catch (AuthenticationException $e) {
+            return $this->sendError('Erro de Autenticação.', [0 => $e->getMessage()], Response::HTTP_UNAUTHORIZED);
+        } catch (AuthorizationException $e) {
+            return $this->sendError('Erro de Autorização.', [0 => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+        } catch (\Exception $e) {
+            return $this->sendError('Erro genérico.', [$e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 }

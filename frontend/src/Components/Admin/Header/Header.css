@@ -1,0 +1,29 @@
+@reference "@/index.css"; 
+
+/* START ------------------------------------- HEADER CANDIDATO ------------------------------------- */
+
+header#admin {
+    @apply text-white mx-4 sm:mx-10
+}
+#admin nav {
+  @apply container relative mx-auto px-6 py-2 flex justify-between items-center min-w-[300px] max-w-screen-xl shadow-sm mt-2.5 dark:bg-slate-900 bg-[#29166F] transition-all duration-700 ease-in-out;
+}
+#admin nav ul#desktop{
+  @apply flex items-center md:space-x-20 md:mx-10;
+}
+#admin nav ul#mobile{
+
+}
+.logo-cead{
+  width: 120px;
+  height: 50px;
+}
+#admin .link-page{
+  @apply text-white pb-2 font-semibold transition-colors duration-300 hover:bg-[#004DA9] hover:shadow-2xs rounded-t-sm px-2;
+}
+
+#admin .link-page:hover{
+  box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+}
+
+/* END ------------------------------------- HEADER CANDIDATO ------------------------------------- */

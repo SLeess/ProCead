@@ -1,13 +1,10 @@
-@font-face {
-    font-family: 'Sora';
-    src: url('../../assets/Fonts/Sora/Sora-VariableFont_wght.ttf') format('truetype');
-}
+@reference "@/index.css"; 
 
 h3.cardName{
-    color: #000;
-    font-family: 'Sora', sans-serif;
-    font-size: 22px;
+    @apply text-black text-[24px];
+    font-family: "Sora", sans-serif;
     font-style: normal;
+    font-weight: 600;
     line-height: 19px;
 }
 

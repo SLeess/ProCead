@@ -17,3 +17,7 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+node_modules
+/public/plugins
+/resources
+/routes/web.php

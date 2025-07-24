@@ -2,49 +2,27 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\API\ApiBaseController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\API\APIController;
+use App\Http\Requests\RegisterRequest;
+use App\Services\Auth\AuthService;
 use Illuminate\Support\Facades\Hash;
+use Symfony\Component\HttpFoundation\Response;
 
-class RegisterController extends ApiBaseController
+class RegisterController extends APIController
 {
-    public function __construct()
+    public function __construct(protected AuthService $authService)
     {
         $this->middleware('guest');
     }
 
-    public function register(Request $request)
+    public function register(RegisterRequest $request)
     {
-        $validator = $this->validator($request->all());
-
-        if($validator->fails()){
-            return $this->sendError('Erro de validação.', $validator->errors());
+        try {
+            $result = $this->authService->registerUser($request->validated());
+            return $this->sendResponse($result, 'Usuário registrado com sucesso.', Response::HTTP_ACCEPTED);
+        } catch (\Exception $e) {
+            return $this->sendError('Erro genérico.', [0 => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
-        $input = $request->all();
-        $input['password'] = Hash::make($input['password']);
-
-        $user = \App\Models\User::create($input);
-
-        $success['token'] =  $user->createToken('MyApp')->plainTextToken;
-        $success['user'] =  $user;
-        return $this->sendResponse($success, 'Usuário registrado com sucesso.');
-    }
-
-    protected function validator(array $data)
-    {
-        $rules = [
-            'nome' => 'required',
-            'email' => 'required|email',
-            'password' => ['required', \Illuminate\Validation\Rules\Password::min(8),],
-            'confirm_password' => 'required|same:password',
-        ];
-
-        return \Illuminate\Support\Facades\Validator::make($data, $rules, [], [
-            'confirm_password' => 'de Confirmação de Senha',
-            'password' => 'de Senha',
-            'email' => 'Email',
-            'nome' => 'Nome'
-        ]);
     }
 }

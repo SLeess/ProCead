@@ -31,6 +31,9 @@ npm install react-icons
 
 npm install react-toastify
 
+npm install -D @types/node
+
+
 
 npx flowbite-react@latest init
 npm install flowbite

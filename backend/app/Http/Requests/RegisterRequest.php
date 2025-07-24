@@ -1,0 +1,55 @@
+<?php
+
+namespace App\Http\Requests;
+
+use App\Rules\Cpf;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+
+class RegisterRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     */
+    public function rules(): array
+    {
+        return [
+            'nome' => 'required',
+            'email' => ['required', 'email', Rule::unique('users', 'email'),],
+            'cpf' => [
+                'required',
+                new Cpf,
+                Rule::unique('users', 'cpf'),
+            ],
+            'password' => ['required', \Illuminate\Validation\Rules\Password::min(8),],
+            'confirm_password' => 'required|same:password',
+        ];
+    }
+
+    public function messages(){
+        return [
+            'email.unique' => 'O email já está em uso.',
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'confirm_password' => 'de Confirmação de Senha',
+            'cpf' => 'CPF',
+            'password' => 'de Senha',
+            'email' => 'Email',
+            'nome' => 'Nome'
+        ];
+    }
+}
