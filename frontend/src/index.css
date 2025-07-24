@@ -56,6 +56,8 @@
         @apply mx-auto min-h-[80vh];
         @apply px-2 md:px-6 mt-10 py-12; 
         @apply bg-white rounded-2xl shadow-[-1px_0px_2px_0px_rgba(0,0,0,0.25),1px_1px_2px_0px_rgba(0,0,0,0.25)];
+
+        @apply dark:bg-slate-800;
     }
     .primary-btn {
         @apply flex w-full cursor-pointer justify-center rounded-md bg-blue-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-blue-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:bg-slate-400 disabled:cursor-wait;

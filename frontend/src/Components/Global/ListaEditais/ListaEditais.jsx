@@ -92,47 +92,57 @@ function ListaEditais({type, processos, loading }) {
   return (
     <>
       <form onSubmit={(e) => e.preventDefault()}>
-        <header>
-          <h1>Lista de Editais</h1>
-          <div className='flex flex-col items-center sm:flex-row gap-2'>
-            <div className="searchInputDiv">
-              <div className="divFaSearchIcon">
-                <FaSearch className="text-gray-400" />
+        <header className='lista-editais-header'>
+          <h1 className='header-title'>
+            {
+              (type === 'Admin') ? "Lista de Editais" : "Meus Processos"
+            }
+          </h1>
+
+          <div className='search-filter-container'>
+            <div className='search-input-wrapper'>
+              <div className="search-icon-wrapper">
+                <FaSearch className="search-icon" />
               </div>
               <input
-                type="text"
+                type="search"
+                id="default-search"
+                className="search-input"
                 placeholder="Pesquisar..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
-              <button>Buscar</button>
             </div>
-            <div className='filterContent' ref={filterDropdownRef}>
-              <button onClick={() => setFilterOpen(!filterOpen)}>
-                <SlidersHorizontal className='w-[18px] h-[18px] text-[#727272]' />
+
+            <div className='filter-button-wrapper' ref={filterDropdownRef}>
+              <button
+                className='filter-button'
+                onClick={() => setFilterOpen(!filterOpen)}
+              >
+                <SlidersHorizontal className='filter-icon' />
                 Filtros
               </button>
               {filterOpen && (
-                    <div className="filtersModal">
-                      <p>Filtrar por Status</p>
-                      {['Todos', 'Em andamento', 'Encerrado'].map(statusOption => (
-                          <div key={statusOption} className="flex items-center mb-1">
-                              <input
-                                  type="radio"
-                                  id={`status-${statusOption}`}
-                                  name="statusFilter"
-                                  value={statusOption}
-                                  checked={filtro === statusOption}
-                                  onChange={handleChangeFilters}
-                                  className="form-radio text-blue-600"
-                              />
-                              <label htmlFor={`status-${statusOption}`} className="ml-2 text-sm text-gray-700 dark:text-gray-200">
-                                  {statusOption}
-                              </label>
-                          </div>
-                      ))}
-                  </div>
-                )}
+                <div className="filters-modal">
+                  <p className="filters-modal-title">Filtrar por Status</p>
+                  {['Todos', 'Em andamento', 'Encerrado'].map(statusOption => (
+                    <div key={statusOption} className="filter-option">
+                      <input
+                        type="radio"
+                        id={`status-${statusOption}`}
+                        name="statusFilter"
+                        value={statusOption}
+                        checked={filtro === statusOption}
+                        onChange={handleChangeFilters}
+                        className="filter-option-radio"
+                      />
+                      <label htmlFor={`status-${statusOption}`} className="filter-option-label">
+                        {statusOption}
+                      </label>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
           </div>
