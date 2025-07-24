@@ -1,4 +1,4 @@
-import { FormField, TextInput } from '@/Components/ui/modals';
+import { FormField, TextInput } from '@/Components/Global/ui/modals';
 import { Modal, ModalBody, ModalHeader } from 'flowbite-react';
 import { Pencil } from 'lucide-react';
 import React, { useState } from 'react'
