@@ -31,6 +31,9 @@ li.ProcessoCard p.edital{
 /* div onde se localiza o btn de entrar */
 li.ProcessoCard div.status > div{
   @apply w-full flex justify-between;
+  
+  /* Responsividade */
+  @apply flex-col sm:flex-row mx-auto sm:mx-0 space-y-2 sm:space-y-0;
 }
 
 li.ProcessoCard div.status{
