@@ -10,6 +10,7 @@ import {
   FiPieChart, FiHelpCircle, FiAward, FiBell, FiUserPlus,
   FiFileText, FiDatabase, FiHome, FiCheckSquare, FiFlag
 } from 'react-icons/fi';
+import { List } from 'lucide-react';
 
 
 const SidebarContainer = styled.div`
@@ -128,6 +129,7 @@ const Sidebar = () => {
       { name: 'Polos', icon: <FiMapPin size={16} />, href: `/admin/edital/${editalId}/polos` },
       { name: 'Modalidades', icon: <FiLayers size={16} />, href: `/admin/edital/${editalId}/modalidades` },
       { name: 'Cursos', icon: <FiBookOpen size={16} />, href: `/admin/edital/${editalId}/cursos` },
+      { name: 'Disciplinas', icon: <List size={16} />, href: `/admin/edital/${editalId}/disciplinas` },
       { name: 'Quadro de Vagas', icon: <FiClipboard size={16} />, href: `/admin/edital/${editalId}/quadro-vagas` }
     ]
   },
