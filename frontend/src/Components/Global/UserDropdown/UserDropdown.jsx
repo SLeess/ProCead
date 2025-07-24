@@ -1,9 +1,31 @@
 import { useAppContext } from "@/Contexts/AppContext";
+import { NavigationContext } from "@/Contexts/NavigationContext";
 import { Avatar, Dropdown, DropdownDivider, DropdownHeader, DropdownItem } from "flowbite-react";
+import { useContext } from "react";
+import { toast } from "react-toastify";
 
 export default function UserDropdown()
 {
-    const { user } = useAppContext();
+    const { user, token, logout } = useAppContext();
+    const { navigate } = useContext(NavigationContext);
+
+    async function handlerLogOut(){
+        try {
+            await fetch('/api/logout', {
+                method: 'post',
+                headers:{
+                    "Authorization": `Bearer ${token}`,
+                }
+            });
+
+            toast.success('Sessão encerrada.');
+            logout();
+            navigate('/login');
+        } catch (error) {
+            toast.error(error);
+        }
+    }
+    
 
     return (
         <Dropdown
@@ -24,7 +46,7 @@ export default function UserDropdown()
             <DropdownItem>Suporte</DropdownItem>
             <DropdownItem>Api</DropdownItem>
                 <DropdownDivider />
-            <DropdownItem>Sair</DropdownItem>
+            <DropdownItem onClick={handlerLogOut}>Sair</DropdownItem>
         </Dropdown>
     );
 }
