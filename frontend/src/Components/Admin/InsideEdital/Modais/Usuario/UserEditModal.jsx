@@ -1,4 +1,4 @@
-import { FormField, TextInput, Checkbox, SelectInput, MultiSelectTags } from '@/Components/ui/modals';
+import { FormField, TextInput, Checkbox, SelectInput, MultiSelectTags } from '@/Components/Global/ui/modals';
 import { Modal, ModalBody, ModalHeader } from 'flowbite-react';
 import { Eye, Pencil, Plus } from 'lucide-react';
 import React, { useState } from 'react'
