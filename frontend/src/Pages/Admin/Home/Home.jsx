@@ -1,18 +1,64 @@
-import { NavLink } from 'react-router-dom';
-import './Home.css';
+import './Home.css'
+import React, { useEffect, useState } from 'react';
+import { useAppContext } from '@/Contexts/AppContext';
+import { toast } from 'react-toastify';
+import ListaEditais from '@/Components/Global/ListaEditais/ListaEditais';
 
-export default function Home(){
-    return (
-        <>
-            <section id='adminHome'>
-                <NavLink to="/admin/edital/1" end className={({ isActive }) => `link-page ${isActive ? "border-b-2 border-white" : ""}`}>
-                    Edital 1, teste de link
-                </NavLink>
-                <br />
-                <NavLink to="/admin/edital/2" end className={({ isActive }) => `link-page ${isActive ? "border-b-2 border-white" : ""}`}>
-                    Edital 2, lista de sei la o que
-                </NavLink>
-            </section>
-        </>
-    );
+function Home() {
+  const { token } = useAppContext();
+  const [processos, setProcessos] = useState([]);
+  
+  /** ------------------ Lidando com Filtros ------------------ **/
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  /** Buscar na API os processos seletivos que o usuário participa ou participou **/
+
+  useEffect(() => {
+    const fetchProcessos = async () => {
+      setLoading(true);
+      await new Promise(resolve => setTimeout(resolve, 5000));
+      try {
+          const res = await fetch('/api/admin/editais', { // Substitua pela URL real da sua API
+              method: 'GET',
+              headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${token}`, // Descomente se precisar de token
+              },
+          });
+
+          if (!res.ok) {
+              throw new Error(`Erro ao buscar processos: ${res.status} ${res.statusText}`);
+          }
+
+          const result = await res.json();
+          setProcessos(result.data.editais);
+          
+          toast.success("Todos os processos seletivos existentes no sistema foram encaminhados com sucesso.", {
+            autoClose: 1800,
+          });
+
+      } catch (err) {
+            setError("Não foi possível carregar seus processos seletivos. " + (err.message ? ` (${err.message})` : ''));
+            setProcessos([]);
+        } finally {
+          setLoading(false);
+        }
+      };
+    fetchProcessos();
+  }, []);
+
+  useEffect(() => {
+    toast.error(error);
+  }, [error]);
+
+  return (
+    <>
+    <section id='HomeAdmin'>
+      <ListaEditais type={'Admin'} processos={processos} loading={loading}/>
+    </section>
+    </>
+  );
 }
+
+export default Home;

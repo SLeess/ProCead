@@ -44,18 +44,12 @@ export default function ProcessosAtivos(){
   return (
     <section>
         <div className="text-center mb-12">
-          <h1 className="text-3xl sm:text-4xl text-gray-800 font-normal">Processos em Andamento</h1>
+          <h1 className="text-3xl sm:text-4xl text-gray-800 dark:text-white font-normal">Processos em Andamento</h1>
           <p className="text-gray-600 mt-2">Confira aqui todos os processo em andamento atualmente.</p>
         </div>
-
-        {/* Grade Responsiva: 
-            - 1 coluna em telas pequenas (padrão)
-            - 2 colunas em telas médias (md)
-            - 3 colunas em telas grandes (lg)
-        */}
           {processosData.length > 0 ?
           (           
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:mx-20">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8 lg:mx-20 mx-2">
               {
                 processosData.map((processo) => (
                   <ProcessoCard key={processo.id} processo={processo} />

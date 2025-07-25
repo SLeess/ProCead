@@ -121,7 +121,7 @@ function App() {
           {/* =========================================== */}
           {/* ========= ROTAS PROTEGIDAS (ADMIN) ======== */}
           {/* =========================================== */}
-          <Route path='/admin/'
+          <Route path='/admin'
             element={
               <ProtectedRoute area="admin">
                 <LayoutAdmin />

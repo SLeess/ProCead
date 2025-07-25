@@ -3,7 +3,7 @@
 import { Modal, ModalBody, ModalHeader, } from "flowbite-react";
 import { Eye } from "lucide-react";
 import { useState } from "react";
-import { FormField, SelectInput, AnexoButton, TextInput, DetailRow, AlterationRow } from "@/Components/ui/modals";
+import { FormField, SelectInput, AnexoButton, TextInput, DetailRow, AlterationRow } from "@/Components/Global/ui/modals";
 
 export default function LogsShowModal() {
 
