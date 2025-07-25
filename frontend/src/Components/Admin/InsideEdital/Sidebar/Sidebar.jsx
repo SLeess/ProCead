@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react';
-import styled from 'styled-components';
 import { AppContext } from '@/Contexts/AppContext'; // Importando a função can do contexto
 import { useNavigate, useParams } from 'react-router-dom';
 // Ícones importados para os MENUS e submenus
@@ -11,88 +10,6 @@ import {
   FiFileText, FiDatabase, FiHome, FiCheckSquare, FiFlag
 } from 'react-icons/fi';
 import { List } from 'lucide-react';
-
-
-const SidebarContainer = styled.div`
-  width: 240px;
-  height: 100vh;
-  background-color: #002366;
-  display: flex;
-  flex-direction: column;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  border-top-right-radius: 15px;
-  border-bottom-right-radius: 15px;
-`;
-
-const SidebarHeader = styled.div`
-  padding: 20px 2vh;
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: white;
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid #003388;
-  flex-shrink: 0;
-`;
-
-const MenuListWrapper = styled.div`
-  flex-grow: 1; 
-  overflow-y: auto; 
-  &::-webkit-scrollbar { width: 6px; }MainAdminContainer
-  &::-webkit-scrollbar-track { background: transparent; }
-  &::-webkit-scrollbar-thumb { background-color: #ffffff; border-radius: 10px; }
-`;
-
-const MenuSection = styled.div`
-  padding: 8px 0;
-`;
-
-const SectionHeader = styled.div`
-  padding: 10px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  cursor: pointer;
-  background-color: ${props => (props.$isOpen ? '#003388' : 'transparent')};
-  border-radius: 8px;
-  margin: 4px 8px;
-  transition: background-color 0.2s ease-in-out;
-
-  &:hover { background-color: #003388; }
-
-  span {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 0.95rem;
-    color: white;
-  }
-`;
-
-const SubMenuList = styled.div`
-  overflow: hidden;
-  max-height: ${props => (props.$isOpen ? '500px' : '0')};
-  transition: max-height 0.3s ease-in-out;
-  padding-left: 16px;
-`;
-
-const SubMenuItem = styled.div`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 12px;
-  padding: 6px 16px 6px 30px;
-  text-decoration: none;
-  color: #c5cae9;
-  cursor: pointer;
-  margin: 4px 8px;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  transition: background-color 0.2s, color 0.2s;
-
-  &:hover { background-color: #003d99; }
-  &.active { background-color: #1a73e8; color: white; font-weight: 500; }
-`;
 
 const Sidebar = () => {
   
@@ -167,7 +84,7 @@ const Sidebar = () => {
   });
 
 
-  const [activeItem, setActiveItem] = useState('Campi');
+  const [activeItem, setActiveItem] = useState('Inscrições');
 
   const handleToggleSection = title => {
     setOpenSections(prev => ({ ...prev, [title]: !prev[title] }));
@@ -179,41 +96,48 @@ const Sidebar = () => {
   }
 
   return (
-    <SidebarContainer>
-      <SidebarHeader onClick={() => navigate(`/admin`)} style={{ cursor: 'pointer' }}>
-        <img src="/img/logo_cead_bg_white.png" style={{ marginRight: "10px" }} width={"50px"} />
+    <div className="w-60 h-screen bg-[#002366] flex flex-col font-sans rounded-tr-[15px] rounded-br-[15px]">
+      <div
+        className="p-5 text-2xl font-bold text-white flex items-center border-b border-[#003388] flex-shrink-0 cursor-pointer"
+        onClick={() => navigate(`/admin`)}
+      >
+        <img src="/img/logo_cead_bg_white.png" className="mr-2.5" width="50px" />
         PROCEAD
-      </SidebarHeader>
-      <MenuListWrapper>
+      </div>
+      <div className="flex-grow overflow-y-auto scrollbar scrollbar-thumb-white scrollbar-track-transparent scrollbar-w-[6px]">
         {menuData.map(section => (
-          <MenuSection key={section.title}>
-            <SectionHeader $isOpen={openSections[section.title]} onClick={() => handleToggleSection(section.title)}>
-              <span>
+          <div key={section.title} className="py-2">
+            <div
+              className={`px-4 py-2.5 flex items-center justify-between cursor-pointer rounded-lg m-1 mx-2 transition-colors duration-200 ease-in-out hover:bg-[#003388] ${openSections[section.title] ? 'bg-[#003388]' : 'bg-transparent'}`}
+              onClick={() => handleToggleSection(section.title)}
+            >
+              <span className="flex items-center gap-3 text-[0.95rem] text-white">
                 {section.icon}
                 {section.title}
               </span>
-              {/* LÓGICA ATUALIZADA AQUI: Adicionado color="white" */}
               {openSections[section.title]
                 ? <FiChevronUp color="white" />
                 : <FiChevronDown color="white" />
               }
-            </SectionHeader>
-            <SubMenuList $isOpen={openSections[section.title]}>
+            </div>
+            <div
+              className={`overflow-hidden transition-[max-height] duration-300 ease-in-out pl-4 ${openSections[section.title] ? 'max-h-[500px]' : 'max-h-0'}`}
+            >
               {section.items.filter((link) => link !== null).map(item => (
-                <SubMenuItem
+                <div
                   key={item.name}
-                  className={activeItem === item.name ? 'active' : ''}
+                  className={`flex justify-start items-center gap-3 py-1.5 pr-4 pl-[30px] text-[#c5cae9] cursor-pointer m-1 mx-2 rounded-lg text-[0.9rem] transition-colors duration-200 hover:bg-[#003d99] ${activeItem === item.name ? 'bg-[#1a73e8] text-white font-medium' : ''}`}
                   onClick={() => handleItemClick(item.name, item.href)}
                 >
                   {item.icon}
                   {item.name}
-                </SubMenuItem>
+                </div>
               ))}
-            </SubMenuList>
-          </MenuSection>
+            </div>
+          </div>
         ))}
-      </MenuListWrapper>
-    </SidebarContainer>
+      </div>
+    </div>
   );
 };
 
