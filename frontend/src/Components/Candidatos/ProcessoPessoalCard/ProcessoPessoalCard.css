@@ -33,7 +33,7 @@ li.ProcessoPessoalCard div.status > div{
 }
 
 li.ProcessoPessoalCard div.status{
-    @apply flex flex-row space-x-1 items-center mt-7;
+    @apply flex flex-row space-x-1 items-center mt-3;
 }
 li.ProcessoPessoalCard div.status span{
     @apply text-base not-italic font-normal leading-[19px] dark:text-gray-300;
