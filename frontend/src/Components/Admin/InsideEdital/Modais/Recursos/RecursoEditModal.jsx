@@ -3,7 +3,7 @@
 import { Button, Checkbox, Label, Modal, ModalBody, ModalHeader } from "flowbite-react";
 import { Eye, Pencil } from "lucide-react";
 import { useState } from "react";
-import { FormField, SelectInput, AnexoButton, TextInput } from "@/Components/ui/modals";
+import { FormField, SelectInput, AnexoButton, TextInput } from "@/Components/Global/ui/modals";
 
 export default function RecursoEditModal() {
     const [openModal, setOpenModal] = useState(false);
