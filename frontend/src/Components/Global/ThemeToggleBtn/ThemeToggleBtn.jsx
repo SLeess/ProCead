@@ -19,7 +19,7 @@ export default function ThemeToggleBtn(){
             >
             {
                 theme === 'light' ? 
-                <HiMoon className="h-6 w-6 text-white hover:text-[#81b4f1]" /> : 
+                <HiMoon className="h-6 w-6 text-slate-600 hover:text-slate-900" /> : 
                 <HiSun className="h-6 w-6 dark:text-white dark:hover:text-[#81b4f1]" />
             }
         </button>
