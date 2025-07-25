@@ -54,6 +54,9 @@ import Usuarios from './Pages/Admin/InsideEdital/Usuarios/Usuarios';
 import Logs from './Pages/Admin/InsideEdital/LogsDoSistema/Logs';
 import NotFound from './Components/Global/NotFound/NotFound';
 import Disciplinas from './Pages/Admin/InsideEdital/Disciplinas/Disciplinas';
+import Cotas from './Pages/Admin/InsideEdital/Cotas/Cotas';
+import Recursos from './Pages/Admin/InsideEdital/Recursos/Recursos';
+import Chamadas from './Pages/Admin/InsideEdital/Chamadas/Chamadas';
 
 function App() {
   return (
@@ -147,6 +150,9 @@ function App() {
               <Route path='perfis' element={<Perfis />} />
               <Route path='usuarios' element={<Usuarios />} />
               <Route path='logs' element={<Logs />} />
+              <Route path='cotas' element={<Cotas />} />
+              <Route path='recursos' element={<Recursos />} />
+              <Route path='chamadas' element={<Chamadas />} />
           </Route>
 
           <Route path='*' element={<NotFound />} />

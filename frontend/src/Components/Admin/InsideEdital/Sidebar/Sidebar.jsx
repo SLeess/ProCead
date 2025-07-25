@@ -116,7 +116,7 @@ const Sidebar = () => {
     items: [
       { name: 'Logs', icon: <FiTerminal size={16} />, href: `/admin/edital/${editalId}/logs` },
       { name: 'Usuários', icon: <FiUsers size={16} />, href: `/admin/edital/${editalId}/usuarios` },
-      { name: 'Administradores', icon: <FiShield size={16} />, href: `/admin/edital/${editalId}/administradores` },
+      // { name: 'Administradores', icon: <FiShield size={16} />, href: `/admin/edital/${editalId}/administradores` },
       { name: 'Perfis', icon: <FiUserCheck size={16} />, href: `/admin/edital/${editalId}/perfis` },
       { name: 'Permissões', icon: <FiKey size={16} />, href: `/admin/edital/${editalId}/permissoes` }
     ]
