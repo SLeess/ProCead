@@ -9,7 +9,7 @@ import AccessDenied from '@/Components/Global/AccessDenied/AccessDenied'
 const Logs = () => {
     const { hasPermissionForEdital, isSuperAdmin } = useContext(AppContext);
     const { editalId } = useParams();
-    if (hasPermissionForEdital('visualizar-inscricoes', editalId) || isSuperAdmin())
+    if (hasPermissionForEdital('visualizar-logs-do-sistema', editalId) || isSuperAdmin())
         return (
             <>
                 <div className="p4">
