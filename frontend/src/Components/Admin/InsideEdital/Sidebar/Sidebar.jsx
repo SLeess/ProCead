@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { AppContext } from '@/Contexts/AppContext'; // Importando a função can do contexto
 import { useNavigate, useParams } from 'react-router-dom';
+import './Sidebar.css';
 // Ícones importados para os MENUS e submenus
 import {
   FiGrid, FiChevronDown, FiChevronUp, FiSettings, FiFilePlus,
@@ -29,7 +30,7 @@ const Sidebar = () => {
   {
     title: 'Dados Globais',
     icon: <FiDatabase size={20} />,
-    isInitiallyOpen: true,
+    isInitiallyOpen: false,
     items: [
       { name: 'Logs', icon: <FiTerminal size={16} />, href: `/admin/edital/${editalId}/logs` },
       { name: 'Usuários', icon: <FiUsers size={16} />, href: `/admin/edital/${editalId}/usuarios` },
@@ -41,7 +42,7 @@ const Sidebar = () => {
   {
     title: 'Início',
     icon: <FiHome size={20} />,
-    isInitiallyOpen: true,
+    isInitiallyOpen: false,
     items: [
       { name: 'Polos', icon: <FiMapPin size={16} />, href: `/admin/edital/${editalId}/polos` },
       { name: 'Modalidades', icon: <FiLayers size={16} />, href: `/admin/edital/${editalId}/modalidades` },
@@ -53,7 +54,7 @@ const Sidebar = () => {
   {
     title: 'Avaliação',
     icon: <FiCheckSquare size={20} />,
-    isInitiallyOpen: true,
+    isInitiallyOpen: false,
     items: [
       { name: 'Alocação', icon: <FiArchive size={16} />, href: `/admin/edital/${editalId}/alocacao` },
       
@@ -69,7 +70,7 @@ const Sidebar = () => {
   {
     title: 'Finalização',
     icon: <FiFlag size={20} />,
-    isInitiallyOpen: true,
+    isInitiallyOpen: false,
     items: [
       { name: 'Classificação', icon: <FiAward size={16} />, href: `/admin/edital/${editalId}/classificacao` },
       { name: 'Chamadas', icon: <FiBell size={16} />, href: `/admin/edital/${editalId}/chamadas` },
@@ -96,9 +97,9 @@ const Sidebar = () => {
   }
 
   return (
-    <div className="w-60 h-screen bg-[#002366] flex flex-col font-sans rounded-tr-[15px] rounded-br-[15px]">
+    <div className="w-70 h-screen bg-[#004DA9] flex flex-col font-sans rounded-tr-[15px] rounded-br-[15px]">
       <div
-        className="p-5 text-2xl font-bold text-white flex items-center border-b border-[#003388] flex-shrink-0 cursor-pointer"
+        className="p-5 text-2xl font-bold text-white flex items-center flex-shrink-0 cursor-pointer"
         onClick={() => navigate(`/admin`)}
       >
         <img src="/img/logo_cead_bg_white.png" className="mr-2.5" width="50px" />
@@ -108,7 +109,7 @@ const Sidebar = () => {
         {menuData.map(section => (
           <div key={section.title} className="py-2">
             <div
-              className={`px-4 py-2.5 flex items-center justify-between cursor-pointer rounded-lg m-1 mx-2 transition-colors duration-200 ease-in-out hover:bg-[#003388] ${openSections[section.title] ? 'bg-[#003388]' : 'bg-transparent'}`}
+              className={`px-4 py-2.5 flex items-center justify-between cursor-pointer rounded-lg m-1 mx-2 transition-colors duration-100 ease-in-out hover:bg-[#0064DB] ${openSections[section.title] ? 'bg-[#0064DB]' : 'bg-transparent'}`}
               onClick={() => handleToggleSection(section.title)}
             >
               <span className="flex items-center gap-3 text-[0.95rem] text-white">
@@ -126,7 +127,7 @@ const Sidebar = () => {
               {section.items.filter((link) => link !== null).map(item => (
                 <div
                   key={item.name}
-                  className={`flex justify-start items-center gap-3 py-1.5 pr-4 pl-[30px] text-[#c5cae9] cursor-pointer m-1 mx-2 rounded-lg text-[0.9rem] transition-colors duration-200 hover:bg-[#003d99] ${activeItem === item.name ? 'bg-[#1a73e8] text-white font-medium' : ''}`}
+                  className={`flex justify-start items-center gap-3 py-1.5 pr-4 pl-[30px] text-[#ffffff] cursor-pointer m-1 mx-2 rounded-lg text-[1rem] transition-colors duration-200 hover:bg-[#0064DB] ${activeItem === item.name ? 'bg-[#1a73e8] text-white font-medium' : ''}`}
                   onClick={() => handleItemClick(item.name, item.href)}
                 >
                   {item.icon}
