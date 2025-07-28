@@ -16,7 +16,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
+} from "@/Components/Global/ui/table"
 
 // import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import React, { useState } from 'react'

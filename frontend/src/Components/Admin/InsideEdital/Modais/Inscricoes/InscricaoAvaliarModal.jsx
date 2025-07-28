@@ -3,7 +3,7 @@
 import { Button, Checkbox, Label, Modal, ModalBody, ModalHeader, TextInput } from "flowbite-react";
 import { Check, Eye, Pencil } from "lucide-react";
 import { useState } from "react";
-import { FormField, SelectInput, AnexoButton } from "@/Components/ui/modals";
+import { FormField, SelectInput, AnexoButton } from "@/Components/Global/ui/modals";
 
 export default function InscricaoAvaliarModal() {
     const [openModal, setOpenModal] = useState(false);

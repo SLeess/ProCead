@@ -1,4 +1,4 @@
-import { FormField, TextInput } from '@/Components/ui/modals';
+import { FormField, TextInput } from '@/Components/Global/ui/modals';
 import { Modal, ModalBody, ModalHeader } from 'flowbite-react';
 import { Eye } from 'lucide-react';
 import React, { useState } from 'react'
@@ -29,7 +29,7 @@ const PerfilShowModal = () => {
                     <div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 mb-6">
                             <FormField label="Nome do Perfil">
-                                <TextInput readOnly={true} className="md:col-span-1" value="Ex: controle-acadêmico" />
+                                <TextInput readOnly={true} className="md:col-span-1" value="controle-acadêmico" />
                             </FormField>
                             <FormField label="Tipo">
                                 <TextInput readOnly={true} className="md:col-span-2" value="Administrador" />

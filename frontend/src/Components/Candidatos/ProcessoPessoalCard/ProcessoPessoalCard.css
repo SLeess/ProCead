@@ -1,12 +1,12 @@
 @reference "@/index.css";
 
 li.ProcessoPessoalCard{
-  @apply fill-white transition-transform transform hover:-translate-y-1 hover:cursor-pointer;
+  @apply fill-white transition-transform transform hover:-translate-y-1 hover:cursor-pointer dark:fill-gray-800;
   filter: drop-shadow(0px 6px 24px rgba(0, 0, 0, 0.05))
     drop-shadow(0px 0px 0px rgba(0, 0, 0, 0.08));
 }
 li.ProcessoPessoalCard article{
-  @apply flex flex-row border p-4 rounded-lg shadow-md bg-gray-50 space-x-3;
+  @apply flex flex-row border p-4 rounded-lg shadow-md bg-gray-50 space-x-3 dark:bg-gray-800 dark:border-gray-700;
 }
 
 li.ProcessoPessoalCard article > div{
@@ -14,7 +14,7 @@ li.ProcessoPessoalCard article > div{
 }
 
 li.ProcessoPessoalCard h3.descricao{
-  @apply  text-black text-xl not-italic font-normal leading-7 line-clamp-2 mb-6;
+  @apply  text-black text-xl not-italic font-normal leading-7 line-clamp-2 mb-6 dark:text-white;
   font-family: Sora;
 }
 
@@ -23,7 +23,7 @@ li.ProcessoPessoalCard aside.lateralBar{
 }
 
 li.ProcessoPessoalCard p.edital{
-    @apply text-[#414141] text-sm not-italic font-bold leading-6 ml-0.5;
+    @apply text-[#414141] text-sm not-italic font-bold leading-6 ml-0.5 dark:text-gray-300;
     font-family: Sora;
 }
 
@@ -33,14 +33,14 @@ li.ProcessoPessoalCard div.status > div{
 }
 
 li.ProcessoPessoalCard div.status{
-    @apply flex flex-row space-x-1 items-center mt-7;
+    @apply flex flex-row space-x-1 items-center mt-3;
 }
 li.ProcessoPessoalCard div.status span{
-    @apply text-base not-italic font-normal leading-[19px];
+    @apply text-base not-italic font-normal leading-[19px] dark:text-gray-300;
     text-wrap-mode: nowrap;
     font-family: Sora;
 }
 
 li.ProcessoPessoalCard article > div button.entrarBtn{
-  @apply cursor-pointer p-2 rounded-sm bg-[#095ec5] text-white dark:bg-white dark:text-[#29166F];
+  @apply cursor-pointer p-2 rounded-sm bg-[#095ec5] text-white dark:bg-blue-700 dark:text-white dark:hover:bg-blue-800;
 }

@@ -10,6 +10,7 @@ import {
   FiPieChart, FiHelpCircle, FiAward, FiBell, FiUserPlus,
   FiFileText, FiDatabase, FiHome, FiCheckSquare, FiFlag
 } from 'react-icons/fi';
+import { List } from 'lucide-react';
 
 
 const SidebarContainer = styled.div`
@@ -115,7 +116,7 @@ const Sidebar = () => {
     items: [
       { name: 'Logs', icon: <FiTerminal size={16} />, href: `/admin/edital/${editalId}/logs` },
       { name: 'Usuários', icon: <FiUsers size={16} />, href: `/admin/edital/${editalId}/usuarios` },
-      { name: 'Administradores', icon: <FiShield size={16} />, href: `/admin/edital/${editalId}/administradores` },
+      // { name: 'Administradores', icon: <FiShield size={16} />, href: `/admin/edital/${editalId}/administradores` },
       { name: 'Perfis', icon: <FiUserCheck size={16} />, href: `/admin/edital/${editalId}/perfis` },
       { name: 'Permissões', icon: <FiKey size={16} />, href: `/admin/edital/${editalId}/permissoes` }
     ]
@@ -128,6 +129,7 @@ const Sidebar = () => {
       { name: 'Polos', icon: <FiMapPin size={16} />, href: `/admin/edital/${editalId}/polos` },
       { name: 'Modalidades', icon: <FiLayers size={16} />, href: `/admin/edital/${editalId}/modalidades` },
       { name: 'Cursos', icon: <FiBookOpen size={16} />, href: `/admin/edital/${editalId}/cursos` },
+      { name: 'Disciplinas', icon: <List size={16} />, href: `/admin/edital/${editalId}/disciplinas` },
       { name: 'Quadro de Vagas', icon: <FiClipboard size={16} />, href: `/admin/edital/${editalId}/quadro-vagas` }
     ]
   },
@@ -178,7 +180,7 @@ const Sidebar = () => {
 
   return (
     <SidebarContainer>
-      <SidebarHeader>
+      <SidebarHeader onClick={() => navigate(`/admin`)} style={{ cursor: 'pointer' }}>
         <img src="/img/logo_cead_bg_white.png" style={{ marginRight: "10px" }} width={"50px"} />
         PROCEAD
       </SidebarHeader>

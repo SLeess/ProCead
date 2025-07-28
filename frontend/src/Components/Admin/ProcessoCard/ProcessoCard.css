@@ -2,11 +2,21 @@
 
 li.ProcessoCard{
   @apply fill-white transition-transform transform hover:-translate-y-1 hover:cursor-pointer;
+  
+  /* Light theme */
+
+  /* Dark theme */
+  @apply dark:fill-gray-800;
   filter: drop-shadow(0px 6px 24px rgba(0, 0, 0, 0.05))
     drop-shadow(0px 0px 0px rgba(0, 0, 0, 0.08));
 }
 li.ProcessoCard article{
   @apply flex flex-row border p-4 rounded-lg shadow-md bg-gray-50 space-x-3;
+
+  /* Light theme */
+
+  /* Dark theme */
+  @apply dark:bg-gray-800 dark:border-gray-700;
 }
 
 li.ProcessoCard article > div{
@@ -14,8 +24,13 @@ li.ProcessoCard article > div{
 }
 
 li.ProcessoCard h3.descricao{
-  @apply text-black text-xl not-italic font-normal leading-7 line-clamp-2 mb-6;
-  /* @apply min-w-[97.3%]; */
+  @apply text-xl not-italic font-normal leading-7 line-clamp-2 mb-6;
+  
+  /* Light theme */
+  @apply text-black;
+
+  /* Dark theme */
+  @apply dark:text-white;
   font-family: Sora;
 }
 
@@ -24,13 +39,22 @@ li.ProcessoCard aside.lateralBar{
 }
 
 li.ProcessoCard p.edital{
-    @apply text-[#414141] text-sm not-italic font-bold leading-6 ml-0.5;
+    @apply text-sm not-italic font-bold leading-6 ml-0.5;
+
+    /* Light theme */
+    @apply text-[#414141];
+
+    /* Dark theme */
+    @apply dark:text-gray-300;
     font-family: Sora;
 }
 
 /* div onde se localiza o btn de entrar */
 li.ProcessoCard div.status > div{
   @apply w-full flex justify-between;
+  
+  /* Responsividade */
+  @apply flex-col sm:flex-row mx-auto sm:mx-0 space-y-2 sm:space-y-0;
 }
 
 li.ProcessoCard div.status{
@@ -38,7 +62,13 @@ li.ProcessoCard div.status{
 }
 li.ProcessoCard div.status span,
 li.ProcessoCard div.status p{
-    @apply text-black text-sm not-italic opacity-90 font-bold leading-6;
+    @apply text-sm not-italic opacity-90 font-bold leading-6;
+
+    /* Light theme */
+    @apply text-black;
+
+    /* Dark theme */
+    @apply dark:text-gray-300;
     text-wrap-mode: nowrap;
     font-family: Sora;
 }
@@ -51,6 +81,5 @@ li.ProcessoCard article > div button.entrarBtn{
   @apply hover:bg-[#063772];
 
   /* Dark Mode */
-  @apply dark:bg-white dark:border-2 dark:text-[#29166F];
-  @apply dark:border-[0.4px] dark:border-solid dark:border-[rgba(114,114,114,0.50)];
+  @apply dark:bg-blue-700 dark:text-white dark:hover:bg-blue-800;
 }

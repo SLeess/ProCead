@@ -5,7 +5,7 @@ import { loginSchema } from "@/Pages/Candidato/Auth/Login/loginSchema";
 import { NavigationContext } from "@/Contexts/NavigationContext";
 
 export default function Login() {
-    const { setToken, setPermissions, setRoles } = useContext(AppContext);
+    const { setToken } = useContext(AppContext);
     const { navigate } = useContext(NavigationContext);
 
     const [formData, setFormData] = useState({
@@ -48,8 +48,6 @@ export default function Login() {
             } else{
                 localStorage.setItem('token', result.data.token);
                 setToken(result.data.token);
-                setPermissions(result.data.permissions);
-                setRoles(result.data.roles);
                 navigate('/admin/');
                 toast.success(result.message || "Autenticado com sucesso!");
             }

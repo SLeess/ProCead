@@ -1,29 +1,47 @@
-@reference "@/index.css"; 
+@reference "@/index.css";
 
 /* START ------------------------------------- HEADER CANDIDATO ------------------------------------- */
 
 header#user {
-    @apply text-white mx-4 sm:mx-10
+    @apply text-white mx-4 sm:mx-10 mt-2;
 }
 #user nav {
-  @apply container relative mx-auto px-6 py-2 flex justify-between items-center min-w-[300px] max-w-screen-xl shadow-sm mt-2.5 dark:bg-slate-900 bg-gradient-to-r from-[#004DA9] to-[#2A83ED] transition-all duration-700 ease-in-out;
-}
-#user nav ul#desktop{
-  @apply flex items-center md:space-x-20 md:mx-10;
-}
-#user nav ul#mobile{
+    @apply container relative flex mx-auto rounded-2xl;
+    @apply px-6 py-2 flex flex-nowrap justify-between;
+    @apply min-w-[310px] max-w-screen-xl mt-2.5;
 
+    @apply shadow-sm;
+    
+    @apply dark:bg-gradient-to-r dark:from-slate-900 dark:to-slate-900 bg-gradient-to-r from-[#004DA9] to-[#2A83ED] transition-all duration-700 ease-in-out;
+    
+    @apply md:rounded-xl;
 }
-.logo-cead{
-  width: 120px;
-  height: 50px;
+
+#user nav > div{
+  @apply flex justify-between items-center w-full;
 }
+
+#user.logo-cead{
+    width: 120px;
+    height: 50px;
+}
+
 #user .link-page{
-  @apply text-white pb-2 font-semibold transition-colors duration-300 hover:bg-[#004DA9] hover:shadow-2xs rounded-t-sm px-2;
+    @apply text-[16px];
+    @apply text-white font-semibold transition-colors duration-300 rounded-t-sm px-0;
+    @apply active:border-2 active:border-white;
+}
+
+#user ul a{
+  @apply hover:bg-[#004DA9] hover:shadow-2xs;
 }
 
 #user .link-page:hover{
-  box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+    box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
 }
 
-/* END ------------------------------------- HEADER CANDIDATO ------------------------------------- */
+/* ------------------------------------------- MENU MOBILE ------------------------------------------- */
+
+
+
+/* ------------------------------------------- END MENU MOBILE ------------------------------------------- */

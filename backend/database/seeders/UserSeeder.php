@@ -20,11 +20,11 @@ class UserSeeder extends Seeder
             'cpf' => '20745630006',
             'password' => Hash::make('asdasdasd'), // Use a secure password
         ]);
-        User::create([
-            'nome' => 'Cotas User',
-            'email' => 'cotas@asd.com',
-            'cpf' => '94692719044',
-            'password' => Hash::make('asdasdasd'), // Use a secure password
-        ]);
+        // User::create([
+        //     'nome' => 'Cotas User',
+        //     'email' => 'cotas@asd.com',
+        //     'cpf' => '94692719044',
+        //     'password' => Hash::make('asdasdasd'), // Use a secure password
+        // ]);
     }
 }

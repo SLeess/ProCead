@@ -9,91 +9,76 @@
 }
 
 #MeusProcessos header h1{
-    @apply text-3xl text-center sm:text-4xl text-gray-800 font-normal;
-}
+    @apply text-3xl text-center sm:text-4xl font-normal;
 
-
-/* START ------------------------------------- INPUTS STYLE ------------------------------------- */
-
-#MeusProcessos input[type=text]
-{
-    @apply h-[40px] w-full md:w-[350px]; 
-    @apply p-2 pl-10; 
-    
-    /* White Mode */
-    @apply text-sm text-gray-900; 
-    @apply border-[rgba(0,0,0,0.50)] border-[0.4px] border-solid rounded-lg;
-
-    @apply focus:ring-blue-500 focus:border-blue-500;
-    
-    /* Dark Mode */
-    @apply dark:bg-gray-200 dark:border-gray-600;
-    @apply dark:placeholder-gray-400 dark:text-white;
-}
-
-#MeusProcessos div.searchInputDiv button
-{
-    @apply absolute top-0 right-0 h-[40px] p-[10px_12px] ;
-    @apply flex items-center justify-center rounded-r-lg;
-    
-    /* White Mode */
-    @apply bg-[#095ec5] hover:bg-[#0751ac];
-    @apply text-white;
-
-    /* Dark Mode */
-}
-
-#MeusProcessos div.searchInputDiv div.divFaSearchIcon
-{
-    @apply absolute top-3 left-0 flex items-center pl-3 pointer-events-none;
-}
-
-#MeusProcessos div.searchInputDiv
-{
-    @apply relative max-w-[250px] md:max-w-[350px] w-full;
-    @apply mx-0 md:mx-2;
-}
-
-/* END ------------------------------------- INPUTS STYLE ------------------------------------- */
-
-
-
-/* START ------------------------------------- FILTROS BTN & DIV STYLE ------------------------------------- */
-
-#MeusProcessos header div.filterContent button{
-    @apply h-[40px] max-w-30;
-    @apply hover:cursor-pointer;
-    @apply inline-flex items-center gap-3 justify-items-end sm:justify-items-normal;
-    @apply pt-[11px] pb-2.5 px-[15px] rounded-[10px];
-    @apply focus:border-2;
-
-    /* White Mode */
-    @apply bg-[white] shadow-[0px_0px_0px_1px_rgba(0,0,0,0.08),0px_6px_24px_0px_rgba(0,0,0,0.05)];
-
-    /* Dark Mode */
-    @apply dark:bg-gray-700 dark:text-white;
-}
-
-#MeusProcessos header div.filterContent div.filtersModal p{
-    @apply mb-2;
-    @apply text-sm font-semibold;
-    
     /* White Mode */
     @apply text-gray-800;
-
+    
     /* Dark Mode */
     @apply dark:text-white;
 }
-#MeusProcessos header div.filterContent div.filtersModal{
-    @apply absolute right-0 z-10 mt-2;
-    @apply w-48 p-2; 
-    @apply rounded-md shadow-lg;
-    
-    /* White Mode */
-    @apply bg-white;
-    
-    /* Dark Mode */
-    @apply dark:bg-gray-700;
-}
+
+/* START ------------------------------------- FILTROS BTN & DIV STYLE ------------------------------------- */
+
+
 
 /* END   --------------------------------------------------------------------------------------------------- */
+
+/* Estilos para o contêiner de busca e filtro */
+#MeusProcessos .search-filter-container {
+    @apply flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto justify-end;
+}
+
+/* Estilos para o contêiner do campo de busca */
+#MeusProcessos .search-input-wrapper {
+    @apply relative w-auto sm:w-full; /* XS: breakpoint customizado se existir */
+}
+
+/* Estilos para o ícone de busca dentro do input */
+#MeusProcessos .search-icon-wrapper {
+    @apply absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none;
+}
+
+#MeusProcessos .search-icon-wrapper .search-icon {
+    @apply w-4 h-4 text-gray-500 dark:text-gray-400;
+}
+
+/* Estilos para o input de busca */
+#MeusProcessos .search-input {
+    @apply block w-full p-2 mr-20 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
+}
+
+/* Estilos para o contêiner do botão de filtro e dropdown */
+#MeusProcessos .filter-button-wrapper {
+    @apply relative;
+}
+
+/* Estilos para o botão de filtro */
+#MeusProcessos .filter-button {
+    @apply flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg shadow-sm hover:bg-gray-100 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500;
+}
+
+#MeusProcessos .filter-button .filter-icon {
+    @apply w-4 h-4 text-[#727272] dark:text-gray-400;
+}
+
+/* Estilos para o modal de filtros */
+#MeusProcessos .filters-modal {
+    @apply absolute right-0 z-10 mt-2 w-48 p-2 rounded-md shadow-lg bg-white dark:bg-gray-700 dark:border-gray-600 border border-gray-200;
+}
+
+#MeusProcessos .filters-modal p {
+    @apply mb-2 text-sm font-semibold text-gray-800 dark:text-white;
+}
+
+#MeusProcessos .filters-modal .filter-option {
+    @apply flex items-center mb-1;
+}
+
+#MeusProcessos .filters-modal .filter-option input[type="radio"] {
+    @apply text-blue-600 border-gray-300 dark:border-gray-500 focus:ring-blue-500;
+}
+
+#MeusProcessos .filters-modal .filter-option label {
+    @apply ml-2 text-sm text-gray-700 dark:text-gray-200;
+}

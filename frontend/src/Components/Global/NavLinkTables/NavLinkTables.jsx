@@ -1,4 +1,5 @@
 import React from "react";
+import "./NavLinkTables.css";
 
 export default function NavLinkTables({ table, maxPages = 7 }){
       const renderPageNumbers = () => {
@@ -41,14 +42,14 @@ export default function NavLinkTables({ table, maxPages = 7 }){
         return pageNumbers.map((page, index) => (
             <React.Fragment key={index}>
                 {page === '...' ? (
-                    <span className="mx-3 my-1 text-gray-500">...</span>
+                    <span className={`ellipsis`}>...</span>
                 ) : (
                     <button
                         onClick={() => table.setPageIndex(page)}
-                        className={`px-3 py-2 mx-1 hover:cursor-pointer text-md not-italic font-bold leading-[18px] ${
+                        className={`pageNumberButton' ${
                             table.getState().pagination.pageIndex === page
-                                ? 'text-[#004DA9]' // página ativa
-                                : 'text-black hover:bg-gray-200 ' // páginas inativas
+                                ? 'pageNumberButtonActive'
+                                : 'pageNumberButtonInactive'
                         }`}
                     >
                         {page + 1}
@@ -60,24 +61,24 @@ export default function NavLinkTables({ table, maxPages = 7 }){
     
     return(
         table.getRowModel().rows.length > 0 &&
-          <div className="flex flex-col sm:flex-row justify-center items-center mt-8 px-2 md:px-0 text-sm">
-              <div className="flex items-center space-x-2 shadow-[0px_0px_0px_1px_rgba(0,0,0,0.08),0px_6px_24px_0px_rgba(0,0,0,0.05)] bg-white">
+          <div id={`paginationContainer`}>
+              <div className={`paginationWrapper`}>
                   <button
                       onClick={() => table.previousPage()}
                       disabled={!table.getCanPreviousPage()}
-                      className="px-4 py-2 border border-gray-300 dark:border-gray-600 bg-[#F2F5F7] dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                      className={`pageButton`}
                   >
                       &lt;
                   </button>
 
-                  <div className="flex ">
+                  <div className={`pageNumbersContainer`}>
                       {renderPageNumbers()}
                   </div>
 
                   <button
                       onClick={() => table.nextPage()}
                       disabled={!table.getCanNextPage()}
-                      className="px-4 py-2 border border-gray-300 dark:border-gray-600 bg-[#F2F5F7] dark:bg-gray-800 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 hover:cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                      className={`pageButton`}
                   >
                       &gt;
                   </button>
