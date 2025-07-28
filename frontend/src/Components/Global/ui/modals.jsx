@@ -1,18 +1,21 @@
-import { useState } from "react";
+import { Calendar, X } from "lucide-react";
+import { useRef, useState } from "react";
+import { IMaskInput } from "react-imask";
 
-const FormField = ({ label, children, className = '' }) => (
+const FormField = ({ label, children, className = '' , textWrap = true}) => (
     <div className={`flex flex-col ${className}`}>
-        <label className="mb-1 text-sm font-medium text-gray-600">{label}</label>
+        <label className={`mb-1 text-sm font-medium text-gray-600 ${textWrap === true ? 'text-wrap' : 'xl:text-nowrap'}`}>{label}</label>
         {children}
     </div>
 );
 
-const TextInput = ({ value, readOnly, placeholder }) => (
+const TextInput = ({ value, readOnly, placeholder, onChange = null }) => (
     <input
         type="text"
         defaultValue={value}
-        className="bg-gray-100 border border-gray-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+        className={`${readOnly !== true ? 'bg-white': 'bg-gray-100'} border border-gray-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full`}
         readOnly={readOnly}
+        onChange={onChange}
         placeholder={placeholder}
     />
 );
@@ -58,12 +61,13 @@ const MultiSelectTags = () => {
     );
 };
 
-const SelectInput = ({ value, options, readOnly }) => (
+const SelectInput = ({ value, options, readOnly, onChange = null }) => (
     <div className="relative">
         <select
             disabled={readOnly}
             defaultValue={value}
-            className="appearance-none bg-gray-100 border border-gray-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+            onChange={onChange}
+            className={`${readOnly !== true ? 'bg-white': 'bg-gray-100'} appearance-none border border-gray-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full`}
         >
             {options.map(opt => <option key={opt} value={opt}>{opt}</option>)}
         </select>
@@ -92,5 +96,122 @@ const Checkbox = ({ label, checked, readOnly }) => (
     </label>
 );
 
+const DateTimeInput = ({ value, placeholder = null, readOnly = false, onChange = null }) => {
+    let date;
+    if(placeholder === null){
+        const currentDate = new Date();
+        const year = String(currentDate.getFullYear()).padStart(2,"0");
+        const month = String(currentDate.getMonth() + 1).padStart(2,"0");
+        const day = String(currentDate.getDate()).padStart(2,"0");
+        const hour = String(currentDate.getHours()).padStart(2,"0");
+        const minutes = String(currentDate.getMinutes()).padStart(2,"0");
+        const seconds = String(currentDate.getSeconds()).padStart(2,"0");
+    
+        date = String(`${day}/${month}/${year} ${hour}:${minutes}:${seconds}`);
+    } else{
+        date = placeholder;
+    }
 
-export { FormField, TextInput, SelectInput, AnexoButton, Checkbox, MultiSelectTags, DetailRow, AlterationRow };
+    return (
+    <div className="dateTimeInput relative">
+        <IMaskInput
+            mask="00/00/0000 00:00:00"
+            value={value}
+            readOnly={readOnly}
+            placeholder={`Ex: ${date}`}
+            className={`${readOnly ? 'bg-gray-100' : 'bg-white'} 
+                border border-gray-200 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full`
+            }
+            onBlur={(e) => {
+                if (onChange) {
+                    onChange(e);
+                }
+            }}
+        />
+        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500">
+            <Calendar/>
+        </div>
+    </div>
+)};
+
+import Flatpickr from 'react-flatpickr';
+
+import "flatpickr/dist/flatpickr.min.css";
+// import "flatpickr/dist/themes/material_blue.css";
+import { Portuguese } from "flatpickr/dist/l10n/pt.js";
+
+const DateTimePicker = ({ value, placeholder = null, readOnly = false, onChange = null }) => {
+    const fp = useRef(null);
+    let date;
+
+    if(placeholder === null){
+        const currentDate = new Date();
+        const year = String(currentDate.getFullYear()).padStart(2,"0");
+        const month = String(currentDate.getMonth() + 1).padStart(2,"0");
+        const day = String(currentDate.getDate()).padStart(2,"0");
+        const hour = String(currentDate.getHours()).padStart(2,"0");
+        const minutes = String(currentDate.getMinutes()).padStart(2,"0");
+        const seconds = String(currentDate.getSeconds()).padStart(2,"0");
+    
+        date = String(`${day}/${month}/${year} ${hour}:${minutes}:${seconds}`);
+    } else{
+        date = placeholder;
+    }
+
+    //   https://flatpickr.js.org/examples/
+    const options = {
+        enableTime: true,
+        enableSeconds: true,
+        time_24hr: true,
+        dateFormat: "d/m/Y H:i:S",
+        locale: Portuguese,
+        monthSelectorType: "static",
+    };
+
+    return (
+    <div className="time-picker flex items-center shadow-sm rounded-md">
+        <Flatpickr
+            ref={fp}
+            id="start_recurso"
+            value={value}
+            readOnly={readOnly}
+            placeholder={`Ex: ${date}`}
+            className={`${readOnly ? 'bg-gray-100' : 'bg-white'} 
+                border border-slate-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full
+                block text-slate-900 placeholder:text-slate-500 focus:ring-inset sm:text-sm rounded-l-md`
+            }
+            options={options}
+            onClose={(selectedDates, dateStr) => {
+                if (onChange) {
+                    onChange({target : { value: dateStr}});
+                }
+            }}
+            // onClose={(val) => {
+            //     console.log(val.getDate());
+            //     if (onChange) {
+            //         onChange({target : { value: dateStr}});
+            //     }
+            // }}
+        />
+        <div 
+            onClick={
+                () => fp.current?.flatpickr.toggle()
+            }
+            className="border-[1.5px] border-slate-300 flex items-center justify-center px-1.5 py-1.5 text-gray-500">
+            <Calendar/>
+        </div>
+        <div 
+            onClick={() =>{ 
+                if (onChange) {
+                    onChange({target : { value: ""}})
+                }
+            }}
+            className="border-[1.5px] border-slate-300 flex items-center justify-center px-1.5 py-1.5 text-gray-500 rounded-r-md">
+            <X className="hover:cursor-pointer text-red-700"/>
+        </div>
+    </div>
+  );
+}
+
+
+export { FormField, TextInput, SelectInput, AnexoButton, Checkbox, MultiSelectTags, DetailRow, AlterationRow, DateTimeInput, DateTimePicker };
