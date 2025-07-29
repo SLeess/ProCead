@@ -43,6 +43,8 @@ import Cotas from './Pages/Admin/InsideEdital/Cotas/Cotas';
 import Recursos from './Pages/Admin/InsideEdital/Recursos/Recursos';
 import Chamadas from './Pages/Admin/InsideEdital/Chamadas/Chamadas';
 import Alocacao from './Pages/Admin/InsideEdital/Alocacao/Alocacao';
+import AvaliacoesDoUsuario from './Pages/Admin/InsideEdital/Alocacao/AvaliacoesDoUsuario';
+
 
 /** --------------------------------------------------------------------------------------- */
 
@@ -155,6 +157,7 @@ function App() {
             <Route path='recursos' element={<Recursos />} />
             <Route path='chamadas' element={<Chamadas />} />
             <Route path='alocacao' element={<Alocacao />} />
+            <Route path='alocacao/user/:userId' element={<AvaliacoesDoUsuario />} />
           </Route>
 
           <Route path='*' element={<NotFound />} />

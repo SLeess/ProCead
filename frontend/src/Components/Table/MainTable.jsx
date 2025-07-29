@@ -23,13 +23,14 @@ import React, { useState } from 'react'
 import { Search } from "lucide-react";
 
 const MainTable = ({data, columns, title}) => {
-  const [columnFilters, setColumnFilters] = React.useState([]);
-  const [rowSelection, setRowSelection] = React.useState({});
-  const [globalFilter, setGlobalFilter] = React.useState('');
-  const [pagination, setPagination] = React.useState({
+  const [columnFilters, setColumnFilters] = useState([]);
+  const [rowSelection, setRowSelection] = useState({});
+  const [globalFilter, setGlobalFilter] = useState('');
+  const [pagination, setPagination] = useState({
     pageIndex: 0, //initial page index
     pageSize: 10, //default page size
   });
+
 
   const table = useReactTable({
     data,
@@ -119,11 +120,11 @@ const MainTable = ({data, columns, title}) => {
 
       {/* Controles de Paginação Estilizados */}
       <div className="flex items-center justify-between p-4">
-        <div className="flex-1 text-sm text-muted-foreground">
+        <div className=" text-sm text-muted-foreground justify-start">
           {table.getFilteredSelectedRowModel().rows.length} de{" "}
           {table.getFilteredRowModel().rows.length} linha(s) selecionada(s).
         </div>
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center justify-center space-x-4">
             {/* --- Previous Button --- */}
             <button
                 onClick={() => table.previousPage()}
@@ -150,7 +151,7 @@ const MainTable = ({data, columns, title}) => {
                 Próxima
             </button>
         </div>
-        <div className="flex flex-1 justify-end">
+        <div className="flex ml-5 justify-end">
             {/* --- Page Size Selector --- */}
             <select
                 value={table.getState().pagination.pageSize}

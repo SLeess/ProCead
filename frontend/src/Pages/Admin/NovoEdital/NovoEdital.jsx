@@ -55,7 +55,7 @@ export default function NovoEdital()
         fim_avaliacao_etnica: '',
         inicio_avaliacao_identidade_genero: '',
         fim_avaliacao_identidade_genero: '',
-    });
+    },[]);
     const [loading, setLoading] = useState(true);
 
     const handleOnChangeAttr = (e, attr) => {
