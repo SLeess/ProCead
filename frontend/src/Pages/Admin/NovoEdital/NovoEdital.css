@@ -11,7 +11,7 @@ section#novoEdital header{
     @apply absolute top-0 left-0 w-full px-6 py-4 rounded-t-xl bg-[#29166F] border-2;
 }
 
-section#novoEdital div#content{
+section#novoEdital form#content{
     /* @apply mt-8; */
     @apply mt-20;
 }

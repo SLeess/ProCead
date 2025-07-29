@@ -55,13 +55,21 @@ export default function NovoEdital()
         fim_avaliacao_etnica: '',
         inicio_avaliacao_identidade_genero: '',
         fim_avaliacao_identidade_genero: '',
+
+        resultado_preliminar_inscricao: '',
+        resultado_preliminar_geral: '',
+        resultado_final: '',
     });
+
+    const handleOnSubmit = async (e) => {
+        e.prevent.default();
+    };
+
     const [loading, setLoading] = useState(true);
 
     const handleOnChangeAttr = (e, attr) => {
         const { value } = e.target;
         setFormData(f => ({...f, [attr]: value}));
-        // console.log(formData);
     };
 
     useEffect(() => 
@@ -95,7 +103,7 @@ export default function NovoEdital()
             <h1>Etapas de Criação do Edital</h1>
         </header>
 
-        <div id="content">
+        <form onSubmit={handleOnSubmit} id="content">
             <nav aria-label="Tabs" className="timeline-nav">
                 <Stepper tabsData={tabsData} activeTabIndex={activeTabIndex} setActiveTabIndex={setActiveTabIndex}/>
             </nav>
@@ -130,7 +138,7 @@ export default function NovoEdital()
                     }
                 </button>
             </div>
-        </div>    
+        </form>    
     </section>
     );
 }

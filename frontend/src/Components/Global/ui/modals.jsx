@@ -1,5 +1,5 @@
 import { Calendar, X } from "lucide-react";
-import { useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { IMaskInput } from "react-imask";
 
 const FormField = ({ label, children, className = '' , textWrap = true}) => (
@@ -143,7 +143,6 @@ import Flatpickr from 'react-flatpickr';
 import "flatpickr/dist/flatpickr.min.css";
 // import "flatpickr/dist/themes/material_blue.css";
 import { Portuguese } from "flatpickr/dist/l10n/pt.js";
-import { toast } from "react-toastify";
 
 /**
  * Aplica uma máscara de data e hora (dd/mm/aaaa hh:mm:ss) a uma string.
@@ -166,10 +165,11 @@ function maskDateTime(value) {
     masked = masked.replace(/(\d{2}\/\d{2}\/\d{4} \d{2}:\d{2})(\d)/, '$1:$2'); // ... hh:mm:s
 
     return masked;
+    // return value.replace(/[^0-9/:\s]/g, '');
 }
 
 
-const DateTimePicker = ({ value, placeholder = null, readOnly = false, onChange = null }) => {
+const DateTimePicker = ({ value, placeholder = null, readOnly = false, onChange = null, id }) => {
     const fp = useRef(null);
     let date;
 
@@ -188,7 +188,7 @@ const DateTimePicker = ({ value, placeholder = null, readOnly = false, onChange 
     }
 
     //   https://flatpickr.js.org/examples/
-    const options = {
+    const options = useMemo(() => ({
         allowInput: true,
         enableTime: true,
         enableSeconds: true,
@@ -198,9 +198,14 @@ const DateTimePicker = ({ value, placeholder = null, readOnly = false, onChange 
         minDate: new Date().fp_incr(-365 * 20),
         maxDate: new Date().fp_incr(365 * 10),
         monthSelectorType: "static"
-    };
+    }), []);
 
     const [data, setData] = useState(value);
+
+    // Caso clique no X, vai atualizara aqui
+    useEffect(() => {
+        setData(value);
+    }, [value]);
 
     function handleTyping(selectedDates, dateStr, instance){   
         const maskedValue = maskDateTime(instance.input.value);
@@ -210,6 +215,7 @@ const DateTimePicker = ({ value, placeholder = null, readOnly = false, onChange 
     return (
     <div className="time-picker flex items-center shadow-sm rounded-md">
         <Flatpickr
+            id={id}
             ref={fp}
             mask="00/00/0000 00:00:00"
             maxLength="19"
