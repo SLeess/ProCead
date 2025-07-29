@@ -23,13 +23,14 @@ import React, { useState } from 'react'
 import { Search } from "lucide-react";
 
 const MainTable = ({data, columns, title}) => {
-  const [columnFilters, setColumnFilters] = React.useState([]);
-  const [rowSelection, setRowSelection] = React.useState({});
-  const [globalFilter, setGlobalFilter] = React.useState('');
-  const [pagination, setPagination] = React.useState({
+  const [columnFilters, setColumnFilters] = useState([]);
+  const [rowSelection, setRowSelection] = useState({});
+  const [globalFilter, setGlobalFilter] = useState('');
+  const [pagination, setPagination] = useState({
     pageIndex: 0, //initial page index
     pageSize: 10, //default page size
   });
+
 
   const table = useReactTable({
     data,
@@ -62,7 +63,7 @@ const MainTable = ({data, columns, title}) => {
             type="text"
             value={globalFilter ?? ''}
             onChange={e => setGlobalFilter(e.target.value)}
-            className="w-full rounded-md border border-gray-300 bg-white py-2 pl-10 pr-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="w-full rounded-md border border-gray-300 bg-white py-2 pl-10 pr-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             placeholder="Pesquisar..."
           />
           <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
@@ -119,16 +120,16 @@ const MainTable = ({data, columns, title}) => {
 
       {/* Controles de Paginação Estilizados */}
       <div className="flex items-center justify-between p-4">
-        <div className="flex-1 text-sm text-muted-foreground">
+        <div className=" text-sm text-muted-foreground justify-start">
           {table.getFilteredSelectedRowModel().rows.length} de{" "}
           {table.getFilteredRowModel().rows.length} linha(s) selecionada(s).
         </div>
-        <div className="flex items-center space-x-4">
+        <div className="flex items-center justify-center space-x-4">
             {/* --- Previous Button --- */}
             <button
                 onClick={() => table.previousPage()}
                 disabled={!table.getCanPreviousPage()}
-                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
                 Anterior
             </button>
@@ -136,7 +137,7 @@ const MainTable = ({data, columns, title}) => {
             {/* --- Page Indicator --- */}
             <span className="text-sm font-medium text-gray-700">
                 Página{' '}
-                <span className="font-bold text-indigo-600">
+                <span className="font-bold text-blue-600">
                 {table.getState().pagination.pageIndex + 1} de {table.getPageCount()}
                 </span>
             </span>
@@ -145,19 +146,19 @@ const MainTable = ({data, columns, title}) => {
             <button
                 onClick={() => table.nextPage()}
                 disabled={!table.getCanNextPage()}
-                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
                 Próxima
             </button>
         </div>
-        <div className="flex flex-1 justify-end">
+        <div className="flex ml-5 justify-end">
             {/* --- Page Size Selector --- */}
             <select
                 value={table.getState().pagination.pageSize}
                 onChange={e => {
                 table.setPageSize(Number(e.target.value))
                 }}
-                className="px-2 py-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                className="px-2 py-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             >
                 {[10, 20, 30, 40, 50].map(pageSize => (
                 <option key={pageSize} value={pageSize}>
