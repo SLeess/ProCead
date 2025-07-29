@@ -57,6 +57,7 @@ import Disciplinas from './Pages/Admin/InsideEdital/Disciplinas/Disciplinas';
 import Cotas from './Pages/Admin/InsideEdital/Cotas/Cotas';
 import Recursos from './Pages/Admin/InsideEdital/Recursos/Recursos';
 import Chamadas from './Pages/Admin/InsideEdital/Chamadas/Chamadas';
+import Alocacao from './Pages/Admin/InsideEdital/Alocacao/Alocacao';
 
 function App() {
   return (
@@ -153,6 +154,7 @@ function App() {
               <Route path='cotas' element={<Cotas />} />
               <Route path='recursos' element={<Recursos />} />
               <Route path='chamadas' element={<Chamadas />} />
+              <Route path='alocacao' element={<Alocacao />} />
           </Route>
 
           <Route path='*' element={<NotFound />} />
