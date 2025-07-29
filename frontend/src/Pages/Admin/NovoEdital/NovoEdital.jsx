@@ -62,7 +62,7 @@ export default function NovoEdital()
     });
 
     const handleOnSubmit = async (e) => {
-        e.prevent.default();
+        e.preventDefault();
     };
 
     const [loading, setLoading] = useState(true);
