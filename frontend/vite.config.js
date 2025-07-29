@@ -11,7 +11,7 @@ export default defineConfig({
   server: {
     proxy:{
       '/api': {
-        target: 'http://127.0.0.1:8000',
+        target: import.meta.env.VITE_API_BASE_URL,
         changeOrigin: true,
         headers: {
           Accept: 'application/json',
@@ -24,7 +24,7 @@ export default defineConfig({
     alias: {
       // Aqui estamos dizendo ao Vite: sempre que encontrar '@' no início de um import,
       // substitua por 'caminho/absoluto/do/projeto/src'
-      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      '@': fileURLToPath(new URL(import.meta.env.VITE_APP_BASE_URL, import.meta.url)),
     },
   },
 })
