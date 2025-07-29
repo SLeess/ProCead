@@ -24,16 +24,27 @@ import UserManagePage from './Pages/Test/UserManagePage';
 
 /** ------------------------------------ Páginas de Admin ------------------------------------ */
 import HomeAdmin from './Pages/Admin/Home/Home';
+import NovoEdital from './Pages/Admin/NovoEdital/NovoEdital';
 // import UsuariosAdminList from './Pages/Admin/Usuarios/Usuarios';
 import Inscricoes from './Pages/Admin/InsideEdital/Inscricoes/Inscricoes';
 
 
-  /** ------------------------------------ Páginas Adm de Edital ---------------------------- */
-    import QuadroVagas from './Pages/Admin/InsideEdital/QuadroVagas/QuadroVagas';
-    import Cursos from './Pages/Admin/InsideEdital/Cursos/Cursos';
-    import Polos from './Pages/Admin/InsideEdital/Polos/Polos';
-    import Modalidades from './Pages/Admin/InsideEdital/Modalidades/Modalidades';
-  /** --------------------------------------------------------------------------------------- */
+/** ------------------------------------ Páginas Adm de Edital ---------------------------- */
+import QuadroVagas from './Pages/Admin/InsideEdital/QuadroVagas/QuadroVagas';
+import Cursos from './Pages/Admin/InsideEdital/Cursos/Cursos';
+import Polos from './Pages/Admin/InsideEdital/Polos/Polos';
+import Modalidades from './Pages/Admin/InsideEdital/Modalidades/Modalidades';
+import Perfis from './Pages/Admin/InsideEdital/Perfis/Perfis';
+import Usuarios from './Pages/Admin/InsideEdital/Usuarios/Usuarios';
+import Logs from './Pages/Admin/InsideEdital/LogsDoSistema/Logs';
+import NotFound from './Components/Global/NotFound/NotFound';
+import Disciplinas from './Pages/Admin/InsideEdital/Disciplinas/Disciplinas';
+import Cotas from './Pages/Admin/InsideEdital/Cotas/Cotas';
+import Recursos from './Pages/Admin/InsideEdital/Recursos/Recursos';
+import Chamadas from './Pages/Admin/InsideEdital/Chamadas/Chamadas';
+import Alocacao from './Pages/Admin/InsideEdital/Alocacao/Alocacao';
+
+/** --------------------------------------------------------------------------------------- */
 
 /** ------------------------------------------------------------------------------------------ */
 
@@ -46,18 +57,6 @@ import GuestAdminRoutes from './Routes/GuestAdminRoutes';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-// Nossas novas páginas de exemplo
-// import HomePage from './Pages/HomePage';
-// import EditalPage from './Pages/EditalPage';
-import Perfis from './Pages/Admin/InsideEdital/Perfis/Perfis';
-import Usuarios from './Pages/Admin/InsideEdital/Usuarios/Usuarios';
-import Logs from './Pages/Admin/InsideEdital/LogsDoSistema/Logs';
-import NotFound from './Components/Global/NotFound/NotFound';
-import Disciplinas from './Pages/Admin/InsideEdital/Disciplinas/Disciplinas';
-import Cotas from './Pages/Admin/InsideEdital/Cotas/Cotas';
-import Recursos from './Pages/Admin/InsideEdital/Recursos/Recursos';
-import Chamadas from './Pages/Admin/InsideEdital/Chamadas/Chamadas';
-import Alocacao from './Pages/Admin/InsideEdital/Alocacao/Alocacao';
 
 function App() {
   return (
@@ -77,18 +76,18 @@ function App() {
         <Routes>
 
 
-          
+
           {/* ======================================= */}
           {/* ========= ROTAS PÚBLICAS/GUEST ======== */}
           {/* ======================================= */}
-          
+
           {/* Rotas para convidados da área de Candidato */}
           <Route element={<GuestRoutes />}>
             <Route path='/login' element={<Login />} />
             <Route path='/registro' element={<Registro />} />
             <Route path='/esqueceu-senha' element={<EsqueceuSenha />} />
             <Route path='/recuperar-senha' element={<RecuperarSenha />} />
-            <Route path='/permissions' element={<UserManagePage userId={1}/>}/>
+            <Route path='/permissions' element={<UserManagePage userId={1} />} />
           </Route>
 
           {/* Rota para convidados da área de Admin */}
@@ -102,8 +101,8 @@ function App() {
           {/* ============================================== */}
           {/* ========= ROTAS PROTEGIDAS (CANDIDATO) ========= */}
           {/* ============================================== */}
-          <Route 
-            path='/' 
+          <Route
+            path='/'
             element={
               <ProtectedRoute area="candidato">
                 <Layout />
@@ -129,9 +128,10 @@ function App() {
               </ProtectedRoute>
             }
           >
-              <Route index element={<HomeAdmin />} />
-              {/* <Route path='usuarios' element={<UsuariosAdminList />} /> */}
-              <Route path='manejar-usuarios/:userId' element={<UserManagePage />} />
+            <Route index element={<HomeAdmin />} />
+            <Route path='edital/create' element={<NovoEdital />} />
+            {/* <Route path='usuarios' element={<UsuariosAdminList />} /> */}
+            <Route path='manejar-usuarios/:userId' element={<UserManagePage />} />
           </Route>
 
           <Route path='/admin/edital/:editalId/'
@@ -141,20 +141,20 @@ function App() {
               </ProtectedRoute>
             }
           >
-              <Route index element={<Inscricoes />} />
-              <Route path='inscricoes' element={<Inscricoes />} />
-              <Route path='quadro-vagas' element={<QuadroVagas />} />
-              <Route path='cursos' element={<Cursos />} />
-              <Route path='disciplinas' element={<Disciplinas />} />
-              <Route path='polos' element={<Polos />} />
-              <Route path='modalidades' element={<Modalidades />} />
-              <Route path='perfis' element={<Perfis />} />
-              <Route path='usuarios' element={<Usuarios />} />
-              <Route path='logs' element={<Logs />} />
-              <Route path='cotas' element={<Cotas />} />
-              <Route path='recursos' element={<Recursos />} />
-              <Route path='chamadas' element={<Chamadas />} />
-              <Route path='alocacao' element={<Alocacao />} />
+            <Route index element={<Inscricoes />} />
+            <Route path='inscricoes' element={<Inscricoes />} />
+            <Route path='quadro-vagas' element={<QuadroVagas />} />
+            <Route path='cursos' element={<Cursos />} />
+            <Route path='disciplinas' element={<Disciplinas />} />
+            <Route path='polos' element={<Polos />} />
+            <Route path='modalidades' element={<Modalidades />} />
+            <Route path='perfis' element={<Perfis />} />
+            <Route path='usuarios' element={<Usuarios />} />
+            <Route path='logs' element={<Logs />} />
+            <Route path='cotas' element={<Cotas />} />
+            <Route path='recursos' element={<Recursos />} />
+            <Route path='chamadas' element={<Chamadas />} />
+            <Route path='alocacao' element={<Alocacao />} />
           </Route>
 
           <Route path='*' element={<NotFound />} />

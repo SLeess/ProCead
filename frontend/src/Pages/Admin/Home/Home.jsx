@@ -17,6 +17,7 @@ function Home() {
   useEffect(() => {
     const fetchProcessos = async () => {
       setLoading(true);
+      // await new Promise(resolve => setTimeout(resolve, 5000));
       try {
           const res = await fetch('/api/admin/editais', { // Substitua pela URL real da sua API
               method: 'GET',
