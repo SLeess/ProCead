@@ -1,6 +1,5 @@
 import { LucideCalendarCheck } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import './NovoEdital.css';
 import { CiCircleInfo } from "react-icons/ci";
 import { FaRegCalendarCheck } from "react-icons/fa";
 import Stepper from "@/Components/Global/Stepper/Stepper";
@@ -8,6 +7,7 @@ import LoaderPages from "@/Components/Global/LoaderPages/LoaderPages";
 import PrazosIniciais from "./Tabs/PrazosIniciais";
 import InformacoesBasicas from "./Tabs/InformacoesBasicas";
 import PrazosFinais from "./Tabs/PrazosFinais";
+import './NovoEdital.css';
 
 const Step = ({ icon: IconComponent, label, isActive, isCompleted }) => {
     const statusClass = isActive
@@ -60,10 +60,8 @@ export default function NovoEdital()
 
     const handleOnChangeAttr = (e, attr) => {
         const { value } = e.target;
-
         setFormData(f => ({...f, [attr]: value}));
-
-        console.log(formData);
+        // console.log(formData);
     };
 
     useEffect(() => 

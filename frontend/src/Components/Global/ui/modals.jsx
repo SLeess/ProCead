@@ -134,11 +134,40 @@ const DateTimeInput = ({ value, placeholder = null, readOnly = false, onChange =
     </div>
 )};
 
+
+
+
+
 import Flatpickr from 'react-flatpickr';
 
 import "flatpickr/dist/flatpickr.min.css";
 // import "flatpickr/dist/themes/material_blue.css";
 import { Portuguese } from "flatpickr/dist/l10n/pt.js";
+import { toast } from "react-toastify";
+
+/**
+ * Aplica uma máscara de data e hora (dd/mm/aaaa hh:mm:ss) a uma string.
+ * @param {string} value O valor do input a ser mascarado.
+ * @returns {string} O valor com a máscara aplicada.
+ */
+function maskDateTime(value) {
+    // 1. Limpa o valor, mantendo apenas os dígitos.
+    const cleaned = value.replace(/\D/g, '');
+
+    // 2. Limita o total de dígitos a 14 (ddmmyyyyhhmmss).
+    const limited = cleaned.slice(0, 14);
+
+    // 3. Aplica a máscara progressivamente usando Regex.
+    let masked = limited;
+    masked = masked.replace(/(\d{2})(\d)/, '$1/$2');          // dd/m
+    masked = masked.replace(/(\d{2})\/(\d{2})(\d)/, '$1/$2/$3');  // dd/mm/y
+    masked = masked.replace(/(\d{2}\/\d{2}\/\d{4})(\d)/, '$1 $2');  // dd/mm/yyyy h
+    masked = masked.replace(/(\d{2}\/\d{2}\/\d{4} \d{2})(\d)/, '$1:$2'); // ... hh:m
+    masked = masked.replace(/(\d{2}\/\d{2}\/\d{4} \d{2}:\d{2})(\d)/, '$1:$2'); // ... hh:mm:s
+
+    return masked;
+}
+
 
 const DateTimePicker = ({ value, placeholder = null, readOnly = false, onChange = null }) => {
     const fp = useRef(null);
@@ -160,45 +189,51 @@ const DateTimePicker = ({ value, placeholder = null, readOnly = false, onChange 
 
     //   https://flatpickr.js.org/examples/
     const options = {
+        allowInput: true,
         enableTime: true,
         enableSeconds: true,
         time_24hr: true,
         dateFormat: "d/m/Y H:i:S",
         locale: Portuguese,
-        monthSelectorType: "static",
+        minDate: new Date().fp_incr(-365 * 20),
+        maxDate: new Date().fp_incr(365 * 10),
+        monthSelectorType: "static"
     };
+
+    const [data, setData] = useState(value);
+
+    function handleTyping(selectedDates, dateStr, instance){   
+        const maskedValue = maskDateTime(instance.input.value);
+        setData(maskedValue);
+    }
 
     return (
     <div className="time-picker flex items-center shadow-sm rounded-md">
         <Flatpickr
             ref={fp}
-            id="start_recurso"
-            value={value}
+            mask="00/00/0000 00:00:00"
+            maxLength="19"
+            value={data}
             readOnly={readOnly}
             placeholder={`Ex: ${date}`}
             className={`${readOnly ? 'bg-gray-100' : 'bg-white'} 
                 border border-slate-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full
                 block text-slate-900 placeholder:text-slate-500 focus:ring-inset sm:text-sm rounded-l-md`
             }
+            onChange={handleTyping}
             options={options}
-            onClose={(selectedDates, dateStr) => {
+            onClose={() => {
                 if (onChange) {
-                    onChange({target : { value: dateStr}});
+                    onChange({ target: { value: data } });
                 }
             }}
-            // onClose={(val) => {
-            //     console.log(val.getDate());
-            //     if (onChange) {
-            //         onChange({target : { value: dateStr}});
-            //     }
-            // }}
         />
         <div 
             onClick={
                 () => fp.current?.flatpickr.toggle()
             }
-            className="border-[1.5px] border-slate-300 flex items-center justify-center px-1.5 py-1.5 text-gray-500">
-            <Calendar/>
+            className="border-[1.5px] border-slate-300 flex items-center justify-center px-1.5 py-1.5 text-gray-500 ">
+            <Calendar className="w-[18px]"/>
         </div>
         <div 
             onClick={() =>{ 
@@ -207,7 +242,7 @@ const DateTimePicker = ({ value, placeholder = null, readOnly = false, onChange 
                 }
             }}
             className="border-[1.5px] border-slate-300 flex items-center justify-center px-1.5 py-1.5 text-gray-500 rounded-r-md">
-            <X className="hover:cursor-pointer text-red-700"/>
+            <X className="hover:cursor-pointer text-red-700 w-[18px]"/>
         </div>
     </div>
   );
