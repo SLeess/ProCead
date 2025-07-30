@@ -5,51 +5,46 @@ import PerfilAlterarPermissoesModal from "@/Components/Admin/InsideEdital/Modais
 import { ArrowUpDown } from "lucide-react";
 
 const columns = [
-    
+    {
+    id: "select",
+    header: ({ table }) => (
+      <input
+        type="checkbox"
+        {...{
+          checked: table.getIsAllRowsSelected(),
+          indeterminate: table.getIsSomeRowsSelected(),
+          onChange: table.getToggleAllRowsSelectedHandler(),
+        }}
+      />
+    ),
+    cell: ({ row }) => (
+      <input
+        type="checkbox"
+        {...{
+          checked: row.getIsSelected(),
+          disabled: !row.getCanSelect(),
+          indeterminate: row.getIsSomeSelected(),
+          onChange: row.getToggleSelectedHandler(),
+        }}
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
     {
       accessorKey: "id",
-      header: ({ column }) => {
-      return (
-        <div className="flex cursor-pointer items-center"
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          #
-          <ArrowUpDown className={`ml-2 h-4 w-4 ${column.getIsSorted() ? 'text-blue-500' : ''}`} />
-        </div>
-      )
-    },
+      header:"Id",
       cell: (props) => <span>{props.getValue()}</span>
     },
     
     {
       accessorKey: "nome",
-      header: ({ column }) => {
-      return (
-        <div className="flex cursor-pointer items-center"
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Descrição
-          <ArrowUpDown className={`ml-2 h-4 w-4 ${column.getIsSorted() ? 'text-blue-500' : ''}`} />
-        </div>
-      )
-    },
+      header:"Nome",
       cell: (props) => <span>{props.getValue()}</span>
     },
     {
       accessorKey: "tipo",
-      header: ({ column }) => {
-      return (
-        <div className="flex cursor-pointer items-center"
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Tipo
-          <ArrowUpDown className={`ml-2 h-4 w-4 ${column.getIsSorted() ? 'text-blue-500' : ''}`} />
-        </div>
-      )
-    },
+      header:"Tipo",
       cell: (props) => <span>{props.getValue()}</span>
     },
     {
@@ -63,6 +58,8 @@ const columns = [
           <PerfilDeleteModal />
         </div>
       ),
+      enableSorting: false,
+      enableHiding: false,
     },
   ];
 

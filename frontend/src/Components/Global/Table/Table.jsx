@@ -229,7 +229,7 @@ export default function Table({ rows, cols, tableName, titulo, details, visibleD
                             <tr key={headerGroup.id}>
                                 {headerGroup.headers.map(header => (
                                     <th key={header.id} scope="col" className="px-6 py-3" onClick={header.column.getToggleSortingHandler()}>
-                                        <div className="flex items-center gap-2 cursor-pointer select-none">
+                                        <div className="flex items-center gap-2 cursor-pointer select-none" >
                                             {flexRender(header.column.columnDef.header, header.getContext())}
                                             { 
                                                 (header.column.columnDef.enableSorting != false) ?

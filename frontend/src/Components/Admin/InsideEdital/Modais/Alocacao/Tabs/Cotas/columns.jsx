@@ -26,6 +26,8 @@ const columns = [
           }}
         />
       ),
+      enableSorting: false,
+      enableHiding: false,
     },
     {
       accessorKey: "id",

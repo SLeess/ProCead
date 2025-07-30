@@ -6,80 +6,55 @@ import QuadroVagasShowModal from "@/Components/Admin/InsideEdital/Modais/QuadroV
 import { ArrowUpDown } from "lucide-react";
 
 const columns = [
-    
+    {
+    id: "select",
+    header: ({ table }) => (
+      <input
+        type="checkbox"
+        {...{
+          checked: table.getIsAllRowsSelected(),
+          indeterminate: table.getIsSomeRowsSelected(),
+          onChange: table.getToggleAllRowsSelectedHandler(),
+        }}
+      />
+    ),
+    cell: ({ row }) => (
+      <input
+        type="checkbox"
+        {...{
+          checked: row.getIsSelected(),
+          disabled: !row.getCanSelect(),
+          indeterminate: row.getIsSomeSelected(),
+          onChange: row.getToggleSelectedHandler(),
+        }}
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
+  },
     {
       accessorKey: "id",
-      header: ({ column }) => {
-      return (
-        <div className="flex cursor-pointer items-center"
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          #
-          <ArrowUpDown className={`ml-2 h-4 w-4 ${column.getIsSorted() ? 'text-blue-500' : ''}`} />
-        </div>
-      )
-    },
+      header:"Id",
       cell: (props) => <span>{props.getValue()}</span>
     },
     {
       accessorKey: "campus",
-      header: ({ column }) => {
-      return (
-        <div className="flex cursor-pointer items-center"
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Campus
-          <ArrowUpDown className={`ml-2 h-4 w-4 ${column.getIsSorted() ? 'text-blue-500' : ''}`} />
-        </div>
-      )
-    },
+      header:"Campus",
       cell: (props) => <span>{props.getValue()}</span>
     },
     {
       accessorKey: "vaga",
-      header: ({ column }) => {
-      return (
-        <div className="flex cursor-pointer items-center"
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Vaga
-          <ArrowUpDown className={`ml-2 h-4 w-4 ${column.getIsSorted() ? 'text-blue-500' : ''}`} />
-        </div>
-      )
-    },
+      header:"Vaga",
       cell: (props) => <span>{props.getValue()}</span>
     },
     {
       accessorKey: "habilitacao",
-      header: ({ column }) => {
-      return (
-        <div className="flex cursor-pointer items-center"
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Habilitação
-          <ArrowUpDown className={`ml-2 h-4 w-4 ${column.getIsSorted() ? 'text-blue-500' : ''}`} />
-        </div>
-      )
-    },
+      header:"Habilitação",
       cell: (props) => <span>{props.getValue()}</span>
     },
     {
       accessorKey: "n_vagas",
-      header: ({ column }) => {
-      return (
-        <div className="flex cursor-pointer items-center"
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Nº de Vagas
-          <ArrowUpDown className={`ml-2 h-4 w-4 ${column.getIsSorted() ? 'text-blue-500' : ''}`} />
-        </div>
-      )
-    },
+    header:"Nº de Vagas",
       cell: (props) => <span>{props.getValue()}</span>
     },
     {
@@ -91,6 +66,8 @@ const columns = [
           <QuadroVagasEditModal/>
         </div>
       ),
+      enableSorting: false,
+      enableHiding: false,
     },
   ];
 

@@ -23,7 +23,7 @@
         <tr style="text-align: center;">
             <th class="row">
                 <td style="width: 100%;font-size:1.04rem;">
-                    EDITAL N.º {{ $contexto->edital?? '00' }} - {{ $contexto->nome_edital??'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Qui cupiditate officia libero laudantium architecto recusandae at porro, repudiandae blanditiis' }}
+                    {{ $title }}
                 </td>
             </th>
         </tr>
@@ -35,7 +35,7 @@
         <tr style="text-align: center;">
             <th class="row">
                 <td style="width: 100%;font-size:1.09rem;">
-                    {{ $title }}
+                    {{ $subtitle }}
                 </td>
             </th>
         </tr>
