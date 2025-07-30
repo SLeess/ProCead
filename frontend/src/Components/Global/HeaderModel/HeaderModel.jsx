@@ -20,7 +20,7 @@ export default function HeaderModel({ headerid, children }){
                 <div className="flex md:order-2 space-x-2">
                     <ThemeToggleBtn />
                     <UserDropdown/>
-                    <NavbarToggle className="text-white hover:text-[#29166F] hover:cursor-pointer"/>
+                    <NavbarToggle className="text-white hover:text-[var(--header-admin-primary)] hover:cursor-pointer"/>
                 </div>
                 <NavbarCollapse className="md:hidden">
                     { children }

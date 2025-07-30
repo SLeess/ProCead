@@ -12,7 +12,7 @@ header#admin {
 
     @apply shadow-sm;
     
-    @apply dark:bg-slate-900 bg-[#29166F] transition-all duration-700 ease-in-out;
+    @apply dark:bg-slate-900 bg-[var(--header-admin-primary)] transition-all duration-700 ease-in-out;
     
     @apply md:rounded-xl;
 }

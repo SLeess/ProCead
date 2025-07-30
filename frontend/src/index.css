@@ -194,6 +194,9 @@ div.info-not-found-itens p#second{
 /*---break---*/
 
 :root {
+    --header-admin-primary: #29166F;
+
+
     --radius: 0.625rem;
     --background: oklch(1 0 0);
     --foreground: oklch(0.145 0 0);

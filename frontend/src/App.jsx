@@ -27,7 +27,8 @@ import HomeAdmin from './Pages/Admin/Home/Home';
 import NovoEdital from './Pages/Admin/NovoEdital/NovoEdital';
 // import UsuariosAdminList from './Pages/Admin/Usuarios/Usuarios';
 import Inscricoes from './Pages/Admin/InsideEdital/Inscricoes/Inscricoes';
-
+import GerenciarPerfis from './Pages/Admin/GerenciarPerfis/GerenciarPerfis';
+import GerenciarUsuarios from './Pages/Admin/GerenciarUsuarios/GerenciarUsuarios';
 
 /** ------------------------------------ Páginas Adm de Edital ---------------------------- */
 import QuadroVagas from './Pages/Admin/InsideEdital/QuadroVagas/QuadroVagas';
@@ -132,8 +133,8 @@ function App() {
           >
             <Route index element={<HomeAdmin />} />
             <Route path='edital/create' element={<NovoEdital />} />
-            <Route path="perfis" element={<></>} />
-            <Route path="usuarios" element={<></>} />
+            <Route path="perfis" element={<GerenciarPerfis/>} />
+            <Route path="usuarios" element={<GerenciarUsuarios/>} />
             {/* <Route path='manejar-usuarios/:userId' element={<UserManagePage />} /> */}
           </Route>
 
