@@ -19,10 +19,13 @@ import {
 } from "@/Components/Global/ui/table"
 
 // import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { ChevronDown, Search } from "lucide-react";
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 import { Button } from "flowbite-react";
+import { toast } from 'react-toastify';
+import { AppContext } from "@/Contexts/AppContext";
+import { FaSort, FaSortDown, FaSortUp } from "react-icons/fa";
 
 const MainTable = ({ data, columns, title }) => {
   const [columnFilters, setColumnFilters] = useState([]);
@@ -33,7 +36,8 @@ const MainTable = ({ data, columns, title }) => {
     pageIndex: 0, //initial page index
     pageSize: 10, //default page size
   });
-
+  const [isExporting, setIsExporting] = useState(false);
+  const { token } = useContext(AppContext);
 
   const table = useReactTable({
     data,
@@ -56,6 +60,94 @@ const MainTable = ({ data, columns, title }) => {
       columnVisibility,
     },
   });
+
+  // const handleColumnToggle = (column) => {
+  //         const isHiding = column.getIsVisible();
+
+  //         const visibleColumnCount = table.getVisibleLeafColumns().length;
+
+  //         if (isHiding && visibleColumnCount <= minColumnsExibe) {
+  //             toast.error("É obrigatório manter ao menos uma coluna visível.");
+  //             return;
+  //         }
+
+  //         column.toggleVisibility();
+  //     };
+
+  const handleExport = async () => {
+    const visibleColumns = table.getVisibleLeafColumns().map(col => ({
+      id: col.id,
+      header: col.columnDef.header,
+    }));
+
+    var RowModels = table.getSortedRowModel().rows;
+
+    if (columns.some(col => col.id === 'select')) {
+      RowModels = RowModels.filter(row => row.getIsSelected());
+      if (RowModels.length == 0) {
+        toast.error('Selecione pelo menos uma linha antes de gerar o relatório.');
+        return;
+      }
+    }
+
+    setIsExporting(true);
+
+    const sortedRows = RowModels.map(row => {
+      const filteredRowData = {};
+      table.getVisibleLeafColumns().forEach(column => {
+        if (column.id in row.original) {
+          filteredRowData[column.id] = row.original[column.id];
+        }
+      });
+      return filteredRowData;
+    });
+
+    try {
+      const response = await fetch('/api/export', {
+        method: 'post',
+        body: JSON.stringify({
+          columns: visibleColumns.filter(chave => chave.id !== 'select' && chave.id !== 'acoes'),
+          rows: sortedRows,
+          tableName: title,
+          titulo: title,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json, application/pdf',
+          'Authorization': `Bearer ${token}`
+        },
+      });
+
+      const contentType = response.headers.get('content-type');
+
+      if (contentType && contentType.includes('application/json')) {
+        const errorData = await response.json();
+
+        console.log(errorData);
+
+        const errorMessages = Object.values(errorData.errors || { general: [errorData.message || 'Erro desconhecido'] }).flat();
+        errorMessages.forEach((e) => toast.error(e));
+      } else {
+        if (!response.ok) {
+          throw new Error(`Erro na rede: ${response.status} ${response.statusText}`);
+        }
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'relatorio.pdf');
+        document.body.appendChild(link);
+        link.click();
+        link.parentNode.removeChild(link);
+        window.URL.revokeObjectURL(url);
+      }
+    } catch (error) {
+      toast.error(error.message || 'Falha na comunicação com a API.');
+      console.error("Erro na exportação:", error);
+    } finally {
+      setIsExporting(false);
+    }
+  };
 
   return (
     <div className="rounded-sm border border-gray-200 bg-white px-5 pt-6 pb-2.5 shadow-md sm:px-7.5 xl:pb-1">
@@ -103,6 +195,13 @@ const MainTable = ({ data, columns, title }) => {
                 })}
             </DropdownMenuContent>
           </DropdownMenu>
+          <button
+            onClick={handleExport}
+            disabled={isExporting}
+            className="export"
+          >
+            {isExporting ? 'Exportando...' : 'Exportar para PDF'}
+          </button>
         </div>
       </div>
 
@@ -115,12 +214,25 @@ const MainTable = ({ data, columns, title }) => {
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead key={header.id} className="whitespace-nowrap px-4 py-3 text-xs font-medium uppercase text-gray-600">
-                      {header.isPlaceholder
+                      {/* {header.isPlaceholder
                         ? null
                         : flexRender(
                           header.column.columnDef.header,
                           header.getContext()
-                        )}
+                        )} */}
+                      <div className="flex items-center gap-2 cursor-pointer select-none" onClick={() => header.column.toggleSorting(header.column.getIsSorted() === "asc")}>
+                        {flexRender(header.column.columnDef.header, header.getContext())}
+                        {
+                          (header.column.columnDef.enableSorting != false) ?
+
+                            {
+                              asc: <FaSortUp />,
+                              desc: <FaSortDown />,
+                            }[header.column.getIsSorted()] ?? <FaSort className="opacity-30" />
+                            : <></>
+
+                        }
+                      </div>
                     </TableHead>
                   )
                 })}

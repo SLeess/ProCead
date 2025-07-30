@@ -31,94 +31,34 @@ const columns = [
     },
     {
       accessorKey: "id",
-      header: ({ column }) => {
-      return (
-        <div className="flex cursor-pointer items-center"
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          #
-          <ArrowUpDown className={`ml-2 h-4 w-4 ${column.getIsSorted() ? 'text-blue-500' : ''}`} />
-        </div>
-      )
-    },
+      header: "Id",
       cell: (props) => <span>{props.getValue()}</span>
     },
     {
       accessorKey: "inscricao",
       // header: "Nº de Inscricao",
-      header: ({ column }) => {
-      return (
-        <div className="flex cursor-pointer items-center"
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Inscricao
-          <ArrowUpDown className={`ml-2 h-4 w-4 ${column.getIsSorted() ? 'text-blue-500' : ''}`} />
-        </div>
-      )
-    },
+      header: "Inscrição",
       cell: (props) => <span>{props.getValue()}</span>
     },
     {
       accessorKey: "nome",
-      header: ({ column }) => {
-      return (
-        <div className="flex cursor-pointer items-center"
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Nome
-          <ArrowUpDown className={`ml-2 h-4 w-4 ${column.getIsSorted() ? 'text-blue-500' : ''}`} />
-        </div>
-      )
-    },
+      header: "Nome",
       cell: (props) => <span>{props.getValue()}</span>
     },
     
     {
       accessorKey: "cpf",
-      header: ({ column }) => {
-      return (
-        <div className="flex cursor-pointer items-center"
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          CPF
-          <ArrowUpDown className={`ml-2 h-4 w-4 ${column.getIsSorted() ? 'text-blue-500' : ''}`} />
-        </div>
-      )
-    },
+      header: "CPF",
       cell: (props) => <span>{props.getValue()}</span>
     },
     {
       accessorKey: "tipo_avaliacao",
-      header: ({ column }) => {
-      return (
-        <div className="flex cursor-pointer items-center"
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Tipo de Avaliação
-          <ArrowUpDown className={`ml-2 h-4 w-4 ${column.getIsSorted() ? 'text-blue-500' : ''}`} />
-        </div>
-      )
-    },
+      header: "Tipo de Avaliação",
       cell: (props) => <span>{props.getValue()}</span>
     },
     {
       accessorKey: "status",
-      header: ({ column }) => {
-      return (
-        <div className="flex cursor-pointer items-center"
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Status
-          <ArrowUpDown className={`ml-2 h-4 w-4 ${column.getIsSorted() ? 'text-blue-500' : ''}`} />
-        </div>
-      )
-    },
+      header: "Status",
       cell: (props) => <span>{props.getValue()}</span>
     },
     {
