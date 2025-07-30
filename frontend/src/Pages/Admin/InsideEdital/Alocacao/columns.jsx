@@ -115,6 +115,8 @@ const columns = [
     cell: ({ row }) => (
       <AlocarModal row={row} />
     ),
+    enableSorting: false,
+    enableHiding: false,
   },
 ];
 

@@ -26,6 +26,8 @@ const columns = [
           }}
         />
       ),
+      enableSorting: false,
+      enableHiding: false,
     },
     {
       accessorKey: "id",
@@ -128,6 +130,8 @@ const columns = [
           <CotaEditModal/>
         </div>
       ),
+      enableSorting: false,
+      enableHiding: false,
     },
   ];
 

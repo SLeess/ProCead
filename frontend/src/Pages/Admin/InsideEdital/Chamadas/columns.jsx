@@ -72,6 +72,8 @@ const columns = [
           {/* Chamada Edit Modal */}
         </div>
       ),
+      enableSorting: false,
+      enableHiding: false,
     },
   ];
 

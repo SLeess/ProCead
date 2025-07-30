@@ -90,6 +90,8 @@ const columns = [
           <UserEditModal />
         </div>
       ),
+      enableSorting: false,
+      enableHiding: false,
     },
   ];
 

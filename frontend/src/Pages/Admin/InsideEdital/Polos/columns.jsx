@@ -43,6 +43,8 @@ const columns = [
           <PoloDeleteModal/>
         </div>
       ),
+      enableSorting: false,
+      enableHiding: false,
     },
   ];
 

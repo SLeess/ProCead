@@ -43,6 +43,8 @@ const columns = [
           <CursoDeleteModal/>
         </div>
       ),
+      enableSorting: false,
+      enableHiding: false,
     },
   ];
 

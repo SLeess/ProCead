@@ -63,6 +63,8 @@ const columns = [
           <PerfilDeleteModal />
         </div>
       ),
+      enableSorting: false,
+      enableHiding: false,
     },
   ];
 

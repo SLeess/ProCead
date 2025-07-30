@@ -58,6 +58,8 @@ const columns = [
           <DisciplinaDeleteModal/>
         </div>
       ),
+      enableSorting: false,
+      enableHiding: false,
     },
   ];
 

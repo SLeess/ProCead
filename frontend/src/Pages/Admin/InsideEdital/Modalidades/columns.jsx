@@ -77,6 +77,8 @@ const columns = [
           <ModalidadeDeleteModal/>
         </div>
       ),
+      enableSorting: false,
+      enableHiding: false,
     },
   ];
 

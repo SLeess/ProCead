@@ -91,6 +91,8 @@ const columns = [
           <QuadroVagasEditModal/>
         </div>
       ),
+      enableSorting: false,
+      enableHiding: false,
     },
   ];
 

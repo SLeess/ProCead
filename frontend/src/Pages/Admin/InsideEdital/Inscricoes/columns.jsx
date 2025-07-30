@@ -27,6 +27,8 @@ const columns = [
           }}
         />
       ),
+      enableSorting: false,
+      enableHiding: false,
     },
     {
       accessorKey: "id",
@@ -144,6 +146,8 @@ const columns = [
           <InscricaoAvaliarModal/>
         </div>
       ),
+      enableSorting: false,
+      enableHiding: false,
     },
   ];
 

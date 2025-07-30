@@ -106,6 +106,8 @@ const columns = [
           <LogsShowModal />
         </div>
       ),
+      enableSorting: false,
+      enableHiding: false,
     },
   ];
 
