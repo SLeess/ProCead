@@ -132,8 +132,9 @@ function App() {
           >
             <Route index element={<HomeAdmin />} />
             <Route path='edital/create' element={<NovoEdital />} />
-            {/* <Route path='usuarios' element={<UsuariosAdminList />} /> */}
-            <Route path='manejar-usuarios/:userId' element={<UserManagePage />} />
+            <Route path="perfis" element={<></>} />
+            <Route path="usuarios" element={<></>} />
+            {/* <Route path='manejar-usuarios/:userId' element={<UserManagePage />} /> */}
           </Route>
 
           <Route path='/admin/edital/:editalId/'
