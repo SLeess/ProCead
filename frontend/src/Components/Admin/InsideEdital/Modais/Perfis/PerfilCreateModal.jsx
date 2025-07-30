@@ -1,9 +1,9 @@
-import { FormField, TextInput, Checkbox } from '@/Components/Global/ui/modals';
+import { FormField, TextInput, Checkbox, SelectInput } from '@/Components/Global/ui/modals';
 import { Modal, ModalBody, ModalHeader } from 'flowbite-react';
 import { Plus } from 'lucide-react';
 import React, { useState } from 'react'
 
-const PerfilCreateModal = () => {
+const PerfilCreateModal = ({enableGlobal = true}) => {
     const [openModal, setOpenModal] = useState(false);
     function onCloseModal() {
         setOpenModal(false);
@@ -24,16 +24,20 @@ const PerfilCreateModal = () => {
                     </div>
 
                     {/* Sub-header */}
-                    <p className="text-sm text-gray-500 mb-6">
-                        Edital Referente: Processo de Seleção de Discentes para os Cursos de Especialização da Unimontes – Modalidade Educação a Distância – Sistema Universidade Aberta do Brasil (UAB) – Edital Nº 08/2025
-                    </p>
+                    {
+                        !enableGlobal &&
+                        <p className="text-sm text-gray-500 mb-6">
+                            Edital Referente: Processo de Seleção de Discentes para os Cursos de Especialização da Unimontes – Modalidade Educação a Distância – Sistema Universidade Aberta do Brasil (UAB) – Edital Nº 08/2025
+                        </p>
+                    }
                     <div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 mb-6">
                             <FormField label="Nome do Perfil">
                                 <TextInput className="md:col-span-1" placeholder="Ex: controle-acadêmico" />
                             </FormField>
                             <FormField label="Tipo">
-                                <TextInput className="md:col-span-2" placeholder="Administrador" />
+                                <SelectInput className="md:col-span-2" value="Local" options={ (enableGlobal == true ) ? ['Global', 'Local'] : ['Local']} />
+                                {/* <TextInput className="md:col-span-2" placeholder="Administrador" /> */}
                             </FormField>
                         </div>
                     </div>
