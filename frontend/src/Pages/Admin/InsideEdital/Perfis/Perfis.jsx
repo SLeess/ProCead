@@ -17,7 +17,7 @@ const Perfis = () => {
       <div className="p-4">
         <div className="flex items-center justify-between mb-4">
           <h1 className="text-2xl font-bold">Perfis</h1>
-          <PerfilCreateModal/>
+          <PerfilCreateModal enableGlobal={false}/>
         </div>
         <div className="flex gap-4 mb-4">
           <div className="bg-white shadow-md rounded-lg p-5 w-xs relative flex flex-col justify-between h-30">
