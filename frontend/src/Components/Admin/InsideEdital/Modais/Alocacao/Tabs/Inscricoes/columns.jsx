@@ -134,17 +134,7 @@ const columns = [
     },
       cell: (props) => <span>{props.getValue()}</span>
     },
-    {
-      id: "actions",
-      header: "Ações",
-      cell: () => (
-        <div className="flex items-center space-x-2">
-          <InscricaoShowModal/>
-          <InscricaoEditModal/>
-          <InscricaoAvaliarModal/>
-        </div>
-      ),
-    },
+    
   ];
 
 export default columns;
