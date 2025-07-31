@@ -31,7 +31,7 @@ const Usuarios = () => {
             <ShieldUser className="absolute top-4 right-4 text-gray-500" />
           </div>
         </div>
-        <MainTable data = {data} columns = {columns} title={"Inscrições"}/>
+        <MainTable data = {data} columns = {columns} title={"Usuarios"}/>
       </div>
     )
   else {

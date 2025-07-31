@@ -26,7 +26,7 @@ const Perfis = () => {
             <Component className="absolute top-4 right-4 text-gray-500" />
           </div>
         </div>
-        <MainTable data={data} columns={columns} title={"Cursos"} />
+        <MainTable data={data} columns={columns} title={"Perfis"} />
       </div>
     )
   else {

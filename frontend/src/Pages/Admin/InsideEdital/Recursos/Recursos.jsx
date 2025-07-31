@@ -22,7 +22,7 @@ const Recursos = () => {
             <UserRoundPen className="absolute top-4 right-4 text-gray-500" />
           </div>
         </div>
-        <MainTable data={data} columns={columns} title={"Cotas"} />
+        <MainTable data={data} columns={columns} title={"Recursos"} />
       </div>
     )
   else {

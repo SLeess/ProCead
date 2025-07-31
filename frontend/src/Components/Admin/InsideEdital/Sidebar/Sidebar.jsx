@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { AppContext } from '@/Contexts/AppContext'; // Importando a função can do contexto
 import { useNavigate, useParams } from 'react-router-dom';
+import './Sidebar.css';
 // Ícones importados para os MENUS e submenus
 import {
   FiGrid, FiChevronDown, FiChevronUp, FiSettings, FiFilePlus,

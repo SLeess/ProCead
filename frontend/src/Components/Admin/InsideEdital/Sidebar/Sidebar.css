@@ -1,0 +1,17 @@
+@reference "@/index.css";
+
+::-webkit-scrollbar { 
+    @apply w-[6px];
+    /* @apply my-[20px]; */
+}
+::-webkit-scrollbar-track {
+    @apply bg-transparent;
+}
+::-webkit-scrollbar-thumb {
+    @apply rounded-[10px];
+
+    /* Light mode */
+    @apply bg-[var(--sidebar)];
+    /* Dark mode */
+    @apply dark:bg-[white];
+}

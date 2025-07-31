@@ -16,7 +16,7 @@ header#user {
     @apply bg-gradient-to-r from-[var(--header-candidato-primary-left)] to-[var(--header-candidato-primary-right)] transition-all duration-700 ease-in-out;
 
     /* Dark modee */
-    @apply dark:bg-gradient-to-r dark:from-slate-900 dark:to-slate-900;
+    @apply dark:bg-gradient-to-r dark:from-[var(--header-candidato-primary)] dark:to-[var(--header-candidato-primary)];
     
     @apply md:rounded-xl;
 }
