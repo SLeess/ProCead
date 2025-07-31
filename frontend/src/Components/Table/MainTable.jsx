@@ -174,9 +174,10 @@ const MainTable = ({ data, columns, title }) => {
   const [groupByFields, setGroupByFields] = useState(['']);
 
   const addGroupByField = () => {
-    setGroupByFields([...groupByFields, '']);
-    console.log(groupByFields);
-
+    if(groupByFields.length == 3)
+      toast.error("Não é possível agrupar por mais de 3 elementos");
+    else
+      setGroupByFields([...groupByFields, '']);
   };
 
   const removeGroupByField = (index) => {
