@@ -81,20 +81,19 @@ const MainTable = ({ data, columns, title }) => {
       header: col.columnDef.header,
     }));
 
-    var RowModels = table.getSortedRowModel().rows;
-    // console.log(RowModels.length);
+    const selectedRows = table.getSelectedRowModel().rows;
+    const sortedRows = table.getSortedRowModel().rows;
 
-    if (columns.some(col => col.id === 'select')) {
-      RowModels = RowModels.filter(row => row.getIsSelected());
-      if (RowModels.length == 0) {
-        toast.error('Selecione pelo menos uma linha antes de gerar o relatório.');
-        return;
-      }
+    const resultRows = sortedRows.filter((row) => selectedRows.find((selecRow) => selecRow.id == row.id));
+
+    if (selectedRows.length === 0) {
+      toast.error('Selecione pelo menos uma linha antes de gerar o relatório.');
+      return;
     }
 
     setIsExporting(true);
 
-    const sortedRows = RowModels.map(row => {
+    const rows = resultRows.map(row => {
       const filteredRowData = {};
       table.getVisibleLeafColumns().forEach(column => {
         if (column.id in row.original) {
@@ -109,7 +108,7 @@ const MainTable = ({ data, columns, title }) => {
         method: 'post',
         body: JSON.stringify({
           columns: visibleColumns.filter(chave => chave.id !== 'select' && chave.id !== 'acoes'),
-          rows: sortedRows,
+          rows: rows,
           tableName: title,
           titulo: titulo,
           subtitulo: subtitulo,
