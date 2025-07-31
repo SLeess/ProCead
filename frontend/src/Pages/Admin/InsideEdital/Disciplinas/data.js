@@ -16,6 +16,23 @@ const data = [
         nome: "Crescimento e Desenvolvimento Humano",
         curso: "Licenciatura em Educação Física",
     },
+    {
+        id: 4,
+        nome: "Anatomia Humana",
+        curso: "Licenciatura em Ciências Biológicas",
+    },
+
+    {
+        id: 5,
+        nome: "Matemática Básica",
+        curso: "Licenciatura em Pedagogia",
+    },
+
+    {
+        id: 6,
+        nome: "Futebol III",
+        curso: "Licenciatura em Educação Física",
+    },
 
     
 
