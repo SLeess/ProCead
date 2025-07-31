@@ -13,6 +13,7 @@ const columns = [
     {
       accessorKey: "inscricao",
       header: "Inscrição",
+      // visibleInitially: false,
       cell: (props) => <span>{props.getValue()}</span>
     },
     {
@@ -44,7 +45,7 @@ const columns = [
       id: "actions",
       header: "Ações",
       cell: () => (
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 justify-center">
           <InscricaoShowModal/>
           <InscricaoEditModal/>
           <InscricaoAvaliarModal/>

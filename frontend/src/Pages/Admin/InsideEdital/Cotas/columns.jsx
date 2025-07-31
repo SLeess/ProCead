@@ -40,7 +40,7 @@ const columns = [
       id: "actions",
       header: "Ações",
       cell: () => (
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 justify-center">
           <CotaShowModal/>
           <CotaEditModal/>
         </div>
