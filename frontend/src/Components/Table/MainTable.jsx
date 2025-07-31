@@ -172,24 +172,28 @@ const MainTable = ({ data, columns, title }) => {
 
 
   return (
-    <div className="rounded-sm border border-gray-200 bg-white px-5 pt-6 pb-2.5 shadow-md sm:px-7.5 xl:pb-1">
-      <div className="mb-6 flex justify-between">
-        <h4 className="text-xl font-semibold text-black mb-2">
-          {title}
-        </h4>
-        <div className="relative w-1/3">
-          <input
-            type="text"
-            value={globalFilter ?? ''}
-            onChange={e => setGlobalFilter(e.target.value)}
-            className="w-full rounded-md border border-gray-300 bg-white py-2 pl-10 pr-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-            placeholder="Pesquisar..."
-          />
-          <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
-            <Search />
-          </span>
+    <div className="rounded-sm border border-gray-200 bg-white px-5 pt-6 pb-2.5 shadow-md sm:px-7.5 xl:pb-1 min-w-[320px]">
+      <h4 className="text-xl font-semibold text-black mb-4">
+        {title}
+      </h4>
+      <div className="mb-6 grid grid-cols-12 lg:flex justify-between">
+        <div className="col-span-12 flex w-full items-center space-x-4 justify-between lg:justify-start">
+          {/* <div className="w-full"> */}
+            <div className="relative w-full lg:w-[90%] lg:max-w-md">
+              <input
+                type="text"
+                value={globalFilter ?? ''}
+                onChange={e => setGlobalFilter(e.target.value)}
+                className="w-full rounded-md border border-gray-300 bg-white py-2 pl-10 pr-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                placeholder="Pesquisar..."
+              />
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
+                <Search />
+              </span>
+            </div>
+          {/* </div> */}
         </div>
-        <div className="flex items-center gap-2">
+        <div className="justify-between mt-5 lg:mt-0 col-span-12 flex items-center gap-2">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 dark:bg-gray-800 dark:text-white">
@@ -212,13 +216,14 @@ const MainTable = ({ data, columns, title }) => {
                     >
                       <input type="checkbox" checked={column.getIsVisible() ? true : false} className={`mr-2 border border-gray-300 rounded-sm `} />
                       {column.id}
+                      {/* <span className="mr-2">{column.id}</span> */}
                     </DropdownMenuCheckboxItem>
                   )
                 })}
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <button onClick={() => onOpenModal()} className="cursor-pointer px-4 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+          <button onClick={() => onOpenModal()} className="cursor-pointer text-nowrap px-4 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
             {isExporting ? 'Exportando...' : 'Gerar Relatório'}
           </button>
           <Modal show={openModal} onClose={onCloseModal} popup>
@@ -267,7 +272,7 @@ const MainTable = ({ data, columns, title }) => {
 
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                <TableHead className="whitespace-nowrap px-4 py-3 text-xs font-medium uppercase text-gray-600" key={"select"}>
+                <TableHead className={`whitespace-nowrap px-4 py-3 text-xs font-medium uppercase text-gray-600`} key={"select"}>
                   <input
                     type="checkbox"
                     checked={table.getIsAllPageRowsSelected()}
@@ -277,7 +282,7 @@ const MainTable = ({ data, columns, title }) => {
                 </TableHead>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id} className="whitespace-nowrap px-4 py-3 text-xs font-medium uppercase text-gray-600">
+                    <TableHead key={header.id} className={`whitespace-nowrap px-4 py-3 text-xs font-medium uppercase text-gray-600 ${header.id === 'actions' ? 'flex justify-center': ''}`}>
                       {/* {header.isPlaceholder
                         ? null
                         : flexRender(
