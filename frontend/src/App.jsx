@@ -23,14 +23,14 @@ import UserManagePage from './Pages/Test/UserManagePage';
 
 
 /** ------------------------------------ Páginas de Admin ------------------------------------ */
-import HomeAdmin from './Pages/Admin/Home/Home';
-import NovoEdital from './Pages/Admin/NovoEdital/NovoEdital';
+import Editais from './Pages/Admin/Home/Editais/Editais';
+import NovoEdital from './Pages/Admin/Home/NovoEdital/NovoEdital';
 // import UsuariosAdminList from './Pages/Admin/Usuarios/Usuarios';
-import Inscricoes from './Pages/Admin/InsideEdital/Inscricoes/Inscricoes';
-import GerenciarPerfis from './Pages/Admin/GerenciarPerfis/GerenciarPerfis';
-import GerenciarUsuarios from './Pages/Admin/GerenciarUsuarios/GerenciarUsuarios';
+import GerenciarPerfis from './Pages/Admin/Home/GerenciarPerfis/GerenciarPerfis';
+import GerenciarUsuarios from './Pages/Admin/Home/GerenciarUsuarios/GerenciarUsuarios';
 
 /** ------------------------------------ Páginas Adm de Edital ---------------------------- */
+import Inscricoes from './Pages/Admin/InsideEdital/Inscricoes/Inscricoes';
 import QuadroVagas from './Pages/Admin/InsideEdital/QuadroVagas/QuadroVagas';
 import Cursos from './Pages/Admin/InsideEdital/Cursos/Cursos';
 import Polos from './Pages/Admin/InsideEdital/Polos/Polos';
@@ -131,7 +131,7 @@ function App() {
               </ProtectedRoute>
             }
           >
-            <Route index element={<HomeAdmin />} />
+            <Route index element={<Editais />} />
             <Route path='edital/create' element={<NovoEdital />} />
             <Route path="perfis" element={<GerenciarPerfis/>} />
             <Route path="usuarios" element={<GerenciarUsuarios/>} />

@@ -1,0 +1,18 @@
+@reference "@/index.css";
+
+section#gerenciar_perfis{
+    @apply mt-0;
+}
+section#gerenciar_perfis header h1{
+    @apply text-white text-[22px] not-italic font-bold leading-[normal] mx-0;
+    font-family: Sora;
+}
+section#gerenciar_perfis header{
+    @apply absolute top-0 left-0 w-full px-6 py-4 rounded-t-xl bg-[var(--header-admin-primary)] border-2;
+}
+
+section#gerenciar_perfis div#content{
+    /* @apply mt-8; */
+    @apply mt-15;
+}
+
