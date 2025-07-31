@@ -74,6 +74,18 @@ const MainTable = ({ data, columns, title }) => {
   //         column.toggleVisibility();
   //     };
 
+  const [openModal, setOpenModal] = useState(false);
+  function onCloseModal() {
+    setOpenModal(false);
+  }
+  function onOpenModal() {
+    var RowModels = table.getSortedRowModel().rows.filter(row => row.getIsSelected());
+    if (RowModels.length == 0)
+      toast.error('Selecione pelo menos uma linha antes de gerar o relatório.');
+    else
+      setOpenModal(true);
+  }
+
   const handleExport = async (titulo, subtitulo, orientacao, formato) => {
     const visibleColumns = table.getVisibleLeafColumns().map(col => ({
       id: col.id,
@@ -127,10 +139,12 @@ const MainTable = ({ data, columns, title }) => {
       if (contentType && contentType.includes('application/json')) {
         const errorData = await response.json();
 
-        console.log(errorData);
-
+        
         const errorMessages = Object.values(errorData.errors || { general: [errorData.message || 'Erro desconhecido'] }).flat();
-        errorMessages.forEach((e) => toast.error(e));
+        onCloseModal();
+        errorMessages.forEach((e) => {
+          return toast.error(e);
+        });
       } else {
         if (!response.ok) {
           throw new Error(`Erro na rede: ${response.status} ${response.statusText}`);
@@ -153,18 +167,6 @@ const MainTable = ({ data, columns, title }) => {
     }
   };
 
-  const [openModal, setOpenModal] = useState(false);
-  function onCloseModal() {
-    setOpenModal(false);
-  }
-  function onOpenModal() {
-    var RowModels = table.getSortedRowModel().rows.filter(row => row.getIsSelected());
-    if (RowModels.length == 0)
-      toast.error('Selecione pelo menos uma linha antes de gerar o relatório.');
-    else
-      setOpenModal(true);
-  }
-
   const [titulo, setTitulo] = useState('Edital Referente: Processo de Seleção de Discentes para os Cursos de Especialização da Unimontes – Modalidade Educação a Distância – Sistema Universidade Aberta do Brasil (UAB) – Edital Nº 08/2025');
   const [subtitulo, setSubtitulo] = useState(title);
   const [orientacao, setOrientacao] = useState('Retrato');
@@ -184,7 +186,7 @@ const MainTable = ({ data, columns, title }) => {
     const newFields = [...groupByFields];
     newFields.splice(index, 1);
     setGroupByFields(newFields);
-    console.log(groupByFields);
+    // console.log(groupByFields);
   };
 
   const handleGroupByChange = (index, value) => {
@@ -200,7 +202,7 @@ const MainTable = ({ data, columns, title }) => {
   }, [groupByFields]);
 
   const availableColumns = table.getAllColumns()
-    .filter(column => column.id !== 'select' && column.id !== 'acoes')
+    .filter(column => column.id !== 'select' && column.id !== 'acoes' && column.id !== 'id' && column.id !== 'actions')
     .map(column => column.id);
 
   function enableGroupBy(showGroupBy) {
