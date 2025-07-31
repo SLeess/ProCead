@@ -40,7 +40,6 @@ const MainTable = ({ data, columns, title }) => {
   });
   const [isExporting, setIsExporting] = useState(false);
   const { token } = useContext(AppContext);
-
   const table = useReactTable({
     data,
     columns,
@@ -266,8 +265,17 @@ const MainTable = ({ data, columns, title }) => {
       <div className="overflow-x-auto rounded-md border">
         <Table>
           <TableHeader className="bg-gray-50">
+
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
+                <TableHead className="whitespace-nowrap px-4 py-3 text-xs font-medium uppercase text-gray-600" key={"select"}>
+                  <input
+                    type="checkbox"
+                    checked={table.getIsAllPageRowsSelected()}
+                    indeterminate={table.getIsSomePageRowsSelected() && !table.getIsAllPageRowsSelected()}
+                    onChange={table.getToggleAllPageRowsSelectedHandler()}
+                  />
+                </TableHead>
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead key={header.id} className="whitespace-nowrap px-4 py-3 text-xs font-medium uppercase text-gray-600">
@@ -303,6 +311,15 @@ const MainTable = ({ data, columns, title }) => {
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                 >
+                  <TableCell className="whitespace-nowrap px-4 py-2">
+                    <input
+                      type="checkbox"
+                      checked={row.getIsSelected()}
+                      disabled={!row.getCanSelect()}
+                      onChange={row.getToggleSelectedHandler()}
+                    />
+                  </TableCell>
+
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id} className="whitespace-nowrap px-4 py-2">
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
