@@ -195,7 +195,8 @@ div.info-not-found-itens p#second{
 
 :root {
     --header-admin-primary: #29166F;
-
+    --header-candidato-primary-left: #004DA9;
+    --header-candidato-primary-right: #2A83ED;
 
     --radius: 0.625rem;
     --background: oklch(1 0 0);
@@ -234,6 +235,9 @@ div.info-not-found-itens p#second{
 /*---break---*/
 
 .dark {
+    --header-candidato-primary: #0f172b;
+
+
     --background: oklch(0.145 0 0);
     --foreground: oklch(0.985 0 0);
     --card: oklch(0.205 0 0);
