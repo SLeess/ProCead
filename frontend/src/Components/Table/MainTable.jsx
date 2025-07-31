@@ -40,7 +40,6 @@ const MainTable = ({ data, columns, title }) => {
   });
   const [isExporting, setIsExporting] = useState(false);
   const { token } = useContext(AppContext);
-
   const table = useReactTable({
     data,
     columns,
@@ -82,19 +81,19 @@ const MainTable = ({ data, columns, title }) => {
       header: col.columnDef.header,
     }));
 
-    var RowModels = table.getSortedRowModel().rows;
+    const selectedRows = table.getSelectedRowModel().rows;
+    const sortedRows = table.getSortedRowModel().rows;
 
-    if (columns.some(col => col.id === 'select')) {
-      RowModels = RowModels.filter(row => row.getIsSelected());
-      if (RowModels.length == 0) {
-        toast.error('Selecione pelo menos uma linha antes de gerar o relatório.');
-        return;
-      }
+    const resultRows = sortedRows.filter((row) => selectedRows.find((selecRow) => selecRow.id == row.id));
+
+    if (selectedRows.length === 0) {
+      toast.error('Selecione pelo menos uma linha antes de gerar o relatório.');
+      return;
     }
 
     setIsExporting(true);
 
-    const sortedRows = RowModels.map(row => {
+    const rows = resultRows.map(row => {
       const filteredRowData = {};
       table.getVisibleLeafColumns().forEach(column => {
         if (column.id in row.original) {
@@ -109,7 +108,7 @@ const MainTable = ({ data, columns, title }) => {
         method: 'post',
         body: JSON.stringify({
           columns: visibleColumns.filter(chave => chave.id !== 'select' && chave.id !== 'acoes'),
-          rows: sortedRows,
+          rows: rows,
           tableName: title,
           titulo: titulo,
           subtitulo: subtitulo,
@@ -158,12 +157,19 @@ const MainTable = ({ data, columns, title }) => {
   function onCloseModal() {
     setOpenModal(false);
   }
+  function onOpenModal() {
+    var RowModels = table.getSortedRowModel().rows.filter(row => row.getIsSelected());
+    if (RowModels.length == 0)
+      toast.error('Selecione pelo menos uma linha antes de gerar o relatório.');
+    else
+      setOpenModal(true);
+  }
 
   const [titulo, setTitulo] = useState('Edital Referente: Processo de Seleção de Discentes para os Cursos de Especialização da Unimontes – Modalidade Educação a Distância – Sistema Universidade Aberta do Brasil (UAB) – Edital Nº 08/2025');
   const [subtitulo, setSubtitulo] = useState(title);
   const [orientacao, setOrientacao] = useState('Retrato');
   const [formato, setFormato] = useState('PDF');
-  
+
 
   return (
     <div className="rounded-sm border border-gray-200 bg-white px-5 pt-6 pb-2.5 shadow-md sm:px-7.5 xl:pb-1">
@@ -212,7 +218,7 @@ const MainTable = ({ data, columns, title }) => {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <button onClick={() => setOpenModal(true)} className="cursor-pointer px-4 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+          <button onClick={() => onOpenModal()} className="cursor-pointer px-4 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
             {isExporting ? 'Exportando...' : 'Gerar Relatório'}
           </button>
           <Modal show={openModal} onClose={onCloseModal} popup>
@@ -230,12 +236,12 @@ const MainTable = ({ data, columns, title }) => {
                       className="bg-gray-100 border border-gray-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
                       value={titulo}
                       onChange={(e) => setTitulo(e.target.value)}
-                      >
+                    >
                     </textarea>
                   </FormField>
-                  <FormField className="md:col-span-3" label="Subtítulo do PDF"><TextInput value={subtitulo} onChange={(e) => setSubtitulo(e.target.value)}/></FormField>
+                  <FormField className="md:col-span-3" label="Subtítulo do PDF"><TextInput value={subtitulo} onChange={(e) => setSubtitulo(e.target.value)} /></FormField>
                   <FormField className="md:col-span-1" label="Orientação da Página">
-                    <SelectInput value={orientacao} options={['Retrato', 'Paisagem']} onChange={(e) => setOrientacao(e.target.value)}/>
+                    <SelectInput value={orientacao} options={['Retrato', 'Paisagem']} onChange={(e) => setOrientacao(e.target.value)} />
                   </FormField>
                   <FormField className="md:col-span-1" label="Formato do Arquivo">
                     <SelectInput readOnly={true} value={formato} onChange={(e) => setFormato(e.target.value)} options={['PDF', 'Excel']} />
@@ -244,7 +250,7 @@ const MainTable = ({ data, columns, title }) => {
 
                 <div className="mt-10 flex justify-end items-center space-x-4">
                   <button onClick={onCloseModal} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">Fechar</button>
-                  <button onClick={() => handleExport(titulo,subtitulo,orientacao,formato)} className="px-6 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"> {isExporting ? 'Exportando...' : 'Gerar Relatório'}</button>
+                  <button onClick={() => handleExport(titulo, subtitulo, orientacao, formato)} className="px-6 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"> {isExporting ? 'Exportando...' : 'Gerar Relatório'}</button>
                 </div>
               </div>
             </ModalBody>
@@ -258,8 +264,17 @@ const MainTable = ({ data, columns, title }) => {
       <div className="overflow-x-auto rounded-md border">
         <Table>
           <TableHeader className="bg-gray-50">
+
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
+                <TableHead className="whitespace-nowrap px-4 py-3 text-xs font-medium uppercase text-gray-600" key={"select"}>
+                  <input
+                    type="checkbox"
+                    checked={table.getIsAllPageRowsSelected()}
+                    indeterminate={table.getIsSomePageRowsSelected() && !table.getIsAllPageRowsSelected()}
+                    onChange={table.getToggleAllPageRowsSelectedHandler()}
+                  />
+                </TableHead>
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead key={header.id} className="whitespace-nowrap px-4 py-3 text-xs font-medium uppercase text-gray-600">
@@ -295,6 +310,15 @@ const MainTable = ({ data, columns, title }) => {
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                 >
+                  <TableCell className="whitespace-nowrap px-4 py-2">
+                    <input
+                      type="checkbox"
+                      checked={row.getIsSelected()}
+                      disabled={!row.getCanSelect()}
+                      onChange={row.getToggleSelectedHandler()}
+                    />
+                  </TableCell>
+
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id} className="whitespace-nowrap px-4 py-2">
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
