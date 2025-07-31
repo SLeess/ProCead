@@ -20,14 +20,13 @@ import {
 
 // import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table'
 import React, { useContext, useState } from 'react'
-import { ChevronDown, Search } from "lucide-react";
+import { ChevronDown, Search, PlusCircle, MinusCircle } from "lucide-react";
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 import { Button, Modal, ModalBody, ModalHeader, TextInput } from "flowbite-react";
 import { toast } from 'react-toastify';
 import { AppContext } from "@/Contexts/AppContext";
 import { FaSort, FaSortDown, FaSortUp } from "react-icons/fa";
 import { FormField, SelectInput } from "../Global/ui/modals";
-import { toUpperCase } from "zod/v4";
 
 const MainTable = ({ data, columns, title }) => {
   const [columnFilters, setColumnFilters] = useState([]);
@@ -114,6 +113,7 @@ const MainTable = ({ data, columns, title }) => {
           subtitulo: subtitulo,
           orientacao: orientacao,
           formato: formato,
+          groupByFields: groupByFields.filter(field => field !== ''),
         }),
         headers: {
           'Content-Type': 'application/json',
@@ -169,7 +169,45 @@ const MainTable = ({ data, columns, title }) => {
   const [subtitulo, setSubtitulo] = useState(title);
   const [orientacao, setOrientacao] = useState('Retrato');
   const [formato, setFormato] = useState('PDF');
+  const [showGroupBy, setShowGroupBy] = useState(false);
 
+  const [groupByFields, setGroupByFields] = useState(['']);
+
+  const addGroupByField = () => {
+    setGroupByFields([...groupByFields, '']);
+    console.log(groupByFields);
+
+  };
+
+  const removeGroupByField = (index) => {
+    const newFields = [...groupByFields];
+    newFields.splice(index, 1);
+    setGroupByFields(newFields);
+    console.log(groupByFields);
+  };
+
+  const handleGroupByChange = (index, value) => {
+    setGroupByFields(prevFields => {
+      const newFields = [...prevFields];
+      newFields[index] = value;
+      return newFields;
+    });
+  };
+
+  React.useEffect(() => {
+    console.log("Novo grupo de campos:", groupByFields);
+  }, [groupByFields]);
+
+  const availableColumns = table.getAllColumns()
+    .filter(column => column.id !== 'select' && column.id !== 'acoes')
+    .map(column => column.id);
+
+  function enableGroupBy(showGroupBy) {
+    if(showGroupBy) {
+      setGroupByFields(['']);
+    }
+    setShowGroupBy(!showGroupBy)
+  }
 
   return (
     <div className="rounded-sm border border-gray-200 bg-white px-5 pt-6 pb-2.5 shadow-md sm:px-7.5 xl:pb-1">
@@ -247,6 +285,46 @@ const MainTable = ({ data, columns, title }) => {
                     <SelectInput readOnly={true} value={formato} onChange={(e) => setFormato(e.target.value)} options={['PDF', 'Excel']} />
                   </FormField>
                 </div>
+                <div className="mt-4">
+                  <button onClick={() => enableGroupBy(showGroupBy)} className="text-sm font-semibold text-blue-600 hover:underline">
+                    {showGroupBy ? 'Desabilitar Agrupamento' : 'Agrupar por Coluna'}
+                  </button>
+                </div>
+                {showGroupBy && (
+                  <>
+                    <hr className="my-4 h-1 bg-gray-300 border-0 rounded-sm dark:bg-gray-700" />
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-6">
+                      <FormField className="md:col-span-3" label="Agrupar por">
+                        <div className="space-y-2">
+                          {groupByFields.map((field, index) => (
+                            <div key={index} className="flex items-center gap-2">
+                              <button
+                                type="button"
+                                onClick={index === 0 ? addGroupByField : () => removeGroupByField(index)}
+                                className={`p-1 rounded-full transition-colors ${index === 0
+                                    ? 'text-blue-600 hover:bg-blue-100'
+                                    : 'text-red-600 hover:bg-red-100'
+                                  }`}
+                              >
+                                {index === 0 ? <PlusCircle className="h-5 w-5" /> : <MinusCircle className="h-5 w-5" />}
+                              </button>
+                              <div className="w-full">
+                                <SelectInput
+                                  defaultOption={true}
+                                  value={field}
+                                  onChange={(e) => handleGroupByChange(index, e.target.value)}
+                                  options={availableColumns.filter(op => !groupByFields.includes(op) || op == field)}
+                                  placeholder="Selecione uma coluna"
+                                />
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </FormField>
+                    </div>
+                  </>
+                )}
+
 
                 <div className="mt-10 flex justify-end items-center space-x-4">
                   <button onClick={onCloseModal} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">Fechar</button>
