@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
+    
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>CANDIDATOS INSCRITOS NO EDITAL {{ $contexto->edital ?? '00' }}</title>
+    <title>{{ $data['titulo'] }}</title>
 
     <style>
         * {
@@ -35,25 +35,25 @@
         }
     </style>
 </head>
-
 <body>
-    @include('cabecalho', ['title' => $titulo ?? 'Teste'])
-    <h2 style="font-size:1.06rem;margin-top: 0px; margin-bottom: 15px;">{{ $tableName ?? 'NON NAME SET'}}</h2>
-    @if(sizeof($rows) == 0)
+    
+    @include('cabecalho', ['title' => $data['titulo'], 'subtitle' => $data['subtitulo']])
+    <h2 style="font-size:1.06rem;margin-top: 0px; margin-bottom: 15px;">{{$data['tableName']}}</h2>
+    @if(sizeof($data['rows']) == 0)
         <p>Nenhum registro enviado ou encontrado</p>
     @else
         <table class="table-content" style="margin-bottom: 10px;width: 100%;text-align: center;">
             <thead>
                 <tr>
-                    @foreach ($columns as $column)
+                    @foreach ($data['columns'] as $column)
                         <th style="width: 10%">{{ $column['header'] }}</th>
                     @endforeach
                 </tr>
             </thead>
             <tbody>
-                @foreach ($rows as $row)
+                @foreach ($data['rows'] as $row)
                     <tr>
-                        @foreach ($columns as $column)
+                        @foreach ($data['columns'] as $column)
                             <td style="width: 10%;">{{$row[$column["id"]]}}</td>
                         @endforeach
                     </tr>

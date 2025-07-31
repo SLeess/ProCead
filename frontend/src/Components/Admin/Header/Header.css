@@ -12,7 +12,7 @@ header#admin {
 
     @apply shadow-sm;
     
-    @apply dark:bg-slate-900 bg-[#29166F] transition-all duration-700 ease-in-out;
+    @apply dark:bg-slate-900 bg-[var(--header-admin-primary)] transition-all duration-700 ease-in-out;
     
     @apply md:rounded-xl;
 }
@@ -21,20 +21,89 @@ header#admin {
   @apply flex justify-between items-center w-full;
 }
 
+/* #admin nav #div-ul-header {
+    @apply flex flex-grow;
+}
+
+*/
+#admin nav #div-ul-header{
+    /* @apply w-full; */
+}
+#admin nav #div-ul-header > ul{
+    @apply flex items-center flex-nowrap;
+    @apply space-x-2 md:space-x-4 lg:space-x-2;
+    @apply w-full;
+    @apply justify-start lg:justify-evenly; 
+} 
+
 #admin.logo-cead{
     width: 120px;
     height: 50px;
 }
 
-#admin .link-page{
-    @apply text-[16px];
-    @apply text-white font-semibold transition-colors duration-300 hover:bg-[#004DA9] hover:shadow-2xs rounded-t-sm px-0;
-    @apply active:border-2 active:border-white;
+#admin .link-page:not(.active-link){
+    @apply px-0 text-white font-semibold relative transition-colors duration-200 ease-in-out;
+    @apply whitespace-nowrap md:text-sm;
+
+    /* HOVER - Efeito de underline que surge da esquerda para a direita */
+    &::after {
+        content: '';
+        @apply absolute bottom-0 left-0 h-[2px];
+        @apply bg-white;
+        @apply w-0;
+        @apply transition-all duration-300 ease-in-out;
+    }
+
+    &:hover::after {
+        @apply w-full;
+    }
+
+    &.active::after {
+        @apply w-full;
+        @apply bg-[#005ABF];
+    }
+
+    /* Opcional: Se você quiser um foco suave ao navegar com teclado */
+    &:focus-visible {
+        outline: 2px solid theme('colors.white'); /* Adiciona um outline branco para acessibilidade */
+        outline-offset: 2px;
+        @apply rounded-sm;
+    }
+}
+#admin .active-link{
+    @apply px-0 text-white font-semibold relative transition-colors duration-200 ease-in-out;
+    @apply whitespace-nowrap md:text-sm;
+
+    /* HOVER - Efeito de underline que surge da esquerda para a direita */
+    &::after {
+        content: '';
+        @apply absolute bottom-[-3px] left-0 h-[3px];
+        @apply bg-blue-700;
+        @apply w-0;
+        @apply transition-all duration-300 ease-in-out;
+    }
+
+    &:hover::after {
+        @apply w-full;
+    }
+
+    &.active::after {
+        @apply w-full;
+        @apply bg-[#005ABF];
+    }
+
+    /* Opcional: Se você quiser um foco suave ao navegar com teclado */
+    &:focus-visible {
+        outline: 2px solid theme('colors.white'); /* Adiciona um outline branco para acessibilidade */
+        outline-offset: 2px;
+        @apply rounded-sm;
+    }
 }
 
-#admin .link-page:hover{
-    box-shadow: rgba(17, 17, 26, 0.05) 0px 4px 16px, rgba(17, 17, 26, 0.05) 0px 8px 32px;
+ #admin .navbar-collapse.md\:hidden ul {
+    @apply flex flex-col; /* Garante que no mobile eles fiquem em coluna */
 }
+
 
 /* ------------------------------------------- MENU MOBILE ------------------------------------------- */
 
