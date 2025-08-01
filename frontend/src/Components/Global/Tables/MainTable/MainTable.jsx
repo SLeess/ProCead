@@ -24,7 +24,7 @@ import { toast } from 'react-toastify';
 import { FaSort, FaSortDown, FaSortUp } from "react-icons/fa";
 import ModalExportarRelatorio from "./Modais/ModalExportarRelatorio";
 
-const MainTable = ({ data, columns, title, hasShadowBorderStyle = true, hasPaddingStyle = true, canExport = true, canHiddenColumns = true }) => {
+const MainTable = ({ data, columns, title, hasShadowBorderStyle = true, hasPaddingStyle = true, canExport = true, canHiddenColumns = true, hasSelectForRows = true }) => {
   const [columnFilters, setColumnFilters] = useState([]);
   const [rowSelection, setRowSelection] = useState({});
   const [globalFilter, setGlobalFilter] = useState('');
@@ -138,14 +138,17 @@ const MainTable = ({ data, columns, title, hasShadowBorderStyle = true, hasPaddi
 
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                <TableHead className={`whitespace-nowrap px-4 py-3 text-xs font-medium uppercase text-gray-600`} key={"select"}>
-                  <input
-                    type="checkbox"
-                    checked={table.getIsAllPageRowsSelected()}
-                    indeterminate={table.getIsSomePageRowsSelected() && !table.getIsAllPageRowsSelected()}
-                    onChange={table.getToggleAllPageRowsSelectedHandler()}
-                  />
-                </TableHead>
+                {
+                  hasSelectForRows &&
+                  <TableHead className={`whitespace-nowrap px-4 py-3 text-xs font-medium uppercase text-gray-600`} key={"select"}>
+                    <input
+                      type="checkbox"
+                      checked={table.getIsAllPageRowsSelected()}
+                      indeterminate={table.getIsSomePageRowsSelected() && !table.getIsAllPageRowsSelected()}
+                      onChange={table.getToggleAllPageRowsSelectedHandler()}
+                    />
+                  </TableHead>
+                }
                 {headerGroup.headers.map((header) => {
                   return (
                     <TableHead key={header.id} className={`whitespace-nowrap px-4 py-3 text-xs font-medium uppercase text-gray-600 ${header.id === 'actions' ? 'flex justify-center': ''}`}>
@@ -181,14 +184,18 @@ const MainTable = ({ data, columns, title, hasShadowBorderStyle = true, hasPaddi
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                 >
-                  <TableCell className="whitespace-nowrap px-4 py-2">
-                    <input
-                      type="checkbox"
-                      checked={row.getIsSelected()}
-                      disabled={!row.getCanSelect()}
-                      onChange={row.getToggleSelectedHandler()}
-                    />
-                  </TableCell>
+                  
+                  {
+                    hasSelectForRows &&
+                    <TableCell className="whitespace-nowrap px-4 py-2">
+                      <input
+                        type="checkbox"
+                        checked={row.getIsSelected()}
+                        disabled={!row.getCanSelect()}
+                        onChange={row.getToggleSelectedHandler()}
+                      />
+                    </TableCell>
+                  }
 
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id} className="whitespace-nowrap px-4 py-2">

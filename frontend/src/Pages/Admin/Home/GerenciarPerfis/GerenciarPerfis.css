@@ -13,6 +13,6 @@ section#gerenciar_perfis header{
 
 section#gerenciar_perfis div#content{
     /* @apply mt-8; */
-    @apply mt-15;
+    @apply mt-10;
 }
 

@@ -1,34 +1,32 @@
-import PerfilDeleteModal from "@/Components/Admin/InsideEdital/Modais/Perfis/PerfilDeleteModal";
-import PerfilEditModal from "@/Components/Admin/InsideEdital/Modais/Perfis/PerfilEditModal";
-import PerfilShowModal from "@/Components/Admin/InsideEdital/Modais/Perfis/PerfilShowModal";
-import PerfilAlterarPermissoesModal from "@/Components/Admin/InsideEdital/Modais/Perfis/PerfilAlterarPermissoesModal";
 import { Eye, Pencil, Trash, List } from "lucide-react";
+import React from "react";
 
-const columns = [
+export const getColumns = (navigate) => [
   
     {
       accessorKey: "id",
       header:"Id",
-      cell: (props) => <span>{props.getValue()}</span>
+      cell: ({row}) => <span>{row.original.id}</span>
     },
     
     {
       accessorKey: "nome",
       header:"Nome",
-      cell: (props) => <span>{props.getValue()}</span>
+      cell: ({row}) => <span>{row.original.nome}</span>
     },
     {
       accessorKey: "escopo",
       header:"Escopo",
-      cell: (props) => <span>{props.getValue()}</span>
+      cell: ({row}) => <span>{row.original.escopo}</span>
     },
     {
       id: "actions",
       header: "Ações",
       alignText: true,
-      cell: () => (
+      cell: ({row}) => {
+        return (
         <div className="flex items-center space-x-2 justify-center">
-          <button onClick={() => {}} className="p-1 hover:bg-gray-200 rounded-full">
+          <button onClick={() => navigate(`admin/perfis/${row.original.id}/permissoes`)} className="p-1 hover:bg-gray-200 rounded-full">
               <List className="h-5 w-5 text-green-500" />
           </button>
           <button onClick={() => {}} className="p-1 hover:bg-gray-200 rounded-full">
@@ -41,10 +39,10 @@ const columns = [
               <Trash className="h-5 w-5 text-red-500" />
           </button>
         </div>
-      ),
+      )},
       enableSorting: false,
       enableHiding: false,
     },
   ];
 
-export default columns;
+export default getColumns;
