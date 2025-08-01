@@ -5,49 +5,52 @@ import LayoutAdmin from './Layouts/LayoutAdmin';
 import LayoutAdminInsideEdital from './Layouts/LayoutAdminInsideEdital';
 
 /** ------------------------------------ Páginas Públicas ------------------------------------ */
-import Login from './Pages/Candidato/Auth/Login/Login';
-import Registro from './Pages/Candidato/Auth/Registro/Registro';
-import AdminLogin from './Pages/Admin/Auth/AdminLogin';
-import EsqueceuSenha from './Pages/Candidato/Auth/EsqueceuSenha/EsqueceuSenha';
-import RecuperarSenha from './Pages/Candidato/Auth/RecuperarSenha/RecuperarSenha';
+  import Login from './Pages/Candidato/Auth/Login/Login';
+  import Registro from './Pages/Candidato/Auth/Registro/Registro';
+  import AdminLogin from './Pages/Admin/Auth/AdminLogin';
+  import EsqueceuSenha from './Pages/Candidato/Auth/EsqueceuSenha/EsqueceuSenha';
+  import RecuperarSenha from './Pages/Candidato/Auth/RecuperarSenha/RecuperarSenha';
 
 
 /** ---------------------------------- Páginas de Candidato ---------------------------------- */
-import HomeCandidato from './Pages/Candidato/Home/Home';
-import MeusProcessos from './Pages/Candidato/MeusProcessos/MeusProcessos';
-import HomePage from './Pages/Test/HomePage';
-import EditalPage from './Pages/Test/EditalPage';
-import ProcessosAtivos from './Pages/Candidato/ProcessosAtivos/ProcessosAtivos';
-import UserManagePage from './Pages/Test/UserManagePage';
+  import HomeCandidato from './Pages/Candidato/Home/Home';
+  import MeusProcessos from './Pages/Candidato/Home/MeusProcessos/MeusProcessos';
+  import HomePage from './Pages/Test/HomePage';
+  import EditalPage from './Pages/Test/EditalPage';
+  import ProcessosAtivos from './Pages/Candidato/Home/ProcessosAtivos/ProcessosAtivos';
+  import UserManagePage from './Pages/Test/UserManagePage';
 /** ------------------------------------------------------------------------------------------ */
 
 
 /** ------------------------------------ Páginas de Admin ------------------------------------ */
-import Editais from './Pages/Admin/Home/Editais/Editais';
-import NovoEdital from './Pages/Admin/Home/NovoEdital/NovoEdital';
-// import UsuariosAdminList from './Pages/Admin/Usuarios/Usuarios';
-import GerenciarPerfis from './Pages/Admin/Home/GerenciarPerfis/GerenciarPerfis';
-import GerenciarUsuarios from './Pages/Admin/Home/GerenciarUsuarios/GerenciarUsuarios';
+  import Editais from './Pages/Admin/Home/Editais/Editais';
+  import NovoEdital from './Pages/Admin/Home/NovoEdital/NovoEdital';
+  // import UsuariosAdminList from './Pages/Admin/Usuarios/Usuarios';
+  import GerenciarPerfis from './Pages/Admin/Home/GerenciarPerfis/GerenciarPerfis';
+    /** ------------------------------------ Páginas de Gerência de Perfis ---------------------------- */
+    import GerenciarPerfisPermissoes from './Pages/Admin/Home/GerenciarPerfis/ActionPages/GerenciarPerfisPermissoes/GerenciarPerfisPermissoes';
+    /** ------------------------------------ Páginas de Gerência de Perfis ---------------------------- */
+  import GerenciarUsuarios from './Pages/Admin/Home/GerenciarUsuarios/GerenciarUsuarios';
 
-/** ------------------------------------ Páginas Adm de Edital ---------------------------- */
-import Inscricoes from './Pages/Admin/InsideEdital/Inscricoes/Inscricoes';
-import QuadroVagas from './Pages/Admin/InsideEdital/QuadroVagas/QuadroVagas';
-import Cursos from './Pages/Admin/InsideEdital/Cursos/Cursos';
-import Polos from './Pages/Admin/InsideEdital/Polos/Polos';
-import Modalidades from './Pages/Admin/InsideEdital/Modalidades/Modalidades';
-import Perfis from './Pages/Admin/InsideEdital/Perfis/Perfis';
-import Usuarios from './Pages/Admin/InsideEdital/Usuarios/Usuarios';
-import Logs from './Pages/Admin/InsideEdital/LogsDoSistema/Logs';
-import NotFound from './Components/Global/NotFound/NotFound';
-import Disciplinas from './Pages/Admin/InsideEdital/Disciplinas/Disciplinas';
-import Cotas from './Pages/Admin/InsideEdital/Cotas/Cotas';
-import Recursos from './Pages/Admin/InsideEdital/Recursos/Recursos';
-import Chamadas from './Pages/Admin/InsideEdital/Chamadas/Chamadas';
-import Alocacao from './Pages/Admin/InsideEdital/Alocacao/Alocacao';
-import AvaliacoesDoUsuario from './Pages/Admin/InsideEdital/Alocacao/AvaliacoesDoUsuario';
+    /** ------------------------------------ Páginas Adm de Edital ---------------------------- */
+    import Inscricoes from './Pages/Admin/InsideEdital/Inscricoes/Inscricoes';
+    import QuadroVagas from './Pages/Admin/InsideEdital/QuadroVagas/QuadroVagas';
+    import Cursos from './Pages/Admin/InsideEdital/Cursos/Cursos';
+    import Polos from './Pages/Admin/InsideEdital/Polos/Polos';
+    import Modalidades from './Pages/Admin/InsideEdital/Modalidades/Modalidades';
+    import Perfis from './Pages/Admin/InsideEdital/Perfis/Perfis';
+    import Usuarios from './Pages/Admin/InsideEdital/Usuarios/Usuarios';
+    import Logs from './Pages/Admin/InsideEdital/LogsDoSistema/Logs';
+    import NotFound from './Components/Global/NotFound/NotFound';
+    import Disciplinas from './Pages/Admin/InsideEdital/Disciplinas/Disciplinas';
+    import Cotas from './Pages/Admin/InsideEdital/Cotas/Cotas';
+    import Recursos from './Pages/Admin/InsideEdital/Recursos/Recursos';
+    import Chamadas from './Pages/Admin/InsideEdital/Chamadas/Chamadas';
+    import Alocacao from './Pages/Admin/InsideEdital/Alocacao/Alocacao';
+    import AvaliacoesDoUsuario from './Pages/Admin/InsideEdital/Alocacao/AvaliacoesDoUsuario';
 
 
-/** --------------------------------------------------------------------------------------- */
+    /** --------------------------------------------------------------------------------------- */
 
 /** ------------------------------------------------------------------------------------------ */
 
@@ -134,6 +137,9 @@ function App() {
             <Route index element={<Editais />} />
             <Route path='edital/create' element={<NovoEdital />} />
             <Route path="perfis" element={<GerenciarPerfis/>} />
+            <Route path="perfis/:perfilId/">
+              <Route path='permissoes' element={<GerenciarPerfisPermissoes/>}></Route>
+            </Route>
             <Route path="usuarios" element={<GerenciarUsuarios/>} />
             {/* <Route path='manejar-usuarios/:userId' element={<UserManagePage />} /> */}
           </Route>

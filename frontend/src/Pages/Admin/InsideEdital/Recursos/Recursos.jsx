@@ -1,5 +1,5 @@
 import AccessDenied from '@/Components/Global/AccessDenied/AccessDenied';
-import MainTable from '@/Components/Table/MainTable';
+import MainTable from '@/Components/Global/Tables/MainTable/MainTable';
 import { AppContext } from '@/Contexts/AppContext';
 import { UserRoundPen } from 'lucide-react';
 import React, { useContext } from 'react'

@@ -24,7 +24,7 @@ import { toast } from 'react-toastify';
 import { FaSort, FaSortDown, FaSortUp } from "react-icons/fa";
 import ModalExportarRelatorio from "./Modais/ModalExportarRelatorio";
 
-const MainTable = ({ data, columns, title }) => {
+const MainTable = ({ data, columns, title, hasShadowBorderStyle = true, hasPaddingStyle = true, canExport = true, canHiddenColumns = true }) => {
   const [columnFilters, setColumnFilters] = useState([]);
   const [rowSelection, setRowSelection] = useState({});
   const [globalFilter, setGlobalFilter] = useState('');
@@ -68,7 +68,7 @@ const MainTable = ({ data, columns, title }) => {
   }
 
   return (
-    <div className="rounded-sm border border-gray-200 bg-white px-5 pt-6 pb-2.5 shadow-md sm:px-7.5 xl:pb-1 ">
+    <div className={`${hasShadowBorderStyle === true ? "rounded-sm border border-gray-200 shadow-md": ""} ${hasPaddingStyle === true ? "px-5 sm:px-7.5" : ""} bg-white pt-6 pb-2.5 xl:pb-1 `}>
       <h4 className="text-xl font-semibold text-black mb-4">
         {title}
       </h4>
@@ -90,38 +90,43 @@ const MainTable = ({ data, columns, title }) => {
           {/* </div> */}
         </div>
         <div className="justify-between mt-5 lg:mt-0 col-span-12 flex items-center gap-2">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 dark:bg-gray-800 dark:text-white">
-                Colunas <ChevronDown className="ml-2 h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="max-h-60 overflow-y-auto bg-white dark:bg-gray-800 z-50 border border-gray-200 rounded-md shadow-lg p-1">
-              {table
-                .getAllColumns()
-                .filter((column) => column.getCanHide())
-                .map((column) => {
-                  return (
-                    <DropdownMenuCheckboxItem
-                      key={column.id}
-                      className="capitalize text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md px-2 py-1.5 cursor-pointer flex items-center"
-                      checked={column.getIsVisible()}
-                      onCheckedChange={(value) =>
-                        column.toggleVisibility(!!value)
-                      }
-                    >
-                      <input type="checkbox" defaultChecked={column.getIsVisible() ? true : false} className={`mr-2 border border-gray-300 rounded-sm `} />
-                      {column.id}
-                      {/* <span className="mr-2">{column.id}</span> */}
-                    </DropdownMenuCheckboxItem>
-                  )
-                })}
-            </DropdownMenuContent>
-          </DropdownMenu>
+          {
+            canHiddenColumns && 
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 dark:bg-gray-800 dark:text-white">
+                  Colunas <ChevronDown className="ml-2 h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="max-h-60 overflow-y-auto bg-white dark:bg-gray-800 z-50 border border-gray-200 rounded-md shadow-lg p-1">
+                {table
+                  .getAllColumns()
+                  .filter((column) => column.getCanHide())
+                  .map((column) => {
+                    return (
+                      <DropdownMenuCheckboxItem
+                        key={column.id}
+                        className="capitalize text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md px-2 py-1.5 cursor-pointer flex items-center"
+                        checked={column.getIsVisible()}
+                        onCheckedChange={(value) =>
+                          column.toggleVisibility(!!value)
+                        }
+                      >
+                        <input type="checkbox" defaultChecked={column.getIsVisible() ? true : false} className={`mr-2 border border-gray-300 rounded-sm `} />
+                        {column.id}
+                        {/* <span className="mr-2">{column.id}</span> */}
+                      </DropdownMenuCheckboxItem>
+                    )
+                  })}
+              </DropdownMenuContent>
+            </DropdownMenu>
+          }
 
-          <button onClick={() => onOpenModal()} className="cursor-pointer md:text-nowrap px-4 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-            {'Gerar Relatório'}
-          </button>
+          {
+            canExport && <button onClick={() => onOpenModal()} className="cursor-pointer md:text-nowrap px-4 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+              {'Gerar Relatório'}
+            </button>
+          }
           <ModalExportarRelatorio openModal={openModal} onCloseModal={onCloseModal} table={table} title={title}/>
         </div>
       </div>

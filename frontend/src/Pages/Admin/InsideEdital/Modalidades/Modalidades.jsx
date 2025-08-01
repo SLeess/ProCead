@@ -3,7 +3,7 @@ import React, { useContext } from 'react'
 import data from './data'
 import columns from './columns';
 import { Component, GraduationCap, Plus } from 'lucide-react';
-import MainTable from '@/Components/Table/MainTable';
+import MainTable from '@/Components/Global/Tables/MainTable/MainTable';
 import ModalidadeCreateModal from '@/Components/Admin/InsideEdital/Modais/Modalidades/ModalidadeCreateModal';
 import { useParams } from 'react-router-dom';
 

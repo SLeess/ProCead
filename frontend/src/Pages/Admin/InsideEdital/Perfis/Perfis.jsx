@@ -4,7 +4,7 @@ import data from './data';
 import columns from './columns';
 import PerfilCreateModal from '@/Components/Admin/InsideEdital/Modais/Perfis/PerfilCreateModal';
 import { Component } from 'lucide-react';
-import MainTable from '@/Components/Table/MainTable';
+import MainTable from '@/Components/Global/Tables/MainTable/MainTable';
 import { useParams } from 'react-router-dom';
 
 const Perfis = () => {

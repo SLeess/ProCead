@@ -1,4 +1,4 @@
-import MainTable from '../../../../Components/Table/MainTable'
+import MainTable from '../../../../Components/Global/Tables/MainTable/MainTable'
 import React, { useContext } from 'react'
 import { AppContext } from '@/Contexts/AppContext';
 import AccessDenied from '../../../../Components/Global/AccessDenied/AccessDenied';

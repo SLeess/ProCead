@@ -1,7 +1,7 @@
 import React from 'react'
 import data from './data'
 import columns from './columns'
-import MainTable from '@/Components/Table/MainTable'
+import MainTable from '@/Components/Global/Tables/MainTable/MainTable'
 
 const AlocacaoRecursos = () => {
   return (

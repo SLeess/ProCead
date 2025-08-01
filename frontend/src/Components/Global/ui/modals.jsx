@@ -61,13 +61,13 @@ const MultiSelectTags = () => {
     );
 };
 
-const SelectInput = ({ value, options, readOnly, onChange = null, defaultOption = false}) => (
+const SelectInput = ({ value, options, readOnly, onChange = null, defaultOption = false, className=``}) => (
     <div className="relative">
         <select
             disabled={readOnly}
             defaultValue={value}
             onChange={onChange}
-            className={`${readOnly !== true ? 'bg-white': 'bg-gray-100'} appearance-none border border-gray-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full`}
+            className={`${readOnly !== true ? 'bg-white': 'bg-gray-100'} appearance-none border border-gray-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full ${className}`}
         >
             {defaultOption && <option value="" disabled>Selecione uma opção</option>}
             {options.map(opt => <option key={opt} value={opt}>{opt}</option>)}

@@ -1,7 +1,7 @@
-import { COLUMNSS } from "@/Components/Global/Table/columns";
-import Table from "../../../Components/Global/Table/Table";
-import { COLUMNS, visibleDefaultColumns } from "@/Components/Global/Table/ColumnsInscricoes";
-import { PRODUCTS } from "@/Components/Global/Table/DATA";
+import { COLUMNSS } from "@/Components/Global/Tables/TestTable/columns";
+import TestTable from "@/Components/Global/Tables/TestTable/TestTable";
+import { COLUMNS, visibleDefaultColumns } from "@/Components/Global/Tables/TestTable/ColumnsInscricoes";
+import { PRODUCTS } from "@/Components/Global/Tables/TestTable/DATA";
 import { AppContext } from "@/Contexts/AppContext";
 import { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -34,7 +34,7 @@ export default function Home()
     return (
         <>
             <div className="">
-                <Table 
+                <TestTable 
                     rows={Inscricoes} 
                     cols={COLUMNS} 
                     className={`mx-10`} 
@@ -43,10 +43,10 @@ export default function Home()
                     details={"Listagem dos candidatos que participaram do Edital 04/2025"}
                     visibleDefaultColumns={visibleDefaultColumns}
                     minColumns={3}
-                ></Table>
+                ></TestTable>
             </div>
             {/* <div className="">
-                <Table 
+                <TestTable 
                     rows={PRODUCTS} 
                     cols={COLUMNSS} 
                     className={`mx-10`} 
@@ -55,7 +55,7 @@ export default function Home()
                     details={"Listagem dos candidatos que participaram do Edital 04/2025"}
                     visibleDefaultColumns={visibleDefaultColumns}
                     minColumns={3}
-                ></Table>
+                ></TestTable>
             </div> */}
         </>
     );
