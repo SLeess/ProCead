@@ -61,13 +61,13 @@ const MultiSelectTags = () => {
     );
 };
 
-const SelectInput = ({ value, options, readOnly, onChange = null, defaultOption = false, className=``}) => (
+const SelectInput = ({ value, options, readOnly, onChange = null, defaultOption = false}) => (
     <div className="relative">
         <select
             disabled={readOnly}
             defaultValue={value}
             onChange={onChange}
-            className={`${readOnly !== true ? 'bg-white': 'bg-gray-100'} appearance-none border border-gray-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full ${className}`}
+            className={`${readOnly !== true ? 'bg-white': 'bg-gray-100'} appearance-none border border-gray-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full`}
         >
             {defaultOption && <option value="" disabled>Selecione uma opção</option>}
             {options.map(opt => <option key={opt} value={opt}>{opt}</option>)}
@@ -90,9 +90,9 @@ const AnexoButton = ({ label }) => (
     </div>
 );
 
-const Checkbox = ({ label, checked, readOnly }) => (
+const Checkbox = ({ label, checked, readOnly, onChange = () => {} }) => (
     <label className="flex items-center space-x-2 text-gray-700">
-        <input type="checkbox" checked={checked} disabled={readOnly} className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
+        <input type="checkbox" checked={checked} disabled={readOnly} onChange={onChange} className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500" />
         <span>{label}</span>
     </label>
 );
