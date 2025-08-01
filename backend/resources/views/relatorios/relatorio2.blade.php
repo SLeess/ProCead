@@ -4,7 +4,6 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>{{ $data['titulo'] }}</title>
-
     <style>
         * {
             font-size: .95rem;
@@ -38,19 +37,20 @@
 </head>
 
 <body>
-    {{-- @dd($data['rows']) --}}
+    {{-- @dd($data) --}}
 
     {{-- @include('cabecalho', ['title' => $data['titulo'], 'subtitle' => $data['subtitulo']]) --}}
     {{-- <h2 style="font-size:1.06rem;margin-top: 0px; margin-bottom: 15px;">{{ $data['tableName'] }}</h2> --}}
     @if (sizeof($data['rows']) == 0)
         <p>Nenhum registro enviado ou encontrado</p>
     @else
-        @foreach ($data['groupByFields'] as $groupName)
-            @foreach ($data['rows'] as $key => $grupo)
-                @include('cabecalho', ['title' => $data['titulo'], 'subtitle' => $data['subtitulo']])
+        @foreach ($data['rows'] as $key => $grupo)
+            @include('cabecalho', ['title' => $data['titulo'], 'subtitle' => $data['subtitulo']])
 
-                {{-- @dd($grupo) --}}
-                <h2>{{ucwords($groupName).": ".$key }}</h2>
+            <h1>{{ str_replace('_', ' ', ucwords($data['groupByFields'][0])) . ': ' . $key }}</h1>
+            <hr />
+            @foreach ($grupo as $subgroupKey => $subgroup)
+                <h2>{{ str_replace('_', ' ', ucwords($data['groupByFields'][1])) . ': ' . $subgroupKey }}</h2>
                 <table class="table-content" style="margin-bottom: 10px;width: 100%;text-align: center;">
                     <thead>
                         <tr>
@@ -61,19 +61,19 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($grupo as $row)
+                        @foreach ($subgroup as $element)
                             <tr>
                                 @foreach ($data['columns'] as $column)
-                                <td style="width: 10%;">{{ $row[$column['id']] }}</td>
+                                    <td style="width: 10%;">{{ $element[$column['id']] }}</td>
                                 @endforeach
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
-                @if ($loop->index < count($grupo))
+            @endforeach
+            @if ($loop->index < count($grupo))
                     <div class="break"></div>
                 @endif
-            @endforeach
         @endforeach
     @endif
 

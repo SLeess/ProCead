@@ -38,7 +38,7 @@
 <body>
     
     @include('cabecalho', ['title' => $data['titulo'], 'subtitle' => $data['subtitulo']])
-    <h2 style="font-size:1.06rem;margin-top: 0px; margin-bottom: 15px;">{{$data['tableName']}}</h2>
+    {{-- <h2 style="font-size:1.06rem;margin-top: 0px; margin-bottom: 15px;">{{$data['tableName']}}</h2> --}}
     @if(sizeof($data['rows']) == 0)
         <p>Nenhum registro enviado ou encontrado</p>
     @else
