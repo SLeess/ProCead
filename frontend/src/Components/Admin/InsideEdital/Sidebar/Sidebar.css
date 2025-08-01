@@ -1,13 +1,13 @@
 @reference "@/index.css";
 
-::-webkit-scrollbar { 
+div#Sidebar-admin ::-webkit-scrollbar { 
     @apply w-[6px];
     /* @apply my-[20px]; */
 }
-::-webkit-scrollbar-track {
+div#Sidebar-admin ::-webkit-scrollbar-track {
     @apply bg-transparent;
 }
-::-webkit-scrollbar-thumb {
+div#Sidebar-admin ::-webkit-scrollbar-thumb {
     @apply rounded-[10px];
 
     /* Light mode */
