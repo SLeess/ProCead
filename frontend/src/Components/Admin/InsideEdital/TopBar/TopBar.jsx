@@ -34,10 +34,10 @@ export default function TopBar() {
     }
 
     return (
-        <div className="flex items-center w-[84vw] ml-3 px-4 py-2 bg-white shadow-md rounded-2xl">
+        <div className="flex items-center w-full px-4 py-2 bg-white shadow-md rounded-2xl">
             {/* Left Item */}
             <div className="font-semibold text-purple-800 bg-gray-100 py-1 px-2 rounded-md">
-                 Edital: {editalId}
+                Edital: {editalId}
             </div>
 
             {/* Spacer */}
