@@ -12,8 +12,9 @@
 
         .table-content th,
         .table-comtent td {
-            border-bottom: 2px solid #DDDDDD;
+            /* border-bottom: 2px solid #DDDDDD; */
             border-top: 2px solid #DDDDDD;
+            word-wrap: break-word;
         }
 
         .title {
@@ -38,7 +39,6 @@
 </head>
 
 <body>
-    {{-- @dd($data['rows']) --}}
 
     {{-- @include('cabecalho', ['title' => $data['titulo'], 'subtitle' => $data['subtitulo']]) --}}
     {{-- <h2 style="font-size:1.06rem;margin-top: 0px; margin-bottom: 15px;">{{ $data['tableName'] }}</h2> --}}
@@ -51,13 +51,15 @@
 
                 {{-- @dd($grupo) --}}
                 <h2>{{ ucwords($groupName) . ': ' . $key }}</h2>
-                <table class="table-content" style="margin-bottom: 10px;width: 100%;text-align: center;">
+                <table class="table-content" style="margin-bottom: 10px;width: 100%;text-align: center;table-layout: fixed;">
                     <thead>
                         <tr>
 
                             @foreach ($data['columns'] as $column)
                                 @if ($column['id'] != $data['groupByFields'][0])
-                                    <th style="overflow-wrap: break-word; word-break: break-all; width: {{floor($data['columnWidths'][$column['id']])}}%;">
+
+                                    <th
+                                        style="overflow-wrap: break-word; word-break: break-all; width: {{ floor($data['columnWidths'][$column['id']]) }}%;">
                                         {{ $column['header'] }}
                                     </th>
                                 @endif
@@ -69,7 +71,8 @@
                             <tr>
                                 @foreach ($data['columns'] as $column)
                                     @if ($column['id'] != $data['groupByFields'][0])
-                                        <td style="overflow-wrap: break-word; word-break: break-all; width: {{floor($data['columnWidths'][$column['id']])}}%;">
+                                        <td
+                                            style="overflow-wrap: break-word; word-break: break-all; width: {{ floor($data['columnWidths'][$column['id']]) }}%;">
                                             {{ $row[$column['id']] }}
                                         </td>
                                     @endif

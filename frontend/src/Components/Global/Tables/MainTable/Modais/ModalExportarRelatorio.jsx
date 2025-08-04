@@ -25,8 +25,14 @@ export default function ModalExportarRelatorio({ openModal, onCloseModal, table,
   const previewContainerRef = useRef(null);
 
   const exportableColumns = useMemo(() => table.getVisibleLeafColumns()
-    .filter(column => column.id !== 'select' && column.id !== 'id' && column.id !== 'actions'),
-    [table.getState().columnVisibility]
+    .filter(column => 
+      column.id !== 'select' && 
+      column.id !== 'acoes' && 
+      column.id !== 'id' && 
+      column.id !== 'actions' &&
+      !groupByFields.includes(column.id)
+    ),
+    [table.getState().columnVisibility, groupByFields]
   );
 
   useEffect(() => {
@@ -74,11 +80,11 @@ export default function ModalExportarRelatorio({ openModal, onCloseModal, table,
     setColumnWidths(newWidths);
   }, [resizingColumnIndex, exportableColumns]);
 
-  // useEffect(() => {
-  //   if (Object.keys(columnWidths).length > 0) {
-  //     console.log('Column Widths:', columnWidths);
-  //   }
-  // }, [columnWidths]);
+  useEffect(() => {
+    if (Object.keys(columnWidths).length > 0) {
+      console.log('Column Widths:', columnWidths);
+    }
+  }, [columnWidths]);
 
   const handleMouseUp = useCallback(() => {
     setResizingColumnIndex(null);

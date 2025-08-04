@@ -51,7 +51,7 @@
             <hr />
             @foreach ($grupo as $subgroupKey => $subgroup)
                 <h2>{{ str_replace('_', ' ', ucwords($data['groupByFields'][1])) . ': ' . $subgroupKey }}</h2>
-                <table class="table-content" style="margin-bottom: 10px;width: 100%;text-align: center;">
+                <table class="table-content" style="margin-bottom: 10px;width: 100%;text-align: center;table-layout: fixed;">
                     <thead>
                         <tr>
 
