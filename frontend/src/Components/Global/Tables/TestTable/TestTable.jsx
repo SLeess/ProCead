@@ -10,9 +10,9 @@ import {
 import { FaSearch, FaChevronDown, FaSort, FaSortUp, FaSortDown } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { AppContext } from '@/Contexts/AppContext';
-import './Table.css';
+import './TestTable.css';
 
-export default function Table({ rows, cols, tableName, titulo, details, visibleDefaultColumns = {}, className = `` , minColumns = 1}){
+export default function TestTable({ rows, cols, tableName, titulo, details, visibleDefaultColumns = {}, className = `` , minColumns = 1}){
     const { token } = useContext(AppContext);
 
     //**Determinar a quantidade mínima de colunas que precisam estar visiveis pra não ficar só os checkbox e os btns de ações */

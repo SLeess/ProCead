@@ -3,7 +3,7 @@ import React, { useContext } from 'react'
 import data from './data'
 import columns from './columns';
 import { Component, GraduationCap, Plus } from 'lucide-react';
-import MainTable from '@/Components/Table/MainTable';
+import MainTable from '@/Components/Global/Tables/MainTable/MainTable';
 import ModalidadeCreateModal from '@/Components/Admin/InsideEdital/Modais/Modalidades/ModalidadeCreateModal';
 import { useParams } from 'react-router-dom';
 
@@ -25,7 +25,7 @@ const Modalidades = () => {
             <Component className="absolute top-4 right-4 text-gray-500" />
           </div>
         </div>
-        <MainTable data={data} columns={columns} title={"Cursos"} />
+        <MainTable data={data} columns={columns} title={"Modalidades"} />
       </div>
     )
   else {

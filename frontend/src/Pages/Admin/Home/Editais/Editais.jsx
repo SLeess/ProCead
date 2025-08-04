@@ -1,10 +1,10 @@
-import './Home.css'
+import './Editais.css'
 import React, { useEffect, useState } from 'react';
 import { useAppContext } from '@/Contexts/AppContext';
 import { toast } from 'react-toastify';
 import ListaEditais from '@/Components/Global/ListaEditais/ListaEditais';
 
-function Home() {
+function Editais() {
   const { token } = useAppContext();
   const [processos, setProcessos] = useState([]);
   
@@ -61,4 +61,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Editais;

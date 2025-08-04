@@ -15,7 +15,7 @@ const data = [
         nome: "NEIDE DA ROCHA DO NASCIMENTO",
         email: "	neidedarochadonascimento @gmail.com 	",
         cpf: " 185.200.998 - 58",
-        modalidade: " AC",
+        modalidade: " NEEP",
         status: " INDEFERIDO"
     },
 
@@ -25,7 +25,7 @@ const data = [
         nome: "LUCIMARLY TAVARES DA FONSECA",
         email: " 	lucimarlytavaresfonseca @gmail.com 	",
         cpf: " 041.167.326 - 21",
-        modalidade: " AC",
+        modalidade: " NEEP",
         status: " INDEFERIDO"
     },
 
@@ -35,7 +35,7 @@ const data = [
         nome: "MARIA DA CONCEIÇÃO VIEIRA DE SOUZA",
         email: " maria.souza189@educacao.mg.gov.br 	",
         cpf: " 672.740.486-00",
-        modalidade: " AC",
+        modalidade: " NEEP",
         status: " INDEFERIDO"
     },
 
@@ -45,7 +45,7 @@ const data = [
         nome: "SARAH DE OLIVEIRA VIEIRA",
         email: " sarah.oliveira.vieira.eng@gmail.com 	",
         cpf: " 146.057.157 - 62",
-        modalidade: " AC",
+        modalidade: " NEEP",
         status: " INDEFERIDO"
     },
 
@@ -55,7 +55,7 @@ const data = [
         nome: "ROSANGELA PRICILA DE OLIVEIRA",
         email: " 	rosapricila16 @yahoo.com.br 	",
         cpf: " 036.992.126 - 70",
-        modalidade: " AC",
+        modalidade: " QEEP",
         status: " INDEFERIDO"
     },
 
@@ -65,7 +65,7 @@ const data = [
         nome: "DAIANE FRANCINE GONÇALVES FREITAS",
         email: " 	manu31032017 @gmail.com 	",
         cpf: " 098.954.686 - 10",
-        modalidade: " AC",
+        modalidade: " QEEP",
         status: " INDEFERIDO"
     },
 
@@ -75,7 +75,7 @@ const data = [
         nome: "FABIA RIBEIRO LIMA",
         email: " 	fabiacapoeira1979 @gmail.com 	",
         cpf: " 016.405.301 - 85",
-        modalidade: " AC",
+        modalidade: " QEEP",
         status: " INDEFERIDO"
     },
 
@@ -85,7 +85,7 @@ const data = [
         nome: "ZENÁLIA BARBOS",
         email: " 	zennamissoes @gmail.com 	",
         cpf: " 003.195.236 - 40",
-        modalidade: " AC",
+        modalidade: " QEEP",
         status: " INDEFERIDO"
     },
 
@@ -95,7 +95,7 @@ const data = [
         nome: "MÁRCIA APARECIDA CARDOSO DE OLIVEIRA",
         email: " 	marciacardosooliveira2025 @gmail.com 	",
         cpf: " 031.373.876 - 98",
-        modalidade: " AC",
+        modalidade: " PCD",
         status: " INDEFERIDO"
     },
 
@@ -105,7 +105,7 @@ const data = [
         nome: "LUCELIA SANTOS PEREIRA",
         email: " 	luceliasantoss340 @gmail.com 	",
         cpf: " 065.118.556 - 43",
-        modalidade: " AC",
+        modalidade: " PCD",
         status: " INDEFERIDO"
     },
 
@@ -125,8 +125,8 @@ const data = [
         nome: "ADRIANA CRISTIELLE FERREIRA",
         email: " adriana.cristielle@educacao.mg.gov.br 	",
         cpf: " 034.146.086 - 93",
-        modalidade: " AC",
-        status: " INDEFERIDO"
+        modalidade: " PCD",
+        status: " DEFERIDOS"
     },
 
     {
@@ -136,7 +136,7 @@ const data = [
         email: " 	mariafernandap0099 @gmail.com 	",
         cpf: " 187.054.846 - 93",
         modalidade: " AC",
-        status: " INDEFERIDO"
+        status: " DEFERIDOS"
     },
 
     {
@@ -146,7 +146,7 @@ const data = [
         email: " 	carlanayara2356 @gmail.com 	",
         cpf: " 021.609.126 - 89",
         modalidade: " AC",
-        status: " INDEFERIDO"
+        status: " DEFERIDOS"
     },
     {
         id: 16,
@@ -155,7 +155,7 @@ const data = [
         email: " eusouiagoleal@gmail.com 	",
         cpf: " 104.021.836 - 90",
         modalidade: " AC",
-        status: " INDEFERIDO"
+        status: " DEFERIDOS"
     },
 
     {
@@ -165,7 +165,7 @@ const data = [
         email: "	neidedarochadonascimento @gmail.com 	",
         cpf: " 185.200.998 - 58",
         modalidade: " AC",
-        status: " INDEFERIDO"
+        status: " DEFERIDOS"
     },
 
     {
@@ -175,7 +175,7 @@ const data = [
         email: " 	lucimarlytavaresfonseca @gmail.com 	",
         cpf: " 041.167.326 - 21",
         modalidade: " AC",
-        status: " INDEFERIDO"
+        status: " DEFERIDOS"
     },
 
     {
@@ -185,7 +185,7 @@ const data = [
         email: " maria.souza189@educacao.mg.gov.br 	",
         cpf: " 672.740.486-00",
         modalidade: " AC",
-        status: " INDEFERIDO"
+        status: " DEFERIDOS"
     },
 
     {
@@ -195,7 +195,7 @@ const data = [
         email: " sarah.oliveira.vieira.eng@gmail.com 	",
         cpf: " 146.057.157 - 62",
         modalidade: " AC",
-        status: " INDEFERIDO"
+        status: " DEFERIDOS"
     },
 
     {
@@ -205,7 +205,7 @@ const data = [
         email: " 	rosapricila16 @yahoo.com.br 	",
         cpf: " 036.992.126 - 70",
         modalidade: " AC",
-        status: " INDEFERIDO"
+        status: " DEFERIDOS"
     },
 
     {

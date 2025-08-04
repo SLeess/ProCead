@@ -4,7 +4,7 @@ import React, { useContext } from 'react'
 import { useParams } from 'react-router-dom';
 import data from './data';
 import columns from './columns';
-import MainTable from '@/Components/Table/MainTable';
+import MainTable from '@/Components/Global/Tables/MainTable/MainTable';
 import AdminCreateModal from '@/Components/Admin/InsideEdital/Modais/Usuario/AdminCreateModal';
 
 const Usuarios = () => {
@@ -31,7 +31,7 @@ const Usuarios = () => {
             <ShieldUser className="absolute top-4 right-4 text-gray-500" />
           </div>
         </div>
-        <MainTable data = {data} columns = {columns} title={"Inscrições"}/>
+        <MainTable data = {data} columns = {columns} title={"Usuarios"}/>
       </div>
     )
   else {

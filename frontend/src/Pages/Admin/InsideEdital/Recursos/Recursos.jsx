@@ -1,5 +1,5 @@
 import AccessDenied from '@/Components/Global/AccessDenied/AccessDenied';
-import MainTable from '@/Components/Table/MainTable';
+import MainTable from '@/Components/Global/Tables/MainTable/MainTable';
 import { AppContext } from '@/Contexts/AppContext';
 import { UserRoundPen } from 'lucide-react';
 import React, { useContext } from 'react'
@@ -22,7 +22,7 @@ const Recursos = () => {
             <UserRoundPen className="absolute top-4 right-4 text-gray-500" />
           </div>
         </div>
-        <MainTable data={data} columns={columns} title={"Cotas"} />
+        <MainTable data={data} columns={columns} title={"Recursos"} />
       </div>
     )
   else {

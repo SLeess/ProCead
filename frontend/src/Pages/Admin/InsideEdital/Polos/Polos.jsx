@@ -3,7 +3,7 @@ import React, { useContext } from 'react'
 import data from './data'
 import columns from './columns';
 import { Building2, GraduationCap, Plus } from 'lucide-react';
-import MainTable from '@/Components/Table/MainTable';
+import MainTable from '@/Components/Global/Tables/MainTable/MainTable';
 import PoloCreateModal from '@/Components/Admin/InsideEdital/Modais/Polos/PoloCreateModal';
 import { useParams } from 'react-router-dom';
 

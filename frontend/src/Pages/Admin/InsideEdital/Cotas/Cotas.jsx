@@ -3,7 +3,7 @@ import React, { useContext } from 'react'
 import { useParams } from 'react-router-dom';
 import data from './data';
 import columns from './columns';
-import MainTable from '@/Components/Table/MainTable';
+import MainTable from '@/Components/Global/Tables/MainTable/MainTable';
 import { UserRoundPen } from 'lucide-react';
 
 const Cotas = () => {

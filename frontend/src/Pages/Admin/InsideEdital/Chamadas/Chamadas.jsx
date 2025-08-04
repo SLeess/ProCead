@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import data from './data';
 import columns from './columns';
 import AccessDenied from '@/Components/Global/AccessDenied/AccessDenied';
-import MainTable from '@/Components/Table/MainTable';
+import MainTable from '@/Components/Global/Tables/MainTable/MainTable';
 
 const Chamadas = () => {
   const { editalId } = useParams();

@@ -1,0 +1,26 @@
+@reference "@/index.css";
+
+section#gerenciar_perfis_permissoes{
+    @apply mt-0;
+}
+section#gerenciar_perfis_permissoes header h1{
+    @apply text-white text-[22px] not-italic font-bold leading-[normal] mx-0;
+    font-family: Sora;
+}
+section#gerenciar_perfis_permissoes header{
+    @apply absolute top-0 left-0 w-full px-6 py-4 rounded-t-xl bg-[var(--header-admin-primary)] border-2;
+}
+
+section#gerenciar_perfis_permissoes div#content{
+    @apply mt-10 mb-2 lg:px-4 mx-4 md:mx-0;
+}
+
+section#gerenciar_perfis_permissoes div#content div h2{
+    @apply text-black text-[24px] font-normal;
+    font-family: Sora;
+}
+
+/* section#gerenciar_perfis_permissoes div#content div#informacoes_gerais div input, */
+section#gerenciar_perfis_permissoes div#content div#informacoes_gerais div > div{
+    @apply col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3 sm:max-w-[296px];
+}

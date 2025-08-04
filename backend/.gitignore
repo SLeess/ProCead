@@ -19,5 +19,6 @@ yarn-error.log
 /.vscode
 node_modules
 /public/plugins
-/resources
+/resources/views/Layout
+/resources/views/show.blade.php
 /routes/web.php

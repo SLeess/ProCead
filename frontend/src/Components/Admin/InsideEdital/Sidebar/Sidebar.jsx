@@ -97,7 +97,7 @@ const Sidebar = () => {
   }
 
   return (
-    <div className="w-70 h-screen bg-[#004DA9] flex flex-col font-sans rounded-tr-[15px] rounded-br-[15px]">
+    <div id='Sidebar-admin' className="w-60 h-screen bg-[#002366] flex flex-col font-sans rounded-tr-[15px] rounded-br-[15px]">
       <div
         className="p-5 text-2xl font-bold text-white flex items-center flex-shrink-0 cursor-pointer"
         onClick={() => navigate(`/admin`)}

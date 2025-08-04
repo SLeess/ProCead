@@ -1,9 +1,17 @@
-::-webkit-scrollbar { 
-    width: 6px; 
+@reference "@/index.css";
+
+div#Sidebar-admin ::-webkit-scrollbar { 
+    @apply w-[6px];
+    /* @apply my-[20px]; */
 }
-::-webkit-scrollbar-track {
-    background: transparent; 
+div#Sidebar-admin ::-webkit-scrollbar-track {
+    @apply bg-transparent;
 }
-::-webkit-scrollbar-thumb {
-    background-color: #ffffff; border-radius: 10px; 
+div#Sidebar-admin ::-webkit-scrollbar-thumb {
+    @apply rounded-[10px];
+
+    /* Light mode */
+    @apply bg-[var(--sidebar)];
+    /* Dark mode */
+    @apply dark:bg-[white];
 }
