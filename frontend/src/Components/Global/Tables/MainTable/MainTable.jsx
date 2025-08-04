@@ -132,7 +132,7 @@ const MainTable = ({ data, columns, title, hasShadowBorderStyle = true, hasPaddi
       </div>
 
       {/* Tabela Shadcn/ui */}
-      <div className="overflow-x-auto rounded-md border">
+      <div className="overflow-y-auto h-[60vh] overflow-x-auto rounded-md border">
         <Table>
           <TableHeader className="bg-gray-50">
 

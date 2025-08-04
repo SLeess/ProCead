@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>{{ $data['titulo'] }}</title>
@@ -49,37 +50,52 @@
             <hr />
             @foreach ($grupo as $subgroupKey => $subgroup)
                 <h2>{{ str_replace('_', ' ', ucwords($data['groupByFields'][1])) . ': ' . $subgroupKey }}</h2>
-                
-                @foreach ($subgroup as $subSubgroupKey => $subSubgroup )
-                <h2>{{ str_replace('_', ' ', ucwords($data['groupByFields'][2])) . ': ' . $subSubgroupKey }}</h2>
-                
-                <table class="table-content" style="margin-bottom: 10px;width: 100%;text-align: center;">
-                    <thead>
-                        <tr>
 
-                            @foreach ($data['columns'] as $column)
-                                {{-- <th style="width: 10%">{{ $column['header'] }}</th> --}}
-                                <th >{{ $column['header'] }}</th>
-                            @endforeach
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($subSubgroup as $element)
+                @foreach ($subgroup as $subSubgroupKey => $subSubgroup)
+                    <h2>{{ str_replace('_', ' ', ucwords($data['groupByFields'][2])) . ': ' . $subSubgroupKey }}</h2>
+
+                    <table class="table-content" style="margin-bottom: 10px;width: 100%;text-align: center;">
+                        <thead>
                             <tr>
+
                                 @foreach ($data['columns'] as $column)
-                                    {{-- <td style="width: 10%;">{{ $element[$column['id']] }}</td> --}}
-                                    <td>{{ $element[$column['id']] }}</td>
+                                    @if (
+                                        $column['id'] != $data['groupByFields'][0] &&
+                                            $column['id'] != $data['groupByFields'][1] &&
+                                            $column['id'] != $data['groupByFields'][2]
+                                    )
+                                        <th
+                                            style="overflow-wrap: break-word; word-break: break-all; width: {{ floor($data['columnWidths'][$column['id']]) }}%;">
+                                            {{ $column['header'] }}
+                                        </th>
+                                    @endif
                                 @endforeach
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach ($subSubgroup as $element)
+                                <tr>
+                                    @foreach ($data['columns'] as $column)
+                                        @if (
+                                            $column['id'] != $data['groupByFields'][0] &&
+                                                $column['id'] != $data['groupByFields'][1] &&
+                                                $column['id'] != $data['groupByFields'][2]
+                                        )
+                                            <th
+                                                style="overflow-wrap: break-word; word-break: break-all; width: {{ floor($data['columnWidths'][$column['id']]) }}%;">
+                                                {{ $element[$column['id']] }}
+                                                </td>
+                                        @endif
+                                    @endforeach
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 @endforeach
-
             @endforeach
             @if ($loop->index < count($grupo))
-                    <div class="break"></div>
-                @endif
+                <div class="break"></div>
+            @endif
         @endforeach
     @endif
 

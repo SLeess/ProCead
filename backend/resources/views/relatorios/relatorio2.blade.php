@@ -56,7 +56,12 @@
                         <tr>
 
                             @foreach ($data['columns'] as $column)
-                                <th style="width: 10%">{{ $column['header'] }}</th>
+                            @if ($column['id'] != $data['groupByFields'][0] && $column['id'] != $data['groupByFields'][1])
+                                <th
+                                    style="overflow-wrap: break-word; word-break: break-all; width: {{ floor($data['columnWidths'][$column['id']]) }}%;">
+                                    {{ $column['header'] }}
+                                </th>
+                                @endif
                             @endforeach
                         </tr>
                     </thead>
@@ -64,7 +69,12 @@
                         @foreach ($subgroup as $element)
                             <tr>
                                 @foreach ($data['columns'] as $column)
-                                    <td style="width: 10%;">{{ $element[$column['id']] }}</td>
+                                @if ($column['id'] != $data['groupByFields'][0] && $column['id'] != $data['groupByFields'][1])
+                                    <th
+                                        style="overflow-wrap: break-word; word-break: break-all; width: {{ floor($data['columnWidths'][$column['id']]) }}%;">
+                                        {{ $element[$column['id']] }}
+                                        </td>
+                                        @endif
                                 @endforeach
                             </tr>
                         @endforeach
@@ -72,8 +82,8 @@
                 </table>
             @endforeach
             @if ($loop->index < count($grupo))
-                    <div class="break"></div>
-                @endif
+                <div class="break"></div>
+            @endif
         @endforeach
     @endif
 

@@ -50,13 +50,17 @@
                 @include('cabecalho', ['title' => $data['titulo'], 'subtitle' => $data['subtitulo']])
 
                 {{-- @dd($grupo) --}}
-                <h2>{{ucwords($groupName).": ".$key }}</h2>
+                <h2>{{ ucwords($groupName) . ': ' . $key }}</h2>
                 <table class="table-content" style="margin-bottom: 10px;width: 100%;text-align: center;">
                     <thead>
                         <tr>
 
                             @foreach ($data['columns'] as $column)
-                                <th style="width: 10%">{{ $column['header'] }}</th>
+                                @if ($column['id'] != $data['groupByFields'][0])
+                                    <th style="overflow-wrap: break-word; word-break: break-all; width: {{floor($data['columnWidths'][$column['id']])}}%;">
+                                        {{ $column['header'] }}
+                                    </th>
+                                @endif
                             @endforeach
                         </tr>
                     </thead>
@@ -64,7 +68,11 @@
                         @foreach ($grupo as $row)
                             <tr>
                                 @foreach ($data['columns'] as $column)
-                                <td style="width: 10%;">{{ $row[$column['id']] }}</td>
+                                    @if ($column['id'] != $data['groupByFields'][0])
+                                        <td style="overflow-wrap: break-word; word-break: break-all; width: {{floor($data['columnWidths'][$column['id']])}}%;">
+                                            {{ $row[$column['id']] }}
+                                        </td>
+                                    @endif
                                 @endforeach
                             </tr>
                         @endforeach
