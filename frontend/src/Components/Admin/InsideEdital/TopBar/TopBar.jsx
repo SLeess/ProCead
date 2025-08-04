@@ -24,46 +24,47 @@ export default function TopBar() {
             logout();
             navigate('/login');
         } catch (error) {
-            toast.error("Ocorreu um erro ao tentar sair.");
+            toast.error("Ocorreu um erro ao tentar sair." + error);
         }
     }
 
     function handleChangeEdital() {
-        navigate('/admin/home');
+        navigate('/admin');
         toast.info("Selecione outro edital.");
     }
 
     return (
-        <div className="flex justify-between items-center w-full">
+        <div className="flex items-center w-[84vw] ml-3 px-4 py-2 bg-white shadow-md rounded-2xl">
             {/* Left Item */}
-            <div className="bg-white py-2 px-4 rounded-2xl shadow-md">
-                <span className="font-semibold text-gray-700">Edital: {editalId}</span>
+            <div className="font-semibold text-purple-800 bg-gray-100 py-1 px-2 rounded-md">
+                 Edital: {editalId}
             </div>
 
+            {/* Spacer */}
+            <div className="flex-1" />
+
             {/* Right Item */}
-            <div className="relative">
-                <Dropdown
-                    arrowIcon={false}
-                    inline
-                    label={
-                        <div className="flex items-center gap-3 cursor-pointer rounded-2xl bg-white py-2 px-4 shadow-md transition-all hover:shadow-lg">
-                            <span className="font-semibold text-gray-700">Olá, {user?.nome?.split(' ')[0] || 'Usuário'}</span>
-                        </div>
-                    }
-                >
-                    <DropdownHeader className="w-56">
-                        <span className="block text-sm">{user?.nome}</span>
-                        <span className="block truncate text-sm font-medium">{user?.email}</span>
-                    </DropdownHeader>
-                    <DropdownItem icon={ChevronsLeftRight} onClick={handleChangeEdital}>
-                        Mudar de edital
-                    </DropdownItem>
-                    <DropdownDivider />
-                    <DropdownItem icon={LogOut} onClick={handlerLogOut}>
-                        Sair
-                    </DropdownItem>
-                </Dropdown>
-            </div>
+            <Dropdown
+                arrowIcon={false}
+                inline
+                label={
+                    <div className="flex items-center gap-3 cursor-pointer rounded-2xl bg-white py-2 px-4 shadow transition-all hover:shadow-lg">
+                        <span className="font-semibold text-gray-700">Olá, {user?.nome?.split(' ')[0] || 'Usuário'}</span>
+                    </div>
+                }
+            >
+                <DropdownHeader className="w-56">
+                    <span className="block text-sm">{user?.nome}</span>
+                    <span className="block truncate text-sm font-medium">{user?.email}</span>
+                </DropdownHeader>
+                <DropdownItem icon={ChevronsLeftRight} onClick={handleChangeEdital}>
+                    Mudar de edital
+                </DropdownItem>
+                <DropdownDivider />
+                <DropdownItem icon={LogOut} onClick={handlerLogOut}>
+                    Sair
+                </DropdownItem>
+            </Dropdown>
         </div>
     );
 }
