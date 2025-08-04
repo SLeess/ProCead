@@ -80,11 +80,11 @@ export default function ModalExportarRelatorio({ openModal, onCloseModal, table,
     setColumnWidths(newWidths);
   }, [resizingColumnIndex, exportableColumns]);
 
-  useEffect(() => {
-    if (Object.keys(columnWidths).length > 0) {
-      console.log('Column Widths:', columnWidths);
-    }
-  }, [columnWidths]);
+  // useEffect(() => {
+  //   if (Object.keys(columnWidths).length > 0) {
+  //     console.log('Column Widths:', columnWidths);
+  //   }
+  // }, [columnWidths]);
 
   const handleMouseUp = useCallback(() => {
     setResizingColumnIndex(null);
