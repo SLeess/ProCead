@@ -24,7 +24,6 @@ const Sidebar = () => {
     isInitiallyOpen: false,
     items: [
       { name: 'Configurações', icon: <FiSettings size={16} />, href: `/admin/edital/${editalId}/configuracoes` },
-      { name: 'Novo Edital', icon: <FiFilePlus size={16} />, href: `/admin/edital/${editalId}/novo-edital` }
     ]
   },
   {
@@ -97,7 +96,7 @@ const Sidebar = () => {
   }
 
   return (
-    <div id='Sidebar-admin' className="w-60 h-screen bg-[#002366] flex flex-col font-sans rounded-tr-[15px] rounded-br-[15px]">
+    <div id='Sidebar-admin' className="w-67 h-screen bg-[#0A51BF] flex flex-col font-sans rounded-tr-[15px] rounded-br-[15px]">
       <div
         className="p-5 text-2xl font-bold text-white flex items-center flex-shrink-0 cursor-pointer"
         onClick={() => navigate(`/admin`)}
@@ -109,7 +108,7 @@ const Sidebar = () => {
         {menuData.map(section => (
           <div key={section.title} className="py-2">
             <div
-              className={`px-4 py-2.5 flex items-center justify-between cursor-pointer rounded-lg m-1 mx-2 transition-colors duration-100 ease-in-out hover:bg-[#0064DB] ${openSections[section.title] ? 'bg-[#0064DB]' : 'bg-transparent'}`}
+              className={`px-4 py-2.5 flex items-center justify-between cursor-pointer rounded-lg m-1 mx-2 transition-colors duration-50 ease-in-out hover:bg-[#0064DB] ${openSections[section.title] ? 'bg-[#0A51BF]' : 'bg-transparent'}`}
               onClick={() => handleToggleSection(section.title)}
             >
               <span className="flex items-center gap-3 text-[0.95rem] text-white">
