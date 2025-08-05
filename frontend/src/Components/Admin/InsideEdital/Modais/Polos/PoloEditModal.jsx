@@ -32,8 +32,8 @@ const PoloEditModal = () => {
               <FormField label="Edital Referente"><TextInput value="Edital Nº 08/2025" /></FormField>
             </div>
             <div className="mt-10 flex justify-end items-center space-x-4">
-              <button onClick={onCloseModal} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">Fechar</button>
-              <button onClick={onCloseModal} className="px-6 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Salvar</button>
+              <button onClick={onCloseModal} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Fechar</button>
+              <button onClick={onCloseModal} className="px-6 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Salvar</button>
             </div>
           </div>
         </ModalBody>

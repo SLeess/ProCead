@@ -31,13 +31,13 @@ const PerfilDeleteModal = () => {
                             <div className="flex justify-center items-center space-x-4">
                                 <button
                                     onClick={onCloseModal}
-                                    className="px-8 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400"
+                                    className="px-8 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400"
                                 >
                                     Cancelar
                                 </button>
                                 <button
                                     onClick={onCloseModal}
-                                    className="px-8 py-2.5 text-sm font-semibold text-white bg-red-600 rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                                    className="px-8 py-2.5 text-sm font-semibold text-white bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                                 >
                                     Deletar
                                 </button>

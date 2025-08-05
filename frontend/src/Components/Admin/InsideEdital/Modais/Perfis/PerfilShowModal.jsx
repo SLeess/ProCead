@@ -42,7 +42,7 @@ const PerfilShowModal = () => {
                         
                         <button
                             onClick={onCloseModal}
-                            className="px-8 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700"
+                            className="px-8 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700"
                         >
                             Fechar
                         </button>

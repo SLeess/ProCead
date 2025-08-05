@@ -91,8 +91,8 @@ export default function QuadroVagasShowModal() {
                                 <FormField label="Habilitação" className="md:col-span-3"><TextInput readOnly={true} value="Pós Graduação" /></FormField>
                             </div>
                             <div className="mt-10 flex justify-end items-center space-x-4">
-                                <button onClick={onCloseModal} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">Fechar</button>
-                                <button onClick={handleNext} className="px-6 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Próximo: Distribuição de Vagas</button>
+                                <button onClick={onCloseModal} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Fechar</button>
+                                <button onClick={handleNext} className="px-6 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Próximo: Distribuição de Vagas</button>
                             </div>
                         </div>
                     )}
@@ -108,14 +108,14 @@ export default function QuadroVagasShowModal() {
                                 <FormField label="TRANS"><TextInput readOnly={true} value="2" /></FormField>
                             </div>
                             <div className="mt-10 flex justify-end items-center space-x-4">
-                                <button onClick={handleBack} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">Voltar</button>
-                                <button onClick={handleNext} className="px-6 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Próximo: Categorias Customizadas</button>
+                                <button onClick={handleBack} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Voltar</button>
+                                <button onClick={handleNext} className="px-6 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Próximo: Categorias Customizadas</button>
                             </div>
                         </div>
                     )}
                     {/* Tab Content: Categorias Customizadas */}
                     {activeTab === 'Categorias Customizadas' && (
-                        <div className="border border-gray-200 rounded-lg overflow-hidden">
+                        <div className="border border-gray-200 rounded-md overflow-hidden">
                             {/* Table Header */}
                             <div className="flex bg-gray-50 px-6 py-3">
                                 <div className="w-16 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</div>
@@ -131,8 +131,8 @@ export default function QuadroVagasShowModal() {
                                 ))}
                             </div>
                             <div className="mt-10 flex justify-end items-center space-x-4">
-                                <button onClick={handleBack} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">Voltar</button>
-                                <button onClick={onCloseModal} className="px-6 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Fechar</button>
+                                <button onClick={handleBack} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Voltar</button>
+                                <button onClick={onCloseModal} className="px-6 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Fechar</button>
                             </div>
                         </div>
                     )}

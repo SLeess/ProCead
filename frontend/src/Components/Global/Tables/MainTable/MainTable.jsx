@@ -68,7 +68,7 @@ const MainTable = ({ data, columns, title, hasShadowBorderStyle = true, hasPaddi
   }
 
   return (
-    <div className={`${hasShadowBorderStyle === true ? "rounded-sm border border-gray-200 shadow-md": ""} ${hasPaddingStyle === true ? "px-5 sm:px-7.5" : ""} bg-white pt-6 pb-2.5 xl:pb-1 `}>
+    <div className={`${hasShadowBorderStyle === true ? "rounded-md border border-gray-200 shadow-md": ""} ${hasPaddingStyle === true ? "px-5 sm:px-7.5" : ""} bg-white pt-6 pb-2.5 xl:pb-1 `}>
       <h4 className="text-xl font-semibold text-black mb-4">
         {title}
       </h4>
@@ -112,7 +112,7 @@ const MainTable = ({ data, columns, title, hasShadowBorderStyle = true, hasPaddi
                           column.toggleVisibility(!!value)
                         }
                       >
-                        <input type="checkbox" defaultChecked={column.getIsVisible() ? true : false} className={`mr-2 border border-gray-300 rounded-sm `} />
+                        <input type="checkbox" defaultChecked={column.getIsVisible() ? true : false} className={`mr-2 border border-gray-300 rounded-md `} />
                         {column.id}
                         {/* <span className="mr-2">{column.id}</span> */}
                       </DropdownMenuCheckboxItem>
@@ -123,7 +123,7 @@ const MainTable = ({ data, columns, title, hasShadowBorderStyle = true, hasPaddi
           }
 
           {
-            canExport && <button onClick={() => onOpenModal()} className="cursor-pointer md:text-nowrap px-4 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+            canExport && <button onClick={() => onOpenModal()} className="cursor-pointer md:text-nowrap px-4 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
               {'Gerar Relatório'}
             </button>
           }

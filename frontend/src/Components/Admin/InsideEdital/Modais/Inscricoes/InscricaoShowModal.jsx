@@ -123,10 +123,10 @@ export default function InscricaoShowModal() {
 
                             {/* Action Buttons */}
                             <div className="mt-10 flex justify-end items-center space-x-4">
-                                <button onClick={onCloseModal} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">
+                                <button onClick={onCloseModal} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
                                     Cancelar
                                 </button>
-                                <button onClick={handleNext} className="px-6 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                <button onClick={handleNext} className="px-6 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                                     Próximo: Endereço
                                 </button>
                             </div>
@@ -144,14 +144,14 @@ export default function InscricaoShowModal() {
                                 <FormField label="Cidade" className="md:col-span-3"><TextInput readOnly={true} value="São João da Ponte" /></FormField>
                             </div>
                             <div className="mt-10 flex justify-end items-center space-x-4">
-                                <button onClick={handleBack} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">Voltar</button>
-                                <button onClick={handleNext} className="px-6 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Próximo: Vaga</button>
+                                <button onClick={handleBack} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Voltar</button>
+                                <button onClick={handleNext} className="px-6 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Próximo: Vaga</button>
                             </div>
                         </div>
                     )}
                     {activeTab === 'Vaga' && (
                         <div className="flex flex-col items-center">
-                            <div className="w-full max-w-lg border border-gray-200 rounded-lg p-6">
+                            <div className="w-full max-w-lg border border-gray-200 rounded-md p-6">
                                 <h3 className="text-lg font-semibold text-gray-800">Lato Sensu em Alfabetização e Multiletramentos</h3>
                                 <p className="text-sm text-gray-500 mb-6">Montes Claros | MG</p>
                                 <div className="space-y-4">
@@ -160,8 +160,8 @@ export default function InscricaoShowModal() {
                                 </div>
                             </div>
                             <div className="mt-10 flex justify-end items-center w-full max-w-lg space-x-4">
-                                <button onClick={handleBack} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">Voltar</button>
-                                <button onClick={handleNext} className="px-6 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Próximo: Anexos</button>
+                                <button onClick={handleBack} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Voltar</button>
+                                <button onClick={handleNext} className="px-6 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Próximo: Anexos</button>
                             </div>
                         </div>
                     )}
@@ -184,15 +184,15 @@ export default function InscricaoShowModal() {
                                     <textarea
                                         readOnly
                                         rows="4"
-                                        className="bg-gray-100 border border-gray-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+                                        className="bg-gray-100 border border-gray-200 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
                                         value="Informamos que a inscrição de Vossa Senhoria no presente processo seletivo foi indeferida em razão do não atendimento aos requisitos formais estabelecidos no edital, especificamente pela ausência da documentação comprobatória exigida para a função pretendida, inviabilizando a devida análise e homologação da candidatura."
                                     />
                                 </FormField>
                             </div>
 
                             <div className="mt-10 flex justify-end items-center space-x-4">
-                                <button onClick={handleBack} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">Voltar</button>
-                                <button onClickCapture={onCloseModal} className="px-8 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700">Fechar</button>
+                                <button onClick={handleBack} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Voltar</button>
+                                <button onClickCapture={onCloseModal} className="px-8 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700">Fechar</button>
                             </div>
                         </div>
                     )}

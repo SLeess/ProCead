@@ -10,7 +10,7 @@ const DisciplinaCreateModal = () => {
     }
     return (
         <>
-            <button onClick={() => setOpenModal(true)} className="px-4 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+            <button onClick={() => setOpenModal(true)} className="px-4 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                 <Plus className="inline" />
                 <span className='ml-1'>Cadastrar Disciplina</span>
             </button>
@@ -35,8 +35,8 @@ const DisciplinaCreateModal = () => {
                             <FormField className="md:col-span-1" label="Carga Horária"><TextInput value="60 horas" /></FormField>
                         </div>
                         <div className="mt-10 flex justify-end items-center space-x-4">
-                            <button onClick={onCloseModal} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">Fechar</button>
-                            <button onClick={onCloseModal} className="px-6 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Salvar</button>
+                            <button onClick={onCloseModal} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Fechar</button>
+                            <button onClick={onCloseModal} className="px-6 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Salvar</button>
                         </div>
                     </div>
                 </ModalBody>

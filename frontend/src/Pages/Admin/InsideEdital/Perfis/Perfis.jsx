@@ -20,7 +20,7 @@ const Perfis = () => {
           <PerfilCreateModal enableGlobal={false}/>
         </div>
         <div className="flex gap-4 mb-4">
-          <div className="bg-white shadow-md rounded-lg p-5 w-xs relative flex flex-col justify-between h-30">
+          <div className="bg-white shadow-md rounded-md p-5 w-xs relative flex flex-col justify-between h-30">
             <p className="text-gray-600 mb-1">Nº de Pefis</p>
             <p className="text-2xl font-bold mb-1">3</p>
             <Component className="absolute top-4 right-4 text-gray-500" />
