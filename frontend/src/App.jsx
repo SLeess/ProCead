@@ -62,6 +62,7 @@ import GuestAdminRoutes from './Routes/GuestAdminRoutes';
 // ToastFy
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Inscrever from './Pages/Candidato/Inscrever/Inscrever';
 
 
 function App() {
@@ -118,6 +119,7 @@ function App() {
             <Route index element={<ProcessosAtivos />} />
             <Route path="/home" element={<HomePage />} />
             <Route path="/edital/:editalId" element={<EditalPage />} />
+            <Route path="/edital/:editalId/inscrever" element={<Inscrever />} />
             <Route path='meus-processos' element={<MeusProcessos />} />
           </Route>
 
