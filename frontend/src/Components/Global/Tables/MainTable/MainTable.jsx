@@ -132,7 +132,7 @@ const MainTable = ({ data, columns, title, hasShadowBorderStyle = true, hasPaddi
       </div>
 
       {/* Tabela Shadcn/ui */}
-      <div className="overflow-x-auto rounded-md border">
+      <div className="overflow-y-auto h-[60vh] overflow-x-auto rounded-md border">
         <Table>
           <TableHeader className="bg-gray-50">
 
@@ -248,22 +248,37 @@ const MainTable = ({ data, columns, title, hasShadowBorderStyle = true, hasPaddi
             Próxima
           </button>
         </div>
-        <div className="flex ml-5 justify-end">
+        <div className="flex items-center gap-2 ml-5 justify-end">
+          <span className="text-sm font-medium text-gray-700 hidden md:block">
+            Linhas por página:
+          </span>
           {/* --- Page Size Selector --- */}
           <select
             value={table.getState().pagination.pageSize}
             onChange={e => {
               table.setPageSize(Number(e.target.value))
             }}
-            className="min-w-[110px] px-2 py-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            className="min-w-[80px] px-2 py-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
           >
             {[10, 20, 30, 40, 50].map(pageSize => (
               <option key={pageSize} value={pageSize}>
-                Mostrar {pageSize}
+                {pageSize}
               </option>
             ))}
-            <option value={data.length} key={data.length}>Mostrar Todos</option>
+            <option value={data.length} key={data.length}>Todos</option>
           </select>
+          {/* <input
+            type="number"
+            min={1}
+            step={10}
+            value={table.getState().pagination.pageSize}
+            onChange={e => {
+              const size = e.target.value ? Number(e.target.value) : 0
+              table.setPageSize(size)
+            }}
+            className="w-24 px-2 py-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+            placeholder="Qtd. linhas"
+          /> */}
         </div>
       </div>
     </div>

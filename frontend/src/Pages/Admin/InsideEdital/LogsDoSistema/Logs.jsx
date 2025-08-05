@@ -12,7 +12,7 @@ const Logs = () => {
     if (hasPermissionForEdital('visualizar-logs-do-sistema', editalId) || isSuperAdmin())
         return (
             <>
-                <div className="p4">
+                <div className="p-4">
                     <h1 className="text-2xl font-bold mb-4">Logs do Sistema</h1>
                     <MainTable data={data} columns={columns} title={"Logs"} />
                 </div>

@@ -6,7 +6,9 @@ const data = [
         email: " eusouiagoleal@gmail.com 	",
         cpf: " 104.021.836 - 90",
         modalidade: " AC",
-        status: " INDEFERIDO"
+        status: " INDEFERIDO",
+        curso: "Ciência da Computação",
+        polo: "Belo Horizonte"
     },
 
     {
@@ -16,7 +18,9 @@ const data = [
         email: "	neidedarochadonascimento @gmail.com 	",
         cpf: " 185.200.998 - 58",
         modalidade: " NEEP",
-        status: " INDEFERIDO"
+        status: " INDEFERIDO",
+        curso: "Sistemas de Informação",
+        polo: "São Paulo"
     },
 
     {
@@ -26,7 +30,9 @@ const data = [
         email: " 	lucimarlytavaresfonseca @gmail.com 	",
         cpf: " 041.167.326 - 21",
         modalidade: " NEEP",
-        status: " INDEFERIDO"
+        status: " INDEFERIDO",
+        curso: "Engenharia de Software",
+        polo: "Rio de Janeiro"
     },
 
     {
@@ -36,7 +42,9 @@ const data = [
         email: " maria.souza189@educacao.mg.gov.br 	",
         cpf: " 672.740.486-00",
         modalidade: " NEEP",
-        status: " INDEFERIDO"
+        status: " INDEFERIDO",
+        curso: "Análise e Desenvolvimento de Sistemas",
+        polo: "Curitiba"
     },
 
     {
@@ -46,7 +54,9 @@ const data = [
         email: " sarah.oliveira.vieira.eng@gmail.com 	",
         cpf: " 146.057.157 - 62",
         modalidade: " NEEP",
-        status: " INDEFERIDO"
+        status: " INDEFERIDO",
+        curso: "Ciência da Computação",
+        polo: "Belo Horizonte"
     },
 
     {
@@ -56,7 +66,9 @@ const data = [
         email: " 	rosapricila16 @yahoo.com.br 	",
         cpf: " 036.992.126 - 70",
         modalidade: " QEEP",
-        status: " INDEFERIDO"
+        status: " INDEFERIDO",
+        curso: "Sistemas de Informação",
+        polo: "São Paulo"
     },
 
     {
@@ -66,7 +78,9 @@ const data = [
         email: " 	manu31032017 @gmail.com 	",
         cpf: " 098.954.686 - 10",
         modalidade: " QEEP",
-        status: " INDEFERIDO"
+        status: " INDEFERIDO",
+        curso: "Engenharia de Software",
+        polo: "Rio de Janeiro"
     },
 
     {
@@ -76,7 +90,9 @@ const data = [
         email: " 	fabiacapoeira1979 @gmail.com 	",
         cpf: " 016.405.301 - 85",
         modalidade: " QEEP",
-        status: " INDEFERIDO"
+        status: " INDEFERIDO",
+        curso: "Análise e Desenvolvimento de Sistemas",
+        polo: "Curitiba"
     },
 
     {
@@ -86,7 +102,9 @@ const data = [
         email: " 	zennamissoes @gmail.com 	",
         cpf: " 003.195.236 - 40",
         modalidade: " QEEP",
-        status: " INDEFERIDO"
+        status: " INDEFERIDO",
+        curso: "Ciência da Computação",
+        polo: "Belo Horizonte"
     },
 
     {
@@ -96,7 +114,9 @@ const data = [
         email: " 	marciacardosooliveira2025 @gmail.com 	",
         cpf: " 031.373.876 - 98",
         modalidade: " PCD",
-        status: " INDEFERIDO"
+        status: " INDEFERIDO",
+        curso: "Sistemas de Informação",
+        polo: "São Paulo"
     },
 
     {
@@ -106,7 +126,9 @@ const data = [
         email: " 	luceliasantoss340 @gmail.com 	",
         cpf: " 065.118.556 - 43",
         modalidade: " PCD",
-        status: " INDEFERIDO"
+        status: " INDEFERIDO",
+        curso: "Engenharia de Software",
+        polo: "Rio de Janeiro"
     },
 
     {
@@ -116,7 +138,9 @@ const data = [
         email: " sol.faria@edu.pbh.gov.br 	",
         cpf: " 780.496.366 - 15",
         modalidade: " AC",
-        status: " INDEFERIDO"
+        status: " INDEFERIDO",
+        curso: "Análise e Desenvolvimento de Sistemas",
+        polo: "Curitiba"
     },
 
     {
@@ -126,7 +150,9 @@ const data = [
         email: " adriana.cristielle@educacao.mg.gov.br 	",
         cpf: " 034.146.086 - 93",
         modalidade: " PCD",
-        status: " DEFERIDOS"
+        status: " DEFERIDOS",
+        curso: "Ciência da Computação",
+        polo: "Belo Horizonte"
     },
 
     {
@@ -136,7 +162,9 @@ const data = [
         email: " 	mariafernandap0099 @gmail.com 	",
         cpf: " 187.054.846 - 93",
         modalidade: " AC",
-        status: " DEFERIDOS"
+        status: " DEFERIDOS",
+        curso: "Sistemas de Informação",
+        polo: "São Paulo"
     },
 
     {
@@ -146,7 +174,9 @@ const data = [
         email: " 	carlanayara2356 @gmail.com 	",
         cpf: " 021.609.126 - 89",
         modalidade: " AC",
-        status: " DEFERIDOS"
+        status: " DEFERIDOS",
+        curso: "Engenharia de Software",
+        polo: "Rio de Janeiro"
     },
     {
         id: 16,
@@ -155,7 +185,9 @@ const data = [
         email: " eusouiagoleal@gmail.com 	",
         cpf: " 104.021.836 - 90",
         modalidade: " AC",
-        status: " DEFERIDOS"
+        status: " DEFERIDOS",
+        curso: "Análise e Desenvolvimento de Sistemas",
+        polo: "Curitiba"
     },
 
     {
@@ -165,7 +197,9 @@ const data = [
         email: "	neidedarochadonascimento @gmail.com 	",
         cpf: " 185.200.998 - 58",
         modalidade: " AC",
-        status: " DEFERIDOS"
+        status: " DEFERIDOS",
+        curso: "Ciência da Computação",
+        polo: "Belo Horizonte"
     },
 
     {
@@ -175,7 +209,9 @@ const data = [
         email: " 	lucimarlytavaresfonseca @gmail.com 	",
         cpf: " 041.167.326 - 21",
         modalidade: " AC",
-        status: " DEFERIDOS"
+        status: " DEFERIDOS",
+        curso: "Sistemas de Informação",
+        polo: "São Paulo"
     },
 
     {
@@ -185,7 +221,9 @@ const data = [
         email: " maria.souza189@educacao.mg.gov.br 	",
         cpf: " 672.740.486-00",
         modalidade: " AC",
-        status: " DEFERIDOS"
+        status: " DEFERIDOS",
+        curso: "Engenharia de Software",
+        polo: "Rio de Janeiro"
     },
 
     {
@@ -195,7 +233,9 @@ const data = [
         email: " sarah.oliveira.vieira.eng@gmail.com 	",
         cpf: " 146.057.157 - 62",
         modalidade: " AC",
-        status: " DEFERIDOS"
+        status: " DEFERIDOS",
+        curso: "Análise e Desenvolvimento de Sistemas",
+        polo: "Curitiba"
     },
 
     {
@@ -205,7 +245,9 @@ const data = [
         email: " 	rosapricila16 @yahoo.com.br 	",
         cpf: " 036.992.126 - 70",
         modalidade: " AC",
-        status: " DEFERIDOS"
+        status: " DEFERIDOS",
+        curso: "Ciência da Computação",
+        polo: "Belo Horizonte"
     },
 
     {
@@ -215,7 +257,9 @@ const data = [
         email: " 	manu31032017 @gmail.com 	",
         cpf: " 098.954.686 - 10",
         modalidade: " AC",
-        status: " INDEFERIDO"
+        status: " INDEFERIDO",
+        curso: "Sistemas de Informação",
+        polo: "São Paulo"
     },
 
     

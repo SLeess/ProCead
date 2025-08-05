@@ -58,7 +58,7 @@ function randomDate(start, end) {
     return date.toLocaleDateString('pt-BR') + " " + date.toLocaleTimeString('pt-BR');
 }
 
-const data = Array.from({ length: 22 }, (_, i) => ({
+const data = Array.from({ length: 1000 }, (_, i) => ({
     id: i + 1,
     descricao: descricoes[Math.floor(Math.random() * descricoes.length)],
     tipo_objeto: tiposObjeto[Math.floor(Math.random() * tiposObjeto.length)],
