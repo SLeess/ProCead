@@ -6,11 +6,15 @@ import styles from './Login.module.css';
 import { NavigationContext } from "@/Contexts/NavigationContext";
 import z from 'zod/v4';
 import ThemeToggleBtn from "@/Components/Global/ThemeToggleBtn/ThemeToggleBtn";
+import LoaderPages from "@/Components/Global/LoaderPages/LoaderPages";
+import Loader from "@/Components/Global/Loader/Loader";
 
 export default function Login() {
     const { setToken, theme } = useContext(AppContext);
     const { navigate } = useContext(NavigationContext);
     const { inputRef } = useRef(`border-[#004da9]`);
+
+    const [loading, setLoading] = useState(false);
 
     const [formData, setFormData] = useState({
         email: '',
@@ -21,6 +25,8 @@ export default function Login() {
 
     const handleLogin = async (e) => {
         e.preventDefault();
+
+        setLoading(true);
 
         const {email, password} = formData;
         const validation = loginSchema.safeParse({ email, password });
@@ -55,13 +61,13 @@ export default function Login() {
                 localStorage.setItem('token', result.data.token);
                 setToken(result.data.token);
 
-                toast.success((result.message || "Autenticado com sucesso!") + " Redirecionando a página...", {
-                    closeOnClick: true,
-                    autoClose: 1500,
-                });
+                toast.success((result.message || "Autenticado com sucesso!"));
+                navigate('/');
             }
         } catch (error) {
             toast.error(error.toString());
+        } finally{
+            setLoading(false);
         }
     };
 
@@ -78,6 +84,9 @@ export default function Login() {
 
             <div className="flex justify-center" style={{alignItems: "center", minHeight: "94.3vh"}}>
                 <div className="login-container flex flex-col items-center">
+                    {
+                        loading == true && <LoaderPages></LoaderPages>
+                    }
                     <div className="mb-12">
                         <img src={`${theme === 'light' ? "/img/img_logo.png" : '/img/logo_cead_bg_white_full.png'}`} alt="CEAD Unimontes Logo" className="h-[155px] w-[345px]"/>
                     </div>

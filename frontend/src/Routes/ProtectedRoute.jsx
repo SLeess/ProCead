@@ -4,13 +4,15 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { AppContext } from '@/Contexts/AppContext';
 import Loader from '@/Components/Global/Loader/Loader';
 import { toast } from 'react-toastify';
+import LoaderPages from '@/Components/Global/LoaderPages/LoaderPages';
 
 const ProtectedRoute = ({ children, area }) => {
   const { user, loading, canAccessAdminArea } = useContext(AppContext);
   const location = useLocation();
 
+  
   if (loading) {
-    return <Loader/>;
+    return <LoaderPages/>;
   }
 
   const isAuthenticated = !!user;

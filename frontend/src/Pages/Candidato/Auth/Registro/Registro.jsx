@@ -6,6 +6,7 @@ import { maskCPF, registerSchema } from "./registroSchema";
 import { NavigationContext } from "@/Contexts/NavigationContext";
 import z from 'zod/v4';
 import ThemeToggleBtn from "@/Components/Global/ThemeToggleBtn/ThemeToggleBtn";
+import LoaderPages from "@/Components/Global/LoaderPages/LoaderPages";
 
 export default function Registro(){
 
@@ -19,12 +20,19 @@ export default function Registro(){
         confirm_password: '',
     });
 
+    const [loading, setLoading] = useState(false);
+
     const [errors, setErrors] = useState({});
 
     const { setToken, theme } = useContext(AppContext);
 
     const handleRegister = async (e) => {
+        if(loading == true) 
+            return;
+
         e.preventDefault();
+
+        setLoading(true);
 
         try {
             const validatedData = registerSchema.safeParse(formData);
@@ -62,18 +70,15 @@ export default function Registro(){
                     toast.error(result.message || "Ocorreu um erro desconhecido.");
                 }
             } else{
-                toast.success((result.message ||  "Registrado com sucesso!") + " Redirecionando a página...", {
-                    autoClose: 1500,
-                    closeOnClick: false,
-                    // theme: theme,
-                    onClose: () => {
-                        localStorage.setItem('token', result.data.token);
-                        setToken(result.data.token);
-                    }
-                });
+                toast.success((result.message ||  "Registrado com sucesso!"));
+                localStorage.setItem('token', result.data.token);
+                setToken(result.data.token);
+                navigate("/");
             }
         } catch (error) {
             toast.error(error.toString());
+        } finally {
+            setLoading(false);
         }
 
     };
@@ -104,6 +109,9 @@ export default function Registro(){
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm mt-14 sm:mt-0">
                     <img className="mx-auto h-25 w-auto" src={`${theme === 'light' ? "/img/img_logo.png" : '/img/logo_cead_bg_white_full.png'}`} alt="Unimontes logo"/>
                 </div>
+                {
+                    loading && <LoaderPages></LoaderPages>
+                }
                 <div id="container-form">
                     <div id="alert-form" role="alert">
                         <span className="flex rounded-full bg-blue-500 uppercase px-2 py-1 text-xs font-bold mr-3"><strong>Atenção</strong></span>

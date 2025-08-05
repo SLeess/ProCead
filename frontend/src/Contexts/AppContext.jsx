@@ -176,6 +176,7 @@ export default function AppProvider({ children }) {
         token, 
         setToken, 
         loading, 
+        setLoading,
         toggleTheme, 
         theme, 
         logout, 
