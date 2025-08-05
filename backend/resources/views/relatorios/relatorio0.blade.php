@@ -10,9 +10,10 @@
             font-size: .95rem;
         }
 
-        .table-content th, .table-comtent td{
-            border-bottom: 2px solid #DDDDDD;
+        .table-content th, .table-content td{
+            /* border-bottom: 2px solid #DDDDDD; */
             border-top: 2px solid #DDDDDD;
+            word-wrap: break-word;
         }
 
         .title {
@@ -38,15 +39,15 @@
 <body>
     
     @include('cabecalho', ['title' => $data['titulo'], 'subtitle' => $data['subtitulo']])
-    <h2 style="font-size:1.06rem;margin-top: 0px; margin-bottom: 15px;">{{$data['tableName']}}</h2>
+    {{-- <h2 style="font-size:1.06rem;margin-top: 0px; margin-bottom: 15px;">{{$data['tableName']}}</h2> --}}
     @if(sizeof($data['rows']) == 0)
         <p>Nenhum registro enviado ou encontrado</p>
     @else
-        <table class="table-content" style="margin-bottom: 10px;width: 100%;text-align: center;">
+        <table class="table-content" style="margin-bottom: 10px;width: 100%;text-align: center;table-layout: fixed;">
             <thead>
                 <tr>
                     @foreach ($data['columns'] as $column)
-                        <th style="width: 10%">{{ $column['header'] }}</th>
+                        <th style="width: {{floor($data['columnWidths'][$column['id']])}}%;">{{ $column['header'] }}</th>
                     @endforeach
                 </tr>
             </thead>
@@ -54,7 +55,9 @@
                 @foreach ($data['rows'] as $row)
                     <tr>
                         @foreach ($data['columns'] as $column)
-                            <td style="width: 10%;">{{$row[$column["id"]]}}</td>
+                            {{-- @dd("width: ".floor($data['columnWidths'][$column['id']])."%") --}}
+                            
+                            <td style="width: {{floor($data['columnWidths'][$column['id']])}}%;">{{$row[$column["id"]]}}</td>
                         @endforeach
                     </tr>
                 @endforeach

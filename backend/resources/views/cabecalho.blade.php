@@ -43,5 +43,7 @@
 </table>
 
 
-<p style="width: 100%; padding:10px;font-size: 0.80rem;">Data de emissão: {{now()->isoFormat('D [de] MMMM [de] YYYY, H\hmm')}}.</p>
+<p style="width: 100%; padding:10px;font-size: 0.80rem;">
+    Data de emissão: {{ now()->locale('pt_BR')->isoFormat('D [de] MMMM [de] YYYY, H\hmm') }}.
+</p>
 <hr style="height: 0.08px;background-color: #0000002e;border: none;">
