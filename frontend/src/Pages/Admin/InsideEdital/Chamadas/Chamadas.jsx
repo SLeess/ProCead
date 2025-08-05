@@ -13,7 +13,7 @@ const Chamadas = () => {
 
   if (hasPermissionForEdital('visualizar-cursos', editalId) || isSuperAdmin())
     return (
-      <div className="p-4">
+      <div>
         <div className="flex items-center justify-between mb-4">
           <h1 className="text-2xl font-bold">Chamadas para Matrícula</h1>
           {/* TODO: Chamada Create Modal */}

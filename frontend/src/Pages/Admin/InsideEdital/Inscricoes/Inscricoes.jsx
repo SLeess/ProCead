@@ -13,7 +13,7 @@ const Inscricoes = () => {
 
   if (hasPermissionForEdital('visualizar-inscricoes', editalId) || isSuperAdmin())
     return (
-      <div className="p-4">
+      <div className="">
         <h1 className="text-2xl font-bold mb-4">Gerenciamento de Inscrições</h1>
         <div className="flex gap-4 mb-4">
           <div className="bg-white shadow-md rounded-lg p-5 w-xs relative flex flex-col justify-between h-30">

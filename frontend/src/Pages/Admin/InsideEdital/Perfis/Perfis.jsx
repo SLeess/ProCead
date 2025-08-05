@@ -14,7 +14,7 @@ const Perfis = () => {
 
   if (hasPermissionForEdital('visualizar-perfis', editalId) || isSuperAdmin())
     return (
-      <div className="p-4">
+      <div>
         <div className="flex items-center justify-between mb-4">
           <h1 className="text-2xl font-bold">Perfis</h1>
           <PerfilCreateModal enableGlobal={false}/>
