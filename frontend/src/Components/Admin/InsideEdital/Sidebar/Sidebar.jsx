@@ -96,7 +96,7 @@ const Sidebar = () => {
   }
 
   return (
-    <div id='Sidebar-admin' className="w-67 h-screen bg-[#0A51BF] flex flex-col font-sans rounded-tr-[15px] rounded-br-[15px]">
+    <div id='Sidebar-admin' className="w-67 h-screen bg-[var(--admin-sidebar)] flex flex-col font-sans rounded-tr-[15px] rounded-br-[15px]">
       <div
         className="p-5 text-2xl font-bold text-white flex items-center flex-shrink-0 cursor-pointer"
         onClick={() => navigate(`/admin`)}
@@ -108,7 +108,7 @@ const Sidebar = () => {
         {menuData.map(section => (
           <div key={section.title} className="py-2">
             <div
-              className={`px-4 py-2.5 flex items-center justify-between cursor-pointer rounded-md m-1 mx-2 transition-colors duration-50 ease-in-out hover:bg-[#0064DB] ${openSections[section.title] ? 'bg-[#0A51BF]' : 'bg-transparent'}`}
+              className={`px-4 py-2.5 flex items-center justify-between cursor-pointer rounded-md m-1 mx-2 transition-colors duration-50 ease-in-out hover:bg-[var(--admin-sidebar-hover-and-select)]`}
               onClick={() => handleToggleSection(section.title)}
             >
               <span className="flex items-center gap-3 text-[0.95rem] text-white">
@@ -126,7 +126,8 @@ const Sidebar = () => {
               {section.items.filter((link) => link !== null).map(item => (
                 <div
                   key={item.name}
-                  className={`flex justify-start items-center gap-3 py-1.5 pr-4 pl-[30px] text-[#ffffff] cursor-pointer m-1 mx-2 rounded-md text-[1rem] transition-colors duration-200 hover:bg-[#0064DB] ${activeItem === item.name ? 'bg-[#1a73e8] text-white font-medium' : ''}`}
+                  className={`flex justify-start items-center gap-3 py-1.5 pr-4 pl-[30px] text-[#ffffff] cursor-pointer m-1 mx-2 rounded-md text-[1rem] transition-colors duration-200 hover:bg-[var(--admin-sidebar-hover-and-select)] ${activeItem === item.name ? 'bg-[var(--admin-sidebar-hover-and-select)] text-white font-medium' : ''}`
+                  }
                   onClick={() => handleItemClick(item.name, item.href)}
                 >
                   {item.icon}

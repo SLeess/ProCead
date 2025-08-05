@@ -198,6 +198,9 @@ div.info-not-found-itens p#second{
     --header-candidato-primary-left: #004DA9;
     --header-candidato-primary-right: #2A83ED;
 
+    --admin-sidebar: #2A1670;
+    --admin-sidebar-hover-and-select: #6C4BC3;
+
     --radius: 0.625rem;
     --background: oklch(1 0 0);
     --foreground: oklch(0.145 0 0);
@@ -222,7 +225,6 @@ div.info-not-found-itens p#second{
     --chart-3: oklch(0.398 0.07 227.392);
     --chart-4: oklch(0.828 0.189 84.429);
     --chart-5: oklch(0.769 0.188 70.08);
-    --sidebar: oklch(0.985 0 0);
     --sidebar-foreground: oklch(0.145 0 0);
     --sidebar-primary: oklch(0.205 0 0);
     --sidebar-primary-foreground: oklch(0.985 0 0);

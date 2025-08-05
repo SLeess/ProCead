@@ -80,7 +80,7 @@ const MainTable = ({ data, columns, title, hasShadowBorderStyle = true, hasPaddi
                 type="text"
                 value={globalFilter ?? ''}
                 onChange={e => setGlobalFilter(e.target.value)}
-                className="w-full rounded-md border border-gray-300 bg-white py-2 pl-10 pr-4 text-sm font-medium text-gray-700"
+                className="w-full rounded-md border border-gray-100 bg-white py-2 pl-10 pr-4 text-sm font-medium text-gray-700"
                 placeholder="Pesquisar..."
               />
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
