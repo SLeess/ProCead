@@ -1,11 +1,14 @@
 import React from 'react';
 import './ProcessoCard.css';
-
 import { FaBookmark } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+
 
 
 export default function ProcessoCard({ processo }){
-  const { edital, descricao, inscrito } = processo;
+  const navigate = useNavigate();
+  const {id, edital, descricao, inscrito } = processo;
+  
 
   const limitarString = (text, maxLength) => {
     if(text.length <= maxLength){
@@ -17,6 +20,10 @@ export default function ProcessoCard({ processo }){
 
   return (
     <div className={`cardBase ${inscrito ? 'cardBorderInscrito' : 'cardBorderNaoInscrito'}`}>
+      <h1>{id}</h1>
+      <h1>{edital}</h1>
+      <h1>{descricao}</h1>
+      <h1>{"inscrito: "+inscrito}</h1>
       {
         inscrito && (
           <div className={'bookmarkIcon'}>
@@ -29,7 +36,7 @@ export default function ProcessoCard({ processo }){
         <p className={`cardContent`} >{ limitarString(descricao, 115) }</p>
       </div>
 
-      <button className={`buttonBase ${inscrito ? `buttonInscrito` : `buttonNaoInscrito`}`}>
+      <button className={`buttonBase ${inscrito ? `buttonInscrito` : `buttonNaoInscrito`}`} onClick={ inscrito ? () => navigate(`/edital/${id}`) : () => navigate(`/edital/${id}/inscrever`)}>
         {inscrito ? 'Ver Inscrição' : 'Inscreva-se'}
       </button>
     </div>

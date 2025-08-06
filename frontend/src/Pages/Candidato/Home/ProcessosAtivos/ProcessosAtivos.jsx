@@ -3,37 +3,37 @@ import { CiInboxIn } from "react-icons/ci";
 
 const processosData = [
   {
-    id: 102,
+    id: 2,
     edital: 'Edital 08/2025',
     descricao: 'Processo Seletivo para contratação de Professor Substituto de Direito',
     inscrito: true,
   },
   {
-    id: 104,
+    id: 4,
     edital: 'Edital 11/2024',
     descricao: 'Processo de Seleção de Discentes para os Cursos de Especialização da Unimontes Modalidade Educação a DistânciaSeleção para o Programa de Pós-Graduação em Biotecnologia (PPGBiotec)',
     inscrito: true,
   },
   {
-    id: 106,
+    id: 6,
     edital: 'Edital 01/2025',
     descricao: 'Seleção de tutores para cursos de Educação a Distância (EaD)',
     inscrito: true,
   },
   {
-    id: 101,
+    id: 1,
     edital: 'Edital 12/2024',
     descricao: 'Seleção para Mestrado em Produção Vegetal no Semiárido',
     inscrito: false,
   },
   {
-    id: 103,
+    id: 3,
     edital: 'Edital 02/2025',
     descricao: 'Vagas remanescentes para o curso de Especialização em Gestão Pública',
     inscrito: false,
   },
   {
-    id: 105,
+    id: 5,
     edital: 'Edital 09/2025',
     descricao: 'Processo de Seleção de Discentes para o curso de Odontologia',
     inscrito: false,

@@ -20,9 +20,8 @@ const CandidateArea = ({ editalId }) => (
 
 export default function EditalPage() {
     const { editalId } = useParams();
-    const { user, hasPermissionForEdital, loading, permissions } = useAppContext();
+    const { user, loading, permissions } = useAppContext();
 
-    console.log("here");
     console.log(permissions);
     
     if (loading) {
@@ -33,23 +32,10 @@ export default function EditalPage() {
         return <div>Você precisa estar logado para ver esta página.</div>;
     }
 
-    const canAdmin = hasPermissionForEdital('administrar', editalId);
-    const canApply = hasPermissionForEdital('inscrever-se', editalId);
 
     return (
         <div style={{ padding: '20px' }}>
-            <h1>Página do Edital {editalId}</h1>
-            <p>Logado como: <strong>{user.email}</strong></p>
-
-            {canAdmin && <AdminDashboard editalId={editalId} />}
-            {canApply && <CandidateArea editalId={editalId} />}
-
-            {!canAdmin && !canApply && (
-                <div style={{ border: '2px solid red', padding: '20px', marginTop: '20px' }}>
-                    <h3>Acesso Negado</h3>
-                    <p>Você não tem permissões de administrador ou candidato para este edital.</p>
-                </div>
-            )}
+            <h1>Inscrito no edital {editalId}</h1>
         </div>
     );
 }
