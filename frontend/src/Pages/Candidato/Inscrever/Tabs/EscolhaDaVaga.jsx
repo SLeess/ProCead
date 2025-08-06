@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 const EscolhaDaVaga = ({ formData, setFormData, handleBack, handleNext }) => {
   const vagas = [
@@ -8,7 +8,7 @@ const EscolhaDaVaga = ({ formData, setFormData, handleBack, handleNext }) => {
     { id: 4, title: 'Lato Sensu em Alfabetização e Multiletramentos' },
   ];
 
-  const VagaCard = ({ title, isSelected, onSelect, onCampusChange }) => (
+  const VagaCard = ({ title, isSelected, onSelect, onCampusChange, selectedValue }) => (
     <div
       onClick={onSelect}
       className={`cursor-pointer border-2 rounded-lg p-4 flex flex-col justify-between h-48 transition-colors ${isSelected ? 'bg-yellow-300 border-yellow-400' : 'bg-white border-gray-200 hover:border-blue-500'}`}
@@ -18,6 +18,7 @@ const EscolhaDaVaga = ({ formData, setFormData, handleBack, handleNext }) => {
         <select
           onClick={(e) => e.stopPropagation()}
           onChange={onCampusChange}
+          value={selectedValue}
           className="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none"
           disabled={!isSelected}
         >
@@ -40,7 +41,7 @@ const EscolhaDaVaga = ({ formData, setFormData, handleBack, handleNext }) => {
         ? prevFormData.vagas.filter(v => v.vaga !== vagaId)
         : [...prevFormData.vagas, { vaga: vagaId, title: vagaTitle, polo: '', modalidade: '', categoria: '' }];
       
-      return { ...prevFormData, vagas: newVagas.filter(v => v.vaga) }; 
+      return { ...prevFormData, vagas: newVagas.filter(v => v.vaga) };
     });
   };
 
@@ -53,9 +54,9 @@ const EscolhaDaVaga = ({ formData, setFormData, handleBack, handleNext }) => {
     });
   };
 
-  useEffect(() => {
-    console.log(formData);
-  },[formData.vagas])
+  // useEffect(() => {
+  //   console.log(formData);
+  // },[formData.vagas])
 
   return (
     <div className="bg-gray-100 min-h-screen p-4 sm:p-6 md:p-8 font-sans">
@@ -75,6 +76,7 @@ const EscolhaDaVaga = ({ formData, setFormData, handleBack, handleNext }) => {
                   key={vaga.id}
                   title={vaga.title}
                   isSelected={!!selectedVaga}
+                  selectedValue={selectedVaga ? selectedVaga.polo : ''}
                   onSelect={() => handleVagaSelect(vaga.id, vaga.title)}
                   onCampusChange={(e) => handleCampusChange(vaga.id, e.target.value)}
                 />

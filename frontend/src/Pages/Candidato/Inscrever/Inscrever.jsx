@@ -68,12 +68,17 @@ const Inscrever = () => {
                 categoria: ''
             },
         ],
+        termo_responsabilidade: false
 });
 
     const handleOnChangeAttr = (e, attr) => {
+        console.log(e.target.checked);
         const { value } = e.target;
         setFormData(f => ({...f, [attr]: value}));
     };
+      useEffect(() => {
+    console.log(formData);
+  },[formData])
 
     return (
         <div  id='inscricao'>
@@ -94,10 +99,10 @@ const Inscrever = () => {
                     activeTabIndex === 2 && <EscolhaDaVaga formData={formData} setFormData={setFormData} handleNext={handleNext} handleBack={handleBack}/>
                 }
                 {
-                    activeTabIndex === 3 && <DetalhesDaVaga formData={formData} handleOnChangeAttr={handleOnChangeAttr} handleNext={handleNext} handleBack={handleBack}/>
+                    activeTabIndex === 3 && <DetalhesDaVaga formData={formData} setFormData={setFormData} handleNext={handleNext} handleBack={handleBack}/>
                 }
                 {
-                    activeTabIndex === 4 && <Confirmacao formData={formData} handleOnChangeAttr={handleOnChangeAttr} handleNext={handleNext} handleBack={handleBack}/>
+                    activeTabIndex === 4 && <Confirmacao formData={formData} setFormData={setFormData} handleOnChangeAttr={handleOnChangeAttr} handleNext={handleNext} handleBack={handleBack}/>
                 }
         </form>
         </div>

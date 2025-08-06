@@ -1,6 +1,5 @@
 import React from 'react'
-import { FormField, SelectInput } from "@/Components/Global/ui/modals";
-import { TextInput } from "flowbite-react";
+import { FormField, TextInput } from "@/Components/Global/ui/modals";
 import { useAppContext } from '@/Contexts/AppContext';
 const InformacoesBasicas = ({formData, handleOnChangeAttr, handleNext}) => {
   const user = useAppContext();
