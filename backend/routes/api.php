@@ -1,31 +1,48 @@
 <?php
 
-use App\Http\Controllers\Admin\RelatorioController;
-use App\Http\Controllers\Admin\UserController;
+/* ----------- COMUM ----------- */
+
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogOutController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
-use App\Http\Controllers\UserPermissionController;
-use App\Http\Controllers\Admin\UserPermissionController as ManageUserPermissionsController;
-use Illuminate\Support\Facades\Route;
 
 /* ---------- USUÁRIO ---------- */
-Route::middleware(['throttle:global'])->name('usuario.')->group(function(){
+use App\Http\Controllers\UserController;
+
+/* ----------- ADMIN ----------- */
+use App\Http\Controllers\Admin\ManageUserController;
+use App\Http\Controllers\Admin\ManageUserPermissionsController;
+use App\Http\Controllers\Admin\ManageRolePermissionsController;
+use App\Http\Controllers\Admin\RelatorioController;
+
+/* ----------------------------- */
+
+
+
+
+
+/* ---------- USUÁRIO ---------- */
+Route::middleware(['throttle:api',])->name('usuario.')->group(function(){
     Route::post('/register', [RegisterController::class, 'register'])->name('register');
     Route::post('/login', [LoginController::class, 'loginCandidate'])->name('login');
     Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
     Route::post('/reset-password', [ResetPasswordController::class, 'resetPassword'])->name('password.update');
 });
 
-Route::middleware(['auth:sanctum'])->name('candidato.')->group( function () {
+Route::middleware(['auth:sanctum', 'throttle:auth'])->name('candidato.')->group( function () {
     Route::name('usuario.')->group(function() {
-        Route::get('/user', [UserPermissionController::class, 'userPermissions'])->name('dados');
+        Route::prefix("/user")->group(function(){
+            Route::singleton('', UserController::class)->only(['show', 'update']);
+            Route::get('/permissions',[UserController::class, 'getPermissions'])->name('permissions.show');
+        });
+
         Route::post('/logout', [LogOutController::class, 'logout'])->name('logout');
     });
 
-    /** Rotas de Teste -- Serão apagadas depois */
+    /** --------------------- Inicio Rotas de Teste -------------------- */
     Route::name('home.')->group(function(){
         Route::get('/user/meus-processos', function(){
             $response = [
@@ -282,34 +299,28 @@ Route::middleware(['auth:sanctum'])->name('candidato.')->group( function () {
         });
     });
     /** ---------------------- Fim Rotas de Teste ---------------------- */
-
-    Route::post('/export', [RelatorioController::class, 'export'])->name('export');
-
 });
 /* ---------- FIM - CANDIDATO ---------- */
 
 
 
 /* ------------- ADMINISTRADOR ------------- */
-/* Rotas de Login do Administrador */
-Route::prefix('/admin')->name('admin.')->group(function(){
+Route::middleware(['throttle:api'])->prefix('/admin')->name('admin.')->group(function(){
     Route::post('/login', [LoginController::class, 'loginAdmin']);
 });
 
+Route::prefix('/admin')->middleware(['auth:sanctum', 'throttle:auth'])->name('admin.')->group( function () {
 
-Route::prefix('/admin')->middleware(['auth:sanctum', 'admin-Access'])->name('admin.')->group( function () {
-
-    // Gerenciamento geral de usuários
     Route::prefix('/users')->name('users.')->group(function(){
-        Route::get("", [UserController::class, 'index'])->name('index');
-
-        // Gerenciamento de permissões dos usuários
+        Route::resource('', ManageUserController::class)
+                ->parameters(['' => 'user'])
+                ->only(['index', 'show', 'update']);
         Route::prefix('{userId}/permissions')->name('permissions.')->group(function () {
-            Route::get('', [ManageUserPermissionsController::class, 'show'])->name('show');
-            Route::put('', [ManageUserPermissionsController::class, 'update'])->name('update');
+            Route::singleton('', ManageUserPermissionsController::class)->only(['show', 'update']);
         });
     });
 
+    Route::post("/role-permissions", [ManageRolePermissionsController::class, 'update'])->name('role-permissions.update');
 
     Route::prefix('/editais')->name('editais.')->group(function(){
         Route::get('', function(){
@@ -404,52 +415,19 @@ Route::prefix('/admin')->middleware(['auth:sanctum', 'admin-Access'])->name('adm
         })->name('index');
 
         Route::prefix('{edital}')->name('manage.')->group(function(){
-            // Route::get('inscricoes', [InscricaoController::class, 'index'])->name('inscricoes.index');
+        // Route::get('inscricoes', [InscricaoController::class, 'index'])->name('inscricoes.index');
         });
     });
 
-    Route::get('/teste', function(){
-        return response()->json(['atumalaca' => 'tome'], 202);
-    });
+    Route::post('/export', [RelatorioController::class, 'export'])->name('export');
 });
-
-
 /* ---------- FIM - ADMINISTRADOR ---------- */
 
 
+
+
 /* ------------- SUPER-ADMINISTRADOR ------------- */
-/* Rotas de Login do Administrador */
-Route::name('superAdmin')->group(function(){
+Route::name('superAdmin')->middleware(['auth:sanctum', 'role:super-Admin'])->group(function(){
 
-})->middleware(['auth:sanctum', 'role:super-Admin']);
+});
 /* ---------- FIM - SUPER-ADMINISTRADOR ---------- */
-
-
-
-
-
-
-
-
-
-Route::get('/test-permissions', function(){
-    $user = Illuminate\Support\Facades\Auth::attempt(['email' => 'leandro.freitas@edu.unimontes.br', 'password'=> 'asdasdasd']);
-    $CONTROLLER = new UserPermissionController();
-    return $CONTROLLER->userPermissions(new Illuminate\Http\Request([], ['user' => Illuminate\Support\Facades\Auth::user()]));
-});
-
-
-
-Route::get('/teste/admin/editais', function(){
-    return response()->json(
-        [
-            'editais' => App\Models\Edital::all()->toArray(),
-            'roles' => App\Models\Roles::all()->map(function($role) {
-                return ['id' => $role->id, 'name' => $role->name];
-            })->toArray(),
-            'permissions' => Spatie\Permission\Models\Permission::all()->map(function($permission) {
-                return ['id' => $permission->id, 'name' => $permission->name];
-            })->toArray(),
-        ]
-    );
-});
