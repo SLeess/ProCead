@@ -37,7 +37,7 @@ export default function TopBar() {
     return (
         <div className="flex items-center w-full px-4 py-2 bg-white shadow rounded-md mb-4">
             {/* Left Item */}
-            <div className="font-semibold bg-[var(--topbar-flag)] py-1 px-2 rounded-md">
+            <div className="font-semibold text-[var(--topbar-flag-text)] bg-[var(--topbar-flag)] py-1 px-2 rounded-md">
                 Edital: {editalId}
             </div>
 

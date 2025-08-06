@@ -262,7 +262,7 @@ export default function ModalExportarRelatorio({ openModal, onCloseModal, table,
             </FormField>
           </div>
           <div className="mt-4">
-            <button onClick={() => enableGroupBy(showGroupBy)} className="text-sm font-semibold text-blue-600 hover:underline">
+            <button onClick={() => enableGroupBy(showGroupBy)} className="text-sm font-semibold text-[var(--add-group-by)] hover:underline">
               {showGroupBy ? 'Desabilitar Agrupamento' : 'Agrupar por Coluna'}
             </button>
           </div>
@@ -278,8 +278,8 @@ export default function ModalExportarRelatorio({ openModal, onCloseModal, table,
                           type="button"
                           onClick={index === 0 ? addGroupByField : () => removeGroupByField(index)}
                           className={`p-1 rounded-full transition-colors ${index === 0
-                            ? 'text-blue-600 hover:bg-blue-100'
-                            : 'text-red-600 hover:bg-red-100'
+                            ? 'cursor-pointer text-[var(--add-group-by)] hover:bg-[var(--add-group-by-hover)]'
+                            : 'cursor-pointer text-red-600 hover:bg-red-100'
                             }`}
                         >
                           {index === 0 ? <PlusCircle className="h-5 w-5" /> : <MinusCircle className="h-5 w-5" />}
@@ -301,7 +301,7 @@ export default function ModalExportarRelatorio({ openModal, onCloseModal, table,
             </>
           )}
           <div className="mt-4">
-            <button onClick={() => enableColumnWidth(showColumnWidth)} className="text-sm font-semibold text-blue-600 hover:underline">
+            <button onClick={() => enableColumnWidth(showColumnWidth)} className="text-sm font-semibold text-[var(--add-group-by)] hover:underline">
               {showColumnWidth ? 'Desabilitar Ajuste de Colunas' : 'Ajustar Largura das Colunas'}
             </button>
           </div>
@@ -337,7 +337,7 @@ export default function ModalExportarRelatorio({ openModal, onCloseModal, table,
 
           <div className="mt-10 flex justify-end items-center space-x-4">
             <button onClick={onCloseModal} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Fechar</button>
-            <button onClick={() => handleExport(titulo, subtitulo, orientacao, formato)} className="px-6 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"> {isExporting ? 'Exportando...' : 'Gerar Relatório'}</button>
+            <button onClick={() => handleExport(titulo, subtitulo, orientacao, formato)} className="cursor-pointer px-6 py-2.5 text-sm font-semibold text-white bg-[var(--button)] rounded-md hover:bg-[var(--button-hover)]"> {isExporting ? 'Exportando...' : 'Gerar Relatório'}</button>
           </div>
         </div>
       </ModalBody>

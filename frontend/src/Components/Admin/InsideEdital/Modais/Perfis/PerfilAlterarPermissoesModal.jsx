@@ -60,7 +60,7 @@ const PefilAlterarPermissoesModal = () => {
                         </button>
                         <button
                             onClick={onCloseModal}
-                            className="px-8 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700"
+                            className="cursor-pointer px-8 py-2.5 text-sm font-semibold text-white bg-[var(--button)] rounded-md hover:bg-[var(--button-hover)]"
                         >
                             Salvar
                         </button>

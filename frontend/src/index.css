@@ -199,23 +199,29 @@ div.info-not-found-itens p#second{
     --header-candidato-primary-right: #2A83ED;
 
     /* ----- Inside Edital ----- */
-    
+
     /* Sidebar */
     --admin-sidebar: #2A1670;
     --admin-sidebar-hover-and-select: #6C4BC3;
 
     /* Topbar */
     --topbar-flag: #F8F2FF;
+    --topbar-flag-text: #09024B;
 
     /* Buttons */
     --button: #6C4BC3;
     --button-hover: #2A1670;
 
     /* Cards */
-    --stats-card: #2A1670;
+    --stats-card: #D8C1FD;
+    --stats-card-text: #15085E;
 
     /* Table */
     --paginate-text: #6C4BC3;
+
+    /* Export */
+    --add-group-by: #6C4BC3;
+    --add-group-by-hover: #F8F2FF;
 
     /* -------------------- */
     

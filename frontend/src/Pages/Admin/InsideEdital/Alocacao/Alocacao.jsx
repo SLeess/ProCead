@@ -5,6 +5,7 @@ import data from './data';
 import columns from './columns';
 import MainTable from '@/Components/Global/Tables/MainTable/MainTable';
 import { AlertTriangle, FileText, GraduationCap, ShieldCheck } from 'lucide-react';
+import StatsCard from '@/Components/Global/Cards/StatsCard';
 
 const Alocacao = () => {
 
@@ -19,30 +20,21 @@ const Alocacao = () => {
           <h1 className="text-2xl font-bold">Alocação para Avaliação</h1>
         </div>
         <div className="flex gap-4 mb-4">
-          <div className="bg-[var(--stats-card)] shadow-md rounded-md p-5 w-xs relative flex flex-col justify-between h-30">
-            <p className="text-white mb-1">Total de Inscrições</p>
-            <p className="text-white text-2xl font-bold mb-1">250</p>
-            <FileText className="absolute top-4 right-4 text-white" />
+          <StatsCard title={"Total de Inscrições"} quant={400}>
+            <FileText className="text-[var(--stats-card-text)] absolute top-4 right-4" />
+          </StatsCard>
 
-          </div>
-          <div className="bg-[var(--stats-card)] shadow-md rounded-md p-5 w-xs relative flex flex-col justify-between h-30">
-            <p className="text-white mb-1">Total de Cotas</p>
-            <p className="text-white text-2xl font-bold mb-1">125</p>
-            <ShieldCheck className="absolute top-4 right-4 text-white" />
+          <StatsCard title={"Total de Cotas"} quant={300}>
+            <ShieldCheck className="text-[var(--stats-card-text)] absolute top-4 right-4" />
+          </StatsCard>
 
-          </div>
-          <div className="bg-[var(--stats-card)] shadow-md rounded-md p-5 w-xs relative flex flex-col justify-between h-30">
-            <p className="text-white mb-1">Total de Recursos</p>
-            <p className="text-white text-2xl font-bold mb-1">72</p>
-            <AlertTriangle className="absolute top-4 right-4 text-white" />
+          <StatsCard title={"Total de Recursos"} quant={200}>
+            <AlertTriangle className="text-[var(--stats-card-text)] absolute top-4 right-4" />
+          </StatsCard>
 
-          </div>
-          <div className="bg-[var(--stats-card)] shadow-md rounded-md p-5 w-xs relative flex flex-col justify-between h-30">
-            <p className="text-white mb-1">Total de Matrículas</p>
-            <p className="text-white text-2xl font-bold mb-1">128</p>
-            <GraduationCap className="absolute top-4 right-4 text-white" />
-
-          </div>
+          <StatsCard title={"Total de Matrículas"} quant={100}>
+            <GraduationCap className="text-[var(--stats-card-text)] absolute top-4 right-4" />
+          </StatsCard>
         </div>
         <MainTable data={data} columns={columns} title={"Lista de Administradores"} />
       </div>

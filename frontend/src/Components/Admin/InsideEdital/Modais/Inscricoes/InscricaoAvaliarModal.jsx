@@ -54,7 +54,7 @@ export default function InscricaoAvaliarModal() {
 
                         <div className="mt-10 flex justify-end items-center space-x-4">
                             <button onClick={onCloseModal} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Cancelar</button>
-                            <button onClickCapture={onCloseModal} className="px-8 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700">Avaliar</button>
+                            <button onClickCapture={onCloseModal} className="cursor-pointer px-8 py-2.5 text-sm font-semibold text-white bg-[var(--button)] rounded-md hover:bg-[var(--button-hover)]">Avaliar</button>
                         </div>
                     </div>
 

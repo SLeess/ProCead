@@ -19,7 +19,7 @@ const AvaliacoesDoUsuario = () => {
             <div>
                 <div className="flex items-center justify-between mb-4">
                     <h1 className="text-2xl font-bold">Alocar para Avaliação</h1>
-                    <button onClick={() => navigate(-1)} className="px-4 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                    <button onClick={() => navigate(-1)} className="px-4 py-2.5 text-sm font-semibold text-white bg-[var(--button)] rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                         <Undo2 className="inline" />
                         <span className='ml-1'>Voltar</span>
                     </button>
