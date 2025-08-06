@@ -39,28 +39,36 @@ const Inscrever = () => {
         }
     };
 
-    const [formData, setFormData] = useState([
-        'nome_completo',
-        'cpf',
-        'email',
-        'data_nascimento',
-        'telefone',
-        'genero',
-        'nome_social',
-        'identidade_genero',
-        'rg',
-        'estado_civil',
-        'uf_nascimento',
-        'nacionalidade',
-        'naturalidade',
-        'cep',
-        'rua',
-        'bairro',
-        'numero',
-        'complemento',
-        'cidade',
-        'uf'
-    ]);
+    const [formData, setFormData] = useState({
+        nome_completo: '',
+        cpf: '',
+        email: '',
+        data_nascimento: '',
+        telefone: '',
+        genero: '',
+        nome_social: '',
+        identidade_genero: '',
+        rg: '',
+        estado_civil: '',
+        uf_nascimento: '',
+        nacionalidade: '',
+        naturalidade: '',
+        cep: '',
+        rua: '',
+        bairro: '',
+        numero: '',
+        complemento: '',
+        cidade: '',
+        uf: '',
+        vagas: [
+            {
+                vaga: '',
+                polo: '',
+                modalidade: '',
+                categoria: ''
+            },
+        ],
+});
 
     const handleOnChangeAttr = (e, attr) => {
         const { value } = e.target;
@@ -83,7 +91,7 @@ const Inscrever = () => {
                     activeTabIndex === 1 && <Endereco formData={formData} handleOnChangeAttr={handleOnChangeAttr} handleNext={handleNext} handleBack={handleBack}/>
                 }
                 {
-                    activeTabIndex === 2 && <EscolhaDaVaga formData={formData} handleOnChangeAttr={handleOnChangeAttr} handleNext={handleNext} handleBack={handleBack}/>
+                    activeTabIndex === 2 && <EscolhaDaVaga formData={formData} setFormData={setFormData} handleNext={handleNext} handleBack={handleBack}/>
                 }
                 {
                     activeTabIndex === 3 && <DetalhesDaVaga formData={formData} handleOnChangeAttr={handleOnChangeAttr} handleNext={handleNext} handleBack={handleBack}/>
