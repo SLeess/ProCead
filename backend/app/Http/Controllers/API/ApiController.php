@@ -2,17 +2,22 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Foundation\Validation\ValidatesRequests;
+use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-class APIController extends Controller
+class APIController extends BaseController
 {
+    use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
     /**
      * success response method.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function sendResponse($result, $message, $code = Response::HTTP_OK)
+    public function sendResponse($result, $message, $code = Response::HTTP_OK): JsonResponse
     {
         $response = [
             'success' => true,
@@ -24,9 +29,9 @@ class APIController extends Controller
     /**
      * return error response.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function sendError($error, $errorMessages = [], $code = Response::HTTP_NOT_FOUND)
+    public function sendError($error, $errorMessages = [], $code = Response::HTTP_NOT_FOUND): JsonResponse
     {
         $response = [
             'success' => false,

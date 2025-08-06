@@ -7,10 +7,6 @@ use Carbon\Carbon;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Sanctum\Sanctum;
 
-use App\Models\Edital;
-use App\Policies\EditalPolicy;
-use Illuminate\Support\Facades\Gate;
-
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -18,7 +14,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(\App\Interfaces\Auth\IAuthService::class, \App\Services\Auth\AuthService::class);
+        $this->app->bind(\App\Interfaces\User\IUserService::class, \App\Services\User\UserService::class);
+        $this->app->bind(\App\Interfaces\User\IManageUserRolesAndPermissionsService::class, \App\Services\User\ManageUserRolesAndPermissionsService::class);
+
+        $this->app->bind( \App\Interfaces\Admin\SyncRolePermissions\ISyncRolePermissionsService::class,  \App\Services\Admin\SyncRolePermissions\SyncRolePermissionsService::class);
     }
 
     /**
@@ -26,9 +26,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Gate::policy(Edital::class, EditalPolicy::class);
-
-        Carbon::setlocale(LC_TIME);
+        Carbon::setlocale('pt_BR.utf8');
 
         Sanctum::usePersonalAccessTokenModel(PersonalAccessToken::class);
     }

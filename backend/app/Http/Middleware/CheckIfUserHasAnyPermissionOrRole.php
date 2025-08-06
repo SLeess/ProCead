@@ -16,14 +16,6 @@ class CheckIfUserHasAnyPermissionOrRole
      */
     public function handle(Request $request, Closure $next)
     {
-        if (! Auth::check()) {
-            return response()->json( [
-                'success' => false,
-                'message' => "Usuário não autenticado",
-                'data' => [],
-            ], Response::HTTP_FORBIDDEN);
-        }
-
         if ($request->user()->dontHaveAnyPermissionOrRole()) {
             return response()->json( [
                 'success' => false,

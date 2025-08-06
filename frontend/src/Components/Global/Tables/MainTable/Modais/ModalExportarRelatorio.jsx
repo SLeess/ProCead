@@ -181,7 +181,7 @@ export default function ModalExportarRelatorio({ openModal, onCloseModal, table,
     });
 
     try {
-      const response = await fetch('/api/export', {
+      const response = await fetch('/api/admin/export', {
         method: 'post',
         body: JSON.stringify({
           columns: visibleColumnsForExport,

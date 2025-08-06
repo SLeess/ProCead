@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\API\APIController;
-use App\Services\Auth\AuthService;
+use App\Interfaces\Auth\IAuthService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class LogOutController extends APIController
 {
-    public function __construct(protected AuthService $authService)
+    public function __construct(protected IAuthService $authService)
     {
         $this->middleware('auth:sanctum');
     }

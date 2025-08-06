@@ -4,13 +4,13 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\API\APIController;
 use App\Http\Requests\RegisterRequest;
-use App\Services\Auth\AuthService;
+use App\Interfaces\Auth\IAuthService;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\Response;
 
 class RegisterController extends APIController
 {
-    public function __construct(protected AuthService $authService)
+    public function __construct(protected IAuthService $authService)
     {
         $this->middleware('guest');
     }

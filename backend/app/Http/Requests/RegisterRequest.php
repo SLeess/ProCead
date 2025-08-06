@@ -15,7 +15,6 @@ class RegisterRequest extends FormRequest
     {
         return true;
     }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -24,8 +23,12 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nome' => 'required',
-            'email' => ['required', 'email', Rule::unique('users', 'email'),],
+            'nome' => [
+                'required',
+                'max:191',
+                "regex:/^[\pL\s]+$/u",
+            ],
+            'email' => ['required', 'email', 'max:191', Rule::unique('users', 'email'),],
             'cpf' => [
                 'required',
                 new Cpf,

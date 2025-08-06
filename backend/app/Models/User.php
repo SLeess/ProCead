@@ -77,4 +77,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Edital::class, 'model_has_roles_by_edital', 'user_id', 'edital_id');
     }
+
+
+    public function setRolesAndPermissionsByEditais(){
+        $this->attributes['roles_permissions_by_editais'] = $this->getAllRolesAndPermissionsByEdital();
+    }
 }

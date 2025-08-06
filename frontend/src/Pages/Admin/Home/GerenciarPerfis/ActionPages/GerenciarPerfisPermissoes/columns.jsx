@@ -1,24 +1,29 @@
 import { Checkbox } from "@/Components/Global/ui/modals";
 
-const getColumns = (updatePermission, toggleAllRowPermissions) => {
+const getColumns = (updatePermission, toggleAllRowPermissions, toggleAllPermissions, getAreAllChecked) => {
   return [
     {
       accessorKey: "name_permission",
-      header: ({row, col}) => {
-        console.log(row, col);
+      header: () => {
         return (<>
-          <Checkbox label={"Permissões"}/>
+          <Checkbox 
+            label={"Permissões"} 
+            // checked={getAreAllChecked}
+            // checked={getAreAllChecked}
+            checked={getAreAllChecked() === false ? true : false}
+            onChange={(e) => toggleAllPermissions(!e.target.checked)}
+          />
         </>);
       },
       cell: ({row}) => {
         const { ler, criar, atualizar, deletar } = row.original;
-        const areAllChecked = ler && criar && atualizar && deletar;
+        const areAllInRowChecked = ler && criar && atualizar && deletar;
         
         return (
           <Checkbox
             label={row.original.name_permission}
-            checked={areAllChecked}
-            onChange={() => toggleAllRowPermissions(row.index, areAllChecked)}
+            checked={areAllInRowChecked}
+            onChange={() => toggleAllRowPermissions(row.index, areAllInRowChecked)}
           />
         );
       },

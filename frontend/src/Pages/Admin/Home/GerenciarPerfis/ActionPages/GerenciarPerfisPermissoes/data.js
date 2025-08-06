@@ -4,7 +4,7 @@ const data = [
         name_permission: "Inscricao",
         criar: true,
         ler: true,
-        atualizar: false,
+        atualizar: true,
         deletar: true,
     },
 
