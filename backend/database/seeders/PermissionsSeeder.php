@@ -5,8 +5,8 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
+use App\Models\Permission;
+use App\Models\Role;
 
 class PermissionsSeeder extends Seeder
 {
@@ -102,39 +102,32 @@ class PermissionsSeeder extends Seeder
             "editar-edital" => " Editar Edital",
             "gerenciar-edital" => " Gerenciar Edital",
         ];
-        // dd(Permission::all()->except($arrayOfGlobalPermissionNames)->toArray());
 
         foreach ($arrayOfLocalPermissionNames as $permission => $description) {
             // dd($arrayOfLocalPermissionNames,$permission,$description);
-            Permission::create(["name" => $permission, "guard_name" => "local", "description" => $description]);
+            Permission::create(["name" => $permission, "guard_name" => "api", "description" => $description, 'scope' => "local"]);
         }
         foreach ($arrayOfGlobalPermissionNames as $permission => $description) {
-            Permission::create(["name" => $permission, "guard_name" => "global", "description" => $description]);
+            Permission::create(["name" => $permission, "guard_name" => "api", "description" => $description, 'scope' => 'global']);
         }
-        // Permissions::insert($permissions->toArray());
 
-        // create role & give it permissions
-        // Fetch permissions that belong to the 'local' guard
-        $localPermissions = Permission::where('guard_name', 'local')
+        // Fetch permissions that belong to the 'local' scope
+        $localPermissions = Permission::where('scope', 'local')
             ->whereNotIn('name', $arrayOfGlobalPermissionNames)
             ->get();
-        Role::create(["name" => "admin", "guard_name" => "local"])
+
+        // Fetch ALL permissions that belong to the 'global' scope
+        $globalPermissions = Permission::where('scope', 'global')->get();
+
+        Role::create(["name" => "admin", "guard_name" => "api", 'scope' => "local"])
             ->givePermissionTo($localPermissions);
 
-        // Fetch ALL permissions that belong to the 'global' guard
-        $globalPermissions = Permission::where('guard_name', 'global')->get();
-
-        Role::create(["name" => "super-Admin", "guard_name" => "global"])
+        $role = Role::create(["name" => "super-Admin", "guard_name" => "api", 'scope' => "global"])
             ->givePermissionTo($globalPermissions);
 
         $user = User::first();
-        // dd($user);
         if ($user) {
-            $user->assignRole('super-Admin');
+            $user->assignRole($role);
         }
-        // $cotasUser = User::where('email','cotas@cotas.com')->first();
-        // if($cotasUser) {
-        //     $cotasUser->assignRole('cotas');
-        // }
     }
 }
