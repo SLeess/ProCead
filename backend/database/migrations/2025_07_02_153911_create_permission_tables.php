@@ -24,7 +24,8 @@ return new class extends Migration
             // $table->engine('InnoDB');
             $table->bigIncrements('id'); // permission id
             $table->string('name');       // For MyISAM use string('name', 225); // (or 166 for InnoDB with Redundant/Compact row format)
-            $table->string('guard_name'); // For MyISAM use string('guard_name', 25);
+            $table->string('scope')->default('local');
+            $table->string('guard_name', 25); // For MyISAM use string('guard_name', 25);
             $table->string('description')->nullable(); // For MyISAM use string('description', 255); // (or 166 for InnoDB with Redundant/Compact row format)
             $table->timestamps();
 
@@ -39,6 +40,7 @@ return new class extends Migration
                 $table->index($columnNames['team_foreign_key'], 'roles_team_foreign_key_index');
             }
             $table->string('name');       // For MyISAM use string('name', 225); // (or 166 for InnoDB with Redundant/Compact row format)
+            $table->string('scope', 25)->default('local');
             $table->string('guard_name'); // For MyISAM use string('guard_name', 25);
             $table->timestamps();
             if ($teams || config('permission.testing')) {
