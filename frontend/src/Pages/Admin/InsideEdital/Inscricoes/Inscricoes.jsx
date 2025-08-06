@@ -6,6 +6,7 @@ import data from './data'
 import columns from './columns';
 import { UserRoundPen } from 'lucide-react';
 import { useParams } from 'react-router-dom';
+import StatsCard from '@/Components/Global/Cards/StatsCard';
 
 const Inscricoes = () => {
   const { editalId } = useParams();
@@ -13,14 +14,12 @@ const Inscricoes = () => {
 
   if (hasPermissionForEdital('visualizar-inscricoes', editalId) || isSuperAdmin())
     return (
-      <div className="p-4">
+      <div>
         <h1 className="text-2xl font-bold mb-4">Gerenciamento de Inscrições</h1>
         <div className="flex gap-4 mb-4">
-          <div className="bg-white shadow-md rounded-lg p-5 w-xs relative flex flex-col justify-between h-30">
-            <p className="text-gray-600 mb-1">Nº de Inscrições</p>
-            <p className="text-2xl font-bold mb-1">1223</p>
-            <UserRoundPen className="absolute top-4 right-4 text-gray-500" />
-          </div>
+          <StatsCard title={"Nº de Inscrições"} quant={1000}>
+            <UserRoundPen className="text-[var(--stats-card-text)] absolute top-4 right-4" />
+          </StatsCard>
         </div>
         <MainTable data = {data} columns = {columns} title={"Inscrições"}/>
       </div>

@@ -11,7 +11,7 @@ li.ProcessoCard{
     drop-shadow(0px 0px 0px rgba(0, 0, 0, 0.08));
 }
 li.ProcessoCard article{
-  @apply flex flex-row border p-4 rounded-lg shadow-md bg-gray-50 space-x-3;
+  @apply flex flex-row border p-4 rounded-md shadow-md bg-gray-50 space-x-3;
 
   /* Light theme */
 

@@ -12,7 +12,7 @@ export default function ThemeToggleBtn(){
             type="button"
             className="
                 hover:cursor-pointer 
-                rounded-lg text-sm p-2.5
+                rounded-md text-sm p-2.5
                 focus:ring-0
             "
             aria-label="Toggle dark mode"

@@ -10,7 +10,7 @@ const PerfilCreateModal = ({enableGlobal = true}) => {
     }
     return (
         <>
-            <button onClick={() => setOpenModal(true)} className="px-4 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+            <button onClick={() => setOpenModal(true)} className="px-4 py-2.5 text-sm font-semibold text-white bg-[var(--button)] rounded-md hover:bg-[var(--button-hover)] focus:outline-none cursor-pointer">
                 <Plus className="inline" />
                 <span className='ml-1'>Cadastrar Perfil</span>
             </button>
@@ -46,13 +46,13 @@ const PerfilCreateModal = ({enableGlobal = true}) => {
                     <div className="mt-10 flex justify-end items-center space-x-4">
                         <button
                             onClick={onCloseModal}
-                            className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50"
+                            className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
                         >
                             Cancelar
                         </button>
                         <button
                             onClick={onCloseModal}
-                            className="px-8 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700"
+                            className="cursor-pointer px-8 py-2.5 text-sm font-semibold text-white bg-[var(--button)] rounded-md hover:bg-[var(--button-hover)]"
                         >
                             Salvar
                         </button>
