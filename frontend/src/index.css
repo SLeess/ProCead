@@ -198,9 +198,27 @@ div.info-not-found-itens p#second{
     --header-candidato-primary-left: #004DA9;
     --header-candidato-primary-right: #2A83ED;
 
+    /* ----- Inside Edital ----- */
+    
+    /* Sidebar */
     --admin-sidebar: #2A1670;
     --admin-sidebar-hover-and-select: #6C4BC3;
 
+    /* Topbar */
+    --topbar-flag: #F8F2FF;
+
+    /* Buttons */
+    --button: #6C4BC3;
+    --button-hover: #2A1670;
+
+    /* Cards */
+    --stats-card: #2A1670;
+
+    /* Table */
+    --paginate-text: #6C4BC3;
+
+    /* -------------------- */
+    
     --radius: 0.625rem;
     --background: oklch(1 0 0);
     --foreground: oklch(0.145 0 0);

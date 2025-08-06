@@ -10,7 +10,7 @@ const PoloCreateModal = () => {
     }
     return (
         <>
-            <button onClick={() => setOpenModal(true)} className="px-4 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+            <button onClick={() => setOpenModal(true)} className="px-4 py-2.5 text-sm font-semibold text-white bg-[var(--button)] rounded-md hover:bg-[var(--button-hover)] focus:outline-none cursor-pointer">
                 <Plus className="inline" />
                 <span className='ml-1'>Cadastrar Polo</span>
             </button>

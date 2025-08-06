@@ -23,6 +23,7 @@ import { Button } from "flowbite-react";
 import { toast } from 'react-toastify';
 import { FaSort, FaSortDown, FaSortUp } from "react-icons/fa";
 import ModalExportarRelatorio from "./Modais/ModalExportarRelatorio";
+import './MainTable.css';
 
 const MainTable = ({ data, columns, title, hasShadowBorderStyle = true, hasPaddingStyle = true, canExport = true, canHiddenColumns = true, hasSelectForRows = true }) => {
   const [columnFilters, setColumnFilters] = useState([]);
@@ -69,52 +70,49 @@ const MainTable = ({ data, columns, title, hasShadowBorderStyle = true, hasPaddi
 
   return (
     <div className={`${hasShadowBorderStyle === true ? "rounded-md border border-gray-200 shadow-md": ""} ${hasPaddingStyle === true ? "px-5 sm:px-7.5" : ""} bg-white pt-6 pb-2.5 xl:pb-1 `}>
-      <h4 className="text-xl font-semibold text-black mb-4">
+      <h4 id="table-title">
         {title}
       </h4>
-      <div className="mb-6 grid grid-cols-12 lg:flex justify-between">
-        <div className="col-span-12 flex w-full items-center space-x-4 justify-between lg:justify-start">
-          {/* <div className="w-full"> */}
-            <div className="relative w-full lg:w-[90%] lg:max-w-md">
+      <div id="table-tools">
+        <div id="table-search-container">
+            <div id="table-search">
               <input
+                id="search-input"
                 type="text"
                 value={globalFilter ?? ''}
                 onChange={e => setGlobalFilter(e.target.value)}
-                className="w-full rounded-md border border-gray-100 bg-white py-2 pl-10 pr-4 text-sm font-medium text-gray-700"
                 placeholder="Pesquisar..."
               />
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
+              <span id="search-icon">
                 <Search />
               </span>
             </div>
-          {/* </div> */}
         </div>
-        <div className="justify-between mt-5 lg:mt-0 col-span-12 flex items-center gap-2">
+        <div id="table-other-tools">
           {
             canHiddenColumns && 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 dark:bg-gray-800 dark:text-white">
-                  Colunas <ChevronDown className="ml-2 h-4 w-4" />
+                <Button id="columns-button" variant="outline">
+                  Colunas <ChevronDown id="chevron" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="max-h-60 overflow-y-auto bg-white dark:bg-gray-800 z-50 border border-gray-200 rounded-md shadow-lg p-1">
+              <DropdownMenuContent id="dropdown-content" align="end">
                 {table
                   .getAllColumns()
                   .filter((column) => column.getCanHide())
                   .map((column) => {
                     return (
                       <DropdownMenuCheckboxItem
+                        id="dropdown-checkbox-item"
                         key={column.id}
-                        className="capitalize text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md px-2 py-1.5 cursor-pointer flex items-center"
                         checked={column.getIsVisible()}
                         onCheckedChange={(value) =>
                           column.toggleVisibility(!!value)
                         }
                       >
-                        <input type="checkbox" defaultChecked={column.getIsVisible() ? true : false} className={`mr-2 border border-gray-300 rounded-md `} />
+                        <input id="dropdown-checkbox" type="checkbox" defaultChecked={column.getIsVisible() ? true : false}/>
                         {column.id}
-                        {/* <span className="mr-2">{column.id}</span> */}
                       </DropdownMenuCheckboxItem>
                     )
                   })}
@@ -123,7 +121,7 @@ const MainTable = ({ data, columns, title, hasShadowBorderStyle = true, hasPaddi
           }
 
           {
-            canExport && <button onClick={() => onOpenModal()} className="cursor-pointer md:text-nowrap px-4 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none">
+            canExport && <button id="export-button" className="bg-[var(--button)] hover:bg-[var(--button-hover)]" onClick={() => onOpenModal()}>
               {'Gerar Relatório'}
             </button>
           }
@@ -132,7 +130,7 @@ const MainTable = ({ data, columns, title, hasShadowBorderStyle = true, hasPaddi
       </div>
 
       {/* Tabela Shadcn/ui */}
-      <div className="overflow-y-auto h-[60vh] overflow-x-auto rounded-md border">
+      <div id="table-data-container" className={data.length > 10 ? 'h-[60vh]' : ''}>
         <Table>
           <TableHeader className="bg-gray-50">
 
@@ -216,25 +214,25 @@ const MainTable = ({ data, columns, title, hasShadowBorderStyle = true, hasPaddi
       </div>
 
       {/* Controles de Paginação Estilizados */}
-      <div className="flex md:flex-row flex-col md:space-y-0 space-y-2 items-center justify-between p-4">
-        <div className=" text-sm text-muted-foreground justify-start">
+      <div id="bottom-tools">
+        <div id="rows-selected">
           {table.getFilteredSelectedRowModel().rows.length} de{" "}
           {table.getFilteredRowModel().rows.length} linha(s) selecionada(s).
         </div>
-        <div className="flex items-center justify-center space-x-4">
+        <div id="paginate">
           {/* --- Previous Button --- */}
           <button
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
-            className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="paginate-buttons"
           >
             Anterior
           </button>
 
           {/* --- Page Indicator --- */}
-          <span className="text-sm font-medium text-gray-700">
+          <span id="paginate-text">
             Página{' '}
-            <span className="font-bold text-blue-600">
+            <span className="font-bold text-[var(--paginate-text)]">
               {table.getState().pagination.pageIndex + 1} de {table.getPageCount()}
             </span>
           </span>
@@ -243,22 +241,22 @@ const MainTable = ({ data, columns, title, hasShadowBorderStyle = true, hasPaddi
           <button
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
-            className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="paginate-buttons"
           >
             Próxima
           </button>
         </div>
-        <div className="flex items-center gap-2 ml-5 justify-end">
-          <span className="text-sm font-medium text-gray-700 hidden md:block">
+        <div id="pagesize">
+          <span id="pagesize-text">
             Linhas por página:
           </span>
           {/* --- Page Size Selector --- */}
           <select
+            id="pagesize-selector"
             value={table.getState().pagination.pageSize}
             onChange={e => {
               table.setPageSize(Number(e.target.value))
             }}
-            className="min-w-[80px] px-2 py-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none"
           >
             {[10, 20, 30, 40, 50].map(pageSize => (
               <option key={pageSize} value={pageSize}>

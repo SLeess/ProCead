@@ -15,20 +15,17 @@ const Usuarios = () => {
   if (hasPermissionForEdital('visualizar-usuarios', editalId) || isSuperAdmin())
     return (
       <div>
-        <div className="flex items-center justify-between mb-4">
-          <h1 className="text-2xl font-bold">Usuários</h1>
-          <AdminCreateModal/>
-        </div>
+        <h1 className="text-2xl font-bold mb-4">Usuários</h1>
         <div className="flex gap-4 mb-4">
-          <div className="bg-white shadow-sm rounded-md p-5 w-xs relative flex flex-col justify-between h-30">
-            <p className="text-gray-600 mb-1">Nº de Candidatos</p>
-            <p className="text-2xl font-bold mb-1">1.123</p>
-            <UsersRound className="absolute top-4 right-4 text-gray-500" />
+          <div className="bg-[var(--stats-card)] shadow-sm rounded-md p-5 w-xs relative flex flex-col justify-between h-30">
+            <p className="text-white mb-1">Nº de Candidatos</p>
+            <p className="text-white text-2xl font-bold mb-1">1.123</p>
+            <UsersRound className="absolute top-4 right-4 text-white" />
           </div>
-          <div className="bg-white shadow-sm rounded-md p-5 w-xs relative flex flex-col justify-between h-30">
-            <p className="text-gray-600 mb-1">Nº de Administradores</p>
-            <p className="text-2xl font-bold mb-1">20</p>
-            <ShieldUser className="absolute top-4 right-4 text-gray-500" />
+          <div className="bg-[var(--stats-card)] shadow-sm rounded-md p-5 w-xs relative flex flex-col justify-between h-30">
+            <p className="text-white mb-1">Nº de Administradores</p>
+            <p className="text-white text-2xl font-bold mb-1">20</p>
+            <ShieldUser className="absolute top-4 right-4 text-white" />
           </div>
         </div>
         <MainTable data = {data} columns = {columns} title={"Usuarios"}/>

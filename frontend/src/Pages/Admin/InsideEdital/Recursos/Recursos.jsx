@@ -16,10 +16,10 @@ const Recursos = () => {
       <div>
         <h1 className="text-2xl font-bold mb-4">Recursos Gerais</h1>
         <div className="flex gap-4 mb-4">
-          <div className="bg-white shadow-md rounded-md p-5 w-xs relative flex flex-col justify-between h-30">
-            <p className="text-gray-600 mb-1">Nº de Recursos</p>
-            <p className="text-2xl font-bold mb-1">36</p>
-            <UserRoundPen className="absolute top-4 right-4 text-gray-500" />
+          <div className="bg-[var(--stats-card)] shadow-md rounded-md p-5 w-xs relative flex flex-col justify-between h-30">
+            <p className="text-white mb-1">Nº de Recursos</p>
+            <p className="text-white text-2xl font-bold mb-1">36</p>
+            <UserRoundPen className="absolute top-4 right-4 text-white" />
           </div>
         </div>
         <MainTable data={data} columns={columns} title={"Recursos"} />
