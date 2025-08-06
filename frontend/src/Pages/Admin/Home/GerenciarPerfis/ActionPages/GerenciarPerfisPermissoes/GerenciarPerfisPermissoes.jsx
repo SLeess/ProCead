@@ -76,9 +76,9 @@ export default function GerenciarPerfisPermissoes()
             }
         );
 
-        console.log(columns, permissionsData);
-        debugger;
-        console.log(`Tem algum desmarcado? ${res === true ? 'Sim': 'Não'}`);
+        // console.log(columns, permissionsData);
+        // debugger;
+        // console.log(`Tem algum desmarcado? ${res === true ? 'Sim': 'Não'}`);
         return res;
     }
 
