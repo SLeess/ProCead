@@ -59,7 +59,7 @@ const EscolhaDaVaga = ({ formData, setFormData, handleBack, handleNext }) => {
   // },[formData.vagas])
 
   return (
-    <div className="bg-gray-100 min-h-screen p-4 sm:p-6 md:p-8 font-sans">
+    <div className="bg-gray-100 min-h-screen p-4 sm:p-6 md:p-8 font-sans animate-fade-in">
       <div className="max-w-6xl mx-auto">
         <div className="bg-blue-700 text-white p-6 rounded-t-2xl">
           <h1 className="text-2xl font-semibold">
