@@ -1,10 +1,21 @@
 import { AnexoButton, FormField, SelectInput } from '@/Components/Global/ui/modals';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './animations.css';
 
 const DetalhesDaVaga = ({ formData, setFormData, handleBack, handleNext }) => {
   const [currentVagaIndex, setCurrentVagaIndex] = useState(0);
   const [animationDirectionRight, setAnimationDirectionRight] = useState(true);
+  const [isFormValid, setIsFormValid] = useState(false);
+
+  const currentVaga = formData.vagas[currentVagaIndex];
+
+  useEffect(() => {
+    if (currentVaga) {
+      const { modalidade, categoria, anexo_cpf, anexo_comprovante_residencia, anexo_historico, anexo_autodeclaracao } = currentVaga;
+      const allFieldsFilled = modalidade && categoria && anexo_cpf && anexo_comprovante_residencia && anexo_historico && anexo_autodeclaracao;
+      setIsFormValid(allFieldsFilled);
+    }
+  }, [currentVaga, formData.vagas]);
 
   const handleInputChange = (vagaId, field, value) => {
     setFormData(prevFormData => {
@@ -48,8 +59,6 @@ const DetalhesDaVaga = ({ formData, setFormData, handleBack, handleNext }) => {
     }
   };
 
-  const currentVaga = formData.vagas[currentVagaIndex];
-
   return (
     <div className="bg-gray-100 dark:bg-slate-700 min-h-screen p-4 sm:p-6 md:p-8 font-sans animate-fade-in">
       <div className="max-w-6xl mx-auto">
@@ -69,6 +78,7 @@ const DetalhesDaVaga = ({ formData, setFormData, handleBack, handleNext }) => {
               <div className="space-y-6">
                 <FormField label="Modalidade de Concorrência a Vaga">
                   <SelectInput
+                    defaultOption={true}
                     value={currentVaga.modalidade || ''}
                     onChange={(e) => handleInputChange(currentVaga.vaga, 'modalidade', e.target.value)}
                     options={['Modalidade 3: Negros e Pardos', 'Modalidade 2: Indígenas', 'Modalidade 1: Ampla Concorrência']}
@@ -76,16 +86,29 @@ const DetalhesDaVaga = ({ formData, setFormData, handleBack, handleNext }) => {
                 </FormField>
                 <FormField label="Categoria de Concorrência a Vaga">
                   <SelectInput
+                    defaultOption={true}
                     value={currentVaga.categoria || ''}
                     onChange={(e) => handleInputChange(currentVaga.vaga, 'categoria', e.target.value)}
                     options={['Categoria 3: Comunidade em Geral', 'Categoria 2: Servidores', 'Categoria 1: Egressos']}
                   />
                 </FormField>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
-                  <AnexoButton onChange={(e) => handleFileChange(currentVaga.vaga, 'anexo_cpf', e.target.files[0])} label="CPF:" />
-                  <AnexoButton onChange={(e) => handleFileChange(currentVaga.vaga, 'anexo_comprovante_residencia', e.target.files[0])} label="Comprovante de Residência:" />
-                  <AnexoButton onChange={(e) => handleFileChange(currentVaga.vaga, 'anexo_historico', e.target.files[0])} label="Histórico:" />
-                  <AnexoButton onChange={(e) => handleFileChange(currentVaga.vaga, 'anexo_autodeclaracao', e.target.files[0])} label="Auto Declaração:" />
+                  <div>
+                    <AnexoButton onChange={(e) => handleFileChange(currentVaga.vaga, 'anexo_cpf', e.target.files[0])} label="CPF:" />
+                    {currentVaga.anexo_cpf && <p className="text-sm text-gray-500 mt-1">{currentVaga.anexo_cpf.name}</p>}
+                  </div>
+                  <div>
+                    <AnexoButton onChange={(e) => handleFileChange(currentVaga.vaga, 'anexo_comprovante_residencia', e.target.files[0])} label="Comprovante de Residência:" />
+                    {currentVaga.anexo_comprovante_residencia && <p className="text-sm text-gray-500 mt-1">{currentVaga.anexo_comprovante_residencia.name}</p>}
+                  </div>
+                  <div>
+                    <AnexoButton onChange={(e) => handleFileChange(currentVaga.vaga, 'anexo_historico', e.target.files[0])} label="Histórico:" />
+                    {currentVaga.anexo_historico && <p className="text-sm text-gray-500 mt-1">{currentVaga.anexo_historico.name}</p>}
+                  </div>
+                  <div>
+                    <AnexoButton onChange={(e) => handleFileChange(currentVaga.vaga, 'anexo_autodeclaracao', e.target.files[0])} label="Auto Declaração:" />
+                    {currentVaga.anexo_autodeclaracao && <p className="text-sm text-gray-500 mt-1">{currentVaga.anexo_autodeclaracao.name}</p>}
+                  </div>
                 </div>
                 <p className="text-sm text-gray-500 mt-2">
                   Tamanho máximo por arquivo: 10MB.
@@ -96,7 +119,11 @@ const DetalhesDaVaga = ({ formData, setFormData, handleBack, handleNext }) => {
           <button onClick={goToPrevVaga} className="px-6 py-2.5 mr-3 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">
             {currentVagaIndex === 0 ? 'Voltar' : 'Vaga Anterior'}
           </button>
-          <button onClick={goToNextVaga} className="px-8 py-3 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 ">
+          <button 
+            onClick={goToNextVaga} 
+            className={`px-8 py-3 text-sm font-semibold text-white rounded-lg ${isFormValid ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-400 cursor-not-allowed'}`}
+            disabled={!isFormValid}
+          >
             {currentVagaIndex === formData.vagas.length - 1 ? 'Próxima Etapa' : 'Próxima Vaga'}
           </button>
         </div>

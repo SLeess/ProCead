@@ -15,7 +15,7 @@ const Inscrever = () => {
 
     useEffect(() =>
         setLoading(false)
-    , [activeTabIndex]);
+        , [activeTabIndex]);
 
     const tabsData = [
         { label: 'Informações Básicas', icon: <CiCircleInfo /> },
@@ -65,50 +65,51 @@ const Inscrever = () => {
                 vaga: '',
                 polo: '',
                 modalidade: '',
-                categoria: ''
+                categoria: '',
+                anexo_cpf: null,
+                anexo_comprovante_residencia: null,
+                anexo_historico: null,
+                anexo_autodeclaracao: null,
             },
         ],
         termo_responsabilidade: false,
-        anexo_cpf: null,
-        anexo_comprovante_residencia: null,
-        anexo_historico: null,
-        anexo_autodeclaracao: null,
-});
+
+    });
 
     const handleOnChangeAttr = (e, attr) => {
         console.log(e.target.checked);
         const { value } = e.target;
-        setFormData(f => ({...f, [attr]: value}));
+        setFormData(f => ({ ...f, [attr]: value }));
     };
-      useEffect(() => {
-    console.log(formData);
-  },[formData])
+    useEffect(() => {
+        console.log(formData);
+    }, [formData])
 
     return (
-        <div  id='inscricao'>
-                <nav aria-label="Tabs" className="timeline-nav">
-                    <Stepper tabsData={tabsData} activeTabIndex={activeTabIndex} setActiveTabIndex={setActiveTabIndex} />
-                </nav>
-            <form  id="content" onSubmit={(e) => e.preventDefault()}>
-                {
+        <div id='inscricao'>
+            <nav aria-label="Tabs" className="timeline-nav">
+                <Stepper tabsData={tabsData} activeTabIndex={activeTabIndex} setActiveTabIndex={setActiveTabIndex} />
+            </nav>
+            <form id="content" onSubmit={(e) => e.preventDefault()}>
+                {/* {
                     loading && <LoaderPages />
-                }
+                } */}
                 {
                     activeTabIndex === 0 && <InformacoesBasicas formData={formData} handleOnChangeAttr={handleOnChangeAttr} handleNext={handleNext} />
                 }
                 {
-                    activeTabIndex === 1 && <Endereco formData={formData} handleOnChangeAttr={handleOnChangeAttr} handleNext={handleNext} handleBack={handleBack}/>
+                    activeTabIndex === 1 && <Endereco formData={formData} handleOnChangeAttr={handleOnChangeAttr} handleNext={handleNext} handleBack={handleBack} />
                 }
                 {
-                    activeTabIndex === 2 && <EscolhaDaVaga formData={formData} setFormData={setFormData} handleNext={handleNext} handleBack={handleBack}/>
+                    activeTabIndex === 2 && <EscolhaDaVaga formData={formData} setFormData={setFormData} handleNext={handleNext} handleBack={handleBack} />
                 }
                 {
-                    activeTabIndex === 3 && <DetalhesDaVaga formData={formData} setFormData={setFormData} handleNext={handleNext} handleBack={handleBack}/>
+                    activeTabIndex === 3 && <DetalhesDaVaga formData={formData} setFormData={setFormData} handleNext={handleNext} handleBack={handleBack} />
                 }
                 {
-                    activeTabIndex === 4 && <Confirmacao formData={formData} setFormData={setFormData} handleOnChangeAttr={handleOnChangeAttr} handleNext={handleNext} handleBack={handleBack}/>
+                    activeTabIndex === 4 && <Confirmacao formData={formData} setFormData={setFormData} handleOnChangeAttr={handleOnChangeAttr} handleNext={handleNext} handleBack={handleBack} />
                 }
-        </form>
+            </form>
         </div>
     )
 }

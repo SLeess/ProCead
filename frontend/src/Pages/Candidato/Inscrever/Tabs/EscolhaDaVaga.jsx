@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const EscolhaDaVaga = ({ formData, setFormData, handleBack, handleNext }) => {
+  const [isFormValid, setIsFormValid] = useState(false);
+
   const vagas = [
     { id: 1, title: 'Lato Sensu em Apicultura' },
     { id: 2, title: 'Lato Sensu em Arte e Cultura Visual' },
     { id: 3, title: 'Lato Sensu em Álgebra e Geometria' },
     { id: 4, title: 'Lato Sensu em Alfabetização e Multiletramentos' },
   ];
+
+  useEffect(() => {
+    const isValid = formData.vagas.length > 0 && formData.vagas.some(v => v.polo && v.polo !== '');
+    setIsFormValid(isValid);
+  }, [formData.vagas]);
 
   const VagaCard = ({ title, isSelected, onSelect, onCampusChange, selectedValue }) => (
     <div
@@ -54,10 +61,6 @@ const EscolhaDaVaga = ({ formData, setFormData, handleBack, handleNext }) => {
     });
   };
 
-  // useEffect(() => {
-  //   console.log(formData);
-  // },[formData.vagas])
-
   return (
     <div className="bg-gray-100 min-h-screen p-4 sm:p-6 md:p-8 font-sans animate-fade-in">
       <div className="max-w-6xl mx-auto">
@@ -90,7 +93,11 @@ const EscolhaDaVaga = ({ formData, setFormData, handleBack, handleNext }) => {
             <button onClick={handleBack} className="px-6 py-2.5 mr-3 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">
               Voltar
             </button>
-            <button onClick={handleNext} className="px-8 py-3 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 ">
+            <button 
+              onClick={handleNext} 
+              className={`px-8 py-3 text-sm font-semibold text-white rounded-lg ${isFormValid ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-400 cursor-not-allowed'}`}
+              disabled={!isFormValid}
+            >
               Próxima Etapa
             </button>
           </div>
