@@ -1,16 +1,20 @@
 import { Navbar, NavbarBrand, NavbarCollapse, NavbarToggle } from "flowbite-react";
 import UserDropdown from "../UserDropdown/UserDropdown";
 import ThemeToggleBtn from "../ThemeToggleBtn/ThemeToggleBtn";
+import { useContext } from "react";
+import { NavigationContext } from "@/Contexts/NavigationContext";
 
 export default function HeaderModel({ headerid, children }){
+    const { navigate } = useContext(NavigationContext);
+
     return(
         <header id={headerid}>
             <Navbar fluid rounded>
-                <NavbarBrand href="#" className="md:hidden block">
+                <NavbarBrand href="#" onClick={() => navigate('/')} className="md:hidden block">
                     <img src={`/img/logo_cead_bg_white_full.png`} alt="Logo CEAD" className="w-[100px] h-[42px]"/>
                 </NavbarBrand>
                 <div className="hidden md:flex space-x-4 items-center flex-nowrap lg:w-[88%]">
-                    <NavbarBrand href="#">
+                    <NavbarBrand href="#" onClick={() => navigate('/')}>
                         <img src="/img/logo_cead_bg_white_full.png" alt="Logo CEAD" className="w-[100px] h-[42px]"/>
                     </NavbarBrand>
                     <NavbarCollapse id="div-ul-header" className="lg:w-full">
