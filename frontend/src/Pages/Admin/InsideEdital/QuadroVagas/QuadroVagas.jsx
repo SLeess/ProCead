@@ -18,10 +18,10 @@ const QuadroVagas = () => {
         <h1 className="text-2xl font-bold mb-4">Quadro de Vagas</h1>
         <div className="flex gap-4 mb-4">
           <StatsCard title={"Nº de Quadros"} quant={5}>
-            <Grid2x2Plus className="text-[var(--stats-card-text)] absolute top-4 right-4" />
+            <Grid2x2Plus className="text-[var(--admin-stats-card-text)] absolute top-4 right-4" />
           </StatsCard>
           <StatsCard title={"Total de Vagas"} quant={120}>
-            <UserRoundPen className="text-[var(--stats-card-text)] absolute top-4 right-4" />
+            <UserRoundPen className="text-[var(--admin-stats-card-text)] absolute top-4 right-4" />
           </StatsCard>
         </div>
         <MainTable data={data} columns={columns} title={"Quadro de Vagas"}/>

@@ -4,7 +4,7 @@ import { IMaskInput } from "react-imask";
 
 const FormField = ({ label, children, className = '' , textWrap = true}) => (
     <div className={`flex flex-col ${className}`}>
-        <label className={`mb-1 text-sm font-medium text-gray-600 ${textWrap === true ? 'text-wrap' : 'xl:text-nowrap'}`}>{label}</label>
+        <label className={`mb-1 text-ms font-normal text-gray-500 ${textWrap === true ? 'text-wrap' : 'xl:text-nowrap'}`}>{label}</label>
         {children}
     </div>
 );
@@ -13,7 +13,7 @@ const TextInput = ({ value, readOnly, placeholder, onChange = null }) => (
     <input
         type="text"
         defaultValue={value}
-        className={`${readOnly !== true ? 'bg-white': 'bg-gray-100'} border border-gray-200 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full`}
+        className={`${readOnly !== true ? 'bg-white': 'bg-gray-50'} border border-gray-50 rounded-md px-4 py-2 focus:outline-none w-full`}
         readOnly={readOnly}
         onChange={onChange}
         placeholder={placeholder}
@@ -81,7 +81,7 @@ const SelectInput = ({ value, options, readOnly, onChange = null, defaultOption 
 const AnexoButton = ({ label }) => (
     <div className="flex flex-col items-start">
         <span className="text-sm font-medium text-gray-600 mb-1">{label}</span>
-        <button className="w-full bg-[var(--button)] text-white font-semibold py-2 px-4 rounded-md flex items-center justify-center space-x-2 hover:bg-[var(--button-hover)] cursor-pointer">
+        <button className="w-full bg-[var(--admin-button)] text-white font-semibold py-2 px-4 rounded-md flex items-center justify-center space-x-2 hover:bg-[var(--admin-button-hover)] cursor-pointer">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
             </svg>

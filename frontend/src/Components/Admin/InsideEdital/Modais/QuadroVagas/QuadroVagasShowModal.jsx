@@ -4,6 +4,7 @@ import { Button, Checkbox, Label, Modal, ModalBody, ModalHeader, } from "flowbit
 import { Eye } from "lucide-react";
 import { useState } from "react";
 import { FormField, SelectInput, AnexoButton, TextInput } from "@/Components/Global/ui/modals";
+import CabecalhoModal from "@/Components/Global/Modais/CabecalhoModal";
 
 export default function QuadroVagasShowModal() {
     const [openModal, setOpenModal] = useState(false);
@@ -40,18 +41,18 @@ export default function QuadroVagasShowModal() {
                 <Eye className="h-5 w-5 text-blue-500" />
             </button>
             <Modal show={openModal} onClose={onCloseModal} popup>
-                <ModalHeader />
+
+                <CabecalhoModal titleModal = {"Visualizar Quadro de Vagas"}/>
+
+                    <hr className='mb-3 mx-4'/>
+
                 <ModalBody >
                     {/* <div className="bg-gray-100 min-h-screen flex items-center justify-center p-4 font-sans">
                         <div className="w-full max-w-4xl bg-white rounded-2xl shadow-lg p-8"> */}
 
-                    {/* Header */}
-                    <div className="flex justify-between items-center mb-4">
-                        <h1 className="text-2xl font-bold text-gray-800">Visualizar Quadro de Vagas</h1>
-                    </div>
 
                     {/* Sub-header */}
-                    <p className="text-sm text-gray-500 mb-6">
+                    <p className="text-gray-500 text-xs/5 font-bold mb-4">
                         Edital Referente: Processo de Seleção de Discentes para os Cursos de Especialização da Unimontes – Modalidade Educação a Distância – Sistema Universidade Aberta do Brasil (UAB) – Edital Nº 08/2025
                     </p>
 
@@ -63,7 +64,7 @@ export default function QuadroVagasShowModal() {
                                 <button
                                     key={tab}
                                     onClick={() => setActiveTab(tab)}
-                                    className={`whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm ${activeTab === tab
+                                    className={`whitespace-nowrap pt-4 pb-2 px-1 border-b-2 font-medium text-sm ${activeTab === tab
                                         ? 'border-blue-500 text-blue-600'
                                         : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                                         }`}
@@ -77,7 +78,7 @@ export default function QuadroVagasShowModal() {
                     {/* Form Content - Only showing the active tab's content */}
                     {activeTab === 'Dados' && (
                         <div>
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-6">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-x-3 gap-y-2">
                                 {/* Row 1 */}
                                 <FormField label="Código"><TextInput readOnly={true} value="1" /></FormField>
                                 <FormField label="Semestre"><TextInput readOnly={true} value="2" /></FormField>
@@ -90,9 +91,9 @@ export default function QuadroVagasShowModal() {
                                 {/* Row 3 */}
                                 <FormField label="Habilitação" className="md:col-span-3"><TextInput readOnly={true} value="Pós Graduação" /></FormField>
                             </div>
-                            <div className="mt-10 flex justify-end items-center space-x-4">
+                            <div className="mt-6 flex justify-end items-center space-x-4">
                                 <button onClick={onCloseModal} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Fechar</button>
-                                <button onClick={handleNext} className="cursor-pointer px-6 py-2.5 text-sm font-semibold text-white bg-[var(--button)] rounded-md hover:bg-[var(--button-hover)]">Próximo: Distribuição de Vagas</button>
+                                <button onClick={handleNext} className="cursor-pointer px-6 py-2.5 text-sm font-semibold text-white bg-[var(--admin-button)] rounded-md hover:bg-[var(--admin-button-hover)]">Próximo: Distribuição de Vagas</button>
                             </div>
                         </div>
                     )}
@@ -107,9 +108,9 @@ export default function QuadroVagasShowModal() {
                                 <FormField label="PCD"><TextInput readOnly={true} value="6" /></FormField>
                                 <FormField label="TRANS"><TextInput readOnly={true} value="2" /></FormField>
                             </div>
-                            <div className="mt-10 flex justify-end items-center space-x-4">
+                            <div className="mt-6 flex justify-end items-center space-x-4">
                                 <button onClick={handleBack} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Voltar</button>
-                                <button onClick={handleNext} className="cursor-pointer px-6 py-2.5 text-sm font-semibold text-white bg-[var(--button)] rounded-md hover:bg-[var(--button-hover)]">Próximo: Categorias Customizadas</button>
+                                <button onClick={handleNext} className="cursor-pointer px-6 py-2.5 text-sm font-semibold text-white bg-[var(--admin-button)] rounded-md hover:bg-[var(--admin-button-hover)]">Próximo: Categorias Customizadas</button>
                             </div>
                         </div>
                     )}
@@ -130,9 +131,9 @@ export default function QuadroVagasShowModal() {
                                     </div>
                                 ))}
                             </div>
-                            <div className="mt-10 flex justify-end items-center space-x-4">
+                            <div className="mt-6 flex justify-end items-center space-x-4">
                                 <button onClick={handleBack} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Voltar</button>
-                                <button onClick={onCloseModal} className="cursor-pointer px-6 py-2.5 text-sm font-semibold text-white bg-[var(--button)] rounded-md hover:bg-[var(--button-hover)]">Fechar</button>
+                                <button onClick={onCloseModal} className="cursor-pointer px-6 py-2.5 text-sm font-semibold text-white bg-[var(--admin-button)] rounded-md hover:bg-[var(--admin-button-hover)]">Fechar</button>
                             </div>
                         </div>
                     )}

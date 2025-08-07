@@ -21,7 +21,7 @@ const Polos = () => {
         </div>
         <div className="flex gap-4 mb-4">
           <StatsCard title={"Nº de Polos"} quant={3}>
-            <Building2 className="text-[var(--stats-card-text)] absolute top-4 right-4" />
+            <Building2 className="text-[var(--admin-stats-card-text)] absolute top-4 right-4" />
           </StatsCard>
         </div>
         <MainTable data={data} columns={columns} title={"Polos"} />

@@ -122,7 +122,7 @@ export default function NovoEdital()
             }
             
             {/* Botões de Prosseguimento */}
-            <div className="mt-10 flex justify-end items-center space-x-4">
+            <div className="mt-6 flex justify-end items-center space-x-4">
                 <button onClick={handleBack} className="voltar_and_cancelar">
                     {
                         activeTabIndex !== 0 ? 'Voltar' : 'Cancelar'

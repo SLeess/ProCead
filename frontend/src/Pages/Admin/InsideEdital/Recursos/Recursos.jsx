@@ -18,7 +18,7 @@ const Recursos = () => {
         <h1 className="text-2xl font-bold mb-4">Recursos Gerais</h1>
         <div className="flex gap-4 mb-4">
           <StatsCard title={"Nº de Recursos"} quant={30}>
-            <UserRoundPen className="text-[var(--stats-card-text)] absolute top-4 right-4" />
+            <UserRoundPen className="text-[var(--admin-stats-card-text)] absolute top-4 right-4" />
           </StatsCard>
         </div>
         <MainTable data={data} columns={columns} title={"Recursos"} />

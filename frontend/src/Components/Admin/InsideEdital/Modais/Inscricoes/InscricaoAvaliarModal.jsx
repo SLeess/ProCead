@@ -4,6 +4,7 @@ import { Button, Checkbox, Label, Modal, ModalBody, ModalHeader, TextInput } fro
 import { Check, Eye, Pencil } from "lucide-react";
 import { useState } from "react";
 import { FormField, SelectInput, AnexoButton } from "@/Components/Global/ui/modals";
+import CabecalhoModal from "@/Components/Global/Modais/CabecalhoModal";
 
 export default function InscricaoAvaliarModal() {
     const [openModal, setOpenModal] = useState(false);
@@ -18,17 +19,18 @@ export default function InscricaoAvaliarModal() {
                 <Check className="h-5 w-5 text-green-500" />
             </button>
             <Modal show={openModal} onClose={onCloseModal} popup>
-                <ModalHeader />
+
+                <CabecalhoModal titleModal = {"Avaliar Inscrição"}/>
+
+                    <hr className='mb-3 mx-4'/>
+
                 <ModalBody >
-                    <div className="flex justify-between items-start mb-6">
-                        <div>
-                            <h1 className="text-2xl font-bold text-gray-800">Avaliar Inscrição</h1>
-                            <div className="flex items-center mt-2">
-                                <p className="text-sm text-gray-500">Data de Inscrição: 04/07/2025</p>
-                                <span className="ml-4 bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full">Deferido</span>
-                            </div>
-                        </div>
+
+                    <div className="flex justify-between items-center mb-2 mt-1">
+                        <p className="text-sm text-gray-500">Data de Inscrição: 04/07/2025</p>
+                        <span className="ml-4 bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full">Deferido</span>
                     </div>
+
                     <div>
                         <h2 className="text-xl font-semibold text-gray-800 mb-4">Anexos</h2>
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-8">
@@ -39,7 +41,7 @@ export default function InscricaoAvaliarModal() {
                         </div>
 
                         <h2 className="text-xl font-semibold text-gray-800 mb-4">Situação</h2>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-6">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-x-3 gap-y-2">
                             <FormField label="Status" className="md:col-span-1">
                                 <SelectInput value="Deferido" options={['Deferido', 'Indeferido', 'Em Análise']} />
                             </FormField>
@@ -52,9 +54,9 @@ export default function InscricaoAvaliarModal() {
                             </FormField>
                         </div>
 
-                        <div className="mt-10 flex justify-end items-center space-x-4">
+                        <div className="mt-6 flex justify-end items-center space-x-4">
                             <button onClick={onCloseModal} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Cancelar</button>
-                            <button onClickCapture={onCloseModal} className="cursor-pointer px-8 py-2.5 text-sm font-semibold text-white bg-[var(--button)] rounded-md hover:bg-[var(--button-hover)]">Avaliar</button>
+                            <button onClickCapture={onCloseModal} className="cursor-pointer px-8 py-2.5 text-sm font-semibold text-white bg-[var(--admin-button)] rounded-md hover:bg-[var(--admin-button-hover)]">Avaliar</button>
                         </div>
                     </div>
 

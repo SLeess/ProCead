@@ -121,7 +121,7 @@ const MainTable = ({ data, columns, title, hasShadowBorderStyle = true, hasPaddi
           }
 
           {
-            canExport && <button id="export-button" className="bg-[var(--button)] hover:bg-[var(--button-hover)]" onClick={() => onOpenModal()}>
+            canExport && <button id="export-button" className="bg-[var(--admin-button)] hover:bg-[var(--admin-button-hover)]" onClick={() => onOpenModal()}>
               {'Gerar Relatório'}
             </button>
           }
@@ -232,7 +232,7 @@ const MainTable = ({ data, columns, title, hasShadowBorderStyle = true, hasPaddi
           {/* --- Page Indicator --- */}
           <span id="paginate-text">
             Página{' '}
-            <span className="font-bold text-[var(--paginate-text)]">
+            <span className="font-bold text-[var(--admin-paginate-text)]">
               {table.getState().pagination.pageIndex + 1} de {table.getPageCount()}
             </span>
           </span>

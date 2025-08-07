@@ -21,7 +21,7 @@ const Modalidades = () => {
         </div>
         <div className="flex gap-4 mb-4">
           <StatsCard title={"Nº de Modalidades"} quant={3}>
-            <Component className="text-[var(--stats-card-text)] absolute top-4 right-4" />
+            <Component className="text-[var(--admin-stats-card-text)] absolute top-4 right-4" />
           </StatsCard>
         </div>
         <MainTable data={data} columns={columns} title={"Modalidades"} />

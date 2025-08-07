@@ -4,6 +4,7 @@ import { Button, Checkbox, Label, Modal, ModalBody, ModalHeader } from "flowbite
 import { Eye, Pencil } from "lucide-react";
 import { useState } from "react";
 import { FormField, SelectInput, AnexoButton, TextInput } from "@/Components/Global/ui/modals";
+import CabecalhoModal from "@/Components/Global/Modais/CabecalhoModal";
 
 export default function InscricaoEditModal() {
     const [openModal, setOpenModal] = useState(false);
@@ -36,30 +37,26 @@ export default function InscricaoEditModal() {
                 <Pencil className="h-5 w-5 text-yellow-500" />
             </button>
             <Modal show={openModal} onClose={onCloseModal} popup>
-                <ModalHeader />
-                <ModalBody >
-                    {/* <div className="bg-gray-100 min-h-screen flex items-center justify-center p-4 font-sans">
-                        <div className="w-full max-w-4xl bg-white rounded-2xl shadow-lg p-8"> */}
 
-                    {/* Header */}
-                    <div className="flex justify-between items-start mb-6">
-                        <div>
-                            <h1 className="text-2xl font-bold text-gray-800">Editar Inscrição</h1>
-                            <div className="flex items-center mt-2">
-                                <p className="text-sm text-gray-500">Data de Inscrição: 04/07/2025</p>
-                                <span className="ml-4 bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full">Deferido</span>
-                            </div>
-                        </div>
+                <CabecalhoModal titleModal = {"Editar e/ou Avaliar Inscrição"}/>
+
+                    <hr className='mb-3 mx-4'/>
+
+                <ModalBody >
+
+                    <div className="flex justify-between items-center my-1">
+                        <p className="text-sm text-gray-500">Data de Inscrição: 04/07/2025</p>
+                        <span className="ml-4 bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full">Deferido</span>
                     </div>
 
                     {/* Tabs Navigation */}
-                    <div className="border-b border-gray-200 mb-8">
+                    <div className="border-b border-gray-200 mb-4">
                         <nav className="-mb-px flex space-x-8" aria-label="Tabs">
                             {tabs.map(tab => (
                                 <button
                                     key={tab}
                                     onClick={() => setActiveTab(tab)}
-                                    className={`whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm ${activeTab === tab
+                                    className={`whitespace-nowrap pt-4 pb-2 px-1 border-b-2 font-medium text-sm ${activeTab === tab
                                         ? 'border-blue-500 text-blue-600'
                                         : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                                         }`}
@@ -73,7 +70,7 @@ export default function InscricaoEditModal() {
                     {/* Form Content - Only showing the active tab's content */}
                     {activeTab === 'Informações Básicas' && (
                         <div>
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-6">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-x-3 gap-y-2">
                                 {/* Row 1 */}
                                 <FormField label="Nome Completo" className="md:col-span-1">
                                     <TextInput value="Daniel Damasceno Meira" />
@@ -125,11 +122,11 @@ export default function InscricaoEditModal() {
                             </div>
 
                             {/* Action Buttons */}
-                            <div className="mt-10 flex justify-end items-center space-x-4">
+                            <div className="mt-6 flex justify-end items-center space-x-4">
                                 <button onClick={onCloseModal} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
                                     Cancelar
                                 </button>
-                                <button onClick={handleNext} className="cursor-pointer px-6 py-2.5 text-sm font-semibold text-white bg-[var(--button)] rounded-md hover:bg-[var(--button-hover)]">
+                                <button onClick={handleNext} className="cursor-pointer px-6 py-2.5 text-sm font-semibold text-white bg-[var(--admin-button)] rounded-md hover:bg-[var(--admin-button-hover)]">
                                     Próximo: Endereço
                                 </button>
                             </div>
@@ -137,7 +134,7 @@ export default function InscricaoEditModal() {
                     )}
                     {activeTab === 'Endereço' && (
                         <div>
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-6">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-x-3 gap-y-2">
                                 <FormField label="CEP"><TextInput value="39401-001" /></FormField>
                                 <FormField label="Rua"><TextInput value="Daniel Damasceno Meira" /></FormField>
                                 <FormField label="Número"><TextInput value="1012" /></FormField>
@@ -146,9 +143,9 @@ export default function InscricaoEditModal() {
                                 <FormField label="UF"><SelectInput value="MG" options={['MG', 'SP', 'RJ', 'BA']} /></FormField>
                                 <FormField label="Cidade" className="md:col-span-3"><TextInput value="São João da Ponte" /></FormField>
                             </div>
-                            <div className="mt-10 flex justify-end items-center space-x-4">
+                            <div className="mt-6 flex justify-end items-center space-x-4">
                                 <button onClick={handleBack} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Voltar</button>
-                                <button onClick={handleNext} className="cursor-pointer px-6 py-2.5 text-sm font-semibold text-white bg-[var(--button)] rounded-md hover:bg-[var(--button-hover)]">Próximo: Vaga</button>
+                                <button onClick={handleNext} className="cursor-pointer px-6 py-2.5 text-sm font-semibold text-white bg-[var(--admin-button)] rounded-md hover:bg-[var(--admin-button-hover)]">Próximo: Vaga</button>
                             </div>
                         </div>
                     )}
@@ -156,7 +153,7 @@ export default function InscricaoEditModal() {
                         <div className="flex flex-col items-center">
                             <div className="w-full max-w-lg border border-gray-200 rounded-md p-6">
                                 <h3 className="text-lg font-semibold text-gray-800">Lato Sensu em Alfabetização e Multiletramentos</h3>
-                                <p className="text-sm text-gray-500 mb-6">Montes Claros | MG</p>
+                                <p className="text-gray-500 text-xs/5 font-bold mb-4">Montes Claros | MG</p>
                                 <div className="space-y-4">
                                     <TextInput value="Modalidade 3: Negros e Pardos" />
                                     <TextInput value="Categoria 3: Comunidade em Geral" />
@@ -164,7 +161,7 @@ export default function InscricaoEditModal() {
                             </div>
                             <div className="mt-10 flex justify-end items-center w-full max-w-lg space-x-4">
                                 <button onClick={handleBack} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Voltar</button>
-                                <button onClick={handleNext} className="cursor-pointer px-6 py-2.5 text-sm font-semibold text-white bg-[var(--button)] rounded-md hover:bg-[var(--button-hover)]">Próximo: Anexos</button>
+                                <button onClick={handleNext} className="cursor-pointer px-6 py-2.5 text-sm font-semibold text-white bg-[var(--admin-button)] rounded-md hover:bg-[var(--admin-button-hover)]">Próximo: Anexos</button>
                             </div>
                         </div>
                     )}
@@ -179,7 +176,7 @@ export default function InscricaoEditModal() {
                             </div>
 
                             <h2 className="text-xl font-semibold text-gray-800 mb-4">Situação</h2>
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-6">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-x-3 gap-y-2">
                                 <FormField label="Status" className="md:col-span-1">
                                     <SelectInput value="Deferido" options={['Deferido', 'Indeferido', 'Em Análise']} />
                                 </FormField>
@@ -192,9 +189,9 @@ export default function InscricaoEditModal() {
                                 </FormField>
                             </div>
 
-                            <div className="mt-10 flex justify-end items-center space-x-4">
+                            <div className="mt-6 flex justify-end items-center space-x-4">
                                 <button onClick={handleBack} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Voltar</button>
-                                <button onClickCapture={onCloseModal} className="cursor-pointer px-8 py-2.5 text-sm font-semibold text-white bg-[var(--button)] rounded-md hover:bg-[var(--button-hover)]">Fechar</button>
+                                <button onClickCapture={onCloseModal} className="cursor-pointer px-8 py-2.5 text-sm font-semibold text-white bg-[var(--admin-button)] rounded-md hover:bg-[var(--admin-button-hover)]">Fechar</button>
                             </div>
                         </div>
                     )}

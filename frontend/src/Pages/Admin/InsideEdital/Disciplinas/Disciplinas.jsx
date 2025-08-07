@@ -2,7 +2,7 @@ import { AppContext } from '@/Contexts/AppContext';
 import React, { useContext } from 'react'
 import data from './data'
 import columns from './columns';
-import { GraduationCap} from 'lucide-react';
+import { BookA} from 'lucide-react';
 import MainTable from '@/Components/Global/Tables/MainTable/MainTable';
 import { useParams } from 'react-router-dom';
 import AccessDenied from '@/Components/Global/AccessDenied/AccessDenied';
@@ -22,7 +22,7 @@ const Disciplinas = () => {
         </div>
         <div className="flex gap-4 mb-4">
           <StatsCard title={"Nº de Disciplinas"} quant={3}>
-            <GraduationCap className="text-[var(--stats-card-text)] absolute top-4 right-4" />
+            <BookA className="text-[var(--admin-stats-card-text)] absolute top-4 right-4" />
           </StatsCard>
         </div>
         <MainTable data={data} columns={columns} title={"Disciplinas"} />

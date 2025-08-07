@@ -205,23 +205,23 @@ div.info-not-found-itens p#second{
     --admin-sidebar-hover-and-select: #6C4BC3;
 
     /* Topbar */
-    --topbar-flag: #F8F2FF;
-    --topbar-flag-text: #09024B;
+    --admin-topbar-flag: #F8F2FF;
+    --admin-topbar-flag-text: #09024B;
 
     /* Buttons */
-    --button: #6C4BC3;
-    --button-hover: #2A1670;
+    --admin-button: #6C4BC3;
+    --admin-button-hover: #2A1670;
 
     /* Cards */
-    --stats-card: #D8C1FD;
-    --stats-card-text: #15085E;
+    --admin-stats-card: #D8C1FD;
+    --admin-stats-card-text: #15085E;
 
     /* Table */
-    --paginate-text: #6C4BC3;
+    --admin-paginate-text: #6C4BC3;
 
     /* Export */
-    --add-group-by: #6C4BC3;
-    --add-group-by-hover: #F8F2FF;
+    --admin-add-group-by: #6C4BC3;
+    --admin-add-group-by-hover: #F8F2FF;
 
     /* -------------------- */
     

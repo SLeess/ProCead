@@ -4,6 +4,7 @@ import { Button, Checkbox, Label, Modal, ModalBody, ModalHeader } from "flowbite
 import { Eye, Pencil } from "lucide-react";
 import { useState } from "react";
 import { FormField, SelectInput, AnexoButton, TextInput } from "@/Components/Global/ui/modals";
+import CabecalhoModal from "@/Components/Global/Modais/CabecalhoModal";
 
 export default function RecursoEditModal() {
     const [openModal, setOpenModal] = useState(false);
@@ -18,17 +19,18 @@ export default function RecursoEditModal() {
                 <Pencil className="h-5 w-5 text-yellow-500" />
             </button>
             <Modal show={openModal} onClose={onCloseModal} popup>
-                <ModalHeader />
+
+                <CabecalhoModal titleModal = {"Editar Recurso"}/>
+
+                    <hr className='mb-3 mx-4'/>
+                    
                 <ModalBody >
-                    <div className="flex justify-between items-start mb-6">
-                        <div>
-                            <h1 className="text-2xl font-bold text-gray-800">Visualizar Recurso</h1>
-                            <div className="flex items-center mt-2">
-                                <p className="text-sm text-gray-500">Data do Recurso: 04/07/2025</p>
-                                <span className="ml-4 bg-blue-500 text-white text-xs font-semibold px-3 py-1 rounded-full">Em análise</span>
-                            </div>
-                        </div>
+
+                    <div className="flex justify-between items-center mb-2 mt-1">
+                        <p className="text-sm text-gray-500">Data do Recurso: 04/07/2025</p>
+                        <span className="ml-4 bg-blue-500 text-white text-xs font-semibold px-3 py-1 rounded-full">Em análise</span>
                     </div>
+
                     <div>
                         <h2 className="text-xl font-semibold text-gray-800 mb-4">Situação</h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
@@ -39,7 +41,7 @@ export default function RecursoEditModal() {
                                 <SelectInput readOnly={false} value="Em Análise" options={['Deferido', 'Indeferido', 'Em Análise']} />
                             </FormField>
                         </div>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-6">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-x-3 gap-y-2">
                             <FormField label="Motivo" className="md:col-span-3">
                                 <textarea
                                     rows="6"
@@ -57,9 +59,9 @@ export default function RecursoEditModal() {
 
                         </div>
 
-                        <div className="mt-10 flex justify-end items-center space-x-4">
+                        <div className="mt-6 flex justify-end items-center space-x-4">
                             <button onClick={onCloseModal} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Fechar</button>
-                            <button onClickCapture={onCloseModal} className="cursor-pointer px-8 py-2.5 text-sm font-semibold text-white bg-[var(--button)] rounded-md hover:bg-[var(--button-hover)]">Salvar</button>
+                            <button onClickCapture={onCloseModal} className="cursor-pointer px-8 py-2.5 text-sm font-semibold text-white bg-[var(--admin-button)] rounded-md hover:bg-[var(--admin-button-hover)]">Salvar</button>
                         </div>
                     </div>
 

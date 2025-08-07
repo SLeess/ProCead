@@ -2,7 +2,7 @@ import { AppContext } from '@/Contexts/AppContext';
 import React, { useContext } from 'react'
 import data from './data'
 import columns from './columns';
-import { GraduationCap, Plus } from 'lucide-react';
+import { BookOpen, Plus } from 'lucide-react';
 import MainTable from '@/Components/Global/Tables/MainTable/MainTable';
 import CursoCreateModal from '@/Components/Admin/InsideEdital/Modais/Cursos/CursoCreateModal';
 import { useParams } from 'react-router-dom';
@@ -22,7 +22,7 @@ const Cursos = () => {
         </div>
         <div className="flex gap-4 mb-4">
           <StatsCard title={"Nº de Cursos"} quant={3}>
-            <GraduationCap className="text-[var(--stats-card-text)] absolute top-4 right-4" />
+            <BookOpen className="text-[var(--admin-stats-card-text)] absolute top-4 right-4" />
           </StatsCard>
         </div>
         <MainTable data={data} columns={columns} title={"Cursos"} />
