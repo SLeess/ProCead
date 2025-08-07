@@ -2,7 +2,7 @@ import { AppContext } from '@/Contexts/AppContext';
 import React, { useContext } from 'react'
 import data from './data'
 import columns from './columns';
-import { Building2, GraduationCap, Plus } from 'lucide-react';
+import { MapPin, GraduationCap, Plus } from 'lucide-react';
 import MainTable from '@/Components/Global/Tables/MainTable/MainTable';
 import PoloCreateModal from '@/Components/Admin/InsideEdital/Modais/Polos/PoloCreateModal';
 import { useParams } from 'react-router-dom';
@@ -21,7 +21,7 @@ const Polos = () => {
         </div>
         <div className="flex gap-4 mb-4">
           <StatsCard title={"Nº de Polos"} quant={3}>
-            <Building2 className="text-[var(--admin-stats-card-text)] absolute top-4 right-4" />
+            <MapPin  className="text-[var(--admin-stats-card-text)] absolute top-4 right-4" />
           </StatsCard>
         </div>
         <MainTable data={data} columns={columns} title={"Polos"} />

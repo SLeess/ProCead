@@ -32,7 +32,7 @@ export default function InscricaoAvaliarModal() {
                     </div>
 
                     <div>
-                        <h2 className="text-xl font-semibold text-gray-800 mb-4">Anexos</h2>
+                        <h2 className="text-xl font-semibold text-gray-800 mb-2">Anexos</h2>
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-8">
                             <AnexoButton label="Identidade:" />
                             <AnexoButton label="Comprovante:" />
@@ -40,7 +40,7 @@ export default function InscricaoAvaliarModal() {
                             <AnexoButton label="Auto Declaração:" />
                         </div>
 
-                        <h2 className="text-xl font-semibold text-gray-800 mb-4">Situação</h2>
+                        <h2 className="text-xl font-semibold text-gray-800 mb-2">Situação</h2>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-x-3 gap-y-2">
                             <FormField label="Status" className="md:col-span-1">
                                 <SelectInput value="Deferido" options={['Deferido', 'Indeferido', 'Em Análise']} />
@@ -55,7 +55,7 @@ export default function InscricaoAvaliarModal() {
                         </div>
 
                         <div className="mt-6 flex justify-end items-center space-x-4">
-                            <button onClick={onCloseModal} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Cancelar</button>
+                            <button onClick={onCloseModal} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 cursor-pointer">Cancelar</button>
                             <button onClickCapture={onCloseModal} className="cursor-pointer px-8 py-2.5 text-sm font-semibold text-white bg-[var(--admin-button)] rounded-md hover:bg-[var(--admin-button-hover)]">Avaliar</button>
                         </div>
                     </div>

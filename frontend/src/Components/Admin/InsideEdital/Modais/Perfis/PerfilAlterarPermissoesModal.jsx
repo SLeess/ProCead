@@ -23,7 +23,7 @@ const PefilAlterarPermissoesModal = () => {
                 <ModalBody >
 
                     {/* Sub-header */}
-                    <p className="text-gray-500 text-xs/5 font-bold mb-4">
+                    <p className="text-gray-500 text-xs/5 font-semibold mb-4">
                         Nome do Perfil: controle-academico
                     </p>
                     <div>
@@ -54,7 +54,7 @@ const PefilAlterarPermissoesModal = () => {
                     <div className="mt-6 flex justify-end items-center space-x-4">
                         <button
                             onClick={onCloseModal}
-                            className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
+                            className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 cursor-pointer"
                         >
                             Cancelar
                         </button>

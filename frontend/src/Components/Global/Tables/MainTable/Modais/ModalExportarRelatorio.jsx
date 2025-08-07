@@ -338,7 +338,7 @@ export default function ModalExportarRelatorio({ openModal, onCloseModal, table,
 
 
           <div className="mt-6 flex justify-end items-center space-x-4">
-            <button onClick={onCloseModal} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Fechar</button>
+            <button onClick={onCloseModal} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 cursor-pointer">Fechar</button>
             <button onClick={() => handleExport(titulo, subtitulo, orientacao, formato)} className="cursor-pointer px-6 py-2.5 text-sm font-semibold text-white bg-[var(--admin-button)] rounded-md hover:bg-[var(--admin-button-hover)]"> {isExporting ? 'Exportando...' : 'Gerar Relatório'}</button>
           </div>
         </div>

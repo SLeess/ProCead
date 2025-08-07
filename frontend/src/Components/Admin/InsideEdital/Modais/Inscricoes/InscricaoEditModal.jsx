@@ -123,7 +123,7 @@ export default function InscricaoEditModal() {
 
                             {/* Action Buttons */}
                             <div className="mt-6 flex justify-end items-center space-x-4">
-                                <button onClick={onCloseModal} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
+                                <button onClick={onCloseModal} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 cursor-pointer">
                                     Cancelar
                                 </button>
                                 <button onClick={handleNext} className="cursor-pointer px-6 py-2.5 text-sm font-semibold text-white bg-[var(--admin-button)] rounded-md hover:bg-[var(--admin-button-hover)]">
@@ -144,30 +144,32 @@ export default function InscricaoEditModal() {
                                 <FormField label="Cidade" className="md:col-span-3"><TextInput value="São João da Ponte" /></FormField>
                             </div>
                             <div className="mt-6 flex justify-end items-center space-x-4">
-                                <button onClick={handleBack} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Voltar</button>
+                                <button onClick={handleBack} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 cursor-pointer">Voltar</button>
                                 <button onClick={handleNext} className="cursor-pointer px-6 py-2.5 text-sm font-semibold text-white bg-[var(--admin-button)] rounded-md hover:bg-[var(--admin-button-hover)]">Próximo: Vaga</button>
                             </div>
                         </div>
                     )}
                     {activeTab === 'Vaga' && (
-                        <div className="flex flex-col items-center">
-                            <div className="w-full max-w-lg border border-gray-200 rounded-md p-6">
-                                <h3 className="text-lg font-semibold text-gray-800">Lato Sensu em Alfabetização e Multiletramentos</h3>
-                                <p className="text-gray-500 text-xs/5 font-bold mb-4">Montes Claros | MG</p>
-                                <div className="space-y-4">
-                                    <TextInput value="Modalidade 3: Negros e Pardos" />
-                                    <TextInput value="Categoria 3: Comunidade em Geral" />
+                        <div>
+                            <div className="flex flex-col items-center">
+                                <div className="w-full max-w-lg border border-gray-200 rounded-md p-6">
+                                    <h3 className="text-lg font-semibold text-gray-800">Lato Sensu em Alfabetização e Multiletramentos</h3>
+                                    <p className="text-gray-500 text-xs/5 font-semibold mb-4">Montes Claros | MG</p>
+                                    <div className="space-y-4">
+                                        <TextInput value="Modalidade 3: Negros e Pardos" />
+                                        <TextInput value="Categoria 3: Comunidade em Geral" />
+                                    </div>
                                 </div>
                             </div>
-                            <div className="mt-10 flex justify-end items-center w-full max-w-lg space-x-4">
-                                <button onClick={handleBack} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Voltar</button>
+                            <div className="mt-6 flex justify-end items-center w-full space-x-4">
+                                <button onClick={handleBack} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 cursor-pointer">Voltar</button>
                                 <button onClick={handleNext} className="cursor-pointer px-6 py-2.5 text-sm font-semibold text-white bg-[var(--admin-button)] rounded-md hover:bg-[var(--admin-button-hover)]">Próximo: Anexos</button>
                             </div>
                         </div>
                     )}
                     {activeTab === 'Anexos e Situação' && (
                         <div>
-                            <h2 className="text-xl font-semibold text-gray-800 mb-4">Anexos</h2>
+                            <h2 className="text-xl font-semibold text-gray-800 mb-2">Anexos</h2>
                             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-8">
                                 <AnexoButton label="Identidade:" />
                                 <AnexoButton label="Comprovante:" />
@@ -175,7 +177,7 @@ export default function InscricaoEditModal() {
                                 <AnexoButton label="Auto Declaração:" />
                             </div>
 
-                            <h2 className="text-xl font-semibold text-gray-800 mb-4">Situação</h2>
+                            <h2 className="text-xl font-semibold text-gray-800 mb-2">Situação</h2>
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-x-3 gap-y-2">
                                 <FormField label="Status" className="md:col-span-1">
                                     <SelectInput value="Deferido" options={['Deferido', 'Indeferido', 'Em Análise']} />
@@ -190,7 +192,7 @@ export default function InscricaoEditModal() {
                             </div>
 
                             <div className="mt-6 flex justify-end items-center space-x-4">
-                                <button onClick={handleBack} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Voltar</button>
+                                <button onClick={handleBack} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 cursor-pointer">Voltar</button>
                                 <button onClickCapture={onCloseModal} className="cursor-pointer px-8 py-2.5 text-sm font-semibold text-white bg-[var(--admin-button)] rounded-md hover:bg-[var(--admin-button-hover)]">Fechar</button>
                             </div>
                         </div>

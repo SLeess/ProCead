@@ -1,5 +1,5 @@
 import { AppContext } from '@/Contexts/AppContext';
-import { Phone } from 'lucide-react';
+import { Bell } from 'lucide-react';
 import React, { useContext } from 'react'
 import { useParams } from 'react-router-dom';
 import data from './data';
@@ -21,7 +21,7 @@ const Chamadas = () => {
         </div>
         <div className="flex gap-4 mb-4">
           <StatsCard title={"Nº de Chamadas Feitas"} quant={3}>
-            <Phone className="text-[var(--admin-stats-card-text)] absolute top-4 right-4" />
+            <Bell className="text-[var(--admin-stats-card-text)] absolute top-4 right-4" />
           </StatsCard>
         </div>
         <MainTable data={data} columns={columns} title={"Chamadas"} />

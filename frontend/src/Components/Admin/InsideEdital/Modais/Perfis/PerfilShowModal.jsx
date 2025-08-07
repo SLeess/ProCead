@@ -21,7 +21,7 @@ const PerfilShowModal = () => {
                 <ModalBody >
 
                     {/* Sub-header */}
-                    <p className="text-gray-500 text-xs/5 font-bold mb-4">
+                    <p className="text-gray-500 text-xs/5 font-semibold mb-4">
                         Edital Referente: Processo de Seleção de Discentes para os Cursos de Especialização da Unimontes – Modalidade Educação a Distância – Sistema Universidade Aberta do Brasil (UAB) – Edital Nº 08/2025
                     </p>
                     <div>

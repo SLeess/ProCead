@@ -206,7 +206,7 @@ div.info-not-found-itens p#second{
 
     /* Topbar */
     --admin-topbar-flag: #F8F2FF;
-    --admin-topbar-flag-text: #09024B;
+    --admin-topbar-flag-text: #15085E;
 
     /* Buttons */
     --admin-button: #6C4BC3;
@@ -214,7 +214,7 @@ div.info-not-found-itens p#second{
 
     /* Cards */
     --admin-stats-card: #D8C1FD;
-    --admin-stats-card-text: #15085E;
+    --admin-stats-card-text: #09024B;
 
     /* Table */
     --admin-paginate-text: #6C4BC3;
