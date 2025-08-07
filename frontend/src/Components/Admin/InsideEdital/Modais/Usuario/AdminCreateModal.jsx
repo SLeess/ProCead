@@ -52,16 +52,16 @@ const AdminCreateModal = () => {
                     </div>
 
                     {/* Action Buttons */}
-                    <div className="mt-6 flex justify-end items-center space-x-4">
+                    <div id="buttons-container">
                         <button
                             onClick={onCloseModal}
-                            className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 cursor-pointer"
+                            id='cancel-button'
                         >
                             Cancelar
                         </button>
                         <button
                             onClick={onCloseModal}
-                            className="cursor-pointer px-8 py-2.5 text-sm font-semibold text-white bg-[var(--admin-button)] rounded-md hover:bg-[var(--admin-button-hover)]"
+                            id='save-button'
                         >
                             Salvar
                         </button>

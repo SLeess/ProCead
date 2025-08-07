@@ -23,11 +23,11 @@ const ModalidadeCreateModal = () => {
 
                 <ModalBody >
                     {/* Sub-header */}
-                    <p className="text-gray-500 text-xs/5 font-semibold mb-4">
+                    <p id='subtitle-edital'>
                         Edital Referente: Processo de Seleção de Discentes para os Cursos de Especialização da Unimontes – Modalidade Educação a Distância – Sistema Universidade Aberta do Brasil (UAB) – Edital Nº 08/2025
                     </p>
                     <div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-3 mb-3">
+                        <div id='rows-2-input' className='mb-4'>
                             <FormField label="Sigla">
                                 <TextInput className="md:col-span-1" placeholder="Ex: AC" />
                             </FormField>
@@ -49,16 +49,16 @@ const ModalidadeCreateModal = () => {
                     </div>
 
                     {/* Action Buttons */}
-                    <div className="mt-6 flex justify-end items-center space-x-4">
+                    <div id="buttons-container">
                         <button
                             onClick={onCloseModal}
-                            className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 cursor-pointer"
+                            id='cancel-button'
                         >
                             Cancelar
                         </button>
                         <button
                             onClick={onCloseModal}
-                            className="cursor-pointer px-8 py-2.5 text-sm font-semibold text-white bg-[var(--admin-button)] rounded-md hover:bg-[var(--admin-button-hover)]"
+                            id='save-button'
                         >
                             Salvar
                         </button>

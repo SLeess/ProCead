@@ -21,11 +21,11 @@ const PerfilShowModal = () => {
                 <ModalBody >
 
                     {/* Sub-header */}
-                    <p className="text-gray-500 text-xs/5 font-semibold mb-4">
+                    <p id='subtitle-edital'>
                         Edital Referente: Processo de Seleção de Discentes para os Cursos de Especialização da Unimontes – Modalidade Educação a Distância – Sistema Universidade Aberta do Brasil (UAB) – Edital Nº 08/2025
                     </p>
                     <div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-3 mb-2">
+                        <div id='rows-2-input'>
                             <FormField label="Nome do Perfil">
                                 <TextInput readOnly={true} className="md:col-span-1" value="controle-acadêmico" />
                             </FormField>
@@ -36,11 +36,11 @@ const PerfilShowModal = () => {
                     </div>
 
                     {/* Action Buttons */}
-                    <div className="mt-6 flex justify-end items-center space-x-4">
+                    <div id="buttons-container">
                         
                         <button
                             onClick={onCloseModal}
-                            className="cursor-pointer px-8 py-2.5 text-sm font-semibold text-white bg-[var(--admin-button)] rounded-md hover:bg-[var(--admin-button-hover)]"
+                            id='save-button'
                         >
                             Fechar
                         </button>

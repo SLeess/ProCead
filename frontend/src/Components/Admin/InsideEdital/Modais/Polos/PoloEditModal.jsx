@@ -22,18 +22,18 @@ const PoloEditModal = () => {
 
         <ModalBody >
           {/* Sub-header */}
-          <p className="text-gray-500 text-xs/5 font-semibold mb-4">
+          <p id='subtitle-edital'>
             Edital Referente: Processo de Seleção de Discentes para os Cursos de Especialização da Unimontes – Modalidade Educação a Distância – Sistema Universidade Aberta do Brasil (UAB) – Edital Nº 08/2025
           </p>
           <div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-x-3 gap-y-2">
+            <div id='rows-3-input'>
               {/* Row 1 */}
               <FormField className="md:col-span-2" label="Nome do Polo"><TextInput value="Ex: Especialização Lato Sensu em Eduçação Especial" /></FormField>
               <FormField label="Edital Referente"><TextInput value="Edital Nº 08/2025" /></FormField>
             </div>
-            <div className="mt-6 flex justify-end items-center space-x-4">
-              <button onClick={onCloseModal} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 cursor-pointer">Fechar</button>
-              <button onClick={onCloseModal} className="cursor-pointer px-6 py-2.5 text-sm font-semibold text-white bg-[var(--admin-button)] rounded-md hover:bg-[var(--admin-button-hover)]">Salvar</button>
+            <div id="buttons-container">
+              <button onClick={onCloseModal} id='cancel-button'>Fechar</button>
+              <button onClick={onCloseModal} id='save-button'>Salvar</button>
             </div>
           </div>
         </ModalBody>

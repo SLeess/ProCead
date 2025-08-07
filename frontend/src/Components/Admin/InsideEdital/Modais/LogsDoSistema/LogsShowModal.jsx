@@ -105,11 +105,11 @@ export default function LogsShowModal() {
                                 </div>
                             </div>
                             {/* Action Buttons */}
-                            <div className="mt-6 flex justify-end items-center space-x-4">
-                                <button onClick={onCloseModal} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 cursor-pointer">
+                            <div id="buttons-container">
+                                <button onClick={onCloseModal} id='cancel-button'>
                                     Cancelar
                                 </button>
-                                <button onClick={handleNext} className="cursor-pointer px-6 py-2.5 text-sm font-semibold text-white bg-[var(--admin-button)] rounded-md hover:bg-[var(--admin-button-hover)]">
+                                <button onClick={handleNext} id='save-button'>
                                     Próximo: Alterações
                                 </button>
                             </div>
@@ -128,9 +128,9 @@ export default function LogsShowModal() {
                                     ))}
                                 </div>
                             </div>
-                            <div className="mt-6 flex justify-end items-center space-x-4">
-                                <button onClick={handleBack} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 cursor-pointer">Voltar</button>
-                                <button onClickCapture={onCloseModal} className="cursor-pointer px-8 py-2.5 text-sm font-semibold text-white bg-[var(--admin-button)] rounded-md hover:bg-[var(--admin-button-hover)]">Fechar</button>
+                            <div id="buttons-container">
+                                <button onClick={handleBack} id='cancel-button'>Voltar</button>
+                                <button onClickCapture={onCloseModal} id='save-button'>Fechar</button>
                             </div>
                         </div>
                     )}

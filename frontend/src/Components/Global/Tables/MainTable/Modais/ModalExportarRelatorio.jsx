@@ -245,7 +245,7 @@ export default function ModalExportarRelatorio({ openModal, onCloseModal, table,
       <ModalBody >
 
         <div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-x-3 gap-y-2">
+          <div id='rows-3-input'>
             <FormField className="md:col-span-3" label="Título do PDF">
               <textarea
                 rows={3}
@@ -271,7 +271,7 @@ export default function ModalExportarRelatorio({ openModal, onCloseModal, table,
           {showGroupBy && (
             <>
               <hr className="my-4 h-1 bg-gray-300 border-0 rounded-md dark:bg-gray-700" />
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-x-3 gap-y-2">
+              <div id='rows-3-input'>
                 <FormField className="md:col-span-3" label="Agrupar por">
                   <div className="space-y-2">
                     {groupByFields.map((field, index) => (
@@ -337,9 +337,9 @@ export default function ModalExportarRelatorio({ openModal, onCloseModal, table,
           )}
 
 
-          <div className="mt-6 flex justify-end items-center space-x-4">
-            <button onClick={onCloseModal} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 cursor-pointer">Fechar</button>
-            <button onClick={() => handleExport(titulo, subtitulo, orientacao, formato)} className="cursor-pointer px-6 py-2.5 text-sm font-semibold text-white bg-[var(--admin-button)] rounded-md hover:bg-[var(--admin-button-hover)]"> {isExporting ? 'Exportando...' : 'Gerar Relatório'}</button>
+          <div id="buttons-container">
+            <button onClick={onCloseModal} id='cancel-button'>Fechar</button>
+            <button onClick={() => handleExport(titulo, subtitulo, orientacao, formato)} id='save-button'> {isExporting ? 'Exportando...' : 'Gerar Relatório'}</button>
           </div>
         </div>
       </ModalBody>

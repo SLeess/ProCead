@@ -52,7 +52,7 @@ export default function QuadroVagasEditModal() {
 
 
                     {/* Sub-header */}
-                    <p className="text-gray-500 text-xs/5 font-semibold mb-4">
+                    <p id='subtitle-edital'>
                         Edital Referente: Processo de Seleção de Discentes para os Cursos de Especialização da Unimontes – Modalidade Educação a Distância – Sistema Universidade Aberta do Brasil (UAB) – Edital Nº 08/2025
                     </p>
 
@@ -77,7 +77,7 @@ export default function QuadroVagasEditModal() {
                     {/* Form Content - Only showing the active tab's content */}
                     {activeTab === 'Dados' && (
                         <div>
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-x-3 gap-y-2">
+                            <div id='rows-3-input'>
                                 {/* Row 1 */}
                                 <FormField label="Código"><TextInput value="1" /></FormField>
                                 <FormField label="Semestre"><TextInput value="2" /></FormField>
@@ -90,9 +90,9 @@ export default function QuadroVagasEditModal() {
                                 {/* Row 3 */}
                                 <FormField label="Habilitação" className="md:col-span-3"><TextInput value="Pós Graduação" /></FormField>
                             </div>
-                            <div className="mt-6 flex justify-end items-center space-x-4">
-                                <button onClick={onCloseModal} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 cursor-pointer">Fechar</button>
-                                <button onClick={handleNext} className="cursor-pointer px-6 py-2.5 text-sm font-semibold text-white bg-[var(--admin-button)] rounded-md hover:bg-[var(--admin-button-hover)]">Próximo: Distribuição de Vagas</button>
+                            <div id="buttons-container">
+                                <button onClick={onCloseModal} id='cancel-button'>Fechar</button>
+                                <button onClick={handleNext} id='save-button'>Próximo: Distribuição de Vagas</button>
                             </div>
                         </div>
                     )}
@@ -107,9 +107,9 @@ export default function QuadroVagasEditModal() {
                                 <FormField label="PCD"><TextInput value="6" /></FormField>
                                 <FormField label="TRANS"><TextInput value="2" /></FormField>
                             </div>
-                            <div className="mt-6 flex justify-end items-center space-x-4">
-                                <button onClick={handleBack} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 cursor-pointer">Voltar</button>
-                                <button onClick={handleNext} className="cursor-pointer px-6 py-2.5 text-sm font-semibold text-white bg-[var(--admin-button)] rounded-md hover:bg-[var(--admin-button-hover)]">Próximo: Categorias Customizadas</button>
+                            <div id="buttons-container">
+                                <button onClick={handleBack} id='cancel-button'>Voltar</button>
+                                <button onClick={handleNext} id='save-button'>Próximo: Categorias Customizadas</button>
                             </div>
                         </div>
                     )}
@@ -132,9 +132,9 @@ export default function QuadroVagasEditModal() {
                                     ))}
                                 </div>
                             </div>
-                            <div className="mt-6 flex justify-end items-center space-x-4">
-                                <button onClick={handleBack} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 cursor-pointer">Voltar</button>
-                                <button onClick={onCloseModal} className="cursor-pointer px-6 py-2.5 text-sm font-semibold text-white bg-[var(--admin-button)] rounded-md hover:bg-[var(--admin-button-hover)]">Fechar</button>
+                            <div id="buttons-container">
+                                <button onClick={handleBack} id='cancel-button'>Voltar</button>
+                                <button onClick={onCloseModal} id='save-button'>Fechar</button>
                             </div>
                         </div>
                     )}
