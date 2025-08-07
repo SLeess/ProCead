@@ -1,13 +1,8 @@
-import { FormField, TextInput  } from '@/Components/Global/ui/modals'
+import { FormField, TextInput } from '@/Components/Global/ui/modals'
 import React from 'react'
+import VagaDetails from './VagaDetails'
 
 const Confirmacao = ({ handleBack, handleNext, formData, setFormData }) => {
-
-  const handleTermoCheck = () => {
-    setFormData(prevData => {
-      return { ...prevData, termo_responsabilidade: true }
-    })
-  }
 
   return (
     <div className="bg-gray-100 dark:bg-slate-700 min-h-screen p-4 sm:p-6 md:p-8 font-sans">
@@ -24,40 +19,40 @@ const Confirmacao = ({ handleBack, handleNext, formData, setFormData }) => {
             {/* 1ª linha: 3 colunas */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
               <FormField label="Nome Completo">
-                <TextInput readOnly={true} value="Leandro Freitas" />
+                <TextInput readOnly={true} value={formData.nome_completo} />
               </FormField>
               <FormField label="CPF">
-                <TextInput readOnly={true} value="000.000.000-00" />
+                <TextInput readOnly={true} value={formData.cpf} />
               </FormField>
               <FormField label="E-mail">
-                <TextInput readOnly={true} value="exemplo@gmail.com" />
+                <TextInput readOnly={true} value={formData.email} />
               </FormField>
             </div>
             {/* 2ª linha: 4 colunas */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-8">
               <FormField label="Data de Nascimento">
-                <TextInput readOnly={true} value="01/01/2000" />
+                <TextInput readOnly={true} value={formData.data_nascimento} />
               </FormField>
               <FormField label="Telefone">
-                <TextInput readOnly={true} value="38999999999" />
+                <TextInput readOnly={true} value={formData.telefone} />
               </FormField>
               <FormField label="Gênero">
-                <TextInput readOnly={true} value="Masculino" />
+                <TextInput readOnly={true} value={formData.genero} />
               </FormField>
               <FormField label="CEP">
-                <TextInput readOnly={true} value="39400001" />
+                <TextInput readOnly={true} value={formData.cep} />
               </FormField>
             </div>
             {/* 3ª linha: 3 colunas */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
               <FormField label="Rua">
-                <TextInput readOnly={true} value="Rua Doutor Santos" />
+                <TextInput readOnly={true} value={formData.rua} />
               </FormField>
               <FormField label="Bairro">
-                <TextInput readOnly={true} value="Centro" />
+                <TextInput readOnly={true} value={formData.bairro} />
               </FormField>
               <FormField label="Número">
-                <TextInput readOnly={true} value="100" />
+                <TextInput readOnly={true} value={formData.numero} />
               </FormField>
             </div>
             {/* 4ª linha: 2 colunas */}
@@ -70,20 +65,11 @@ const Confirmacao = ({ handleBack, handleNext, formData, setFormData }) => {
               </FormField>
             </div>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-            <div className="border rounded-lg p-4">
-              <h3 className="font-bold">Lato Sensu em Alfabetização e Multiletramentos</h3>
-              <p className="text-sm text-gray-600">Montes Claros | MG</p>
-              <p className="text-sm bg-gray-100 p-2 rounded-md mt-2">Modalidade 3: Negros e Pardos</p>
-              <p className="text-sm bg-gray-100 p-2 rounded-md mt-2">Categoria 3: Comunidade em Geral</p>
-            </div>
-            <div className="border rounded-lg p-4">
-              <h3 className="font-bold">Lato Sensu em Arte e Cultura Visual</h3>
-              <p className="text-sm text-gray-600">Montes Claros | MG</p>
-              <p className="text-sm bg-gray-100 p-2 rounded-md mt-2">Modalidade 3: Negros e Pardos</p>
-              <p className="text-sm bg-gray-100 p-2 rounded-md mt-2">Categoria 3: Comunidade em Geral</p>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2              
+            gap-6 mb-8">
+            {formData.vagas.map((vaga, index) => (
+              <VagaDetails key={index} vaga={vaga} />
+            ))}
           </div>
 
           <div>
@@ -101,8 +87,6 @@ const Confirmacao = ({ handleBack, handleNext, formData, setFormData }) => {
                 <span className="ml-3 text-sm">Declaro atender as condições estabelecidas e indicadas neste Edital para participar do Processo Seletivo ofertado pela UAB/Unimontes.</span>
               </label>
             </div>
-          </div>
-        </div>
         <div className="mt-10 flex justify-end">
           <button onClick={handleBack} className="px-6 py-2.5 mr-3 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">
             Voltar
@@ -110,6 +94,9 @@ const Confirmacao = ({ handleBack, handleNext, formData, setFormData }) => {
           <button onClick={handleNext} className="px-8 py-3 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 ">
             Concluir
           </button>
+
+        </div>
+          </div>
         </div>
       </div>
     </div>

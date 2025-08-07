@@ -68,7 +68,11 @@ const Inscrever = () => {
                 categoria: ''
             },
         ],
-        termo_responsabilidade: false
+        termo_responsabilidade: false,
+        anexo_cpf: null,
+        anexo_comprovante_residencia: null,
+        anexo_historico: null,
+        anexo_autodeclaracao: null,
 });
 
     const handleOnChangeAttr = (e, attr) => {

@@ -20,10 +20,6 @@ export default function ProcessoCard({ processo }){
 
   return (
     <div className={`cardBase ${inscrito ? 'cardBorderInscrito' : 'cardBorderNaoInscrito'}`}>
-      <h1>{id}</h1>
-      <h1>{edital}</h1>
-      <h1>{descricao}</h1>
-      <h1>{"inscrito: "+inscrito}</h1>
       {
         inscrito && (
           <div className={'bookmarkIcon'}>
