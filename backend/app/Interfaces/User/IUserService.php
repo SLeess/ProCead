@@ -18,7 +18,7 @@ interface IUserService{
     public function updateProfile(User $user, array $data): UserResource;
 
     /**
-     * Pega as permissões e papéis do usuário.
+     * Pega as insformações do usuário, suas permissões e perfis.
      */
-    public function getUserPermissions(User $user): UserDataPermissionsAndRoles;
+    public function getUserDataPermissions(User $user): UserDataPermissionsAndRoles;
 }

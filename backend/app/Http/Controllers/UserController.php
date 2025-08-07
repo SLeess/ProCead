@@ -42,7 +42,7 @@ class UserController extends APIController
     public function getPermissions(Request $request): JsonResponse
     {
         try {
-            $result = $this->iUserService->getUserPermissions($request->user());
+            $result = $this->iUserService->getUserDataPermissions($request->user());
             return $this->sendResponse($result, 'Permissões do usuário recebidas com sucesso.');
         } catch (\Exception $e) {
             return $this->sendError('Erro inesperado',[0 => $e->getMessage() ], Response::HTTP_INTERNAL_SERVER_ERROR);

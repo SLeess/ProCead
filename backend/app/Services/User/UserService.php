@@ -34,7 +34,7 @@ class UserService implements \App\Interfaces\User\IUserService{
         }
     }
 
-    public function getUserPermissions(User $user): UserDataPermissionsAndRoles
+    public function getUserDataPermissions(User $user): UserDataPermissionsAndRoles
     {
         // Reutiliza o seu Resource, o que é uma ótima prática.
         return UserDataPermissionsAndRoles::make($user);
