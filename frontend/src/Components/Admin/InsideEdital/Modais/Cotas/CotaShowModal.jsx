@@ -55,8 +55,7 @@ export default function CotaShowModal() {
                         </div>
 
                         <div id="buttons-container">
-                            {/* <button onClick={handleBack} id='cancel-button'>Voltar</button> */}
-                            <button onClickCapture={onCloseModal} id='save-button'>Fechar</button>
+                            <button onClickCapture={onCloseModal} id='modal-purple-button'>Fechar</button>
                         </div>
                     </div>
 

@@ -91,8 +91,8 @@ export default function QuadroVagasEditModal() {
                                 <FormField label="Habilitação" className="md:col-span-3"><TextInput value="Pós Graduação" /></FormField>
                             </div>
                             <div id="buttons-container">
-                                <button onClick={onCloseModal} id='cancel-button'>Fechar</button>
-                                <button onClick={handleNext} id='save-button'>Próximo: Distribuição de Vagas</button>
+                                <button onClick={onCloseModal} id='modal-white-button'>Fechar</button>
+                                <button onClick={handleNext} id='modal-purple-button'>Próximo: Distribuição de Vagas</button>
                             </div>
                         </div>
                     )}
@@ -108,8 +108,8 @@ export default function QuadroVagasEditModal() {
                                 <FormField label="TRANS"><TextInput value="2" /></FormField>
                             </div>
                             <div id="buttons-container">
-                                <button onClick={handleBack} id='cancel-button'>Voltar</button>
-                                <button onClick={handleNext} id='save-button'>Próximo: Categorias Customizadas</button>
+                                <button onClick={handleBack} id='modal-white-button'>Voltar</button>
+                                <button onClick={handleNext} id='modal-purple-button'>Próximo: Categorias Customizadas</button>
                             </div>
                         </div>
                     )}
@@ -133,8 +133,8 @@ export default function QuadroVagasEditModal() {
                                 </div>
                             </div>
                             <div id="buttons-container">
-                                <button onClick={handleBack} id='cancel-button'>Voltar</button>
-                                <button onClick={onCloseModal} id='save-button'>Fechar</button>
+                                <button onClick={handleBack} id='modal-white-button'>Voltar</button>
+                                <button onClick={onCloseModal} id='modal-purple-button'>Salvar</button>
                             </div>
                         </div>
                     )}

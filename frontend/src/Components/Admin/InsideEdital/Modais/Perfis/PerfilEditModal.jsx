@@ -39,13 +39,13 @@ const PerfilEditModal = () => {
                     <div id="buttons-container">
                         <button
                             onClick={onCloseModal}
-                            id='cancel-button'
+                            id='modal-white-button'
                         >
                             Cancelar
                         </button>
                         <button
                             onClick={onCloseModal}
-                            id='save-button'
+                            id='modal-purple-button'
                         >
                             Salvar
                         </button>

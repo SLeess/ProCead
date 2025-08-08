@@ -35,8 +35,8 @@ const DisciplinaCreateModal = () => {
                             <FormField className="md:col-span-1" label="Carga Horária"><TextInput value="60 horas" /></FormField>
                         </div>
                         <div id="buttons-container">
-                            <button onClick={onCloseModal} id='cancel-button'>Fechar</button>
-                            <button onClick={onCloseModal} id='save-button'>Salvar</button>
+                            <button onClick={onCloseModal} id='modal-white-button'>Cancelar</button>
+                            <button onClick={onCloseModal} id='modal-purple-button'>Salvar</button>
                         </div>
                     </div>
                 </ModalBody>

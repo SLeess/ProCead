@@ -338,8 +338,8 @@ export default function ModalExportarRelatorio({ openModal, onCloseModal, table,
 
 
           <div id="buttons-container">
-            <button onClick={onCloseModal} id='cancel-button'>Fechar</button>
-            <button onClick={() => handleExport(titulo, subtitulo, orientacao, formato)} id='save-button'> {isExporting ? 'Exportando...' : 'Gerar Relatório'}</button>
+            <button onClick={onCloseModal} id='modal-white-button'>Fechar</button>
+            <button onClick={() => handleExport(titulo, subtitulo, orientacao, formato)} id='modal-purple-button'> {isExporting ? 'Exportando...' : 'Gerar Relatório'}</button>
           </div>
         </div>
       </ModalBody>

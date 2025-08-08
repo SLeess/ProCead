@@ -54,8 +54,8 @@ export default function CotaEditModal() {
                         </div>
 
                         <div id="buttons-container">
-                            <button onClick={onCloseModal} id='cancel-button'>Voltar</button>
-                            <button onClickCapture={onCloseModal} id='save-button'>Salvar</button>
+                            <button onClick={onCloseModal} id='modal-white-button'>Cancelar</button>
+                            <button onClickCapture={onCloseModal} id='modal-purple-button'>Salvar</button>
                         </div>
                     </div>
 

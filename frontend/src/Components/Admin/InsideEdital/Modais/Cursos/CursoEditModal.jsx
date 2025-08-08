@@ -32,8 +32,8 @@ const CursoEditModal = () => {
               <FormField label="Edital Referente"><TextInput value="Edital Nº 08/2025" /></FormField>
             </div>
             <div id="buttons-container">
-              <button onClick={onCloseModal} id='cancel-button'>Fechar</button>
-              <button onClick={onCloseModal} id='save-button'>Salvar</button>
+              <button onClick={onCloseModal} id='modal-white-button'>Cancelar</button>
+              <button onClick={onCloseModal} id='modal-purple-button'>Salvar</button>
             </div>
           </div>
         </ModalBody>

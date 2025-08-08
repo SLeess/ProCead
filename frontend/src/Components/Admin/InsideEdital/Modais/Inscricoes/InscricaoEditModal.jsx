@@ -123,10 +123,10 @@ export default function InscricaoEditModal() {
 
                             {/* Action Buttons */}
                             <div id="buttons-container">
-                                <button onClick={onCloseModal} id='cancel-button'>
+                                <button onClick={onCloseModal} id='modal-white-button'>
                                     Cancelar
                                 </button>
-                                <button onClick={handleNext} id='save-button'>
+                                <button onClick={handleNext} id='modal-purple-button'>
                                     Próximo: Endereço
                                 </button>
                             </div>
@@ -144,8 +144,8 @@ export default function InscricaoEditModal() {
                                 <FormField label="Cidade" className="md:col-span-3"><TextInput value="São João da Ponte" /></FormField>
                             </div>
                             <div id="buttons-container">
-                                <button onClick={handleBack} id='cancel-button'>Voltar</button>
-                                <button onClick={handleNext} id='save-button'>Próximo: Vaga</button>
+                                <button onClick={handleBack} id='modal-white-button'>Voltar</button>
+                                <button onClick={handleNext} id='modal-purple-button'>Próximo: Vaga</button>
                             </div>
                         </div>
                     )}
@@ -162,8 +162,8 @@ export default function InscricaoEditModal() {
                                 </div>
                             </div>
                             <div className="mt-6 flex justify-end items-center w-full space-x-4">
-                                <button onClick={handleBack} id='cancel-button'>Voltar</button>
-                                <button onClick={handleNext} id='save-button'>Próximo: Anexos</button>
+                                <button onClick={handleBack} id='modal-white-button'>Voltar</button>
+                                <button onClick={handleNext} id='modal-purple-button'>Próximo: Anexos</button>
                             </div>
                         </div>
                     )}
@@ -192,8 +192,8 @@ export default function InscricaoEditModal() {
                             </div>
 
                             <div id="buttons-container">
-                                <button onClick={handleBack} id='cancel-button'>Voltar</button>
-                                <button onClickCapture={onCloseModal} id='save-button'>Fechar</button>
+                                <button onClick={handleBack} id='modal-white-button'>Voltar</button>
+                                <button onClickCapture={onCloseModal} id='modal-purple-button'>Salvar</button>
                             </div>
                         </div>
                     )}

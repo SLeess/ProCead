@@ -106,10 +106,10 @@ export default function LogsShowModal() {
                             </div>
                             {/* Action Buttons */}
                             <div id="buttons-container">
-                                <button onClick={onCloseModal} id='cancel-button'>
+                                <button onClick={onCloseModal} id='modal-white-button'>
                                     Cancelar
                                 </button>
-                                <button onClick={handleNext} id='save-button'>
+                                <button onClick={handleNext} id='modal-purple-button'>
                                     Próximo: Alterações
                                 </button>
                             </div>
@@ -129,8 +129,8 @@ export default function LogsShowModal() {
                                 </div>
                             </div>
                             <div id="buttons-container">
-                                <button onClick={handleBack} id='cancel-button'>Voltar</button>
-                                <button onClickCapture={onCloseModal} id='save-button'>Fechar</button>
+                                <button onClick={handleBack} id='modal-white-button'>Voltar</button>
+                                <button onClickCapture={onCloseModal} id='modal-purple-button'>Fechar</button>
                             </div>
                         </div>
                     )}

@@ -55,8 +55,8 @@ export default function InscricaoAvaliarModal() {
                         </div>
 
                         <div id="buttons-container">
-                            <button onClick={onCloseModal} id='cancel-button'>Cancelar</button>
-                            <button onClickCapture={onCloseModal} id='save-button'>Avaliar</button>
+                            <button onClick={onCloseModal} id='modal-white-button'>Cancelar</button>
+                            <button onClickCapture={onCloseModal} id='modal-purple-button'>Avaliar</button>
                         </div>
                     </div>
 

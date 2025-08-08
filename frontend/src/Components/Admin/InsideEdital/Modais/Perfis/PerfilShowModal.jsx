@@ -40,7 +40,7 @@ const PerfilShowModal = () => {
                         
                         <button
                             onClick={onCloseModal}
-                            id='save-button'
+                            id='modal-purple-button'
                         >
                             Fechar
                         </button>

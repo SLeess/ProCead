@@ -51,15 +51,9 @@ const ModalidadeShowModal = () => {
                     <div id="buttons-container">
                         <button
                             onClick={onCloseModal}
-                            id='cancel-button'
+                            id='modal-purple-button'
                         >
-                            Cancelar
-                        </button>
-                        <button
-                            onClick={onCloseModal}
-                            id='save-button'
-                        >
-                            Salvar
+                            Fechar
                         </button>
                     </div>
                 </ModalBody>
