@@ -1,0 +1,17 @@
+@reference "@/index.css";
+
+section#relatoriosCustom{
+    @apply mt-0;
+}
+section#relatoriosCustom header h1{
+    @apply text-white text-[22px] not-italic font-bold leading-[normal] mx-0;
+    font-family: Sora;
+}
+section#relatoriosCustom header{
+    @apply absolute top-0 left-0 w-full px-6 py-4 rounded-t-xl bg-[var(--header-admin-primary)];
+}
+
+section#relatoriosCustom form#content{
+    /* @apply mt-8; */
+    @apply mt-8;
+}

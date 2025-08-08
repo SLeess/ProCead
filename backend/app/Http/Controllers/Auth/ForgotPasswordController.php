@@ -4,12 +4,12 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\API\APIController;
 use App\Http\Requests\ForgotPasswordRequest;
-use App\Services\Auth\AuthService;
+use App\Interfaces\Auth\IAuthService;
 use Symfony\Component\HttpFoundation\Response;
 
 class ForgotPasswordController extends APIController
 {
-    public function __construct(protected AuthService $authService)
+    public function __construct(protected IAuthService $authService)
     {
         $this->middleware('guest');
     }

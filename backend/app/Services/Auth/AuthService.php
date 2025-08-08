@@ -2,6 +2,7 @@
 
 namespace App\Services\Auth;
 
+use App\Interfaces\Auth\IAuthService;
 use App\Models\User;
 use Exception;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -11,12 +12,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 
-class AuthService
+class AuthService implements IAuthService
 {
-    /**
-     * Tenta autenticar um usuário e retorna os dados do token.
-     * Lança exceções em caso de falha.
-     */
+    // public function __construct() {}
     public function loginUser(array $credentials): array
     {
         if (!Auth::attempt($credentials)) {
@@ -29,7 +27,7 @@ class AuthService
             /** @var \App\Models\User $user */
             $user->tokens()->delete();
 
-            $data['token'] = $user->createToken('auth_token', ['access:candidate'])->plainTextToken;
+            $data['token'] = $user->createToken('auth_token')->plainTextToken;
 
             DB::commit();
             return $data;
@@ -39,9 +37,6 @@ class AuthService
         }
     }
 
-    /**
-     * Tenta autenticar um administrador e retorna os dados do token.
-     */
     public function loginAdmin(array $credentials): array
     {
         if (!Auth::attempt($credentials)) {
@@ -58,7 +53,7 @@ class AuthService
         try {
 
             $user->tokens()->delete();
-            $data['token'] = $user->createToken('auth_token_admin', ['access:admin'])->plainTextToken;
+            $data['token'] = $user->createToken('auth_token_admin')->plainTextToken;
 
             DB::commit();
             return $data;
@@ -68,9 +63,6 @@ class AuthService
         }
     }
 
-    /**
-     * Registra um novo usuário.
-     */
     public function registerUser(array $data): array
     {
         $data['password'] = Hash::make($data['password']);
@@ -91,9 +83,6 @@ class AuthService
         }
     }
 
-    /**
-     * Faz o logout do usuário logado atualmente.
-     */
     public function logoutUser(User $user): void
     {
         $user->currentAccessToken()->delete();
@@ -124,10 +113,8 @@ class AuthService
         }
     }
 
-    /**
-     * Faz a troca para a senha nova resetada do usuário
-     */
-    public function resetPassword(array $data)
+
+    public function resetPassword(array $data): string
     {
         DB::beginTransaction();
 

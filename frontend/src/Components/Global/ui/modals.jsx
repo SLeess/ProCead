@@ -13,7 +13,7 @@ const TextInput = ({ value, readOnly, placeholder, onChange = null }) => (
     <input
         type="text"
         defaultValue={value}
-        className={`${readOnly !== true ? 'bg-white': 'bg-gray-100'} border border-gray-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full`}
+        className={`${readOnly !== true ? 'bg-white': 'bg-gray-100'} border border-gray-200 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full`}
         readOnly={readOnly}
         onChange={onChange}
         placeholder={placeholder}
@@ -44,7 +44,7 @@ const MultiSelectTags = () => {
 
     return (
         <div className="relative w-full">
-            <div className="flex flex-wrap items-center gap-2 p-2 border border-gray-300 rounded-lg min-h-[42px]">
+            <div className="flex flex-wrap items-center gap-2 p-2 border border-gray-300 rounded-md min-h-[42px]">
                 {selectedItems.map(item => (
                     <div key={item} className="flex items-center bg-gray-200 text-gray-700 text-sm font-medium px-2 py-1 rounded-md">
                         <span>{item}</span>
@@ -67,7 +67,7 @@ const SelectInput = ({ value, options, readOnly, onChange = null, defaultOption 
             disabled={readOnly}
             defaultValue={value}
             onChange={onChange}
-            className={`${readOnly !== true ? 'bg-white': 'bg-gray-100'} appearance-none border border-gray-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full`}
+            className={`${readOnly !== true ? 'bg-white': 'bg-gray-100'} appearance-none border border-gray-200 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full`}
         >
             {defaultOption && <option value="" disabled>Selecione uma opção</option>}
             {options.map(opt => <option key={opt} value={opt}>{opt}</option>)}

@@ -6,6 +6,7 @@ import data from './data';
 import columns from './columns';
 import MainTable from '@/Components/Global/Tables/MainTable/MainTable';
 import AdminCreateModal from '@/Components/Admin/InsideEdital/Modais/Usuario/AdminCreateModal';
+import StatsCard from '@/Components/Global/Cards/StatsCard';
 
 const Usuarios = () => {
   
@@ -14,22 +15,15 @@ const Usuarios = () => {
 
   if (hasPermissionForEdital('visualizar-usuarios', editalId) || isSuperAdmin())
     return (
-      <div className="p-4">
-        <div className="flex items-center justify-between mb-4">
-          <h1 className="text-2xl font-bold">Usuários</h1>
-          <AdminCreateModal/>
-        </div>
+      <div>
+        <h1 className="text-2xl font-bold mb-4">Usuários</h1>
         <div className="flex gap-4 mb-4">
-          <div className="bg-white shadow-md rounded-lg p-5 w-xs relative flex flex-col justify-between h-30">
-            <p className="text-gray-600 mb-1">Nº de Candidatos</p>
-            <p className="text-2xl font-bold mb-1">1.123</p>
-            <UsersRound className="absolute top-4 right-4 text-gray-500" />
-          </div>
-          <div className="bg-white shadow-md rounded-lg p-5 w-xs relative flex flex-col justify-between h-30">
-            <p className="text-gray-600 mb-1">Nº de Administradores</p>
-            <p className="text-2xl font-bold mb-1">20</p>
-            <ShieldUser className="absolute top-4 right-4 text-gray-500" />
-          </div>
+          <StatsCard title={"Nº de Candidatos"} quant={1000}>
+            <UsersRound className="text-[var(--stats-card-text)] absolute top-4 right-4" />
+          </StatsCard>
+          <StatsCard title={"Nº de Administradores"} quant={20}>
+            <ShieldUser className="text-[var(--stats-card-text)] absolute top-4 right-4" />
+          </StatsCard>
         </div>
         <MainTable data = {data} columns = {columns} title={"Usuarios"}/>
       </div>

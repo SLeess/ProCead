@@ -73,15 +73,8 @@ export default function RecuperarSenha()
                     result.errors ? toast.error(result.message) : toast.warning(result.message);
                 }
             } else {
-                toast.success(result.message  + " Redirecionando a página de Login...", {
-                    autoClose: 1500,
-                    closeOnClick: false,
-                    pauseOnFocusLoss: false,
-
-                    onClose: () => {
-                        navigate('/login')
-                    }
-                });
+                toast.success(result.message  + " Redirecionando a página de Login...");
+                navigate('/login');
             }
         } catch (error) {
             toast.error(error.toString());

@@ -13,24 +13,21 @@ import LayoutAdminInsideEdital from './Layouts/LayoutAdminInsideEdital';
 
 
 /** ---------------------------------- Páginas de Candidato ---------------------------------- */
-  import HomeCandidato from './Pages/Candidato/Home/Home';
   import MeusProcessos from './Pages/Candidato/Home/MeusProcessos/MeusProcessos';
-  import HomePage from './Pages/Test/HomePage';
   import EditalPage from './Pages/Test/EditalPage';
   import ProcessosAtivos from './Pages/Candidato/Home/ProcessosAtivos/ProcessosAtivos';
-  import UserManagePage from './Pages/Test/UserManagePage';
 /** ------------------------------------------------------------------------------------------ */
 
 
 /** ------------------------------------ Páginas de Admin ------------------------------------ */
   import Editais from './Pages/Admin/Home/Editais/Editais';
   import NovoEdital from './Pages/Admin/Home/NovoEdital/NovoEdital';
-  // import UsuariosAdminList from './Pages/Admin/Usuarios/Usuarios';
   import GerenciarPerfis from './Pages/Admin/Home/GerenciarPerfis/GerenciarPerfis';
-    /** ------------------------------------ Páginas de Gerência de Perfis ---------------------------- */
+  /** ------------------------------------ Páginas de Gerência de Permissões do Perfil ---------------------------- */
     import GerenciarPerfisPermissoes from './Pages/Admin/Home/GerenciarPerfis/ActionPages/GerenciarPerfisPermissoes/GerenciarPerfisPermissoes';
-    /** ------------------------------------ Páginas de Gerência de Perfis ---------------------------- */
+  /** ------------------------------------ Páginas de Gerência de Permissões do Perfil ---------------------------- */
   import GerenciarUsuarios from './Pages/Admin/Home/GerenciarUsuarios/GerenciarUsuarios';
+  import RelatoriosCustom from './Pages/Admin/Home/RelatoriosCustom/RelatoriosCustom';
 
     /** ------------------------------------ Páginas Adm de Edital ---------------------------- */
     import Inscricoes from './Pages/Admin/InsideEdital/Inscricoes/Inscricoes';
@@ -94,7 +91,6 @@ function App() {
             <Route path='/registro' element={<Registro />} />
             <Route path='/esqueceu-senha' element={<EsqueceuSenha />} />
             <Route path='/recuperar-senha' element={<RecuperarSenha />} />
-            <Route path='/permissions' element={<UserManagePage userId={1} />} />
           </Route>
 
           {/* Rota para convidados da área de Admin */}
@@ -117,7 +113,6 @@ function App() {
             }
           >
             <Route index element={<ProcessosAtivos />} />
-            <Route path="/home" element={<HomePage />} />
             <Route path="/edital/:editalId" element={<EditalPage />} />
             <Route path="/edital/:editalId/inscrever" element={<Inscrever />} />
             <Route path='meus-processos' element={<MeusProcessos />} />
@@ -143,6 +138,7 @@ function App() {
               <Route path='permissoes' element={<GerenciarPerfisPermissoes/>}></Route>
             </Route>
             <Route path="usuarios" element={<GerenciarUsuarios/>} />
+            <Route path="relatorios-custom" element={<RelatoriosCustom/>} />
             {/* <Route path='manejar-usuarios/:userId' element={<UserManagePage />} /> */}
           </Route>
 

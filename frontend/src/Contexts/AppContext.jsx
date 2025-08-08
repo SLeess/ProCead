@@ -116,7 +116,7 @@ export default function AppProvider({ children }) {
             }
             
             try {
-                const response = await fetch('/api/user', {
+                const response = await fetch('/api/usuario/permissions', {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Accept': 'application/json',
@@ -176,6 +176,7 @@ export default function AppProvider({ children }) {
         token, 
         setToken, 
         loading, 
+        setLoading,
         toggleTheme, 
         theme, 
         logout, 

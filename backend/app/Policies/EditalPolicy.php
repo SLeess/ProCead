@@ -20,7 +20,7 @@ class EditalPolicy
     public function before(User $user, $ability)
     {
         // Grant all permissions to a Super Admin
-        if ($user->hasRole('Super-Admin', 'global')) {
+        if ($user->hasRole('Super-Admin', 'api')) {
             return true;
         }
     }
@@ -34,7 +34,7 @@ class EditalPolicy
      */
     public function administrar(User $user, Edital $edital)
     {
-        return $user->hasPermissionTo("administrar-edital:{$edital->id}", 'local');
+        return $user->hasPermissionTo("administrar-edital:{$edital->id}", 'api');
     }
 
     /**
@@ -46,7 +46,7 @@ class EditalPolicy
      */
     public function inscrever(User $user, Edital $edital)
     {
-        return $user->hasPermissionTo(permission: "inscrever-se-edital:{$edital->id}", guardName: 'local');
+        return $user->hasPermissionTo(permission: "inscrever-se-edital:{$edital->id}", guardName: 'api');
     }
 
     /**
@@ -58,6 +58,6 @@ class EditalPolicy
      */
     public function demaisAtividadesCandidato(User $user, Edital $edital)
     {
-        return $user->hasPermissionTo("acesso-candidato-edital:{$edital->id}", 'local');
+        return $user->hasPermissionTo("acesso-candidato-edital:{$edital->id}", 'api');
     }
 }

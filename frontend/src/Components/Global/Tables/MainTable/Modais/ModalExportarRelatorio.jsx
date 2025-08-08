@@ -181,7 +181,7 @@ export default function ModalExportarRelatorio({ openModal, onCloseModal, table,
     });
 
     try {
-      const response = await fetch('/api/export', {
+      const response = await fetch('/api/admin/export', {
         method: 'post',
         body: JSON.stringify({
           columns: visibleColumnsForExport,
@@ -247,7 +247,7 @@ export default function ModalExportarRelatorio({ openModal, onCloseModal, table,
             <FormField className="md:col-span-3" label="Título do PDF">
               <textarea
                 rows={3}
-                className="bg-gray-100 border border-gray-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+                className="bg-gray-100 border border-gray-200 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
                 value={titulo}
                 onChange={(e) => setTitulo(e.target.value)}
               >
@@ -262,13 +262,13 @@ export default function ModalExportarRelatorio({ openModal, onCloseModal, table,
             </FormField>
           </div>
           <div className="mt-4">
-            <button onClick={() => enableGroupBy(showGroupBy)} className="text-sm font-semibold text-blue-600 hover:underline">
+            <button onClick={() => enableGroupBy(showGroupBy)} className="text-sm font-semibold text-[var(--add-group-by)] hover:underline">
               {showGroupBy ? 'Desabilitar Agrupamento' : 'Agrupar por Coluna'}
             </button>
           </div>
           {showGroupBy && (
             <>
-              <hr className="my-4 h-1 bg-gray-300 border-0 rounded-sm dark:bg-gray-700" />
+              <hr className="my-4 h-1 bg-gray-300 border-0 rounded-md dark:bg-gray-700" />
               <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-6">
                 <FormField className="md:col-span-3" label="Agrupar por">
                   <div className="space-y-2">
@@ -278,8 +278,8 @@ export default function ModalExportarRelatorio({ openModal, onCloseModal, table,
                           type="button"
                           onClick={index === 0 ? addGroupByField : () => removeGroupByField(index)}
                           className={`p-1 rounded-full transition-colors ${index === 0
-                            ? 'text-blue-600 hover:bg-blue-100'
-                            : 'text-red-600 hover:bg-red-100'
+                            ? 'cursor-pointer text-[var(--add-group-by)] hover:bg-[var(--add-group-by-hover)]'
+                            : 'cursor-pointer text-red-600 hover:bg-red-100'
                             }`}
                         >
                           {index === 0 ? <PlusCircle className="h-5 w-5" /> : <MinusCircle className="h-5 w-5" />}
@@ -301,17 +301,17 @@ export default function ModalExportarRelatorio({ openModal, onCloseModal, table,
             </>
           )}
           <div className="mt-4">
-            <button onClick={() => enableColumnWidth(showColumnWidth)} className="text-sm font-semibold text-blue-600 hover:underline">
+            <button onClick={() => enableColumnWidth(showColumnWidth)} className="text-sm font-semibold text-[var(--add-group-by)] hover:underline">
               {showColumnWidth ? 'Desabilitar Ajuste de Colunas' : 'Ajustar Largura das Colunas'}
             </button>
           </div>
           {showColumnWidth && (
             <>
-              <hr className="my-4 h-1 bg-gray-300 border-0 rounded-sm dark:bg-gray-700" />
+              <hr className="my-4 h-1 bg-gray-300 border-0 rounded-md dark:bg-gray-700" />
               <div className="mt-6">
                 <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">Pré-visualização de colunas</h3>
                 <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">Arraste as divisórias para ajustar a largura das colunas para a exportação em PDF.</p>
-                <div ref={previewContainerRef} className="flex w-full h-12 bg-gray-50 border border-gray-300 rounded-lg overflow-hidden select-none">
+                <div ref={previewContainerRef} className="flex w-full h-12 bg-gray-50 border border-gray-300 rounded-md overflow-hidden select-none">
                   {exportableColumns.map((column, index) => (
                     <div
                       key={column.id}
@@ -336,8 +336,8 @@ export default function ModalExportarRelatorio({ openModal, onCloseModal, table,
 
 
           <div className="mt-10 flex justify-end items-center space-x-4">
-            <button onClick={onCloseModal} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">Fechar</button>
-            <button onClick={() => handleExport(titulo, subtitulo, orientacao, formato)} className="px-6 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"> {isExporting ? 'Exportando...' : 'Gerar Relatório'}</button>
+            <button onClick={onCloseModal} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Fechar</button>
+            <button onClick={() => handleExport(titulo, subtitulo, orientacao, formato)} className="cursor-pointer px-6 py-2.5 text-sm font-semibold text-white bg-[var(--button)] rounded-md hover:bg-[var(--button-hover)]"> {isExporting ? 'Exportando...' : 'Gerar Relatório'}</button>
           </div>
         </div>
       </ModalBody>

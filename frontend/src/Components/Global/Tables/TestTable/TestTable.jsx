@@ -115,7 +115,7 @@ export default function TestTable({ rows, cols, tableName, titulo, details, visi
         });
 
         try {
-            const response = await fetch('/api/export', {
+            const response = await fetch('/api/admin/export', {
                 method: 'post',
                 body: JSON.stringify({
                     columns: visibleColumns.filter(chave => chave.id !== 'select' && chave.id !== 'acoes'),

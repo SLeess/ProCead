@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './MeusProcessos.css';
 import { useAppContext } from '@/Contexts/AppContext';
 import { toast } from 'react-toastify';
@@ -16,7 +16,7 @@ function MeusProcessos() {
       setLoading(true);
       await new Promise(resolve => setTimeout(resolve, 5000));
       try {
-          const res = await fetch('/api/user/meus-processos', { // Substitua pela URL real da sua API
+          const res = await fetch('/api/candidato/meus-processos', { // Substitua pela URL real da sua API
               method: 'GET',
               headers: {
                   'Content-Type': 'application/json',

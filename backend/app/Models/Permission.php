@@ -2,18 +2,19 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Permission as PluginPermission;
 
-class Permissions extends Permission
+class Permission extends PluginPermission
 {
     public $timestamps = true;
     protected $fillable = [
         'name',
+        'scope',
         'guard_name',
         'description',
     ];
     protected $casts = [
         'id' => 'string',
     ];
+    
 }

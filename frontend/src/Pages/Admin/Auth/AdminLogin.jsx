@@ -3,6 +3,7 @@ import { useContext, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import { loginSchema } from "@/Pages/Candidato/Auth/Login/loginSchema";
 import { NavigationContext } from "@/Contexts/NavigationContext";
+import LoaderPages from "@/Components/Global/LoaderPages/LoaderPages";
 
 export default function Login() {
     const { setToken } = useContext(AppContext);
@@ -13,10 +14,17 @@ export default function Login() {
         password: '',
     });
 
+    const [loading, setLoading] = useState(false);
+
     const [focusedField, setFocusedField] = useState(null);
 
     const handleLogin = async (e) => {
+        if(loading == true) 
+            return;
+
         e.preventDefault();
+
+        setLoading(true);
 
         const {email, password} = formData;
         const validation = loginSchema.safeParse({ email, password });
@@ -53,6 +61,8 @@ export default function Login() {
             }
         } catch (error) {
             toast.error(error.toString());
+        } finally{
+            setLoading(false);
         }
     };
 
@@ -74,6 +84,9 @@ export default function Login() {
                 draggable
                 pauseOnHover
             />
+            {
+                loading && <LoaderPages></LoaderPages>
+            }
             <div className="login-container flex flex-col items-center">
                 <div className="mb-12">
                     <img src="/img/img_logo.png" alt="CEAD Unimontes Logo" className="h-[155px] w-[345px]"/>

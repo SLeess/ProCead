@@ -5,8 +5,8 @@ namespace Database\Seeders;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
+use App\Models\Permission;
+use App\Models\Role;
 
 class PermissionsSeeder extends Seeder
 {
@@ -49,7 +49,7 @@ class PermissionsSeeder extends Seeder
             "deletar-perfis" => " Deletar os Perfis do sistema.",
             "visualizar-e-alterar-permissoes-do-perfil" => " Visualizar e alterar permissões de cada perfil separadamente.",
             "visualizar-permissoes" => " Visualizar todos as permissões do sistema.",
-            "importar" => " Realizar importações no sistema.",
+            "cadastrar-importar" => " Realizar importações no sistema.",
             "visualizar-campus" => " Visualizar todos os campi do sistema.",
             "cadastrar-campus" => " Cadastrar os campi do sistema.",
             "editar-campus" => " Editar os campi do sistema.",
@@ -76,65 +76,57 @@ class PermissionsSeeder extends Seeder
             "visualizar-classificacoes" => " Visualizar as classificações do sistema.",
             "visualizar-pre-matriculas" => " Visualizar todas as Pré-Matrículas do sistema.",
             "editar-pre-matriculas" => " Editar as Pré-Matrículas do sistema.",
-            "redistribuir-vagas-campi-cursos" => " Redistribuir as vagas dos cursos.",
+            "editar-vagas-campi-cursos" => " Redistribuir as vagas dos cursos.",
             "visualizar-disciplinas" => " Visualizar as Disciplinas no sistema.",
             "cadastrar-disciplinas" => " Cadastrar as Disciplinas no sistema.",
             "editar-disciplinas" => " Editar as Disciplinas no sistema.",
-            "apagar-disciplinas" => " Apagar as Disciplinas no sistema.",
+            "deletar-disciplinas" => " Apagar as Disciplinas no sistema.",
             "visualizar-criterios" => " Visualizar os Critérios no sistema.",
             "cadastrar-criterios" => " Cadastrar os Critérios no sistema.",
             "editar-criterios" => " Editar os Critérios no sistema.",
-            "apagar-criterios" => " Apagar os Critérios no sistema.",
+            "deletar-criterios" => " Apagar os Critérios no sistema.",
             "cadastrar-classificacoes" => " Gerar as listas de classificação no sistema.",
             "visualizar-modalidades" => " Visualizar as Modalidades no sistema.",
             "cadastrar-modalidades" => " Cadastrar as Modalidades no sistema.",
             "editar-modalidades" => " Editar as Modalidades no sistema.",
-            "apagar-modalidades" => " Apagar as Modalidades no sistema.",
-            "alocar-inscricoes-para-avaliacao" => " Alocar as Inscrições que Cada Admin Pode Avaliar",
-            "socioeconomico" => " Avaliar todas as cotas que pertencem a modalidade socioeconômica",
-            "heteroidentificacao" => " Avaliar todas as cotas que pertencem a modalidade heteroidentificação",
-            "junta_medica" => " Avaliar todas as cotas que pertencem a modalidade junta médica",
-            "etnica" => " Avaliar todas as cotas que pertencem a modalidade etnica",
-            "genero" => " Avaliar todas as cotas que pertencem a modalidade identidade de gênero",
+            "deletar-modalidades" => " Apagar as Modalidades no sistema.",
+            "editar-alocacao-inscricoes-para-avaliacao" => " Alocar as Inscrições que Cada Admin Pode Avaliar",
+            "avaliar-socioeconomico" => " Avaliar todas as cotas que pertencem a modalidade socioeconômica",
+            "avaliar-heteroidentificacao" => " Avaliar todas as cotas que pertencem a modalidade heteroidentificação",
+            "avaliar-junta_medica" => " Avaliar todas as cotas que pertencem a modalidade junta médica",
+            "avaliar-etnica" => " Avaliar todas as cotas que pertencem a modalidade etnica",
+            "avaliar-genero" => " Avaliar todas as cotas que pertencem a modalidade identidade de gênero",
         ];
         $arrayOfGlobalPermissionNames = [
-            "criar-edital" => " Criar Edital",
+            "cadastrar-edital" => " Criar Edital",
             "editar-edital" => " Editar Edital",
-            "gerenciar-edital" => " Gerenciar Edital",
         ];
-        // dd(Permission::all()->except($arrayOfGlobalPermissionNames)->toArray());
 
         foreach ($arrayOfLocalPermissionNames as $permission => $description) {
             // dd($arrayOfLocalPermissionNames,$permission,$description);
-            Permission::create(["name" => $permission, "guard_name" => "local", "description" => $description]);
+            Permission::create(["name" => $permission, "guard_name" => "api", "description" => $description, 'scope' => "local"]);
         }
         foreach ($arrayOfGlobalPermissionNames as $permission => $description) {
-            Permission::create(["name" => $permission, "guard_name" => "global", "description" => $description]);
+            Permission::create(["name" => $permission, "guard_name" => "api", "description" => $description, 'scope' => 'global']);
         }
-        // Permissions::insert($permissions->toArray());
 
-        // create role & give it permissions
-        // Fetch permissions that belong to the 'local' guard
-        $localPermissions = Permission::where('guard_name', 'local')
+        // Fetch permissions that belong to the 'local' scope
+        $localPermissions = Permission::where('scope', 'local')
             ->whereNotIn('name', $arrayOfGlobalPermissionNames)
             ->get();
-        Role::create(["name" => "admin", "guard_name" => "local"])
+
+        // Fetch ALL permissions that belong to the 'global' scope
+        $globalPermissions = Permission::where('scope', 'global')->get();
+
+        Role::create(["name" => "admin", "guard_name" => "api", 'scope' => "local"])
             ->givePermissionTo($localPermissions);
 
-        // Fetch ALL permissions that belong to the 'global' guard
-        $globalPermissions = Permission::where('guard_name', 'global')->get();
-
-        Role::create(["name" => "super-Admin", "guard_name" => "global"])
+        $role = Role::create(["name" => "super-Admin", "guard_name" => "api", 'scope' => "global"])
             ->givePermissionTo($globalPermissions);
 
         $user = User::first();
-        // dd($user);
         if ($user) {
-            $user->assignRole('super-Admin');
+            $user->assignRole($role);
         }
-        // $cotasUser = User::where('email','cotas@cotas.com')->first();
-        // if($cotasUser) {
-        //     $cotasUser->assignRole('cotas');
-        // }
     }
 }

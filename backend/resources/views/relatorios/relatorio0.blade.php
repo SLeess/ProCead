@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-    
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>{{ $data['titulo'] }}</title>
@@ -37,7 +37,7 @@
     </style>
 </head>
 <body>
-    
+
     @include('cabecalho', ['title' => $data['titulo'], 'subtitle' => $data['subtitulo']])
     {{-- <h2 style="font-size:1.06rem;margin-top: 0px; margin-bottom: 15px;">{{$data['tableName']}}</h2> --}}
     @if(sizeof($data['rows']) == 0)
@@ -56,8 +56,8 @@
                     <tr>
                         @foreach ($data['columns'] as $column)
                             {{-- @dd("width: ".floor($data['columnWidths'][$column['id']])."%") --}}
-                            
-                            <td style="width: {{floor($data['columnWidths'][$column['id']])}}%;">{{$row[$column["id"]]}}</td>
+
+                            <td style="width: {{floor($data['columnWidths'][$column['id']])}}%;">{{$row[$column["id"] ?? ""]}}</td>
                         @endforeach
                     </tr>
                 @endforeach

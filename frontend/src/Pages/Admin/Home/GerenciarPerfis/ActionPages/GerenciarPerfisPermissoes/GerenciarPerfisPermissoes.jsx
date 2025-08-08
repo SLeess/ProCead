@@ -9,7 +9,6 @@ import { useMemo, useState } from "react";
 export default function GerenciarPerfisPermissoes()
 {
     const [permissionsData, setPermissionsData] = useState(data);
-
     const updatePermission = (rowIndex, columnId, value) => {
         setPermissionsData(old =>
             old.map((row, index) => {
@@ -42,12 +41,49 @@ export default function GerenciarPerfisPermissoes()
         );
     };
 
+    const toggleAllPermissions = (currentState) => {
+        const newValue = !currentState;
+        setPermissionsData((old) => old.map((row) => {
+            return {
+                ...row, 
+                ler: newValue,
+                criar: newValue,
+                atualizar: newValue,
+                deletar: newValue,
+            }
+        }));
+    }
+
     const [formData, setFormData] = useState({
 
     });
 
-    const columns = useMemo(() => getColumns(updatePermission, toggleAllRowPermissions), []);
+    const getAreAllChecked = () => {
+        const res = 
+            permissionsData.some((rowPermission) => {
+                const someInRow = 
+                    Object.values(rowPermission).some(
+                        (permission) => {
+                            // console.log(permission);
+                            return permission === false;
+                        }
+                    );
 
+                // console.log(someInRow);
+                // debugger;
+
+                return someInRow === true
+            }
+        );
+
+        // console.log(columns, permissionsData);
+        // debugger;
+        // console.log(`Tem algum desmarcado? ${res === true ? 'Sim': 'Não'}`);
+        return res;
+    }
+
+    const columns = useMemo(() => getColumns(updatePermission, toggleAllRowPermissions, toggleAllPermissions, getAreAllChecked), []);
+    
     const handleOnSubmit = async () => {
 
     };
@@ -71,7 +107,6 @@ export default function GerenciarPerfisPermissoes()
                     <hr className="my-7"/>
                 </div>
                 <form onSubmit={handleOnSubmit}>
-                    {/* <h2>Permissões</h2> */}
                     <MainTable 
                         data={permissionsData} 
                         columns={columns} 

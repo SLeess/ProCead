@@ -5,6 +5,7 @@ import { useContext } from "react";
 import { toast } from "react-toastify";
 import { LogOut, ChevronsLeftRight } from "lucide-react";
 import { useParams } from "react-router-dom";
+import { ChevronDown } from 'lucide-react'
 
 export default function TopBar() {
     const { user, token, logout } = useAppContext();
@@ -13,7 +14,7 @@ export default function TopBar() {
 
     async function handlerLogOut() {
         try {
-            await fetch('/api/logout', {
+            await fetch('/api/usuario/logout', {
                 method: 'post',
                 headers: {
                     "Authorization": `Bearer ${token}`,
@@ -34,9 +35,9 @@ export default function TopBar() {
     }
 
     return (
-        <div className="flex items-center w-full px-4 py-2 bg-white shadow-md rounded-2xl">
+        <div className="flex items-center w-full px-4 py-2 bg-white shadow rounded-md mb-4">
             {/* Left Item */}
-            <div className="font-semibold text-purple-800 bg-gray-100 py-1 px-2 rounded-md">
+            <div className="font-semibold text-[var(--topbar-flag-text)] bg-[var(--topbar-flag)] py-1 px-2 rounded-md">
                 Edital: {editalId}
             </div>
 
@@ -48,8 +49,9 @@ export default function TopBar() {
                 arrowIcon={false}
                 inline
                 label={
-                    <div className="flex items-center gap-3 cursor-pointer rounded-2xl bg-white py-2 px-4 shadow transition-all hover:shadow-lg">
+                    <div className="flex items-center gap-1 cursor-pointer rounded-2xl bg-white py-2 px-4">
                         <span className="font-semibold text-gray-700">Olá, {user?.nome?.split(' ')[0] || 'Usuário'}</span>
+                        <ChevronDown />
                     </div>
                 }
             >

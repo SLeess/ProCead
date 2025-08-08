@@ -8,7 +8,7 @@ section#novoEdital header h1{
     font-family: Sora;
 }
 section#novoEdital header{
-    @apply absolute top-0 left-0 w-full px-6 py-4 rounded-t-xl bg-[var(--header-admin-primary)] border-2;
+    @apply absolute top-0 left-0 w-full px-6 py-4 rounded-t-xl bg-[var(--header-admin-primary)];
 }
 
 section#novoEdital form#content{
@@ -19,9 +19,9 @@ section#novoEdital form#content{
 
 /* --------------------------------------------------------- BOTÕES --------------------------------------------------------- */
 section#novoEdital button.prosseguir_and_finalizar{
-    @apply px-6 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500;
+    @apply px-6 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500;
 }
 section#novoEdital button.voltar_and_cancelar{
-    @apply px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50;    
+    @apply px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50;    
 }
 

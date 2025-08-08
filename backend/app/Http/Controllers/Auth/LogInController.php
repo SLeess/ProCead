@@ -4,18 +4,16 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\API\APIController;
 use App\Http\Requests\LoginRequest;
-use App\Services\Auth\AuthService;
-use Carbon\Carbon;
+use App\Interfaces\Auth\IAuthService;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 
 class LoginController extends APIController
 {
-    public function __construct(protected AuthService $authService)
+    public function __construct(protected IAuthService $authService)
     {
         $this->middleware('guest');
     }
