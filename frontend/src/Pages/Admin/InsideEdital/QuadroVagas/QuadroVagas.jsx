@@ -7,6 +7,7 @@ import columns from './columns';
 import { Clipboard, ContactRound, UserRoundPen } from 'lucide-react';
 import { useParams } from 'react-router-dom';
 import StatsCard from '@/Components/Global/Cards/StatsCard';
+import QuadroVagasCreateModal from '@/Components/Admin/InsideEdital/Modais/QuadroVagas/QuadroVagasCreateModal';
 
 const QuadroVagas = () => {
   const { editalId } = useParams();
@@ -15,7 +16,10 @@ const QuadroVagas = () => {
   if (hasPermissionForEdital('visualizar-campi-cursos', editalId) || isSuperAdmin())
     return (
       <div>
-        <h1 className="text-2xl font-bold mb-4">Quadro de Vagas</h1>
+        <div className="flex items-center justify-between mb-4">
+          <h1 className="text-2xl font-bold">Quadro de Vagas</h1>
+          <QuadroVagasCreateModal />
+        </div>
         <div className="flex gap-4 mb-4">
           <StatsCard title={"Nº de Quadros"} quant={5}>
             <Clipboard className="text-[var(--admin-stats-card-text)] absolute top-4 right-4" />

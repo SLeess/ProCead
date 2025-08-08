@@ -1,4 +1,4 @@
-"use client";
+
 
 import { Button, Checkbox, Label, Modal, ModalBody, ModalHeader, TextInput } from "flowbite-react";
 import { Check, Eye, Pencil } from "lucide-react";

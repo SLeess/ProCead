@@ -1,4 +1,4 @@
-"use client";
+
 
 import { Modal, ModalBody, ModalHeader, } from "flowbite-react";
 import { Eye } from "lucide-react";
