@@ -14,7 +14,7 @@ export default function TopBar() {
 
     async function handlerLogOut() {
         try {
-            await fetch('/api/logout', {
+            await fetch('/api/usuario/logout', {
                 method: 'post',
                 headers: {
                     "Authorization": `Bearer ${token}`,
