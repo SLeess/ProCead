@@ -5,11 +5,9 @@ namespace App\Http\Resources\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class UserCollection extends ResourceCollection
+class RoleCollection extends ResourceCollection
 {
-
-    public $collects = UserResource::class;
-
+    public $collects = RoleResource::class;
 
     /**
      * Transform the resource collection into an array.
@@ -19,7 +17,7 @@ class UserCollection extends ResourceCollection
     public function toArray(Request $request): array
     {
         return [
-            'users' => $this->collection,
+            "roles" => $this->collection,
             'meta' => [
                 'total' => $this->collection->count(),
             ],
