@@ -116,7 +116,7 @@ export default function AppProvider({ children }) {
             }
             
             try {
-                const response = await fetch('/api/user-with-permissions', {
+                const response = await fetch('/api/usuario/permissions', {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Accept': 'application/json',
