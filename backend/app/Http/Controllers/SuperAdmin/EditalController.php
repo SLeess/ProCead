@@ -4,8 +4,11 @@ namespace App\Http\Controllers\SuperAdmin;
 
 use Illuminate\Http\Request;
 
-class EditalController
+class EditalController extends __SuperAdminController
 {
+    public function __construct(){
+        parent::__construct();
+    }
     /**
      * Display a listing of the resource.
      */

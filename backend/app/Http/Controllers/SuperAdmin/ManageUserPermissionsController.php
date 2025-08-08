@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\SuperAdmin;
 
-use App\Http\Controllers\API\APIController;
 use App\Http\Resources\UserDataPermissionsAndRoles;
 use App\Interfaces\User\IManageUserRolesAndPermissionsService;
 use App\Models\User;
@@ -10,9 +9,11 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class ManageUserPermissionsController extends APIController
+class ManageUserPermissionsController extends __SuperAdminController
 {
-    public function __construct(protected IManageUserRolesAndPermissionsService $iManageUserRolesAndPermissionsService){}
+    public function __construct(protected IManageUserRolesAndPermissionsService $iManageUserRolesAndPermissionsService){
+        parent::__construct();
+    }
 
     public function show(string $userId)
     {
