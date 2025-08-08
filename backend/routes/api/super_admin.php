@@ -18,8 +18,10 @@ Route::prefix("/super-admin")->name('super-Admin.')->middleware(['role:super-Adm
         Route::resource('', PermissionsController::class)
                 ->only(['index', 'show'])
                 ->parameter('' , 'permission');
-        Route::get('/local',[ PermissionsController::class, 'indexLocal']);
-        Route::get('/global',[ PermissionsController::class, 'indexGlobal']);
+    });
+    Route::prefix('/permissions-scope')->name('permissions-scope.')->group(function(){
+        Route::get('local',[ PermissionsController::class, 'indexLocal']);
+        Route::get('global',[ PermissionsController::class, 'indexGlobal']);
     });
 
     Route::prefix('/usuarios')->name('usuarios.')->group(function(){

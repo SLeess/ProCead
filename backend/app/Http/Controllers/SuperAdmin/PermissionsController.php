@@ -19,7 +19,6 @@ class PermissionsController extends __SuperAdminController
     }
     public function indexLocal(){
 
-        dd(Permission::where("scope", 'local')->get());
         return $this->index(Permission::where("scope", 'local')->get());
     }
     /**
