@@ -17,6 +17,7 @@ const Inscrever = () => {
     const { token, user } = useAppContext();
     const [activeTabIndex, setActiveTabIndex] = useState(0);
     const [enabledTabs, setEnabledTabs] = useState([0]);
+    const [loading, setLoading] = useState(false);
 
     const tabsData = [
         { label: 'Informações Básicas', icon: <CiCircleInfo /> },
@@ -84,6 +85,7 @@ const Inscrever = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         console.log(formData);
         try {
             const res = await fetch('/api/inscricao', {
@@ -105,15 +107,13 @@ const Inscrever = () => {
                 }
             } else {
                 localStorage.setItem('token', result.data.token);
-
                 toast.success((result.message || "Inscrição realizada com sucesso!"));
             }
         } catch (error) {
             toast.error(error.toString());
+        } finally{
+            setLoading(false);
         }
-        // } finally{
-        //     setLoading(false);
-        // }
     };
 
     return (
@@ -122,9 +122,26 @@ const Inscrever = () => {
                 <Stepper tabsData={tabsData} activeTabIndex={activeTabIndex} setActiveTabIndex={setActiveTabIndex} enabledTabs={enabledTabs} />
             </nav>
             <form id="content" onSubmit={handleSubmit}>
-                {/* {
-                    loading && <LoaderPages />
-                } */}
+                {
+                    loading && (
+                        <div
+                            style={{
+                                position: 'fixed',
+                                top: 0,
+                                left: 0,
+                                width: '100%',
+                                height: '100%',
+                                backgroundColor: 'rgba(0,0,0, 0.3)',
+                                display: 'flex',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                zIndex: 9999,
+                            }}
+                        >
+                            <LoaderPages />
+                        </div>
+                    )
+                }
                 {
                     activeTabIndex === 0 && <InformacoesBasicas formData={formData} handleOnChangeAttr={handleOnChangeAttr} handleNext={handleNext} enabledTabs={enabledTabs} setEnabledTabs={setEnabledTabs} />
                 }
