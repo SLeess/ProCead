@@ -2,8 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\ManageUserController;
-use App\Http\Controllers\Admin\ManageUserPermissionsController;
-use App\Http\Controllers\Admin\ManageRolePermissionsController;
 use App\Http\Controllers\Admin\RelatorioController;
 
 
@@ -12,15 +10,6 @@ Route::prefix('/admin')->name('admin.')->group( function () {
         Route::resource('', ManageUserController::class)
                 ->parameters(['' => 'user'])
                 ->only(['index', 'show', 'update']);
-        Route::prefix('{userId}/permissions')->name('permissions.')->group(function () {
-            Route::singleton('', ManageUserPermissionsController::class)->only(['show', 'update']);
-        });
-    });
-
-    Route::prefix("/roles")->name('roles.')->group(function(){
-        Route::singleton('', ManageRolePermissionsController::class)
-            ->only(['index', 'show', 'store', 'update']);
-        Route::post("/manage-permissions", [ManageRolePermissionsController::class, 'update'])->name('permissions.update');
     });
 
     Route::prefix('/editais')->name('editais.')->group(function(){
