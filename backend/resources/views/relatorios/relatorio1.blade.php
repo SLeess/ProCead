@@ -73,7 +73,7 @@
                                     @if ($column['id'] != $data['groupByFields'][0])
                                         <td
                                             style="overflow-wrap: break-word; word-break: break-all; width: {{ floor($data['columnWidths'][$column['id']]) }}%;">
-                                            {{ $row[$column['id']] }}
+                                            {{ $row[$column['id']]?? "" }}
                                         </td>
                                     @endif
                                 @endforeach

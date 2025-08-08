@@ -48,7 +48,6 @@
             @include('cabecalho', ['title' => $data['titulo'], 'subtitle' => $data['subtitulo']])
 
             <h1>{{ str_replace('_', ' ', ucwords($data['groupByFields'][0])) . ': ' . $key }}</h1>
-            <hr />
             @foreach ($grupo as $subgroupKey => $subgroup)
                 <h2>{{ str_replace('_', ' ', ucwords($data['groupByFields'][1])) . ': ' . $subgroupKey }}</h2>
                 <table class="table-content" style="margin-bottom: 10px;width: 100%;text-align: center;table-layout: fixed;">
@@ -70,9 +69,9 @@
                             <tr>
                                 @foreach ($data['columns'] as $column)
                                 @if ($column['id'] != $data['groupByFields'][0] && $column['id'] != $data['groupByFields'][1])
-                                    <th
+                                    <td
                                         style="overflow-wrap: break-word; word-break: break-all; width: {{ floor($data['columnWidths'][$column['id']]) }}%;">
-                                        {{ $element[$column['id']] }}
+                                        {{ $element[$column['id']] ?? "" }}
                                         </td>
                                         @endif
                                 @endforeach
