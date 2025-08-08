@@ -27,6 +27,7 @@ import LayoutAdminInsideEdital from './Layouts/LayoutAdminInsideEdital';
     import GerenciarPerfisPermissoes from './Pages/Admin/Home/GerenciarPerfis/ActionPages/GerenciarPerfisPermissoes/GerenciarPerfisPermissoes';
   /** ------------------------------------ Páginas de Gerência de Permissões do Perfil ---------------------------- */
   import GerenciarUsuarios from './Pages/Admin/Home/GerenciarUsuarios/GerenciarUsuarios';
+  import RelatoriosCustom from './Pages/Admin/Home/RelatoriosCustom/RelatoriosCustom';
 
     /** ------------------------------------ Páginas Adm de Edital ---------------------------- */
     import Inscricoes from './Pages/Admin/InsideEdital/Inscricoes/Inscricoes';
@@ -137,6 +138,7 @@ function App() {
               <Route path='permissoes' element={<GerenciarPerfisPermissoes/>}></Route>
             </Route>
             <Route path="usuarios" element={<GerenciarUsuarios/>} />
+            <Route path="relatorios-custom" element={<RelatoriosCustom/>} />
             {/* <Route path='manejar-usuarios/:userId' element={<UserManagePage />} /> */}
           </Route>
 
