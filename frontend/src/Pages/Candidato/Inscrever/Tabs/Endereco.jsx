@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react'
 import Loader from '@/Components/Global/Loader/Loader';
 import { IMaskInput } from 'react-imask';
 
-const Endereco = ({ formData, handleOnChangeAttr, handleNext, handleBack }) => {
+const Endereco = ({ formData, handleOnChangeAttr, handleNext, handleBack, setEnabledTabs }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isFormValid, setIsFormValid] = useState(false);
 
@@ -12,6 +12,7 @@ const Endereco = ({ formData, handleOnChangeAttr, handleNext, handleBack }) => {
     const { cep, rua, bairro, cidade, uf } = formData;
     const allFieldsFilled = cep && rua && bairro && cidade && uf ;
     setIsFormValid(allFieldsFilled);
+    setEnabledTabs(allFieldsFilled ? ["Informações Básicas","Endereço", "Escolha da Vaga"] : ["Informações Básicas","Endereço"]);
   }, [formData]);
 
   const buscaCep = async (cep) => {
@@ -24,7 +25,6 @@ const Endereco = ({ formData, handleOnChangeAttr, handleNext, handleBack }) => {
       }
 
       const result = await response.json();
-      console.log(result);
       // Optionally update formData with the fetched address
       if (!result.erro) {
         handleOnChangeAttr({ target: { value: result.logradouro } }, "rua");

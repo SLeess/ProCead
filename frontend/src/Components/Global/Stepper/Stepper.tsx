@@ -34,16 +34,18 @@ interface TabItem {
 interface StepperProps {
     tabsData: TabItem[];
     activeTabIndex: number;
+    enabledTabs: Array<string>;
     setActiveTabIndex: (index: number) => void;
 }
 
 
 
-export default function Stepper({ tabsData, activeTabIndex, setActiveTabIndex }: StepperProps){
+export default function Stepper({ tabsData, activeTabIndex, setActiveTabIndex, enabledTabs }: StepperProps){
     return (
        <>
             {
                 tabsData.map((tab, index) => 
+                    
                     <React.Fragment key={tab.label}>
                         <Step
                             icon={
@@ -51,7 +53,7 @@ export default function Stepper({ tabsData, activeTabIndex, setActiveTabIndex }:
                                     className: 'step-icon',
                                 })
                             }
-                            onClick={() => setActiveTabIndex(index)}
+                            onClick={() => enabledTabs.includes(tab.label) ? setActiveTabIndex(index) : console.log("desabilitado")}
                             label={tab.label}
                             isActive={index === activeTabIndex}
                             isCompleted={index < activeTabIndex}

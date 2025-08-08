@@ -3,7 +3,7 @@ import { FormField, TextInput } from "@/Components/Global/ui/modals";
 import { useAppContext } from '@/Contexts/AppContext';
 import { IMaskInput } from 'react-imask';
 
-const InformacoesBasicas = ({formData, handleOnChangeAttr, handleNext}) => {
+const InformacoesBasicas = ({formData, handleOnChangeAttr, handleNext, setEnabledTabs}) => {
   const user = useAppContext();
   const [isFormValid, setIsFormValid] = useState(false);
 
@@ -11,6 +11,7 @@ const InformacoesBasicas = ({formData, handleOnChangeAttr, handleNext}) => {
     const { nome_completo, cpf, email, data_nascimento, telefone, genero, rg, estado_civil, uf_nascimento, nacionalidade, naturalidade } = formData;
     const allFieldsFilled = nome_completo && cpf && email && data_nascimento && telefone && genero && rg && estado_civil && uf_nascimento && nacionalidade && naturalidade;
     setIsFormValid(allFieldsFilled);
+    setEnabledTabs(allFieldsFilled ? ["Informações Básicas","Endereço"] : ["Informações Básicas"]);
   }, [formData]);
 
   return (

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const EscolhaDaVaga = ({ formData, setFormData, handleBack, handleNext }) => {
+const EscolhaDaVaga = ({ formData, setFormData, handleBack, handleNext,setEnabledTabs }) => {
   const [isFormValid, setIsFormValid] = useState(false);
 
   const vagas = [
@@ -11,8 +11,9 @@ const EscolhaDaVaga = ({ formData, setFormData, handleBack, handleNext }) => {
   ];
 
   useEffect(() => {
-    const isValid = formData.vagas.length > 0 && formData.vagas.some(v => v.polo && v.polo !== '');
+    const isValid = formData.vagas.length > 0 && formData.vagas.every(v => v.polo && v.polo !== '');
     setIsFormValid(isValid);
+    setEnabledTabs(isValid ? ["Informações Básicas","Endereço", "Escolha da Vaga", "Detalhes da Vaga"] : ["Informações Básicas","Endereço", "Escolha da Vaga"]);
   }, [formData.vagas]);
 
   const VagaCard = ({ title, isSelected, onSelect, onCampusChange, selectedValue }) => (
@@ -29,7 +30,7 @@ const EscolhaDaVaga = ({ formData, setFormData, handleBack, handleNext }) => {
           className="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none"
           disabled={!isSelected}
         >
-          <option value="">Selecione o Campus</option>
+          <option value="" disabled selected>Selecione o Campus</option>
           <option value="Montes Claros">Campus: Montes Claros</option>
           <option value="Januária">Campus: Januária</option>
           <option value="Salinas">Campus: Salinas</option>
