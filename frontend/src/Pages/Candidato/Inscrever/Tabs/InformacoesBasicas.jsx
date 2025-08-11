@@ -10,13 +10,15 @@ const InformacoesBasicas = ({ formData, handleOnChangeAttr, handleNext, setEnabl
   const [emailError, setEmailError] = useState(false);
   const [dataNascimentoError, setDataNascimentoError] = useState('');
   const [dataNascimentoBlur, setDataNascimentoBlur] = useState(false);
+  const [cpfError, setCpfError] = useState('');
+  const [cpfBlur, setCpfBlur] = useState(false);
 
   useEffect(() => {
     const { nome_completo, cpf, email, data_nascimento, telefone, rg, nacionalidade, naturalidade, /*genero,estado_civil, uf_nascimento,*/ } = formData;
-    const allFieldsFilled = nome_completo && cpf && email && data_nascimento && telefone && rg && nacionalidade && naturalidade && !emailError && dataNascimentoError === '';
+    const allFieldsFilled = nome_completo && cpf && email && data_nascimento && telefone && rg && nacionalidade && naturalidade && !emailError && dataNascimentoError === '' && !cpfError;
     setIsFormValid(allFieldsFilled);
     setEnabledTabs(allFieldsFilled ? ["Informações Básicas", "Endereço"] : ["Informações Básicas"]);
-  }, [formData,emailError,dataNascimentoError]);
+  }, [formData, emailError, dataNascimentoError, cpfError]);
 
   const validateEmail = () => {
     // Basic email validation regex                                                                   
@@ -27,6 +29,50 @@ const InformacoesBasicas = ({ formData, handleOnChangeAttr, handleNext, setEnabl
       setEmailError(false);
     }
   };
+
+  const validateCpf = (cpf) => {
+    cpf = cpf.replace(/[^\d]+/g, '');
+    if (cpf === '') {
+      return true;
+    }
+    if (cpf.length !== 11 || /^(\d)\1{10}$/.test(cpf)) {
+      return false;
+    }
+    let sum = 0;
+    let remainder;
+    for (let i = 1; i <= 9; i++) {
+      sum += parseInt(cpf.substring(i - 1, i)) * (11 - i);
+    }
+    remainder = (sum * 10) % 11;
+    if ((remainder === 10) || (remainder === 11)) {
+      remainder = 0;
+    }
+    if (remainder !== parseInt(cpf.substring(9, 10))) {
+      return false;
+    }
+    sum = 0;
+    for (let i = 1; i <= 10; i++) {
+      sum += parseInt(cpf.substring(i - 1, i)) * (12 - i);
+    }
+    remainder = (sum * 10) % 11;
+    if ((remainder === 10) || (remainder === 11)) {
+      remainder = 0;
+    }
+    if (remainder !== parseInt(cpf.substring(10, 11))) {
+      return false;
+    }
+    return true;
+  }
+
+  useEffect(() => {
+    if (cpfBlur) {
+      if (!validateCpf(formData.cpf)) {
+        setCpfError('CPF inválido');
+      } else {
+        setCpfError('');
+      }
+    }
+  }, [formData.cpf, cpfBlur]);
 
   const handleEmailBlur = () => {
     setEmailBlur(true);
@@ -96,19 +142,21 @@ const InformacoesBasicas = ({ formData, handleOnChangeAttr, handleNext, setEnabl
           <div className="space-y-6">
             {/* First Row */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <FormField label="Nome Completo">
+              <FormField label="Nome Completo" obrigatorio={true}>
                 <TextInput value={formData.nome_completo} onChange={(e) => handleOnChangeAttr(e, "nome_completo")} placeholder="ex: Leandro Freitas" />
               </FormField>
-              <FormField label="CPF">
+              <FormField obrigatorio={true} label="CPF">
                 <IMaskInput
                   mask="000.000.000-00"
                   value={formData.cpf}
                   onAccept={(value) => handleOnChangeAttr({ target: { value } }, "cpf")}
                   placeholder="ex: 000.000.000-00"
+                  onBlur={() => setCpfBlur(true)}
                   className="w-full py-[0.42rem] px-3 border-2 text-sm border-gray-300 rounded-md"
                 />
+                {cpfError && <span className="text-red-500 animate-fade-in text-sm mt-1 ml-1">{cpfError}</span>}
               </FormField>
-              <FormField label="E-mail">
+              <FormField obrigatorio={true} label="E-mail">
                 <TextInput value={formData.email} onChange={(e) => handleOnChangeAttr(e, "email")} placeholder="ex: exemplo@gmail.com" onBlur={() => handleEmailBlur()} />
                 {emailError && <span className="text-red-500 animate-fade-in text-sm mt-1 ml-1">Insira um email válido.</span>}
               </FormField>
@@ -116,7 +164,7 @@ const InformacoesBasicas = ({ formData, handleOnChangeAttr, handleNext, setEnabl
 
             {/* Second Row */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-              <FormField label="Data de Nascimento">
+              <FormField obrigatorio={true} label="Data de Nascimento">
                 <IMaskInput
                   mask="00/00/0000"
                   value={formData.data_nascimento}
@@ -128,7 +176,7 @@ const InformacoesBasicas = ({ formData, handleOnChangeAttr, handleNext, setEnabl
                 {dataNascimentoError && <span className="text-red-500 text-sm mt-1 ml-1                 
                 animate-fade-in">{dataNascimentoError}</span>}
               </FormField>
-              <FormField label="Telefone">
+              <FormField obrigatorio={true} label="Telefone">
                 <IMaskInput
                   mask="(00) 00000-0000"
                   value={formData.telefone}
@@ -137,7 +185,7 @@ const InformacoesBasicas = ({ formData, handleOnChangeAttr, handleNext, setEnabl
                   className="w-full py-[0.42rem] px-3 border-2 text-sm border-gray-300 rounded-md"
                 />
               </FormField>
-              <FormField label="Gênero">
+              <FormField obrigatorio={true} label="Gênero">
                 <SelectInput options={["Feminino", "Masculino"]} value={formData.genero} onChange={(e) => handleOnChangeAttr(e, "genero")} placeholder="ex: Masculino" />
               </FormField>
               <FormField label="Nome Social">
@@ -147,16 +195,16 @@ const InformacoesBasicas = ({ formData, handleOnChangeAttr, handleNext, setEnabl
 
             {/* Third Row */}
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-              <FormField label="Identidade de Gênero">
+              <FormField obrigatorio={true} label="Identidade de Gênero">
                 <TextInput value={formData.identidade_genero} onChange={(e) => handleOnChangeAttr(e, "identidade_genero")} placeholder="ex: Transgênero" />
               </FormField>
-              <FormField label="RG">
+              <FormField obrigatorio={true} label="RG">
                 <TextInput value={formData.rg} onChange={(e) => handleOnChangeAttr(e, "rg")} placeholder="ex: MG-00.000.000" />
               </FormField>
-              <FormField label="Estado Civil">
+              <FormField obrigatorio={true} label="Estado Civil">
                 <SelectInput options={["Solteiro ", "Casado ", "Divorciado ", "Viúvo", "Separado judicialmente"]} value={formData.estado_civil} onChange={(e) => handleOnChangeAttr(e, "estado_civil")} placeholder="ex: Solteiro" />
               </FormField>
-              <FormField label="UF">
+              <FormField obrigatorio={true} label="UF">
                 <SelectInput options={[
                   "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA",
                   "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN",
@@ -167,15 +215,16 @@ const InformacoesBasicas = ({ formData, handleOnChangeAttr, handleNext, setEnabl
 
             {/* Fourth Row */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <FormField label="Nacionalidade">
+              <FormField obrigatorio={true} label="Nacionalidade">
                 <TextInput value={formData.nacionalidade} onChange={(e) => handleOnChangeAttr(e, "nacionalidade")} placeholder="ex: Brasileira" />
               </FormField>
-              <FormField label="Naturalidade">
+              <FormField obrigatorio={true} label="Naturalidade">
                 <TextInput value={formData.naturalidade} onChange={(e) => handleOnChangeAttr(e, "naturalidade")} placeholder="ex: Belo Horizonte" />
               </FormField>
             </div>
           </div>
-          <div className="mt-10 flex justify-end">
+          <div className="mt-10 flex justify-between items-center">
+            <span className='text-red-500'>* Campos Obrigatórios</span>
             <button
               onClick={handleNext}
               className={`px-8 py-3 text-sm font-semibold text-white rounded-lg ${isFormValid ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-400 cursor-not-allowed'}`}
