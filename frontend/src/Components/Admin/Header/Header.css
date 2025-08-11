@@ -21,21 +21,6 @@ header#admin {
   @apply flex justify-between items-center w-full;
 }
 
-/* #admin nav #div-ul-header {
-    @apply flex flex-grow;
-}
-
-*/
-#admin nav #div-ul-header{
-    /* @apply w-full; */
-}
-#admin nav #div-ul-header > ul{
-    @apply flex items-center flex-nowrap;
-    @apply space-x-2 md:space-x-4 lg:space-x-2;
-    @apply w-full;
-    @apply justify-start lg:justify-evenly; 
-} 
-
 #admin.logo-cead{
     width: 120px;
     height: 50px;
@@ -100,13 +85,6 @@ header#admin {
     }
 }
 
- #admin .navbar-collapse.md\:hidden ul {
+#admin .navbar-collapse.md\:hidden ul {
     @apply flex flex-col; /* Garante que no mobile eles fiquem em coluna */
 }
-
-
-/* ------------------------------------------- MENU MOBILE ------------------------------------------- */
-
-
-
-/* ------------------------------------------- END MENU MOBILE ------------------------------------------- */
