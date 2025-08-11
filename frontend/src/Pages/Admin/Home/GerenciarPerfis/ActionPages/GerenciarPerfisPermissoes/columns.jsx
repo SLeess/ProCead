@@ -1,15 +1,28 @@
 import { Checkbox } from "@/Components/Global/ui/modals";
-import { X } from "lucide-react";
+import { Minus } from "lucide-react";
 
-const createActionColumn = (actionKey, label, updatePermission) => ({
+const createActionColumn = (actionKey, label, updatePermission, toggleAllColPermissions) => {
+  return {
     accessorKey: actionKey,
-    header: () => <Checkbox label={label} />,
+    header: ({table}) => {
+        const tableData = table.getCoreRowModel().rows.map(row => row.original);
+
+        const visibleRowsWithPermission = tableData.filter(row => row[actionKey] !== null);
+        const checkedCount = visibleRowsWithPermission.filter(row => row[actionKey] === true).length;
+        const isAllChecked = visibleRowsWithPermission.length > 0 && checkedCount === visibleRowsWithPermission.length;
+        const isIndeterminate = checkedCount > 0 && checkedCount < visibleRowsWithPermission.length;
+        return (<Checkbox 
+          label={label} 
+          checked={isAllChecked} 
+          ref={el => el && (el.indeterminate = isIndeterminate)} 
+          onChange={() => toggleAllColPermissions(actionKey, isAllChecked)}
+        />);
+    },
     cell: ({ row, column }) => {
         const permissionValue  = row.original[actionKey];
 
         if (permissionValue === null) {
-            // return null;
-            return <X width={16} height={16}/>;
+            return <Minus width={16} height={16}/>;
         }
 
         return (
@@ -26,10 +39,11 @@ const createActionColumn = (actionKey, label, updatePermission) => ({
     },
     enableSorting: false,
     enableHiding: false,
-});
+  }
+};
 
 
-const getColumns = (updatePermission, toggleAllRowPermissions, toggleAllPermissions, getAreAllChecked) => {
+const getColumns = (updatePermission, toggleAllRowPermissions, toggleAllPermissions, toggleAllColPermissions) => {
     return [
         {
             accessorKey: "name_permission",
@@ -51,10 +65,10 @@ const getColumns = (updatePermission, toggleAllRowPermissions, toggleAllPermissi
             enableSorting: false,
             enableHiding: false,
         },
-        createActionColumn("visualizar", "Visualizar", updatePermission),
-        createActionColumn("criar", "Criar", updatePermission),
-        createActionColumn("atualizar", "Atualizar", updatePermission),
-        createActionColumn("deletar", "Deletar", updatePermission),
+        createActionColumn("visualizar", "Visualizar", updatePermission, toggleAllColPermissions),
+        createActionColumn("criar", "Criar", updatePermission, toggleAllColPermissions),
+        createActionColumn("atualizar", "Atualizar", updatePermission, toggleAllColPermissions),
+        createActionColumn("deletar", "Deletar", updatePermission, toggleAllColPermissions),
     ];
 };
 

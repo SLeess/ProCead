@@ -100,8 +100,6 @@ export default function GerenciarPerfisPermissoes()
 
         const selectedIdsSet = new Set(selectedPermissions);
 
-        const groupPermNames = Object.keys(allPermissions);
-
         const formattedData = Object.entries(allPermissions)
         .filter(([groupName, permissions]) => 
             !groupName.includes('avaliar')
@@ -127,7 +125,6 @@ export default function GerenciarPerfisPermissoes()
 
     }, [allPermissions, selectedPermissions]); // Depende dos dados brutos
 
-    // console.log(allPermissions);
     const updatePermission = (rowIndex, columnId, value) => {
         setTableData(old =>
             old.map((row, index) => {
@@ -173,31 +170,19 @@ export default function GerenciarPerfisPermissoes()
         }));
     }
 
-    const getAreAllChecked = () => {
-        const res = 
-            selectedPermissions.some((rowPermission) => {
-                const someInRow = 
-                    Object.values(rowPermission).some(
-                        (permission) => {
-                            // console.log(permission);
-                            return permission === false;
-                        }
-                    );
-
-                // console.log(someInRow);
-                // debugger;
-
-                return someInRow === true
-            }
+    const toggleAllColPermissions = (columnId, currentState) => {
+        const newValue = !currentState;
+        setTableData(oldData =>
+            oldData.map(row => {
+                if (row[columnId] !== null) {
+                    return { ...row, [columnId]: newValue };
+                }
+                return row;
+            })
         );
+    };
 
-        // console.log(columns, selectedPermissions);
-        // debugger;
-        // console.log(`Tem algum desmarcado? ${res === true ? 'Sim': 'Não'}`);
-        return res;
-    }
-
-    const columns = useMemo(() => getColumns(updatePermission, toggleAllRowPermissions, toggleAllPermissions, getAreAllChecked), []);
+    const columns = useMemo(() => getColumns(updatePermission, toggleAllRowPermissions, toggleAllPermissions, toggleAllColPermissions), []);
     
     const handleOnSubmit = async (e) => {
         e.preventDefault();
