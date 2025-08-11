@@ -1,10 +1,21 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import { FormField, TextInput } from "@/Components/Global/ui/modals";
 import { useAppContext } from '@/Contexts/AppContext';
-const InformacoesBasicas = ({formData, handleOnChangeAttr, handleNext}) => {
+import { IMaskInput } from 'react-imask';
+
+const InformacoesBasicas = ({formData, handleOnChangeAttr, handleNext, setEnabledTabs}) => {
   const user = useAppContext();
+  const [isFormValid, setIsFormValid] = useState(false);
+
+  useEffect(() => {
+    const { nome_completo, cpf, email, data_nascimento, telefone, genero, rg, estado_civil, uf_nascimento, nacionalidade, naturalidade } = formData;
+    const allFieldsFilled = nome_completo && cpf && email && data_nascimento && telefone && genero && rg && estado_civil && uf_nascimento && nacionalidade && naturalidade;
+    setIsFormValid(allFieldsFilled);
+    setEnabledTabs(allFieldsFilled ? ["Informações Básicas","Endereço"] : ["Informações Básicas"]);
+  }, [formData]);
+
   return (
-    <div className="bg-gray-100 dark:bg-slate-700 min-h-screen p-4 sm:p-6 md:p-8 font-sans">
+    <div className="bg-gray-100 dark:bg-slate-700 min-h-screen p-4 sm:p-6 md:p-8 font-sans animate-fade-in">
       <div className="max-w-6xl mx-auto">
         
         {/* Header */}
@@ -25,7 +36,13 @@ const InformacoesBasicas = ({formData, handleOnChangeAttr, handleNext}) => {
                         <TextInput value={formData.nome_completo} onChange={(e) => handleOnChangeAttr(e, "nome_completo")} placeholder="ex: Leandro Freitas" />
                     </FormField>
                     <FormField label="CPF">
-                        <TextInput value={formData.cpf} onChange={(e) => handleOnChangeAttr(e, "cpf")} placeholder="ex: 00000000000" />
+                        <IMaskInput
+                          mask="000.000.000-00"
+                          value={formData.cpf}
+                          onAccept={(value) => handleOnChangeAttr({ target: { value } }, "cpf")}
+                          placeholder="ex: 000.000.000-00"
+                          className="w-full p-2 border border-gray-300 rounded-md"
+                        />
                     </FormField>
                     <FormField label="E-mail">
                         <TextInput value={formData.email} onChange={(e) => handleOnChangeAttr(e, "email")} placeholder="ex: exemplo@gmail.com" />
@@ -35,10 +52,22 @@ const InformacoesBasicas = ({formData, handleOnChangeAttr, handleNext}) => {
                 {/* Second Row */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
                     <FormField label="Data de Nascimento">
-                        <TextInput value={formData.data_nascimento} onChange={(e) => handleOnChangeAttr(e, "data_nascimento")} placeholder="ex: 01/01/2000" />
+                        <IMaskInput
+                          mask="00/00/0000"
+                          value={formData.data_nascimento}
+                          onAccept={(value) => handleOnChangeAttr({ target: { value } }, "data_nascimento")}
+                          placeholder="ex: 01/01/2000"
+                          className="w-full p-2 border border-gray-300 rounded-md"
+                        />
                     </FormField>
                     <FormField label="Telefone">
-                        <TextInput value={formData.telefone} onChange={(e) => handleOnChangeAttr(e, "telefone")} placeholder="ex: 38999999999" />
+                        <IMaskInput
+                          mask="(00) 00000-0000"
+                          value={formData.telefone}
+                          onAccept={(value) => handleOnChangeAttr({ target: { value } }, "telefone")}
+                          placeholder="ex: (38) 99999-9999"
+                          className="w-full p-2 border border-gray-300 rounded-md"
+                        />
                     </FormField>
                     <FormField label="Gênero">
                         <TextInput value={formData.genero} onChange={(e) => handleOnChangeAttr(e, "genero")} placeholder="ex: Masculino" />
@@ -75,7 +104,11 @@ const InformacoesBasicas = ({formData, handleOnChangeAttr, handleNext}) => {
                 </div>
             </div>
           <div className="mt-10 flex justify-end">
-                <button onClick={handleNext} className="px-8 py-3 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 ">
+                <button 
+                  onClick={handleNext} 
+                  className={`px-8 py-3 text-sm font-semibold text-white rounded-lg ${isFormValid ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-400 cursor-not-allowed'}`}
+                  disabled={!isFormValid}
+                >
                     Próxima Etapa
                 </button>
             </div> 

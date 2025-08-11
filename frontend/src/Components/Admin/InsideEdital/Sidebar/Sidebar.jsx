@@ -84,7 +84,7 @@ const Sidebar = () => {
   });
 
 
-  const [activeItem, setActiveItem] = useState('Inscrições');
+  const [activeItem, setActiveItem] = useState();
 
   const handleToggleSection = title => {
     setOpenSections(prev => ({ ...prev, [title]: !prev[title] }));

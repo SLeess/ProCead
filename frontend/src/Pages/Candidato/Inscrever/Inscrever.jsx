@@ -10,12 +10,8 @@ import DetalhesDaVaga from './Tabs/DetalhesDaVaga';
 import Confirmacao from './Tabs/Confirmacao';
 
 const Inscrever = () => {
-    const [loading, setLoading] = useState(true);
     const [activeTabIndex, setActiveTabIndex] = useState(0);
-
-    useEffect(() =>
-        setLoading(false)
-    , [activeTabIndex]);
+    const [enabledTabs,setEnabledTabs] = useState([0]);
 
     const tabsData = [
         { label: 'Informações Básicas', icon: <CiCircleInfo /> },
@@ -27,14 +23,12 @@ const Inscrever = () => {
 
     const handleNext = () => {
         if (activeTabIndex < tabsData.length - 1) {
-            setLoading(true);
             setActiveTabIndex(prevIndex => prevIndex + 1);
         }
     };
 
     const handleBack = () => {
         if (activeTabIndex > 0) {
-            setLoading(true);
             setActiveTabIndex(prevIndex => prevIndex - 1);
         }
     };
@@ -65,46 +59,50 @@ const Inscrever = () => {
                 vaga: '',
                 polo: '',
                 modalidade: '',
-                categoria: ''
+                categoria: '',
+                anexo_cpf: null,
+                anexo_comprovante_residencia: null,
+                anexo_historico: null,
+                anexo_autodeclaracao: null,
             },
         ],
-        termo_responsabilidade: false
-});
+        termo_responsabilidade: false,
+
+    });
 
     const handleOnChangeAttr = (e, attr) => {
-        console.log(e.target.checked);
         const { value } = e.target;
-        setFormData(f => ({...f, [attr]: value}));
+        setFormData(f => ({ ...f, [attr]: value }));
     };
-      useEffect(() => {
-    console.log(formData);
-  },[formData])
+    // useEffect(() => {
+    //     console.log(formData);
+    // }, [formData])
 
     return (
-        <div  id='inscricao'>
-                <nav aria-label="Tabs" className="timeline-nav">
-                    <Stepper tabsData={tabsData} activeTabIndex={activeTabIndex} setActiveTabIndex={setActiveTabIndex} />
-                </nav>
-            <form  id="content" onSubmit={(e) => e.preventDefault()}>
-                {
+        <div id='inscricao'>
+            <nav aria-label="Tabs" className="timeline-nav">
+                <Stepper tabsData={tabsData} activeTabIndex={activeTabIndex} setActiveTabIndex={setActiveTabIndex} enabledTabs={enabledTabs} />
+            </nav>
+            <form id="content" onSubmit={(e) => e.preventDefault()}>
+                {/* {
                     loading && <LoaderPages />
+                } */}
+                {
+                    activeTabIndex === 0 && <InformacoesBasicas formData={formData} handleOnChangeAttr={handleOnChangeAttr} handleNext={handleNext} enabledTabs={enabledTabs} setEnabledTabs={setEnabledTabs}/>
                 }
                 {
-                    activeTabIndex === 0 && <InformacoesBasicas formData={formData} handleOnChangeAttr={handleOnChangeAttr} handleNext={handleNext} />
+                    activeTabIndex === 1 && <Endereco formData={formData} handleOnChangeAttr={handleOnChangeAttr} handleNext={handleNext} handleBack={handleBack} enabledTabs={enabledTabs} setEnabledTabs={setEnabledTabs}/>
                 }
                 {
-                    activeTabIndex === 1 && <Endereco formData={formData} handleOnChangeAttr={handleOnChangeAttr} handleNext={handleNext} handleBack={handleBack}/>
+                    activeTabIndex === 2 && <EscolhaDaVaga formData={formData} setFormData={setFormData} handleNext={handleNext} handleBack={handleBack} enabledTabs={enabledTabs} setEnabledTabs={setEnabledTabs}/>
                 }
                 {
-                    activeTabIndex === 2 && <EscolhaDaVaga formData={formData} setFormData={setFormData} handleNext={handleNext} handleBack={handleBack}/>
+                    activeTabIndex === 3 && <DetalhesDaVaga formData={formData} setFormData={setFormData} handleNext={handleNext} handleBack={handleBack} enabledTabs={enabledTabs} setEnabledTabs={setEnabledTabs}/>
                 }
                 {
-                    activeTabIndex === 3 && <DetalhesDaVaga formData={formData} setFormData={setFormData} handleNext={handleNext} handleBack={handleBack}/>
+                    activeTabIndex === 4 && <Confirmacao formData={formData} setFormData={setFormData} handleOnChangeAttr={handleOnChangeAttr} handleNext={handleNext} handleBack={handleBack} enabledTabs={enabledTabs} setEnabledTabs={setEnabledTabs}/>
                 }
-                {
-                    activeTabIndex === 4 && <Confirmacao formData={formData} setFormData={setFormData} handleOnChangeAttr={handleOnChangeAttr} handleNext={handleNext} handleBack={handleBack}/>
-                }
-        </form>
+            </form>
         </div>
     )
 }
