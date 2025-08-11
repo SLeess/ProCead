@@ -1,20 +1,16 @@
 
 
 import { Button, Checkbox, Label, Modal, ModalBody, ModalHeader, } from "flowbite-react";
-import { Eye, Pencil } from "lucide-react";
+import { Eye, Pencil, Plus } from "lucide-react";
 import { useState } from "react";
 import { FormField, SelectInput, AnexoButton, TextInput } from "@/Components/Global/ui/modals";
 import CabecalhoModal from "@/Components/Global/Modais/CabecalhoModal";
+import CategoriaCreateModal from "./CategoriaCreateModal";
 
-export default function QuadroVagasEditModal() {
+export default function QuadroVagasCreateModal() {
     const [openModal, setOpenModal] = useState(false);
     const [activeTab, setActiveTab] = useState('Dados');
     const tabs = ['Dados', 'Distribuição de Vagas', 'Categorias Customizadas'];
-    const categoriesData = [
-    { id: 1, name: 'Comunidade Geral (Vagas Remanecentes)' },
-    { id: 2, name: 'Comunidade Geral (Vagas Remanecentes)' },
-    { id: 3, name: 'Comunidade Geral (Vagas Remanecentes)' },
-];
 
     const handleNext = () => {
         const currentIndex = tabs.indexOf(activeTab);
@@ -37,12 +33,13 @@ export default function QuadroVagasEditModal() {
 
     return (
         <>
-            <button onClick={() => setOpenModal(true)} className="p-1 hover:bg-gray-200 rounded-full">
-                <Pencil className="h-5 w-5 text-yellow-500" />
+            <button onClick={() => setOpenModal(true)} className="px-4 py-2.5 text-sm font-semibold text-white bg-[var(--admin-button)] rounded-md hover:bg-[var(--admin-button-hover)] focus:outline-none cursor-pointer">
+                <Plus className="inline" />
+                <span className='ml-1'>Novo Quadro de Vagas</span>
             </button>
             <Modal show={openModal} onClose={onCloseModal} popup>
 
-                <CabecalhoModal titleModal = {"Editar Quadro de Vagas"}/>
+                <CabecalhoModal titleModal = {"Criar Quadro de Vagas"}/>
 
                     <hr className='mb-3 mx-4'/>
 
@@ -79,16 +76,16 @@ export default function QuadroVagasEditModal() {
                         <div>
                             <div id='rows-3-input'>
                                 {/* Row 1 */}
-                                <FormField label="Código"><TextInput value="1" /></FormField>
-                                <FormField label="Semestre"><TextInput value="2" /></FormField>
-                                <FormField label="Edital Referente"><TextInput value="Edital Nº 08/2025" /></FormField>
+                                <FormField label="Código"><TextInput /></FormField>
+                                <FormField label="Semestre"><TextInput /></FormField>
+                                <FormField label="Edital Referente"><TextInput /></FormField>
 
                                 {/* Row 2 */}
-                                <FormField label="Campus" className="md:col-span-1"><TextInput value="Campus Montes Claros" /></FormField>
-                                <FormField label="Vaga" className="md:col-span-2"><TextInput value="Lato Sensu em Alfabetização e Multi..." /></FormField>
+                                <FormField label="Campus" className="md:col-span-1"><TextInput /></FormField>
+                                <FormField label="Vaga" className="md:col-span-2"><TextInput /></FormField>
 
                                 {/* Row 3 */}
-                                <FormField label="Habilitação" className="md:col-span-3"><TextInput value="Pós Graduação" /></FormField>
+                                <FormField label="Habilitação" className="md:col-span-3"><TextInput /></FormField>
                             </div>
                             <div id="buttons-container">
                                 <button onClick={onCloseModal} id='modal-white-button'>Fechar</button>
@@ -100,12 +97,12 @@ export default function QuadroVagasEditModal() {
                     {activeTab === 'Distribuição de Vagas' && (
                         <div>
                             <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-5 gap-x-3 gap-y-2">
-                                <FormField label="AC"><TextInput value="80" /></FormField>
-                                <FormField label="NP"><TextInput value="32" /></FormField>
-                                <FormField label="I"><TextInput value="6" /></FormField>
-                                <FormField label="Q"><TextInput value="4" /></FormField>
-                                <FormField label="PCD"><TextInput value="6" /></FormField>
-                                <FormField label="TRANS"><TextInput value="2" /></FormField>
+                                <FormField label="AC"><TextInput /></FormField>
+                                <FormField label="NP"><TextInput /></FormField>
+                                <FormField label="I"><TextInput /></FormField>
+                                <FormField label="Q"><TextInput /></FormField>
+                                <FormField label="PCD"><TextInput /></FormField>
+                                <FormField label="TRANS"><TextInput /></FormField>
                             </div>
                             <div id="buttons-container">
                                 <button onClick={handleBack} id='modal-white-button'>Voltar</button>
@@ -124,12 +121,9 @@ export default function QuadroVagasEditModal() {
                                 </div>
                                 {/* Table Body */}
                                 <div className="bg-white">
-                                    {categoriesData.map((category, index) => (
-                                        <div key={category.id} className={`flex px-6 py-4 ${index !== categoriesData.length - 1 ? 'border-b border-gray-200' : ''}`}>
-                                            <div className="w-16 text-sm text-gray-900">{category.id}</div>
-                                            <div className="flex-1 text-sm text-gray-900">{category.name}</div>
+                                        <div className="flex h-12 justify-center items-center border border-dashed border-green-400">
+                                            <CategoriaCreateModal />
                                         </div>
-                                    ))}
                                 </div>
                             </div>
                             <div id="buttons-container">

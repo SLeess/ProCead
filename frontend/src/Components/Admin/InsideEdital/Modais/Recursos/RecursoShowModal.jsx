@@ -1,9 +1,10 @@
-"use client";
+
 
 import { Button, Checkbox, Label, Modal, ModalBody, ModalHeader, } from "flowbite-react";
 import { Eye } from "lucide-react";
 import { useState } from "react";
 import { FormField, SelectInput, AnexoButton, TextInput } from "@/Components/Global/ui/modals";
+import CabecalhoModal from "@/Components/Global/Modais/CabecalhoModal";
 
 export default function RecursoShowModal() {
     const [openModal, setOpenModal] = useState(false);
@@ -18,28 +19,30 @@ export default function RecursoShowModal() {
                 <Eye className="h-5 w-5 text-blue-500" />
             </button>
             <Modal show={openModal} onClose={onCloseModal} popup>
-                <ModalHeader />
+
+                <CabecalhoModal titleModal = {"Visualizar Recurso"}/>
+
+                    <hr className='mb-3 mx-4'/>
+
                 <ModalBody >
-                    <div className="flex justify-between items-start mb-6">
-                        <div>
-                            <h1 className="text-2xl font-bold text-gray-800">Visualizar Recurso</h1>
-                            <div className="flex items-center mt-2">
-                                <p className="text-sm text-gray-500">Data do Recurso: 04/07/2025</p>
-                                <span className="ml-4 bg-blue-500 text-white text-xs font-semibold px-3 py-1 rounded-full">Em análise</span>
-                            </div>
-                        </div>
+
+                    <div id="subtitle-inscricao">
+                        <p id="date-inscricao">Data do Recurso: 04/07/2025</p>
+                        <span id="status-inscricao">Em análise</span>
                     </div>
+
                     <div>
-                        <h2 className="text-xl font-semibold text-gray-800 mb-4">Situação</h2>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <h2 className="text-xl font-semibold text-gray-800 mb-2">Situação</h2>
+                        
+                        <div id='rows-2-input'>
                             <FormField label="Tipo de recurso" className="col-span-1">
                                 <SelectInput readOnly={true} value="Interposição de Classificação" options={['Interposição de Classificação', 'Recurso de Prova', 'Recurso de Cota']} />
                             </FormField>
                             <FormField label="Status" className="col-span-1">
                                 <SelectInput readOnly={true} value="Em Análise" options={['Deferido', 'Indeferido', 'Em Análise']} />
                             </FormField>
-                        </div>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-6">
+                        
+                        
                             <FormField label="Motivo" className="md:col-span-3">
                                 <textarea
                                     readOnly
@@ -56,12 +59,11 @@ export default function RecursoShowModal() {
                                     value="Ex: Em resposta ao recurso apresentado, referente ao Edital nº 04/2025, a Comissão de Avaliação do Processo Seletivo esclarece que as exigências do subitem 1.3.6 e alíneas correspondentes foram estabelecidas como critérios objetivos e pré-requisitos para participação no certame."
                                 />
                             </FormField>
-
                         </div>
 
-                        <div className="mt-10 flex justify-end items-center space-x-4">
-                            {/* <button onClick={handleBack} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Voltar</button> */}
-                            <button onClickCapture={onCloseModal} className="cursor-pointer px-8 py-2.5 text-sm font-semibold text-white bg-[var(--button)] rounded-md hover:bg-[var(--button-hover)]">Fechar</button>
+                        <div id="buttons-container">
+                            {/* <button onClick={handleBack} id='modal-white-button'>Voltar</button> */}
+                            <button onClickCapture={onCloseModal} id='modal-purple-button'>Fechar</button>
                         </div>
                     </div>
 

@@ -1,3 +1,4 @@
+import CabecalhoModal from "@/Components/Global/Modais/CabecalhoModal";
 import { FormField, SelectInput } from "@/Components/Global/ui/modals";
 import { AppContext } from "@/Contexts/AppContext";
 import { Modal, ModalBody, ModalHeader, TextInput } from "flowbite-react";
@@ -236,14 +237,15 @@ export default function ModalExportarRelatorio({ openModal, onCloseModal, table,
 
   return (
     <Modal show={openModal} onClose={onCloseModal} popup>
-      <ModalHeader />
+
+      <CabecalhoModal titleModal = {"Exportar Relatório"}/>
+
+          <hr className='mb-3 mx-4'/>
+
       <ModalBody >
 
-        <div className="flex justify-between items-center mb-4">
-          <h1 className="text-2xl font-bold text-gray-800">Gerar Relatório</h1>
-        </div>
         <div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-6">
+          <div id='rows-3-input'>
             <FormField className="md:col-span-3" label="Título do PDF">
               <textarea
                 rows={3}
@@ -262,14 +264,14 @@ export default function ModalExportarRelatorio({ openModal, onCloseModal, table,
             </FormField>
           </div>
           <div className="mt-4">
-            <button onClick={() => enableGroupBy(showGroupBy)} className="text-sm font-semibold text-[var(--add-group-by)] hover:underline">
+            <button onClick={() => enableGroupBy(showGroupBy)} className="text-sm font-semibold text-[var(--admin-add-group-by)] hover:underline">
               {showGroupBy ? 'Desabilitar Agrupamento' : 'Agrupar por Coluna'}
             </button>
           </div>
           {showGroupBy && (
             <>
               <hr className="my-4 h-1 bg-gray-300 border-0 rounded-md dark:bg-gray-700" />
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-6">
+              <div id='rows-3-input'>
                 <FormField className="md:col-span-3" label="Agrupar por">
                   <div className="space-y-2">
                     {groupByFields.map((field, index) => (
@@ -278,7 +280,7 @@ export default function ModalExportarRelatorio({ openModal, onCloseModal, table,
                           type="button"
                           onClick={index === 0 ? addGroupByField : () => removeGroupByField(index)}
                           className={`p-1 rounded-full transition-colors ${index === 0
-                            ? 'cursor-pointer text-[var(--add-group-by)] hover:bg-[var(--add-group-by-hover)]'
+                            ? 'cursor-pointer text-[var(--admin-add-group-by)] hover:bg-[var(--admin-add-group-by-hover)]'
                             : 'cursor-pointer text-red-600 hover:bg-red-100'
                             }`}
                         >
@@ -301,7 +303,7 @@ export default function ModalExportarRelatorio({ openModal, onCloseModal, table,
             </>
           )}
           <div className="mt-4">
-            <button onClick={() => enableColumnWidth(showColumnWidth)} className="text-sm font-semibold text-[var(--add-group-by)] hover:underline">
+            <button onClick={() => enableColumnWidth(showColumnWidth)} className="text-sm font-semibold text-[var(--admin-add-group-by)] hover:underline">
               {showColumnWidth ? 'Desabilitar Ajuste de Colunas' : 'Ajustar Largura das Colunas'}
             </button>
           </div>
@@ -335,9 +337,9 @@ export default function ModalExportarRelatorio({ openModal, onCloseModal, table,
           )}
 
 
-          <div className="mt-10 flex justify-end items-center space-x-4">
-            <button onClick={onCloseModal} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Fechar</button>
-            <button onClick={() => handleExport(titulo, subtitulo, orientacao, formato)} className="cursor-pointer px-6 py-2.5 text-sm font-semibold text-white bg-[var(--button)] rounded-md hover:bg-[var(--button-hover)]"> {isExporting ? 'Exportando...' : 'Gerar Relatório'}</button>
+          <div id="buttons-container">
+            <button onClick={onCloseModal} id='modal-white-button'>Fechar</button>
+            <button onClick={() => handleExport(titulo, subtitulo, orientacao, formato)} id='modal-purple-button'> {isExporting ? 'Exportando...' : 'Gerar Relatório'}</button>
           </div>
         </div>
       </ModalBody>

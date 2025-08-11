@@ -1,9 +1,10 @@
-"use client";
+
 
 import { Button, Checkbox, Label, Modal, ModalBody, ModalHeader } from "flowbite-react";
 import { Eye, Pencil } from "lucide-react";
 import { useState } from "react";
 import { FormField, SelectInput, AnexoButton, TextInput } from "@/Components/Global/ui/modals";
+import CabecalhoModal from "@/Components/Global/Modais/CabecalhoModal";
 
 export default function CotaEditModal() {
     const [openModal, setOpenModal] = useState(false);
@@ -18,27 +19,28 @@ export default function CotaEditModal() {
                 <Pencil className="h-5 w-5 text-yellow-500" />
             </button>
             <Modal show={openModal} onClose={onCloseModal} popup>
-                <ModalHeader />
+
+                <CabecalhoModal titleModal = {"Editar Situação na Reserva de Vagas"}/>
+
+                    <hr className='mb-3 mx-4'/>
+
                 <ModalBody >
-                    <div className="flex justify-between items-start mb-6">
-                        <div>
-                            <h1 className="text-2xl font-bold text-gray-800">Deferir e/ou Indeferir na Reserva de Vagas</h1>
-                            <div className="flex items-center mt-2">
-                                <p className="text-sm text-gray-500">Data de Inscrição: 04/07/2025</p>
-                                <span className="ml-4 bg-blue-500 text-white text-xs font-semibold px-3 py-1 rounded-full">Em análise</span>
-                            </div>
-                        </div>
+
+                    <div id="subtitle-inscricao">
+                        <p id="date-inscricao">Data de Inscrição: 04/07/2025</p>
+                        <span id="status-inscricao">Em análise</span>
                     </div>
+
                     <div>
-                        <h2 className="text-xl font-semibold text-gray-800 mb-4">Documentos Comprobatórios da Reserva de Vagas</h2>
+                        <h2 className="text-xl font-semibold text-gray-800 mb-2">Documentos Comprobatórios da Reserva de Vagas</h2>
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-8">
                             <AnexoButton label="Documento 1:" />
                             <AnexoButton label="Documento 2:" />
                             <AnexoButton label="Vídeo:" />
                         </div>
 
-                        <h2 className="text-xl font-semibold text-gray-800 mb-4">Situação</h2>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-6">
+                        <h2 className="text-xl font-semibold text-gray-800 mb-2">Situação</h2>
+                        <div id='rows-3-input'>
                             <FormField label="Status" className="md:col-span-1">
                                 <SelectInput value="Em Análise" options={['Deferido', 'Indeferido', 'Em Análise']} />
                             </FormField>
@@ -51,9 +53,9 @@ export default function CotaEditModal() {
                             </FormField>
                         </div>
 
-                        <div className="mt-10 flex justify-end items-center space-x-4">
-                            <button onClick={onCloseModal} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Voltar</button>
-                            <button onClickCapture={onCloseModal} className="cursor-pointer px-8 py-2.5 text-sm font-semibold text-white bg-[var(--button)] rounded-md hover:bg-[var(--button-hover)]">Salvar</button>
+                        <div id="buttons-container">
+                            <button onClick={onCloseModal} id='modal-white-button'>Cancelar</button>
+                            <button onClickCapture={onCloseModal} id='modal-purple-button'>Salvar</button>
                         </div>
                     </div>
 

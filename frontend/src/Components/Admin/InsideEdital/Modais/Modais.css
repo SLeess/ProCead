@@ -1,0 +1,41 @@
+@reference "@/index.css";
+
+/* Subtitle - Edital */
+#subtitle-edital {
+    @apply text-gray-500 text-xs/5 font-semibold mb-4;
+}
+
+/* Subtitle - Inscrição */
+#subtitle-inscricao {
+    @apply flex justify-between items-center mb-2 mt-1;
+}
+
+#date-inscricao {
+    @apply text-sm text-gray-500;
+}
+
+#status-inscricao {
+    @apply ml-4 bg-blue-500 text-white text-xs font-semibold px-3 py-1 rounded-full;
+}
+
+/* Body Inputs */
+#rows-2-input {
+    @apply grid grid-cols-1 md:grid-cols-2 gap-x-3 gap-y-2;
+}
+
+#rows-3-input {
+    @apply grid grid-cols-1 md:grid-cols-3 gap-x-3 gap-y-2;
+}
+
+/* Buttons */
+#buttons-container {
+    @apply mt-6 flex justify-end items-center space-x-4;
+}
+
+#modal-purple-button {
+    @apply cursor-pointer px-8 py-2.5 text-sm font-semibold text-white bg-[var(--admin-button)] rounded-md hover:bg-[var(--admin-button-hover)];
+}
+
+#modal-white-button {
+    @apply px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 cursor-pointer;
+}

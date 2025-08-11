@@ -4,7 +4,7 @@ import { IMaskInput } from "react-imask";
 
 const FormField = ({ label, children, className = '' , textWrap = true}) => (
     <div className={`flex flex-col ${className}`}>
-        <label className={`mb-1 text-sm font-medium text-gray-600 ${textWrap === true ? 'text-wrap' : 'xl:text-nowrap'}`}>{label}</label>
+        <label className={`mb-1 text-ms font-normal text-gray-500 ${textWrap === true ? 'text-wrap' : 'xl:text-nowrap'}`}>{label}</label>
         {children}
     </div>
 );
@@ -13,7 +13,7 @@ const TextInput = ({ value, readOnly, placeholder, onChange = null }) => (
     <input
         type="text"
         defaultValue={value}
-        className={`${readOnly !== true ? 'bg-white': 'bg-gray-100'} border border-gray-200 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full`}
+        className={`${readOnly !== true ? 'bg-white': 'bg-gray-50'} border border-gray-50 rounded-md px-4 py-2 focus:outline-none w-full`}
         readOnly={readOnly}
         onChange={onChange}
         placeholder={placeholder}
@@ -88,7 +88,7 @@ const AnexoButton = ({ label, onChange, accept }) => (
                 onChange={onChange}
                 accept={accept}
             />
-            <span className="w-full bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg flex items-center justify-center space-x-2 hover:bg-blue-800 cursor-pointer">
+            <span className="w-full bg-[var(--admin-button)] text-white font-semibold py-2 px-4 rounded-lg flex items-center justify-center space-x-2 hover:bg-[var(--admin-button-hover)] cursor-pointer">
                 <FileText/>
                 <span>Anexo</span>
             </span>
