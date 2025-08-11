@@ -8,14 +8,15 @@ const InformacoesBasicas = ({ formData, handleOnChangeAttr, handleNext, setEnabl
   const [isFormValid, setIsFormValid] = useState(false);
   const [emailBlur, setEmailBlur] = useState(false);
   const [emailError, setEmailError] = useState(false);
+  const [dataNascimentoError, setDataNascimentoError] = useState('');
+  const [dataNascimentoBlur, setDataNascimentoBlur] = useState(false);
 
   useEffect(() => {
-    const { nome_completo, cpf, email, data_nascimento, telefone, genero, rg, estado_civil, uf_nascimento, nacionalidade, naturalidade } = formData;
-    const allFieldsFilled = nome_completo && cpf && email && data_nascimento && telefone && genero && rg && estado_civil && uf_nascimento && nacionalidade && naturalidade
-      && !emailError;
+    const { nome_completo, cpf, email, data_nascimento, telefone, rg, nacionalidade, naturalidade, /*genero,estado_civil, uf_nascimento,*/ } = formData;
+    const allFieldsFilled = nome_completo && cpf && email && data_nascimento && telefone && rg && nacionalidade && naturalidade && !emailError && dataNascimentoError === '';
     setIsFormValid(allFieldsFilled);
     setEnabledTabs(allFieldsFilled ? ["Informações Básicas", "Endereço"] : ["Informações Básicas"]);
-  }, [formData]);
+  }, [formData,emailError,dataNascimentoError]);
 
   const validateEmail = () => {
     // Basic email validation regex                                                                   
@@ -35,6 +36,47 @@ const InformacoesBasicas = ({ formData, handleOnChangeAttr, handleNext, setEnabl
     if (emailBlur)
       validateEmail();
   }, [formData.email, emailBlur]);
+
+  useEffect(() => {
+    if (dataNascimentoBlur) {
+      const dateStr = formData.data_nascimento;
+      if (!dateStr) {
+        setDataNascimentoError('');
+        return;
+      }
+
+      const parts = dateStr.split('/');
+      if (parts.length === 3 && parts[2].length === 4) {
+        const day = parseInt(parts[0], 10);
+        const month = parseInt(parts[1], 10) - 1; // Month is 0-indexed in JS Date                     
+        const year = parseInt(parts[2], 10);
+
+        const date = new Date(year, month, day);
+        const today = new Date();
+        const minAge = new Date();
+        minAge.setFullYear(today.getFullYear() - 120);
+
+        if (
+          date.getFullYear() !== year ||
+          date.getMonth() !== month ||
+          date.getDate() !== day
+        ) {
+          setDataNascimentoError('Por favor, insira uma data válida.');
+        } else if (date > today) {
+          setDataNascimentoError('A data de nascimento não pode ser no futuro.');
+        } else if (date < minAge) {
+          setDataNascimentoError('A idade não pode ser superior a 120 anos.');
+        } else {
+          setDataNascimentoError('');
+        }
+      } else if (dateStr) {
+        setDataNascimentoError('Por favor, insira uma data completa.');
+      } else {
+        setDataNascimentoError('');
+      }
+    }
+  }, [formData.data_nascimento, dataNascimentoBlur]);
+
 
   return (
     <div className="bg-gray-100 dark:bg-slate-700 min-h-screen p-4 sm:p-6 md:p-8 font-sans animate-fade-in">
@@ -80,8 +122,11 @@ const InformacoesBasicas = ({ formData, handleOnChangeAttr, handleNext, setEnabl
                   value={formData.data_nascimento}
                   onAccept={(value) => handleOnChangeAttr({ target: { value } }, "data_nascimento")}
                   placeholder="ex: 01/01/2000"
+                  onBlur={() => setDataNascimentoBlur(true)}
                   className="w-full py-[0.42rem] px-3 border-2 text-sm border-gray-300 rounded-md"
                 />
+                {dataNascimentoError && <span className="text-red-500 text-sm mt-1 ml-1                 
+                animate-fade-in">{dataNascimentoError}</span>}
               </FormField>
               <FormField label="Telefone">
                 <IMaskInput
