@@ -12,13 +12,16 @@ const InformacoesBasicas = ({ formData, handleOnChangeAttr, handleNext, setEnabl
   const [dataNascimentoBlur, setDataNascimentoBlur] = useState(false);
   const [cpfError, setCpfError] = useState('');
   const [cpfBlur, setCpfBlur] = useState(false);
+  const [telefoneError, setTelefoneError] = useState('');
+  const [telefoneBlur, setTelefoneBlur] = useState(false);
+  
 
   useEffect(() => {
     const { nome_completo, cpf, email, data_nascimento, telefone, rg, nacionalidade, naturalidade, /*genero,estado_civil, uf_nascimento,*/ } = formData;
-    const allFieldsFilled = nome_completo && cpf && email && data_nascimento && telefone && rg && nacionalidade && naturalidade && !emailError && dataNascimentoError === '' && !cpfError;
+    const allFieldsFilled = nome_completo && cpf && email && data_nascimento && telefone && rg && nacionalidade && naturalidade && !emailError && dataNascimentoError === '' && !cpfError && !telefoneError;
     setIsFormValid(allFieldsFilled);
     setEnabledTabs(allFieldsFilled ? ["Informações Básicas", "Endereço"] : ["Informações Básicas"]);
-  }, [formData, emailError, dataNascimentoError, cpfError]);
+  }, [formData, emailError, dataNascimentoError, cpfError, telefoneError]);
 
   const validateEmail = () => {
     // Basic email validation regex                                                                   
@@ -63,6 +66,24 @@ const InformacoesBasicas = ({ formData, handleOnChangeAttr, handleNext, setEnabl
     }
     return true;
   }
+
+  const validateTelefone = (telefone) => {
+    const justDigits = telefone.replace(/[^\d]+/g, '');
+    if (justDigits.length !== 11) {
+      return false;
+    }
+    return true;
+  }
+
+  useEffect(() => {
+    if (telefoneBlur) {
+      if (!validateTelefone(formData.telefone)) {
+        setTelefoneError('Telefone inválido');
+      } else {
+        setTelefoneError('');
+      }
+    }
+  }, [formData.telefone, telefoneBlur]);
 
   useEffect(() => {
     if (cpfBlur) {
@@ -182,8 +203,10 @@ const InformacoesBasicas = ({ formData, handleOnChangeAttr, handleNext, setEnabl
                   value={formData.telefone}
                   onAccept={(value) => handleOnChangeAttr({ target: { value } }, "telefone")}
                   placeholder="ex: (38) 99999-9999"
+                  onBlur={() => setTelefoneBlur(true)}
                   className="w-full py-[0.42rem] px-3 border-2 text-sm border-gray-300 rounded-md"
                 />
+                {telefoneError && <span className="text-red-500 animate-fade-in text-sm mt-1 ml-1">{telefoneError}</span>}
               </FormField>
               <FormField obrigatorio={true} label="Gênero">
                 <SelectInput options={["Feminino", "Masculino"]} value={formData.genero} onChange={(e) => handleOnChangeAttr(e, "genero")} placeholder="ex: Masculino" />
@@ -224,7 +247,7 @@ const InformacoesBasicas = ({ formData, handleOnChangeAttr, handleNext, setEnabl
             </div>
           </div>
           <div className="mt-10 flex justify-between items-center">
-            <span className='text-red-500'>* Campos Obrigatórios</span>
+            <span className='text-red-500 text-sm'>* Campos Obrigatórios</span>
             <button
               onClick={handleNext}
               className={`px-8 py-3 text-sm font-semibold text-white rounded-lg ${isFormValid ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-400 cursor-not-allowed'}`}
