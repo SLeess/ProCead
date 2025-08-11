@@ -45,6 +45,7 @@ const MainTable = ({ data, columns, title, hasShadowBorderStyle = true, hasPaddi
       rowSelection,
       columnVisibility,
     },
+    autoResetPageIndex: false,
   });
 
   return (
@@ -63,12 +64,6 @@ const MainTable = ({ data, columns, title, hasShadowBorderStyle = true, hasPaddi
           }
 
           <ExportModuleTable table={table} title={title} canExport={canExport}/>
-          {/* {
-            canExport && <button id="export-button" className="bg-[var(--admin-button)] hover:bg-[var(--admin-button-hover)]" onClick={() => onOpenModal()}>
-              {'Gerar Relatório'}
-            </button>
-          }
-          <ModalExportarRelatorio openModal={openModal} onCloseModal={onCloseModal} table={table} title={title}/> */}
         </div>
       </div>
 
@@ -81,72 +76,6 @@ const MainTable = ({ data, columns, title, hasShadowBorderStyle = true, hasPaddi
       </div>
 
       <CustomPagination table={table}/>
-      {/* Controles de Paginação Estilizados
-      <div id="bottom-tools">
-        <div id="rows-selected">
-          {table.getFilteredSelectedRowModel().rows.length} de{" "}
-          {table.getFilteredRowModel().rows.length} linha(s) selecionada(s).
-        </div>
-        <div id="paginate">
-          --- Previous Button ---
-          <button
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-            className="paginate-buttons"
-          >
-            Anterior
-          </button>
-
-          --- Page Indicator ---
-          <span id="paginate-text">
-            Página{' '}
-            <span className="font-bold text-[var(--admin-paginate-text)]">
-              {table.getState().pagination.pageIndex + 1} de {table.getPageCount()}
-            </span>
-          </span>
-
-          --- Next Button ---
-          <button
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-            className="paginate-buttons"
-          >
-            Próxima
-          </button>
-        </div>
-        <div id="pagesize">
-          <span id="pagesize-text">
-            Linhas por página:
-          </span>
-          --- Page Size Selector ---
-          <select
-            id="pagesize-selector"
-            value={table.getState().pagination.pageSize}
-            onChange={e => {
-              table.setPageSize(Number(e.target.value))
-            }}
-          >
-            {[10, 20, 30, 40, 50].map(pageSize => (
-              <option key={pageSize} value={pageSize}>
-                {pageSize}
-              </option>
-            ))}
-            <option value={data.length} key={data.length}>Todos</option>
-          </select> */}
-          {/* <input
-            type="number"
-            min={1}
-            step={10}
-            value={table.getState().pagination.pageSize}
-            onChange={e => {
-              const size = e.target.value ? Number(e.target.value) : 0
-              table.setPageSize(size)
-            }}
-            className="w-24 px-2 py-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-            placeholder="Qtd. linhas"
-          /> */}
-        {/* </div> */}
-      {/* </div> */}
     </div>
   );
 };

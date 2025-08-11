@@ -32,6 +32,7 @@ class PermissionCollection extends ResourceCollection
         //             fn($i) => $i->map(fn($s) => ["id" => $s->id, "name" => $s->name])
         //             )->toArray()
         // );
+
         return [
             "permissions" => $this->collection
                 ->groupBy(fn($e) => substr($e->name, strlen(explode("-", $e->name)[0] )+ 1)),
