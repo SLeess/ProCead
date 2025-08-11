@@ -194,12 +194,22 @@ div.info-not-found-itens p#second{
 /*---break---*/
 
 :root {
-    --header-admin-primary: #2A1670;
-    --header-candidato-primary-left: #080808;
+    /* -------------------- CANDIDATO -------------------- */
+    --header-candidato-primary-left: #0E66BB;
     --header-candidato-primary-right: #2A83ED;
+    --header-candidato-responsive-nav-item: #3475DA;
+    --header-candidato-responsive-active-nav-item: #749FF4;
+    --header-candidato-responsive-hover-nav-item: #749FF4;
+    --header-candidato-toggle-btn: #3475DA;
+    
+    /* ---------------------- ADMIN ---------------------- */
+    --header-admin-primary: #2A1670;
+    --header-admin-responsive: #004DA9;
     --header-admin-responsive-nav-item: #4D2F99;
     --header-admin-responsive-active-nav-item: #8A64D4;
     --header-admin-responsive-hover-nav-item: #8A64D4;
+    --header-admin-toggle-btn: #4D2F99;
+    
     
     /* ----- Inside Edital ----- */
 

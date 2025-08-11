@@ -106,7 +106,7 @@ header#admin {
 /* ------------------------------------------- MENU MOBILE ------------------------------------------- */
 
 /* Tamanho máximo para aplicar os estilos */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
 
     /* Link não ativo */
     #admin .link-page:not(.active-link) {
@@ -117,12 +117,6 @@ header#admin {
         &:hover {
             @apply bg-[var(--header-admin-responsive-hover-nav-item)];
             @apply shadow-lg -translate-y-px;
-        }
-
-        /* Ao clicar, o botão "afunda" */
-        &:active {
-            @apply bg-[var(--header-admin-responsive-active-nav-item)];
-            @apply shadow-md translate-y-0;
         }
 
         /* Foco para acessibilidade (navegação com teclado) */
@@ -143,20 +137,14 @@ header#admin {
             @apply shadow-lg -translate-y-px;
         }
 
-        /* Ao clicar, o botão "afunda" */
-        &:active {
-            @apply bg-[var(--header-admin-responsive-active-nav-item)];
-            @apply shadow-md translate-y-0;
-        }
-
         /* Foco para acessibilidade (navegação com teclado) */
         &:focus-visible {
             @apply outline-none ring-2 ring-offset-2 ring-blue-400;
         }
     }
 
-    #navbar-toggle {
-        @apply text-white hover:bg-purple-900;
+    #admin .navbar-toggle {
+        @apply text-white hover:bg-[var(--header-admin-toggle-btn)];
     }
 
 }
