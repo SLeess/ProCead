@@ -194,8 +194,8 @@ div.info-not-found-itens p#second{
 /*---break---*/
 
 :root {
-    --header-admin-primary: #29166F;
-    --header-candidato-primary-left: #004DA9;
+    --header-admin-primary: #2A1670;
+    --header-candidato-primary-left: #080808;
     --header-candidato-primary-right: #2A83ED;
 
     /* ----- Inside Edital ----- */
