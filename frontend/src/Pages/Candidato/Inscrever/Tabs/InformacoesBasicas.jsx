@@ -17,8 +17,9 @@ const InformacoesBasicas = ({ formData, handleOnChangeAttr, handleNext, setEnabl
   
 
   useEffect(() => {
-    const { nome_completo, cpf, email, data_nascimento, telefone, rg, nacionalidade, naturalidade, /*genero,estado_civil, uf_nascimento,*/ } = formData;
-    const allFieldsFilled = nome_completo && cpf && email && data_nascimento && telefone && rg && nacionalidade && naturalidade && !emailError && dataNascimentoError === '' && !cpfError && !telefoneError;
+    const { nome_completo, cpf, email, data_nascimento, telefone, rg, nacionalidade, naturalidade, genero,estado_civil, uf_nascimento } = formData;
+    const allFieldsFilled = nome_completo && cpf && email && data_nascimento && telefone && rg && nacionalidade && naturalidade &&
+                            !emailError && dataNascimentoError === '' && !cpfError && !telefoneError  && genero && estado_civil && uf_nascimento;
     setIsFormValid(allFieldsFilled);
     setEnabledTabs(allFieldsFilled ? ["Informações Básicas", "Endereço"] : ["Informações Básicas"]);
   }, [formData, emailError, dataNascimentoError, cpfError, telefoneError]);
@@ -209,7 +210,7 @@ const InformacoesBasicas = ({ formData, handleOnChangeAttr, handleNext, setEnabl
                 {telefoneError && <span className="text-red-500 animate-fade-in text-sm mt-1 ml-1">{telefoneError}</span>}
               </FormField>
               <FormField obrigatorio={true} label="Gênero">
-                <SelectInput options={["Feminino", "Masculino"]} value={formData.genero} onChange={(e) => handleOnChangeAttr(e, "genero")} placeholder="ex: Masculino" />
+                <SelectInput options={["Feminino", "Masculino"]} defaultOption={true} value={formData.genero} onChange={(e) => handleOnChangeAttr(e, "genero")} placeholder="ex: Masculino" />
               </FormField>
               <FormField label="Nome Social">
                 <TextInput value={formData.nome_social} onChange={(e) => handleOnChangeAttr(e, "nome_social")} placeholder="ex: Leandre Freite" />
@@ -225,14 +226,14 @@ const InformacoesBasicas = ({ formData, handleOnChangeAttr, handleNext, setEnabl
                 <TextInput value={formData.rg} onChange={(e) => handleOnChangeAttr(e, "rg")} placeholder="ex: MG-00.000.000" />
               </FormField>
               <FormField obrigatorio={true} label="Estado Civil">
-                <SelectInput options={["Solteiro ", "Casado ", "Divorciado ", "Viúvo", "Separado judicialmente"]} value={formData.estado_civil} onChange={(e) => handleOnChangeAttr(e, "estado_civil")} placeholder="ex: Solteiro" />
+                <SelectInput options={["Solteiro ", "Casado ", "Divorciado ", "Viúvo", "Separado judicialmente"]} defaultOption={true} value={formData.estado_civil} onChange={(e) => handleOnChangeAttr(e, "estado_civil")} placeholder="ex: Solteiro" />
               </FormField>
               <FormField obrigatorio={true} label="UF">
                 <SelectInput options={[
                   "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA",
                   "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN",
                   "RS", "RO", "RR", "SC", "SP", "SE", "TO"
-                ]} value={formData.uf_nascimento} onChange={(e) => handleOnChangeAttr(e, "uf_nascimento")} placeholder="ex: MG" />
+                ]} value={formData.uf_nascimento} onChange={(e) => handleOnChangeAttr(e, "uf_nascimento")} defaultOption={true} placeholder="ex: MG" />
               </FormField>
             </div>
 
