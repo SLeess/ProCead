@@ -14,7 +14,7 @@ export default function HeaderModel({ headerid, children }){
                             <img src="/img/logo_cead_bg_white_full.png" alt="Logo CEAD" className="w-[92px] h-[40px]"/>
                         </NavbarBrand>
 
-                        <div className="hidden md:flex lg:gap-12 md:gap-6">
+                        <div className="hidden md:flex lg:gap-12 md:gap-5">
                             { children }
                         </div>
 
@@ -27,7 +27,7 @@ export default function HeaderModel({ headerid, children }){
                         <div className="md:hidden flex">
                             <ThemeToggleBtn />
                             <UserDropdown/>
-                            <NavbarToggle />
+                            <NavbarToggle id="navbar-toggle"/>
                         </div>
 
                         <NavbarCollapse className="md:hidden">

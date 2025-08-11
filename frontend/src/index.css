@@ -197,7 +197,10 @@ div.info-not-found-itens p#second{
     --header-admin-primary: #2A1670;
     --header-candidato-primary-left: #080808;
     --header-candidato-primary-right: #2A83ED;
-
+    --header-admin-responsive-nav-item: #4D2F99;
+    --header-admin-responsive-active-nav-item: #8A64D4;
+    --header-admin-responsive-hover-nav-item: #8A64D4;
+    
     /* ----- Inside Edital ----- */
 
     /* Sidebar */
