@@ -195,14 +195,18 @@ div.info-not-found-itens p#second{
 
 :root {
     /* -------------------- CANDIDATO -------------------- */
+
     --header-candidato-primary-left: #0E66BB;
     --header-candidato-primary-right: #2A83ED;
     --header-candidato-responsive-nav-item: #3475DA;
     --header-candidato-responsive-active-nav-item: #749FF4;
     --header-candidato-responsive-hover-nav-item: #749FF4;
     --header-candidato-toggle-btn: #3475DA;
+
+    /* ------------------ FIM CANDIDATO ------------------ */
     
     /* ---------------------- ADMIN ---------------------- */
+
     --header-admin-primary: #2A1670;
     --header-admin-responsive: #004DA9;
     --header-admin-responsive-nav-item: #4D2F99;
@@ -210,8 +214,7 @@ div.info-not-found-itens p#second{
     --header-admin-responsive-hover-nav-item: #8A64D4;
     --header-admin-toggle-btn: #4D2F99;
     
-    
-    /* ----- Inside Edital ----- */
+    /* ----- Dentro do Edital ----- */
 
     /* Sidebar */
     --admin-sidebar: #2A1670;
@@ -235,6 +238,9 @@ div.info-not-found-itens p#second{
     /* Export */
     --admin-add-group-by: #6C4BC3;
     --admin-add-group-by-hover: #F8F2FF;
+
+    /* -------------------- FIM ADMIN -------------------- */
+    
 
     /* -------------------- */
     
@@ -276,6 +282,13 @@ div.info-not-found-itens p#second{
 .dark {
     --header-candidato-primary: #0f172b;
 
+    --header-admin-responsive-nav-item: #5365A6;
+    --header-admin-responsive-active-nav-item: #95A2E5;
+    --header-admin-responsive-hover-nav-item: #95A2E5;
+    
+    --header-candidato-responsive-nav-item: #5365A6;
+    --header-candidato-responsive-active-nav-item: #95A2E5;
+    --header-candidato-responsive-hover-nav-item: #95A2E5;
     
     --background: oklch(0.145 0 0);
     --foreground: oklch(0.985 0 0);
