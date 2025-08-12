@@ -14,8 +14,25 @@ class EditalSeeder extends Seeder
     {
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        $edital1 = Edital::create(['nome' => 'Edital 001/2025', 'descricao' => 'Edital para contratação de desenvolvedores.']);
-        $edital2 = Edital::create(['nome' => 'Edital 002/2025', 'descricao' => 'Edital para seleção de estagiários.']);
+        // $edital1 = Edital::create(['nome_edital' => '01/2025', 'descricao' => 'Edital para contratação de desenvolvedores.']);
+        $edital1 = Edital::create(
+            array(
+                "id" => 1,
+                "referencia" => "04/2025",
+                "descricao" => "Edital Referente: Processo de Seleção de Discentes para os Cursos de Especialização da Unimontes –",
+                "publico_alvo" => "ALUNO",
+                "formato_notas" => "SOMA_CRITERIOS",
+                "tipo_inscricao" => "CURSO",
+                "max_itens_inscricao" => 3,
+                "max_itens_posse" => 1,
+                "remanejamento" => 1,
+                "categorias" => "NÃO_POSSUI",
+                "created_at" => "2025-08-12 14:13:12",
+                "updated_at" => "2025-08-12 14:13:13",
+            ),
+        );
+        // $edital2 = Edital::create(['nome_edital' => '02/2025', 'descricao' => 'Edital para seleção de estagiários.']);
+
 
         $userAdmin = User::create([
             'nome' => 'Admin Edital 1',

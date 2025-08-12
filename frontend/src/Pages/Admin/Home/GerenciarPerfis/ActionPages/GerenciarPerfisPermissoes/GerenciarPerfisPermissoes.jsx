@@ -157,32 +157,29 @@ export default function GerenciarPerfisPermissoes()
         );
     };
 
-    const toggleAllPermissions = (currentState) => {
+    const toggleAllPermissions = (table, currentState) => {
         const newValue = !currentState;
-        setTableData((old) => old.map((row) => {
-            return {
-                ...row, 
-                visualizar: row["visualizar"] !== null ? newValue: null,
-                criar: row["criar"] !== null ? newValue: null,
-                atualizar: row["atualizar"] !== null ? newValue: null,
-                deletar: row["deletar"] !== null ? newValue: null,
-            }
-        }));
-    }
 
-    const toggleAllColPermissions = (columnId, currentState) => {
-        const newValue = !currentState;
+        const visibleRowIds = new Set(table.getRowModel().rows.map(row => row.original.name_permission));
+
         setTableData(oldData =>
             oldData.map(row => {
-                if (row[columnId] !== null) {
-                    return { ...row, [columnId]: newValue };
+                if (visibleRowIds.has(row.name_permission)) {
+                    return {
+                        ...row,
+                        visualizar: row.visualizar !== null ? newValue : null,
+                        criar: row.criar !== null ? newValue : null,
+                        atualizar: row.atualizar !== null ? newValue : null,
+                        deletar: row.deletar !== null ? newValue : null,
+                    };
                 }
                 return row;
             })
         );
     };
 
-    const columns = useMemo(() => getColumns(updatePermission, toggleAllRowPermissions, toggleAllPermissions, toggleAllColPermissions), []);
+    
+    const columns = useMemo(() => getColumns(updatePermission, toggleAllRowPermissions, toggleAllPermissions, setTableData), [updatePermission, toggleAllRowPermissions]);
     
     const handleOnSubmit = async (e) => {
         e.preventDefault();

@@ -30,8 +30,8 @@ export default function NovoEdital()
 {
     const [activeTabIndex, setActiveTabIndex] = useState(0);
     const [formData, setFormData] = useState({
-        edital: '',
-        nome_edital: '',
+        referencia: '',
+        descricao: '',
         publico_alvo: '',
         formato_notas: '',
         tipo_inscricao: '',

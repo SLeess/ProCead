@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\API\APIController;
 use App\Models\Inscricao;
-use DB;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class InscricaoController extends APIController
 {
@@ -41,7 +41,7 @@ class InscricaoController extends APIController
 
                 // etc
                 'termo_responsabilidade' => $request->termo_responsabilidade,
-                'contexto_id' => $request->editalId,
+                'edital_id' => $request->editalId,
                 'status' => $request->status,
                 'motivo' => $request->motivo,
                 'user_uuid' => $request->user['uuid'],

@@ -10,10 +10,10 @@ export default function InformacoesBasicas({formData, handleOnChangeAttr}){
             <div className="grid grid-cols-1 sm:grid-cols-6 lg:grid-cols-11  gap-x-8 gap-y-6">
                 {/* Row 1 */}
                 <FormField label="Edital referente" className="sm:col-span-2 lg:col-span-2">
-                    <TextInput value={formData.edital} onChange={(e) => handleOnChangeAttr(e, "edital")} placeholder="Ex: 00/0000" />
+                    <TextInput value={formData.referencia} onChange={(e) => handleOnChangeAttr(e, "referencia")} placeholder="Ex: 00/0000" />
                 </FormField>
                 <FormField label="Nome do Edital" className="sm:col-span-4 lg:col-span-4">
-                    <TextInput value={formData.nome_edital} onChange={(e) => handleOnChangeAttr(e, "nome_edital")} placeholder="Ex: Processo de Seleção de Discente..." />
+                    <TextInput value={formData.descricao} onChange={(e) => handleOnChangeAttr(e, "descricao")} placeholder="Ex: Processo de Seleção de Discente..." />
                 </FormField>
                 <FormField label="Público alvo" className="sm:col-span-2 lg:col-span-3">
                     <SelectInput value={formData.publico_alvo} onChange={(e) => handleOnChangeAttr(e, "publico_alvo")} options={['...', 'teste']} />

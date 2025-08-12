@@ -22,7 +22,7 @@ class Inscricao extends Model
         'uf_naturalidade',
         'nacionalidade',
         'naturalidade',
-        
+
         // endereço
         'cep',
         'rua',
@@ -34,7 +34,7 @@ class Inscricao extends Model
 
         // etc
         'termo_responsabilidade',
-        'contexto_id',   
+        'edital_id',
         'status',
         'motivo',
         'user_uuid',
@@ -55,7 +55,7 @@ class Inscricao extends Model
         'uf_naturalidade',
         'nacionalidade',
         'naturalidade',
-        
+
         // endereço
         'cep',
         'rua',
@@ -67,7 +67,7 @@ class Inscricao extends Model
 
         // etc
         'termo_responsabilidade',
-        'contexto_id',   
+        'edital_id',
         'status',
         'motivo',
         'user_id',

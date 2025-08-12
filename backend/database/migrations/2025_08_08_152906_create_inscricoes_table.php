@@ -39,15 +39,15 @@ return new class extends Migration
 
             // etc
             $table->boolean('termo_responsabilidade');
-            $table->unsignedBigInteger('contexto_id');
-            $table->foreign('contexto_id')->references('id')->on('contextos');
+            $table->unsignedBigInteger('edital_id');
+            $table->foreign('edital_id')->references('id')->on('editais');
             $table->string('status')->nullable();
             $table->string('motivo')->nullable();
             $table->uuid('user_uuid');
             $table->foreign('user_uuid')->references('uuid')->on('users');
 
             $table->timestamps();
-            $table->unique(['user_uuid', 'contexto_id']);
+            $table->unique(['user_uuid', 'edital_id']);
         });
     }
 

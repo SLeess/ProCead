@@ -50,6 +50,7 @@ export default function Login() {
             
             const result = await res.json();
             if (!result.success || !res.ok) {
+                console.log(result);
                 if (result.errors) {
                     Object(result.errors).forEach((er) => toast.error(er));
                 }
