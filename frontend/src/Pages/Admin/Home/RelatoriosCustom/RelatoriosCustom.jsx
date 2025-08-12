@@ -143,7 +143,7 @@ export default function RelatoriosCustom(){
             {data.length > 0 && (
                 <>
                     <div className="flex justify-end mb-4">
-                        <Button color="failure" className='bg-[var(--button)] hover:bg-[var(--button-hover)] text-white' onClick={handleClearData}>
+                        <Button color="failure" className='bg-[var(--admin-button)] hover:bg-[var(--admin-button-hover)] text-white' onClick={handleClearData}>
                             <CiTrash className="mr-2 h-5 w-5" />
                                 Limpar Tabela
                         </Button>
