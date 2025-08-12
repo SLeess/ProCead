@@ -2,20 +2,24 @@ import { Calendar, FileText, X } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { IMaskInput } from "react-imask";
 
-const FormField = ({ label, children, className = '' , textWrap = true}) => (
+const FormField = ({ label, children, className = '', textWrap = true, obrigatorio = false }) => (
     <div className={`flex flex-col ${className}`}>
-        <label className={`mb-1 text-ms font-normal text-gray-500 ${textWrap === true ? 'text-wrap' : 'xl:text-nowrap'}`}>{label}</label>
+        <div className="flex items-center">
+            <label className={`mb-1 text-sm font-medium text-gray-600 ${textWrap === true ? 'text-wrap' : 'xl:text-nowrap'}`}>{label}</label>
+            {obrigatorio ? <span className="text-red-500 ml-1">*</span> : ""}
+        </div>
         {children}
     </div>
 );
 
-const TextInput = ({ value, readOnly, placeholder, onChange = null }) => (
+const TextInput = ({ value, readOnly, placeholder, onChange = null, onBlur = null }) => (
     <input
         type="text"
         defaultValue={value}
         className={`${readOnly !== true ? 'bg-white': 'bg-gray-50'} border border-gray-50 rounded-md px-4 py-2 focus:outline-none w-full`}
         readOnly={readOnly}
         onChange={onChange}
+        onBlur={onBlur}
         placeholder={placeholder}
     />
 );

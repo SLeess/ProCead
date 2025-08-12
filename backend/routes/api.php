@@ -24,4 +24,5 @@ Route::middleware(['auth:sanctum', 'throttle:auth'])->group(function () {
     require __DIR__.'\api\candidate.php';
     require __DIR__.'\api\admin.php';
     require __DIR__.'\api\super_admin.php';
+    require __DIR__.'\api\inscricao.php';
 });

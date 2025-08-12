@@ -91,7 +91,7 @@ const Confirmacao = ({ handleBack, handleNext, formData, setFormData }) => {
           <button onClick={handleBack} className="px-6 py-2.5 mr-3 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">
             Voltar
           </button>
-          <button onClick={handleNext} className="px-8 py-3 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 ">
+          <button type='submit' className="px-8 py-3 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 ">
             Concluir
           </button>
 

@@ -13,7 +13,7 @@ header#user {
     @apply shadow-sm;
     
     /* Light mode */
-    @apply bg-gradient-to-r from-[var(--header-candidato-primary-left)] to-[var(--header-candidato-primary-right)] transition-all duration-700 ease-in-out;
+    @apply md:bg-gradient-to-r from-[var(--header-candidato-primary-left)] to-[var(--header-candidato-primary-right)] transition-all duration-700 ease-in-out;
 
     /* Dark modee */
     @apply dark:bg-gradient-to-r dark:from-[var(--header-candidato-primary)] dark:to-[var(--header-candidato-primary)];
@@ -38,68 +38,117 @@ header#user {
     @apply justify-start; 
 } 
 
-#user .link-page:not(.active-link){
-    @apply px-0 text-white font-semibold relative transition-colors duration-200 ease-in-out;
-    @apply whitespace-nowrap md:text-sm;
 
-    /* HOVER - Efeito de underline que surge da esquerda para a direita */
-    &::after {
-        content: '';
-        @apply absolute bottom-0 left-0 h-[2px];
-        @apply bg-white;
-        @apply w-0;
-        @apply transition-all duration-300 ease-in-out;
+@media (min-width: 768px) {
+    #user .link-page:not(.active-link){
+        @apply px-0 text-white font-semibold relative transition-colors duration-200 ease-in-out;
+        @apply whitespace-nowrap lg:text-[16px] sm:text-sm;
+
+        /* HOVER - Efeito de underline que surge da esquerda para a direita */
+        &::after {
+            content: '';
+            @apply absolute bottom-[-2px] left-0 h-[2px];
+            @apply bg-white;
+            @apply w-0;
+            @apply transition-all duration-300 ease-in-out;
+        }
+
+        &:hover::after {
+            @apply w-full;
+        }
+
+        &.active::after {
+            @apply w-full;
+            @apply bg-[#005ABF];
+        }
+
+        /* Opcional: Se você quiser um foco suave ao navegar com teclado */
+        &:focus-visible {
+            outline: 2px solid theme('colors.white'); /* Adiciona um outline branco para acessibilidade */
+            outline-offset: 2px;
+            @apply rounded-sm;
+        }
     }
+    #user .active-link{
+        @apply px-0 text-white font-semibold relative transition-colors duration-200 ease-in-out;
+        @apply whitespace-nowrap lg:text-[16px] sm:text-sm;
 
-    &:hover::after {
-        @apply w-full;
-    }
+        /* HOVER - Efeito de underline que surge da esquerda para a direita */
+        &::after {
+            content: '';
+            @apply absolute bottom-[-2px] left-0 h-[2px];
+            @apply bg-blue-700;
+            @apply w-0;
+            @apply transition-all duration-300 ease-in-out;
+        }
 
-    &.active::after {
-        @apply w-full;
-        @apply bg-[#005ABF];
-    }
+        &:hover::after {
+            @apply w-full;
+        }
 
-    /* Opcional: Se você quiser um foco suave ao navegar com teclado */
-    &:focus-visible {
-        outline: 2px solid theme('colors.white'); /* Adiciona um outline branco para acessibilidade */
-        outline-offset: 2px;
-        @apply rounded-sm;
-    }
-}
-#user .active-link{
-    @apply px-0 text-white font-semibold relative transition-colors duration-200 ease-in-out;
-    @apply whitespace-nowrap md:text-sm;
+        &.active::after {
+            @apply w-full;
+            @apply bg-[#005ABF];
+        }
 
-    /* HOVER - Efeito de underline que surge da esquerda para a direita */
-    &::after {
-        content: '';
-        @apply absolute bottom-[-3px] left-0 h-[3px];
-        @apply bg-blue-700;
-        @apply w-0;
-        @apply transition-all duration-300 ease-in-out;
-    }
-
-    &:hover::after {
-        @apply w-full;
-    }
-
-    &.active::after {
-        @apply w-full;
-        @apply bg-[#005ABF];
-    }
-
-    /* Opcional: Se você quiser um foco suave ao navegar com teclado */
-    &:focus-visible {
-        outline: 2px solid theme('colors.white'); /* Adiciona um outline branco para acessibilidade */
-        outline-offset: 2px;
-        @apply rounded-sm;
+        /* Opcional: Se você quiser um foco suave ao navegar com teclado */
+        &:focus-visible {
+            outline: 2px solid theme('colors.white'); /* Adiciona um outline branco para acessibilidade */
+            outline-offset: 2px;
+            @apply rounded-sm;
+        }
     }
 }
 
 
 /* ------------------------------------------- MENU MOBILE ------------------------------------------- */
 
+/* Tamanho máximo para aplicar os estilos */
+@media (max-width: 767px) {
 
+    #user nav {
+        @apply bg-[var(--header-admin-responsive)];
+    }
+
+    /* Link não ativo */
+    #user .link-page:not(.active-link) {
+        @apply bg-[var(--header-candidato-responsive-nav-item)];
+        @apply my-1 w-full py-2 pl-5 text-white font-semibold rounded-md;
+        @apply whitespace-nowrap lg:text-[16px] sm:text-sm;
+
+        &:hover {
+            @apply bg-[var(--header-candidato-responsive-hover-nav-item)];
+            @apply shadow-lg -translate-y-px;
+        }
+
+        /* Foco para acessibilidade (navegação com teclado) */
+        &:focus-visible {
+            @apply outline-none ring-2 ring-offset-2 ring-blue-400;
+        }
+    }
+
+    /* Link ativo */
+    #user .active-link {
+        @apply bg-[var(--header-candidato-responsive-active-nav-item)];
+        @apply w-full py-2 pl-5 text-white font-semibold rounded-md shadow-inner;
+        @apply whitespace-nowrap lg:text-[16px] sm:text-sm;
+        @apply cursor-default; /* Opcional: muda o cursor, já que o link está ativo */
+
+        &:hover {
+            @apply bg-[var(--header-candidato-responsive-hover-nav-item)];
+            @apply shadow-lg -translate-y-px;
+        }
+
+        /* Foco para acessibilidade (navegação com teclado) */
+        &:focus-visible {
+            @apply outline-none ring-2 ring-offset-2 ring-blue-400;
+        }
+    }
+
+    #user .navbar-toggle {
+        @apply text-white hover:bg-[var(--header-candidato-toggle-btn)];
+    }
+
+}
 
 /* ------------------------------------------- END MENU MOBILE ------------------------------------------- */
