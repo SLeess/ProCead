@@ -2,7 +2,7 @@ import { AppContext } from '@/Contexts/AppContext';
 import React, { useContext } from 'react'
 import data from './data'
 import columns from './columns';
-import { Component, GraduationCap, Plus } from 'lucide-react';
+import { Layers, GraduationCap, Plus } from 'lucide-react';
 import MainTable from '@/Components/Global/Tables/MainTable/MainTable';
 import ModalidadeCreateModal from '@/Components/Admin/InsideEdital/Modais/Modalidades/ModalidadeCreateModal';
 import { useParams } from 'react-router-dom';
@@ -21,7 +21,7 @@ const Modalidades = () => {
         </div>
         <div className="flex gap-4 mb-4">
           <StatsCard title={"Nº de Modalidades"} quant={3}>
-            <Component className="text-[var(--stats-card-text)] absolute top-4 right-4" />
+            <Layers className="text-[var(--admin-stats-card-text)] absolute top-4 right-4" />
           </StatsCard>
         </div>
         <MainTable data={data} columns={columns} title={"Modalidades"} />

@@ -45,6 +45,7 @@ const MainTable = ({ data, columns, title, hasShadowBorderStyle = true, hasPaddi
       rowSelection,
       columnVisibility,
     },
+    autoResetPageIndex: false,
   });
 
   return (

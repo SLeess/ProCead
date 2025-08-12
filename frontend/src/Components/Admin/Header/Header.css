@@ -7,7 +7,7 @@ header#admin {
 }
 #admin nav {
     @apply container relative flex mx-auto rounded-2xl;
-    @apply px-6 py-2 flex flex-nowrap justify-between;
+    @apply flex flex-nowrap justify-between;
     @apply min-w-[310px] max-w-screen-xl mt-2.5;
 
     @apply shadow-sm;
@@ -21,92 +21,129 @@ header#admin {
   @apply flex justify-between items-center w-full;
 }
 
-/* #admin nav #div-ul-header {
-    @apply flex flex-grow;
-}
-
-*/
-#admin nav #div-ul-header{
-    /* @apply w-full; */
-}
-#admin nav #div-ul-header > ul{
-    @apply flex items-center flex-nowrap;
-    @apply space-x-2 md:space-x-4 lg:space-x-2;
-    @apply w-full;
-    @apply justify-start lg:justify-evenly; 
-} 
-
 #admin.logo-cead{
     width: 120px;
     height: 50px;
 }
 
-#admin .link-page:not(.active-link){
-    @apply px-0 text-white font-semibold relative transition-colors duration-200 ease-in-out;
-    @apply whitespace-nowrap md:text-sm;
+@media (min-width: 768px) {
+    #admin .link-page:not(.active-link){
+        @apply px-0 text-white font-semibold relative transition-colors duration-200 ease-in-out;
+        @apply whitespace-nowrap lg:text-[16px] sm:text-sm;
 
-    /* HOVER - Efeito de underline que surge da esquerda para a direita */
-    &::after {
-        content: '';
-        @apply absolute bottom-0 left-0 h-[2px];
-        @apply bg-white;
-        @apply w-0;
-        @apply transition-all duration-300 ease-in-out;
+        /* HOVER - Efeito de underline que surge da esquerda para a direita */
+        &::after {
+            content: '';
+            @apply absolute bottom-[-2px] left-0 h-[2px];
+            @apply bg-white;
+            @apply w-0;
+            @apply transition-all duration-300 ease-in-out;
+        }
+
+        &:hover::after {
+            @apply w-full;
+        }
+
+        &.active::after {
+            @apply w-full;
+            @apply bg-[#005ABF];
+        }
+
+        /* Opcional: Se você quiser um foco suave ao navegar com teclado */
+        &:focus-visible {
+            outline: 2px solid theme('colors.white'); /* Adiciona um outline branco para acessibilidade */
+            outline-offset: 2px;
+            @apply rounded-sm;
+        }
     }
+    #admin .active-link{
+        @apply px-0 text-white font-semibold relative transition-colors duration-200 ease-in-out;
+        @apply whitespace-nowrap lg:text-[16px] sm:text-sm;
 
-    &:hover::after {
-        @apply w-full;
+        /* HOVER - Efeito de underline que surge da esquerda para a direita */
+        &::after {
+            content: '';
+            @apply absolute bottom-[-2px] left-0 h-[2px];
+            @apply bg-blue-700;
+            @apply w-0;
+            @apply transition-all duration-300 ease-in-out;
+        }
+
+        &:hover::after {
+            @apply w-full;
+        }
+
+        &.active::after {
+            @apply w-full;
+            @apply bg-[#005ABF];
+        }
+
+        /* Opcional: Se você quiser um foco suave ao navegar com teclado */
+        &:focus-visible {
+            outline: 2px solid theme('colors.white'); /* Adiciona um outline branco para acessibilidade */
+            outline-offset: 2px;
+            @apply rounded-sm;
+        }
     }
-
-    &.active::after {
-        @apply w-full;
-        @apply bg-[#005ABF];
-    }
-
-    /* Opcional: Se você quiser um foco suave ao navegar com teclado */
-    &:focus-visible {
-        outline: 2px solid theme('colors.white'); /* Adiciona um outline branco para acessibilidade */
-        outline-offset: 2px;
-        @apply rounded-sm;
-    }
-}
-#admin .active-link{
-    @apply px-0 text-white font-semibold relative transition-colors duration-200 ease-in-out;
-    @apply whitespace-nowrap md:text-sm;
-
-    /* HOVER - Efeito de underline que surge da esquerda para a direita */
-    &::after {
-        content: '';
-        @apply absolute bottom-[-3px] left-0 h-[3px];
-        @apply bg-blue-700;
-        @apply w-0;
-        @apply transition-all duration-300 ease-in-out;
-    }
-
-    &:hover::after {
-        @apply w-full;
-    }
-
-    &.active::after {
-        @apply w-full;
-        @apply bg-[#005ABF];
-    }
-
-    /* Opcional: Se você quiser um foco suave ao navegar com teclado */
-    &:focus-visible {
-        outline: 2px solid theme('colors.white'); /* Adiciona um outline branco para acessibilidade */
-        outline-offset: 2px;
-        @apply rounded-sm;
-    }
-}
-
- #admin .navbar-collapse.md\:hidden ul {
-    @apply flex flex-col; /* Garante que no mobile eles fiquem em coluna */
 }
 
 
 /* ------------------------------------------- MENU MOBILE ------------------------------------------- */
 
+/* Tamanho máximo para aplicar os estilos */
+@media (max-width: 768px) {
 
+    /* Link não ativo */
+    #admin .link-page:not(.active-link) {
+        @apply bg-[var(--header-admin-responsive-nav-item)];
+        @apply my-1 w-full py-2 pl-5 text-white font-semibold rounded-md;
+        @apply whitespace-nowrap lg:text-[16px] sm:text-sm;
+
+        &:hover {
+            @apply bg-[var(--header-admin-responsive-hover-nav-item)];
+            @apply shadow-lg -translate-y-px;
+        }
+
+        /* Ao clicar, o botão "afunda" */
+        &:active {
+            @apply bg-[var(--header-admin-responsive-active-nav-item)];
+            @apply shadow-md translate-y-0;
+        }
+
+        /* Foco para acessibilidade (navegação com teclado) */
+        &:focus-visible {
+            @apply outline-none ring-2 ring-offset-2 ring-blue-400;
+        }
+    }
+
+    /* Link ativo */
+    #admin .active-link {
+        @apply bg-[var(--header-admin-responsive-active-nav-item)];
+        @apply w-full py-2 pl-5 text-white font-semibold rounded-md shadow-inner;
+        @apply whitespace-nowrap lg:text-[16px] sm:text-sm;
+        @apply cursor-default; /* Opcional: muda o cursor, já que o link está ativo */
+
+        &:hover {
+            @apply bg-[var(--header-admin-responsive-hover-nav-item)];
+            @apply shadow-lg -translate-y-px;
+        }
+
+        /* Ao clicar, o botão "afunda" */
+        &:active {
+            @apply bg-[var(--header-admin-responsive-active-nav-item)];
+            @apply shadow-md translate-y-0;
+        }
+
+        /* Foco para acessibilidade (navegação com teclado) */
+        &:focus-visible {
+            @apply outline-none ring-2 ring-offset-2 ring-blue-400;
+        }
+    }
+
+    #navbar-toggle {
+        @apply text-white hover:bg-purple-900;
+    }
+
+}
 
 /* ------------------------------------------- END MENU MOBILE ------------------------------------------- */

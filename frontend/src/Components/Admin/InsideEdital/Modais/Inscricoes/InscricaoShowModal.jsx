@@ -2,6 +2,7 @@ import { Button, Checkbox, Label, Modal, ModalBody, ModalHeader, } from "flowbit
 import { Eye } from "lucide-react";
 import { useState } from "react";
 import { FormField, SelectInput, AnexoButton, TextInput} from "@/Components/Global/ui/modals";
+import CabecalhoModal from "@/Components/Global/Modais/CabecalhoModal";
 
 export default function InscricaoShowModal() {
     const [openModal, setOpenModal] = useState(false);
@@ -33,30 +34,26 @@ export default function InscricaoShowModal() {
                 <Eye className="h-5 w-5 text-blue-500" />
             </button>
             <Modal show={openModal} onClose={onCloseModal} popup>
-                <ModalHeader />
-                <ModalBody >
-                    {/* <div className="bg-gray-100 min-h-screen flex items-center justify-center p-4 font-sans">
-                        <div className="w-full max-w-4xl bg-white rounded-2xl shadow-lg p-8"> */}
 
-                    {/* Header */}
-                    <div className="flex justify-between items-start mb-6">
-                        <div>
-                            <h1 className="text-2xl font-bold text-gray-800">Visualizar Inscrição</h1>
-                            <div className="flex items-center mt-2">
-                                <p className="text-sm text-gray-500">Data de Inscrição: 04/07/2025</p>
-                                <span className="ml-4 bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full">Deferido</span>
-                            </div>
-                        </div>
+                <CabecalhoModal titleModal = {"Visualizar Inscrição"}/>
+
+                    <hr className='mb-3 mx-4'/>
+
+                <ModalBody >
+
+                    <div className="flex justify-between items-center my-1">
+                        <p id="date-inscricao">Data de Inscrição: 04/07/2025</p>
+                        <span className="ml-4 bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full">Deferido</span>
                     </div>
 
                     {/* Tabs Navigation */}
-                    <div className="border-b border-gray-200 mb-8">
+                    <div className="border-b border-gray-200 mb-4">
                         <nav className="-mb-px flex space-x-8" aria-label="Tabs">
                             {tabs.map(tab => (
                                 <button
                                     key={tab}
                                     onClick={() => setActiveTab(tab)}
-                                    className={`whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm ${activeTab === tab
+                                    className={`whitespace-nowrap pt-4 pb-2 px-1 border-b-2 font-medium text-sm ${activeTab === tab
                                         ? 'border-blue-500 text-blue-600'
                                         : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                                         }`}
@@ -70,7 +67,7 @@ export default function InscricaoShowModal() {
                     {/* Form Content - Only showing the active tab's content */}
                     {activeTab === 'Informações Básicas' && (
                         <div>
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-6">
+                            <div id='rows-3-input'>
                                 {/* Row 1 */}
                                 <FormField label="Nome Completo" className="md:col-span-1">
                                     <TextInput readOnly={true} value="Daniel Damasceno Meira" />
@@ -122,11 +119,11 @@ export default function InscricaoShowModal() {
                             </div>
 
                             {/* Action Buttons */}
-                            <div className="mt-10 flex justify-end items-center space-x-4">
-                                <button onClick={onCloseModal} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
+                            <div id="buttons-container">
+                                <button onClick={onCloseModal} id='modal-white-button'>
                                     Cancelar
                                 </button>
-                                <button onClick={handleNext} className="cursor-pointer px-6 py-2.5 text-sm font-semibold text-white bg-[var(--button)] rounded-md hover:bg-[var(--button-hover)]">
+                                <button onClick={handleNext} id='modal-purple-button'>
                                     Próximo: Endereço
                                 </button>
                             </div>
@@ -134,7 +131,7 @@ export default function InscricaoShowModal() {
                     )}
                     {activeTab === 'Endereço' && (
                         <div>
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-6">
+                            <div id='rows-3-input'>
                                 <FormField label="CEP"><TextInput readOnly={true} value="39401-001" /></FormField>
                                 <FormField label="Rua"><TextInput readOnly={true} value="Daniel Damasceno Meira" /></FormField>
                                 <FormField label="Número"><TextInput readOnly={true} value="1012" /></FormField>
@@ -143,31 +140,33 @@ export default function InscricaoShowModal() {
                                 <FormField label="UF"><SelectInput readOnly={true} value="MG" options={['MG', 'SP', 'RJ', 'BA']} /></FormField>
                                 <FormField label="Cidade" className="md:col-span-3"><TextInput readOnly={true} value="São João da Ponte" /></FormField>
                             </div>
-                            <div className="mt-10 flex justify-end items-center space-x-4">
-                                <button onClick={handleBack} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Voltar</button>
-                                <button onClick={handleNext} className="cursor-pointer px-6 py-2.5 text-sm font-semibold text-white bg-[var(--button)] rounded-md hover:bg-[var(--button-hover)]">Próximo: Vaga</button>
+                            <div id="buttons-container">
+                                <button onClick={handleBack} id='modal-white-button'>Voltar</button>
+                                <button onClick={handleNext} id='modal-purple-button'>Próximo: Vaga</button>
                             </div>
                         </div>
                     )}
                     {activeTab === 'Vaga' && (
-                        <div className="flex flex-col items-center">
-                            <div className="w-full max-w-lg border border-gray-200 rounded-md p-6">
-                                <h3 className="text-lg font-semibold text-gray-800">Lato Sensu em Alfabetização e Multiletramentos</h3>
-                                <p className="text-sm text-gray-500 mb-6">Montes Claros | MG</p>
-                                <div className="space-y-4">
-                                    <TextInput readOnly={true} value="Modalidade 3: Negros e Pardos" />
-                                    <TextInput readOnly={true} value="Categoria 3: Comunidade em Geral" />
+                        <div>
+                            <div className="flex flex-col items-center">
+                                <div className="w-full max-w-lg border border-gray-200 rounded-md p-6">
+                                    <h3 className="text-lg font-semibold text-gray-800">Lato Sensu em Alfabetização e Multiletramentos</h3>
+                                    <p id='subtitle-edital'>Montes Claros | MG</p>
+                                    <div className="space-y-4">
+                                        <TextInput readOnly={true} value="Modalidade 3: Negros e Pardos" />
+                                        <TextInput readOnly={true} value="Categoria 3: Comunidade em Geral" />
+                                    </div>
                                 </div>
                             </div>
-                            <div className="mt-10 flex justify-end items-center w-full max-w-lg space-x-4">
-                                <button onClick={handleBack} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Voltar</button>
-                                <button onClick={handleNext} className="cursor-pointer px-6 py-2.5 text-sm font-semibold text-white bg-[var(--button)] rounded-md hover:bg-[var(--button-hover)]">Próximo: Anexos</button>
+                            <div className="mt-6 flex justify-end items-center w-full space-x-4">
+                                <button onClick={handleBack} id='modal-white-button'>Voltar</button>
+                                <button onClick={handleNext} id='modal-purple-button'>Próximo: Anexos</button>
                             </div>
                         </div>
                     )}
                     {activeTab === 'Anexos e Situação' && (
                         <div>
-                            <h2 className="text-xl font-semibold text-gray-800 mb-4">Anexos</h2>
+                            <h2 className="text-xl font-semibold text-gray-800 mb-2">Anexos</h2>
                             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-8">
                                 <AnexoButton label="Identidade:" />
                                 <AnexoButton label="Comprovante:" />
@@ -175,8 +174,8 @@ export default function InscricaoShowModal() {
                                 <AnexoButton label="Auto Declaração:" />
                             </div>
 
-                            <h2 className="text-xl font-semibold text-gray-800 mb-4">Situação</h2>
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-x-8 gap-y-6">
+                            <h2 className="text-xl font-semibold text-gray-800 mb-2">Situação</h2>
+                            <div id='rows-3-input'>
                                 <FormField label="Status" className="md:col-span-1">
                                     <SelectInput readOnly={true} value="Deferido" options={['Deferido', 'Indeferido', 'Em Análise']} />
                                 </FormField>
@@ -190,9 +189,9 @@ export default function InscricaoShowModal() {
                                 </FormField>
                             </div>
 
-                            <div className="mt-10 flex justify-end items-center space-x-4">
-                                <button onClick={handleBack} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">Voltar</button>
-                                <button onClickCapture={onCloseModal} className="cursor-pointer px-8 py-2.5 text-sm font-semibold text-white bg-[var(--button)] rounded-md hover:bg-[var(--button-hover)]">Fechar</button>
+                            <div id="buttons-container">
+                                <button onClick={handleBack} id='modal-white-button'>Voltar</button>
+                                <button onClickCapture={onCloseModal} id='modal-purple-button'>Fechar</button>
                             </div>
                         </div>
                     )}

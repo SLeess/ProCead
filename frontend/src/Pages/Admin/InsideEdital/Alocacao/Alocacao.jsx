@@ -21,19 +21,19 @@ const Alocacao = () => {
         </div>
         <div className="flex gap-4 mb-4">
           <StatsCard title={"Total de Inscrições"} quant={400}>
-            <FileText className="text-[var(--stats-card-text)] absolute top-4 right-4" />
+            <FileText className="text-[var(--admin-stats-card-text)] absolute top-4 right-4" />
           </StatsCard>
 
           <StatsCard title={"Total de Cotas"} quant={300}>
-            <ShieldCheck className="text-[var(--stats-card-text)] absolute top-4 right-4" />
+            <ShieldCheck className="text-[var(--admin-stats-card-text)] absolute top-4 right-4" />
           </StatsCard>
 
           <StatsCard title={"Total de Recursos"} quant={200}>
-            <AlertTriangle className="text-[var(--stats-card-text)] absolute top-4 right-4" />
+            <AlertTriangle className="text-[var(--admin-stats-card-text)] absolute top-4 right-4" />
           </StatsCard>
 
           <StatsCard title={"Total de Matrículas"} quant={100}>
-            <GraduationCap className="text-[var(--stats-card-text)] absolute top-4 right-4" />
+            <GraduationCap className="text-[var(--admin-stats-card-text)] absolute top-4 right-4" />
           </StatsCard>
         </div>
         <MainTable data={data} columns={columns} title={"Lista de Administradores"} />

@@ -18,7 +18,7 @@ export default function ExportModuleTable({canExport, table, title})
 
     return (<>
         {
-            canExport && <button id="export-button" className="bg-[var(--button)] hover:bg-[var(--button-hover)]" onClick={() => onOpenModal()}>
+            canExport && <button id="export-button" className="bg-[var(--admin-button)] hover:bg-[var(--admin-button-hover)]" onClick={() => onOpenModal()}>
                 {'Gerar Relatório'}
             </button>
         }

@@ -4,9 +4,10 @@ import { AppContext } from '@/Contexts/AppContext';
 import AccessDenied from '../../../../Components/Global/AccessDenied/AccessDenied';
 import data from './data'
 import columns from './columns';
-import { Grid2x2Plus, UserRoundPen } from 'lucide-react';
+import { Clipboard, ContactRound, UserRoundPen } from 'lucide-react';
 import { useParams } from 'react-router-dom';
 import StatsCard from '@/Components/Global/Cards/StatsCard';
+import QuadroVagasCreateModal from '@/Components/Admin/InsideEdital/Modais/QuadroVagas/QuadroVagasCreateModal';
 
 const QuadroVagas = () => {
   const { editalId } = useParams();
@@ -15,13 +16,16 @@ const QuadroVagas = () => {
   if (hasPermissionForEdital('visualizar-campi-cursos', editalId) || isSuperAdmin())
     return (
       <div>
-        <h1 className="text-2xl font-bold mb-4">Quadro de Vagas</h1>
+        <div className="flex items-center justify-between mb-4">
+          <h1 className="text-2xl font-bold">Quadro de Vagas</h1>
+          <QuadroVagasCreateModal />
+        </div>
         <div className="flex gap-4 mb-4">
           <StatsCard title={"Nº de Quadros"} quant={5}>
-            <Grid2x2Plus className="text-[var(--stats-card-text)] absolute top-4 right-4" />
+            <Clipboard className="text-[var(--admin-stats-card-text)] absolute top-4 right-4" />
           </StatsCard>
           <StatsCard title={"Total de Vagas"} quant={120}>
-            <UserRoundPen className="text-[var(--stats-card-text)] absolute top-4 right-4" />
+            <ContactRound className="text-[var(--admin-stats-card-text)] absolute top-4 right-4" />
           </StatsCard>
         </div>
         <MainTable data={data} columns={columns} title={"Quadro de Vagas"}/>

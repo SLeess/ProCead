@@ -1,0 +1,7 @@
+@reference "@/index.css";
+
+div#modalCategoria > div{
+    @apply max-w-100;
+    @apply mx-auto;
+
+}
