@@ -109,5 +109,5 @@ Route::prefix('/admin')->name('admin.')->group( function () {
         });
     });
 
-    Route::post('/export', [RelatorioController::class, 'export'])->name('export');
+    Route::middleware(['throttle:heavy'])->post('/export', [RelatorioController::class, 'export'])->name('export');
 });

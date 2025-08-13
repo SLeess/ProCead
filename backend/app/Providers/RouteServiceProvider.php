@@ -48,8 +48,19 @@ use Illuminate\Support\Facades\Route;class RouteServiceProvider extends ServiceP
             return Limit::perMinute(5)->by($request->ip());
         });
 
-        RateLimiter::for('auth', function (Request $request) {
-            return Limit::perMinute(maxAttempts: 30)->by($request->user()?->id ?: $request->ip());
+        RateLimiter::for('user', function (Request $request) {
+            return Limit::perMinute(maxAttempts: 25)->by($request->user()?->id ?: $request->ip());
+        });
+
+        RateLimiter::for('candidate', function (Request $request) {
+            return Limit::perMinute(maxAttempts: 25)->by($request->user()?->id ?: $request->ip());
+        });
+
+        RateLimiter::for('admin', function (Request $request) {
+            return Limit::perMinute(maxAttempts: 35)->by($request->user()?->id ?: $request->ip());
+        });
+        RateLimiter::for('heavy', function (Request $request) {
+            return Limit::perMinute(5)->by($request->user()?->id); // Apenas 5 por minuto
         });
     }
 
