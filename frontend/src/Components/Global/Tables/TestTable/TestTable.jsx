@@ -13,7 +13,7 @@ import { AppContext } from '@/Contexts/AppContext';
 import './TestTable.css';
 
 export default function TestTable({ rows, cols, tableName, titulo, details, visibleDefaultColumns = {}, className = `` , minColumns = 1}){
-    const { token } = useContext(AppContext);
+    const { token, verifyStatusRequest } = useContext(AppContext);
 
     //**Determinar a quantidade mínima de colunas que precisam estar visiveis pra não ficar só os checkbox e os btns de ações */
     const minColumnsExibe = minColumns;
@@ -141,6 +141,7 @@ export default function TestTable({ rows, cols, tableName, titulo, details, visi
             errorMessages.forEach((e) => toast.error(e));
             } else {
             if (!response.ok) {
+                verifyStatusRequest(response);
                 throw new Error(`Erro na rede: ${response.status} ${response.statusText}`);
             }
             const blob = await response.blob();

@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import ListaEditais from '@/Components/Global/ListaEditais/ListaEditais';
 
 function Editais() {
-  const { token } = useAppContext();
+  const { token, verifyStatusRequest } = useAppContext();
   const [processos, setProcessos] = useState([]);
   
   /** ------------------ Lidando com Filtros ------------------ **/
@@ -28,16 +28,12 @@ function Editais() {
           });
 
           if (!res.ok) {
+              verifyStatusRequest(res);
               throw new Error(`Erro ao buscar processos: ${res.status} ${res.statusText}`);
           }
 
           const result = await res.json();
           setProcessos(result.data.editais);
-          
-          toast.success("Todos os processos seletivos existentes no sistema foram encaminhados com sucesso.", {
-            autoClose: 1800,
-          });
-
       } catch (err) {
             setError("Não foi possível carregar seus processos seletivos. " + (err.message ? ` (${err.message})` : ''));
             setProcessos([]);

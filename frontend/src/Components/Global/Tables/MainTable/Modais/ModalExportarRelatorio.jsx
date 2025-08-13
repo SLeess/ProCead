@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 
 export default function ModalExportarRelatorio({ openModal, onCloseModal, table, title }) {
 
-  const { token } = useContext(AppContext);
+  const { token, verifyStatusRequest } = useContext(AppContext);
 
   const [titulo, setTitulo] = useState('Edital Referente: Processo de Seleção de Discentes para os Cursos de Especialização da Unimontes – Modalidade Educação a Distância – Sistema Universidade Aberta do Brasil (UAB) – Edital Nº 08/2025');
   const [subtitulo, setSubtitulo] = useState(title);
@@ -215,7 +215,8 @@ export default function ModalExportarRelatorio({ openModal, onCloseModal, table,
         });
       } else {
         if (!response.ok) {
-          throw new Error(`Erro na rede: ${response.status} ${response.statusText}`);
+            verifyStatusRequest(response);
+            throw new Error(`Erro na rede: ${response.status} ${response.statusText}`);
         }
         const blob = await response.blob();
         const url = window.URL.createObjectURL(blob);

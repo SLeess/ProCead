@@ -19,6 +19,31 @@ export default function AppProvider({ children }) {
     const [loading, setLoading] = useState(true);
     const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
 
+
+    /**
+     * Função utilizada para tratar casos de exceção de resposta do servidor, dar um alerta e fazer o logout da aplicação
+     * @param {*} response 
+     */
+    const verifyStatusRequest = (response) => {
+        switch (response.status) {
+            case 401:
+                toast.info("Sessão expirada. Por favor, faça login novamente.");
+                break;
+            case 403:
+                toast.info("Você não possui cadastro de candidato, favor realizar seu cadastro novamente.");
+                break;
+            case 429:
+                toast.info("Usuário desconectado por excesso de requisições realizadas.", {
+                    autoClose: true,
+                });
+                break;
+            default:
+                toast.info("Erro desconhecido. Desconectado por segurança.")
+                break;
+        }
+        logout();
+    }
+
     /**
      * Função para fazer o logout da aplicação em todos os esquemas e useStates
      */
@@ -134,19 +159,9 @@ export default function AppProvider({ children }) {
                         setPermissionsWithRolesByEdital(data.admin_access.editals_access || {});
                     }
 
-                } else {
-                    if (response.status === 401) {
-                        toast.info("Sessão expirada. Por favor, faça login novamente.");
-                        localStorage.removeItem('token');
-                        setToken(null);
-                        setUser(null);
-                    }
-                    if (response.status === 403) {
-                        toast.info("Você não possui cadastro de candidato, favor realizar seu cadastro novamente.");
-                        localStorage.removeItem('token');
-                        setToken(null);
-                        setUser(null);
-                    }
+                }
+                if (!response.ok) {
+                    verifyStatusRequest(response);
                 }
             } catch (error) {
                 console.error("Erro ao buscar dados do usuário:", error);
@@ -165,11 +180,6 @@ export default function AppProvider({ children }) {
         localStorage.setItem('theme', theme);
     }, [theme]);
 
-    // console.log(token);
-    // console.log(user);
-    // console.log(globalRoles);
-    // console.log(globalPermissions);
-    // console.log(permissionsWithRolesByEdital);
     const contextValue = { 
         user, 
         setUser, 
@@ -186,6 +196,7 @@ export default function AppProvider({ children }) {
         hasPermissionForEdital,
         canAccessAdminArea,
         isSuperAdmin,
+        verifyStatusRequest,
     };
 
     return (

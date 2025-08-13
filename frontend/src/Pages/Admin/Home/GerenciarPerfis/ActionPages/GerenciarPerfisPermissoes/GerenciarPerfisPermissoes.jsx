@@ -1,32 +1,29 @@
 import "./GerenciarPerfisPermissoes.css";
 import MainTable from "@/Components/Global/Tables/MainTable/MainTable";
-import data from "./data";
 import getColumns from "./columns";
-// import { TextInput } from "flowbite-react";
-import { FormField, SelectInput, TextInput } from "@/Components/Global/ui/modals";
 import { useEffect, useMemo, useState } from "react";
 import { useAppContext } from "@/Contexts/AppContext";
 import { useParams } from "react-router-dom";
-import { toast } from "react-toastify";
 import InformacoesGerais from "./Components/InformacoesGerais";
 import LoaderPages from "@/Components/Global/LoaderPages/LoaderPages";
+import { toast } from "react-toastify";
 
 export default function GerenciarPerfisPermissoes()
 {
     const { perfilId } = useParams();
-    const { token } = useAppContext();
+    const { token, verifyStatusRequest } = useAppContext();
     const [role, setRole] = useState({});
     const [allPermissions, setAllPermissions] = useState([]);
     const [selectedPermissions, setSelectedPermissions] = useState([]);
     const [tableData, setTableData] = useState([]);
+
     const [formData, setFormData] = useState({});
+    
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
     
     useEffect(() => {
         const fetchProcessos = async () => {
             setLoading(true);
-            setError(null);
             // await new Promise(resolve => setTimeout(resolve, 5000));
             try {
                 const resRolePermissions = await fetch(`/api/super-admin/roles/${perfilId}/`, {
@@ -37,20 +34,21 @@ export default function GerenciarPerfisPermissoes()
                     },
                 });
 
-                if (!resRolePermissions.ok) {
-                    throw new Error(`Erro ao buscar as permissões atreladas ao cargo: ${resRolePermissions.status} ${resRolePermissions.statusText}`);
-                }
-
                 const resultRolePermissions = await resRolePermissions.json();
-                setRole((e) => ({...e, 
-                    id: resultRolePermissions.data.id,
-                    nome: resultRolePermissions.data.name,
-                    escopo: resultRolePermissions.data.scope,
-                    updated_at: resultRolePermissions.data.updated_at
-                }));
+                if (!resRolePermissions.ok) {
+                    verifyStatusRequest(resRolePermissions);
+                    throw new Error(`Erro ao buscar as permissões atreladas ao cargo: ${resRolePermissions.status} ${resRolePermissions.statusText}`);
+                } else{
+                    setRole((e) => ({...e, 
+                        id: resultRolePermissions.data.id,
+                        nome: resultRolePermissions.data.name,
+                        escopo: resultRolePermissions.data.scope,
+                        updated_at: resultRolePermissions.data.updated_at
+                    }));
 
-                setSelectedPermissions(resultRolePermissions.data.related_permissions_ids);
+                    setSelectedPermissions(resultRolePermissions.data.related_permissions_ids);
 
+                }
                 const resAllPermissions = await fetch(`/api/super-admin/permissions-scope/${resultRolePermissions.data.scope}`, {
                     method: 'GET',
                     headers: {
@@ -58,28 +56,24 @@ export default function GerenciarPerfisPermissoes()
                         'Authorization': `Bearer ${token}`,
                     },
                 });
-
-                const resultAllPermissions = await resAllPermissions.json();
-                setAllPermissions((a) => ({...a,
-                    ...resultAllPermissions.data.permissions
-                }));
                 
+                const resultAllPermissions = await resAllPermissions.json();
+
                 if ( !resAllPermissions.ok) {
+                    verifyStatusRequest(resAllPermissions);
                     throw new Error(`Erro ao buscar as permissões: ${resAllPermissions.status} ${resAllPermissions.statusText}`);
+                } else {
+                    setAllPermissions((a) => ({...a,
+                        ...resultAllPermissions.data.permissions
+                    }));
                 }
-
-                toast.success("Todos os processos seletivos existentes no sistema foram encaminhados com sucesso.", {
-                    autoClose: 1800,
-                });
-
             } catch (err) {
-                setError("Não foi possível carregar seus processos seletivos. " + (err.message ? ` (${err.message})` : ''));
-                // setPerfis([]);
+                toast.error("Não foi possível carregar seus processos seletivos. " + (err.message ? ` (${err.message})` : ''))
             } finally {
                 setLoading(false);
             }
         };
-    fetchProcessos();
+        fetchProcessos();
     }, [perfilId, token]);
 
     // =================================================================================
@@ -178,7 +172,6 @@ export default function GerenciarPerfisPermissoes()
         );
     };
 
-    
     const columns = useMemo(() => getColumns(updatePermission, toggleAllRowPermissions, toggleAllPermissions, setTableData), [updatePermission, toggleAllRowPermissions]);
     
     const handleOnSubmit = async (e) => {
@@ -187,7 +180,6 @@ export default function GerenciarPerfisPermissoes()
     };
 
     if (loading) return <LoaderPages />;
-    if (error) return <div className="text-red-500 text-center p-8">{error}</div>;
 
     return (
         <section id="gerenciar_perfis_permissoes">

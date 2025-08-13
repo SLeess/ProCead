@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import ListaEditais from '@/Components/Global/ListaEditais/ListaEditais';
 
 function MeusProcessos() {
-  const { token } = useAppContext();
+  const { token, verifyStatusRequest } = useAppContext();
   const [meusProcessos, setMeusProcessos] = useState([]);  
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -25,7 +25,8 @@ function MeusProcessos() {
           });
 
           if (!res.ok) {
-              throw new Error(`Erro ao buscar processos: ${res.status} ${res.statusText}`);
+            verifyStatusRequest(res);
+            throw new Error(`Erro ao buscar processos: ${res.status} ${res.statusText}`);
           }
 
           const result = await res.json();

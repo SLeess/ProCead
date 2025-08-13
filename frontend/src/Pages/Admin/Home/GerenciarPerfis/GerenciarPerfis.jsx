@@ -12,7 +12,7 @@ import LoaderPages from "@/Components/Global/LoaderPages/LoaderPages";
 
 export default function GerenciarPerfis()
 {
-    const { token } = useAppContext();
+    const { token, verifyStatusRequest } = useAppContext();
     const { navigate } = useContext(NavigationContext);
 
     const columns = useMemo(() => getColumns(navigate), [navigate]);
@@ -23,38 +23,37 @@ export default function GerenciarPerfis()
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     useEffect(() => {
-    const fetchProcessos = async () => {
-      setLoading(true);
-      // await new Promise(resolve => setTimeout(resolve, 5000));
-      try {
-          const res = await fetch('/api/super-admin/roles', { // Substitua pela URL real da sua API
-              method: 'GET',
-              headers: {
-                  'Content-Type': 'application/json',
-                  'Authorization': `Bearer ${token}`, // Descomente se precisar de token
-              },
-          });
+        const fetchProcessos = async () => {
+            setLoading(true);
+            // await new Promise(resolve => setTimeout(resolve, 5000));
+            try {
+                const res = await fetch('/api/super-admin/roles', { // Substitua pela URL real da sua API
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`, // Descomente se precisar de token
+                    },
+                });
 
-          if (!res.ok) {
-              throw new Error(`Erro ao buscar processos: ${res.status} ${res.statusText}`);
-          }
-
-          const result = await res.json();
-          setPerfis(result.data.roles);
-          console.log(perfis);
-          
-          toast.success("Todos os processos seletivos existentes no sistema foram encaminhados com sucesso.", {
-            autoClose: 1800,
-          });
-
-      } catch (err) {
-            setError("Não foi possível carregar seus processos seletivos. " + (err.message ? ` (${err.message})` : ''));
-            setPerfis([]);
-        } finally {
-          setLoading(false);
-        }
+                if (!res.ok) {
+                    if (res.errors) {
+                        Object(res.errors).forEach((er) => toast.error(er));
+                    } else{
+                        verifyStatusRequest(res);
+                    }
+                    throw new Error(`Erro ao buscar processos: ${res.status} ${res.statusText}`);
+                } else {
+                    const result = await res.json();
+                    setPerfis(result.data.roles);
+                }
+            } catch (err) {
+                    setError("Não foi possível carregar seus processos seletivos. " + (err.message ? ` (${err.message})` : ''));
+                    setPerfis([]);
+            } finally {
+                setLoading(false);
+            }
       };
-    fetchProcessos();
+      fetchProcessos();
   }, []);
 
     return (

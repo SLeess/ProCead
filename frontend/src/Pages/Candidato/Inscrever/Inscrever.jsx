@@ -14,7 +14,7 @@ import { useParams } from 'react-router-dom';
 
 
 const Inscrever = () => {
-    const { token, user } = useAppContext();
+    const { token, user, verifyStatusRequest } = useAppContext();
     const [activeTabIndex, setActiveTabIndex] = useState(0);
     const [enabledTabs, setEnabledTabs] = useState([0]);
     const [loading, setLoading] = useState(false);
@@ -105,6 +105,7 @@ const Inscrever = () => {
                         toast.error(errorMessage);
                     });
                 }
+                verifyStatusRequest(result);
             } else {
                 localStorage.setItem('token', result.data.token);
                 toast.success((result.message || "Inscrição realizada com sucesso!"));
