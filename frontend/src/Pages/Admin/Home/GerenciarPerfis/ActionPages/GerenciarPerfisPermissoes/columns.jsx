@@ -54,9 +54,37 @@ const getColumns = (updatePermission, toggleAllRowPermissions, setTableData) => 
         {
             accessorKey: "name_permission",
             header: ({ table }) => {
+                const tableRows = table.getRowModel().rows;
+
+                const allVisibleRows = tableRows.map(row => row.original);
+                let allPermissionsInVisibleRows = [];
+                allVisibleRows.forEach(row => {
+                    const existingPermissions = [row.visualizar, row.criar, row.atualizar, row.deletar].filter(p => p !== null);
+                    allPermissionsInVisibleRows.push(...existingPermissions);
+                });
+                
+                const areAllVisibleChecked = allPermissionsInVisibleRows.length > 0 && allPermissionsInVisibleRows.every(p => p === true);
+
                 const handleToggleAll = () => {
+                    const newValue = !areAllVisibleChecked;
+                    const visibleRowIds = new Set(tableRows.map(row => row.original.name_permission));
+                    
+                    setTableData(oldData => 
+                        oldData.map(row => {
+                            if(visibleRowIds.has(row.name_permission)) {
+                                return {
+                                    ...row,
+                                    visualizar: row.visualizar !== null ? newValue : null,
+                                    criar: row.criar !== null ? newValue : null,
+                                    atualizar: row.atualizar !== null ? newValue : null,
+                                    deletar: row.deletar !== null ? newValue : null,
+                                }
+                            }
+                            return row;
+                        })
+                    );
                 };
-                return <Checkbox label={"PERMISSÕES"} onChange={handleToggleAll} />;
+                return <Checkbox label={"PERMISSÕES"} onChange={handleToggleAll} checked={areAllVisibleChecked}/>;
             },
             cell: ({ row }) => {
                 const { visualizar, criar, atualizar, deletar } = row.original;

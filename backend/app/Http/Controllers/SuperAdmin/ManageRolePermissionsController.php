@@ -34,8 +34,9 @@ class ManageRolePermissionsController extends __SuperAdminController
         try {
             $validatedData = $request->validated();
 
-            $this->rolePermissionService->syncPermissionsToRole(
+            $this->rolePermissionService->updateRoleAndSyncPermissions(
                 $validatedData['role_id'],
+                $validatedData['role_data'],
                 $validatedData['permissions']
             );
 

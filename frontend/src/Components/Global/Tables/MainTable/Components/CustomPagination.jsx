@@ -1,11 +1,22 @@
-export default function CustomPagination({table, })
+export default function CustomPagination({table, hasCountSelectedLines})
 {
     return (
         <div id="bottom-tools">
-            <div id="rows-selected">
-                {table.getFilteredSelectedRowModel().rows.length} de{" "}
-                {table.getFilteredRowModel().rows.length} linha(s) selecionada(s).
-            </div>
+                <div id="rows-selected">
+                {
+                    hasCountSelectedLines && 
+                    <>
+                        {table.getFilteredSelectedRowModel().rows.length} de{" "}
+                        {table.getFilteredRowModel().rows.length} linha(s) selecionada(s).
+                    </>
+                }
+                {
+                    !hasCountSelectedLines && 
+                    <>
+                        {table.getFilteredRowModel().rows.length} linha(s) no total(s).
+                    </>
+                }
+                </div>
             <div id="paginate">
                 {/* --- Previous Button --- */}
                 <button

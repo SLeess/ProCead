@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix("/super-admin")->name('super-Admin.')->middleware(['role:super-Admin'])->group(function(){
     Route::resource('/edital', EditalController::class)->only(['index', 'show', 'store', 'update', 'destroy']);
+
     Route::prefix("/roles")->name("role.")->group(function(){
         Route::resource('', ManageRolePermissionsController::class)
                 ->only(['index', 'show', 'store', 'update', 'destroy'])
