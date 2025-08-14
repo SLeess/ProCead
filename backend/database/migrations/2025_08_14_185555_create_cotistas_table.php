@@ -19,7 +19,7 @@ return new class extends Migration
                 'DEFERIDO',
                 'INDEFERIDO'])
             ->default('EM_ANALISE');
-            $table->longText('motivo');
+            $table->text('motivo');
 
             $table->timestamps();
             $table->foreignId('inscricao_id')->references('id')->on('inscricoes');
