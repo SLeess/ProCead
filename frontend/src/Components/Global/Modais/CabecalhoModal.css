@@ -1,0 +1,9 @@
+@reference "@/index.css";
+
+#header-modal {
+    @apply flex justify-between items-center ml-4 mt-2;
+}
+
+#title-modal {
+    @apply text-2xl font-bold text-gray-800;
+}
