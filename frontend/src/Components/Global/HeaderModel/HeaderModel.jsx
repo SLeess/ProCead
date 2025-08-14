@@ -1,6 +1,7 @@
 import { Navbar, NavbarBrand, NavbarCollapse, NavbarToggle } from "flowbite-react";
 import UserDropdown from "../UserDropdown/UserDropdown";
 import ThemeToggleBtn from "../ThemeToggleBtn/ThemeToggleBtn";
+import "./HeaderModel.css";
 
 
 export default function HeaderModel({ headerid, children }){
@@ -10,27 +11,27 @@ export default function HeaderModel({ headerid, children }){
                     <Navbar fluid rounded>
 
                         <NavbarBrand href="#">
-                            <img src="/img/logo_cead_bg_white_full.png" alt="Logo CEAD" className="w-[92px] h-[40px]"/>
+                            <img src="/img/logo_cead_bg_white_full.png" alt="Logo CEAD" id="img-logo"/>
                         </NavbarBrand>
 
-                        <div className="hidden md:flex lg:gap-12 md:gap-6">
+                        <div id="nav-item">
                             { children }
                         </div>
 
 
-                        <div className="hidden md:flex">
+                        <div id="desktop-buttons-div">
                             <ThemeToggleBtn />
                             <UserDropdown/>
                         </div>
 
-                        <div className="md:hidden flex">
+                        <div id="mobile-buttons-div">
                             <ThemeToggleBtn />
                             <UserDropdown/>
                             <NavbarToggle className="ml-1 navbar-toggle"/>
                         </div>
 
                         <NavbarCollapse className="md:hidden">
-                            <div className="flex flex-col items-center">
+                            <div id="menu-responsive">
                                 { children }
                             </div>
                         </NavbarCollapse>

@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import "./StatsCard.css"
 
 const StatsCard = ({title, quant, children}) => {
     return (

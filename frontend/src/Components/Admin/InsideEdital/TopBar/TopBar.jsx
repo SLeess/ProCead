@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { LogOut, ChevronsLeftRight } from "lucide-react";
 import { useParams } from "react-router-dom";
 import { ChevronDown } from 'lucide-react'
+import "./TopBar.css";
 
 export default function TopBar() {
     const { user, token, logout } = useAppContext();
