@@ -32,7 +32,7 @@ export default function ProcessoCard({ processo }){
         <p className={`cardContent`} >{ limitarString(descricao, 115) }</p>
       </div>
 
-      <button className={`buttonBase ${inscrito ? `buttonInscrito` : `buttonNaoInscrito`}`} onClick={ inscrito ? () => navigate(`/edital/${id}`) : () => navigate(`/edital/${id}/inscrever`)}>
+      <button className={`buttonBase ${inscrito ? `buttonInscrito` : `buttonNaoInscrito`}`} onClick={ inscrito ? () => navigate(`/inscricao/${id}`) : () => navigate(`/edital/${id}/inscrever`)}>
         {inscrito ? 'Ver Inscrição' : 'Inscreva-se'}
       </button>
     </div>

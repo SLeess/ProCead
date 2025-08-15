@@ -1,7 +1,7 @@
 import LoaderPages from '@/Components/Global/LoaderPages/LoaderPages';
 import Stepper from '@/Components/Global/Stepper/Stepper';
 import { CheckCheck, ListCheck, ListCollapse, MapPinHouse } from 'lucide-react';
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { CiCircleInfo } from 'react-icons/ci';
 import InformacoesBasicas from './Tabs/InformacoesBasicas';
 import Endereco from './Tabs/Endereco';
@@ -10,11 +10,11 @@ import DetalhesDaVaga from './Tabs/DetalhesDaVaga';
 import { toast } from "react-toastify";
 import Confirmacao from './Tabs/Confirmacao';
 import { useAppContext } from '@/Contexts/AppContext';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 
 const Inscrever = () => {
-    const { token, user, verifyStatusRequest } = useAppContext();
+    const { token, user } = useAppContext();
     const [activeTabIndex, setActiveTabIndex] = useState(0);
     const [enabledTabs, setEnabledTabs] = useState([0]);
     const [loading, setLoading] = useState(false);
@@ -82,6 +82,7 @@ const Inscrever = () => {
     };
 
     const {editalId} = useParams();
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -90,7 +91,7 @@ const Inscrever = () => {
         try {
             const res = await fetch('/api/inscricao', {
                 method: 'post',
-                body: JSON.stringify({...formData, user,editalId}),
+                body: JSON.stringify({...formData, user,editalId: editalId}),
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`, // Descomente se precisar de token
@@ -101,14 +102,22 @@ const Inscrever = () => {
 
             if (!result.success || !res.ok) {
                 if (result.errors) {
-                    result.errors.forEach(errorMessage => {
-                        toast.error(errorMessage);
-                    });
+                    if (Array.isArray(result.errors)) {
+                        result.errors.forEach(errorMessage => {
+                            toast.error(errorMessage);
+                        });
+                    } else {
+                        toast.error(result.errors);
+                    }
+                } else if (result.message) {
+                    toast.error(result.message);
+                } else {
+                    toast.error("Ocorreu um erro inesperado. Por favor, tente novamente.");
                 }
-                verifyStatusRequest(result);
             } else {
                 localStorage.setItem('token', result.data.token);
-                toast.success((result.message || "Inscrição realizada com sucesso!"));
+                toast.success((result.message || "Inscrição realizada com sucesso! Redirecionando..."));
+                new Promise(resolve => setTimeout(resolve, 5000)).then(() => navigate(`/inscricao/${editalId}`));
             }
         } catch (error) {
             toast.error(error.toString());
