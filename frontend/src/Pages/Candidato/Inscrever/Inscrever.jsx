@@ -127,8 +127,8 @@ const Inscrever = () => {
     };
 
     return (
-        <div id='inscricao'>
-            <nav aria-label="Tabs" className="timeline-nav">
+        <div id='inscricao' >
+            <nav aria-label="Tabs" className="timeline-nav overflow-x-auto mb-2">
                 <Stepper tabsData={tabsData} activeTabIndex={activeTabIndex} setActiveTabIndex={setActiveTabIndex} enabledTabs={enabledTabs} />
             </nav>
             <form id="content" onSubmit={handleSubmit}>

@@ -42,7 +42,7 @@ const Endereco = ({ formData, handleOnChangeAttr, handleNext, handleBack, setEna
 
 return (
 
-  <div className="bg-gray-100 dark:bg-slate-700 min-h-screen p-4 sm:p-6 md:p-8 font-sans animate-fade-in">
+  <div className="bg-gray-100 dark:bg-slate-700 min-h-screen md:p-8 font-sans animate-fade-in">
     <div className="max-w-6xl mx-auto">
 
       {/* Header */}

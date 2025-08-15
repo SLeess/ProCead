@@ -56,7 +56,7 @@ const Inscricao = () => {
   }
 
   return (
-    <div className=" dark:bg-slate-800 min-h-screen p-4 sm:p-6 md:p-8 font-sans animate-fade-in">
+    <div className=" dark:bg-slate-800 min-h-screen  md:p-8 font-sans animate-fade-in">
       <div className="max-w-7xl mx-auto">
         {/* Breadcrumbs */}
         <div className="mb-4 text-sm text-gray-500 dark:text-gray-400">
@@ -69,7 +69,7 @@ const Inscricao = () => {
         {/* Form Content */}
         <div className="bg-white dark:bg-slate-700 rounded-lg shadow-md p-6 sm:px-8 sm:py-2 mt-1">
         {/* Tabs */}
-        <div className="border-b border-gray-200 mb-4 dark:border-gray-700">
+        <div className="border-b border-gray-200 mb-4 dark:border-gray-700 overflow-x-auto">
           <nav className="-mb-px flex space-x-6" aria-label="Tabs">
             <a href="#" className="shrink-0 border-b-2 border-blue-600 px-1 py-4 text-sm font-medium text-blue-600">
               Alfabetização e Multiletramentos
@@ -165,60 +165,60 @@ const Inscricao = () => {
               </div>
             </div>
 
-            {/* Escolha da Vaga */}
-            <div>
-              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Escolha da Vaga</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {[1, 2].map(i => (
-                  <div key={i} className="border border-gray-200 dark:border-gray-600 rounded-lg p-4 space-y-3">
-                    <p className="font-semibold text-gray-800 dark:text-gray-100">Lato Sensu em Alfabetização e Multiletramentos</p>
-                    <div className="bg-gray-100 dark:bg-slate-600 p-2 rounded-md text-sm text-gray-700 dark:text-gray-200">
-                      <span className="font-medium">Montes Claros | MG</span>
-                    </div>
-                    <div className="bg-gray-100 dark:bg-slate-600 p-2 rounded-md text-sm text-gray-700 dark:text-gray-200">
-                      <span className="font-medium">Modalidade 3:</span> Negros e Pardos
-                    </div>
-                    <div className="bg-gray-100 dark:bg-slate-600 p-2 rounded-md text-sm text-gray-700 dark:text-gray-200">
-                      <span className="font-medium">Categoria 3:</span> Comunidade em Geral
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            
-            {/* Anexos */}
-            <div className='pb-4'>
-                <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Anexos</h2>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-4">
-                    <div className="space-y-1">
-                        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">CPF:</label>
-                        <button className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
-                            Anexo
-                        </button>
-                    </div>
-                    <div className="space-y-1">
-                        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Comprovante de Residência:</label>
-                        <button className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                           <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
-                           Anexo
-                        </button>
-                    </div>
-                    <div className="space-y-1">
-                        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Histórico:</label>
-                        <button className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
-                            Anexo
-                        </button>
-                    </div>
-                    <div className="space-y-1">
-                        <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Auto declaração:</label>
-                        <button className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                            <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
-                            Anexo
-                        </button>
+            <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-6 mb-5">
+              {/* Escolha da Vaga */}
+              <div>
+                <div className=" ">
+                <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Escolha da Vaga</h2>
+                    <div className="border border-gray-200 dark:border-gray-600 rounded-lg p-4 space-y-3">
+                      <p className="font-semibold text-gray-800 dark:text-gray-100">Lato Sensu em Alfabetização e Multiletramentos</p>
+                      <div className="bg-gray-100 dark:bg-slate-600 p-2 rounded-md text-sm text-gray-700 dark:text-gray-200">
+                        <span className="font-medium">Polo: Montes Claros | MG</span>
+                      </div>
+                      <div className="bg-gray-100 dark:bg-slate-600 p-2 rounded-md text-sm text-gray-700 dark:text-gray-200">
+                        <span className="font-medium">Modalidade: 3 - </span> Negros e Pardos
+                      </div>
+                      <div className="bg-gray-100 dark:bg-slate-600 p-2 rounded-md text-sm text-gray-700 dark:text-gray-200">
+                        <span className="font-medium">Categoria: 3 - </span> Comunidade em Geral
+                      </div>
                     </div>
                 </div>
+              </div>
+              
+              {/* Anexos */}
+              <div className=''>
+                  <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Anexos</h2>
+                  <div className="grid grid-cols-2  gap-x-6 gap-y-2 border border-gray-200 dark:border-gray-600 rounded-lg p-4 space-y-3">
+                      <div className="space-y-1">
+                          <label className="text-sm font-medium text-gray-700 dark:text-gray-300">CPF:</label>
+                          <button className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+                              Anexo
+                          </button>
+                      </div>
+                      <div className="space-y-1">
+                          <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Comprovante de Residência:</label>
+                          <button className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                             <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+                             Anexo
+                          </button>
+                      </div>
+                      <div className="space-y-1">
+                          <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Histórico:</label>
+                          <button className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+                              Anexo
+                          </button>
+                      </div>
+                      <div className="space-y-1">
+                          <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Auto declaração:</label>
+                          <button className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                              <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+                              Anexo
+                          </button>
+                      </div>
+                  </div>
+              </div>
             </div>
 
           </div>

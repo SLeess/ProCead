@@ -21,7 +21,7 @@ const Step = ({ icon: IconComponent, label, isActive, isCompleted, onClick }: St
             <div className="step-icon-wrapper">
                 {IconComponent}
             </div>
-            <p className="step-label">{label}</p>
+            <p className="step-label mb-3 md:mb-0">{label}</p>
         </button>
     );
 };
