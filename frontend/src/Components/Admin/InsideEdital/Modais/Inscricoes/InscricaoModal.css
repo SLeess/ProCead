@@ -8,18 +8,6 @@
     @apply ml-4 bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full;
 }
 
-#inscricao-tabs {
-    @apply border-b border-gray-200 mb-4;
-}
-
-#inscricao-navs {
-    @apply -mb-px flex space-x-8;
-}
-
-#inscricao-nav-button {
-    @apply whitespace-nowrap pt-4 pb-2 px-1 border-b-2 font-medium text-sm;
-}
-
 #inscricao-vaga-content {
     @apply flex flex-col items-center;
 }

@@ -48,11 +48,11 @@ export default function InscricaoShowModal() {
                     </div>
 
                     {/* Tabs Navigation */}
-                    <div id="inscricao-tabs">
-                        <nav id="inscricao-navs" aria-label="Tabs">
+                    <div id="tabs-container">
+                        <nav id="tabs-navs" aria-label="Tabs">
                             {tabs.map(tab => (
                                 <button
-                                    id="inscricao-nav-button"
+                                    id="tabs-nav-button"
                                     key={tab}
                                     onClick={() => setActiveTab(tab)}
                                     className={`${activeTab === tab
