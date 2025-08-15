@@ -6,12 +6,20 @@ import { toast } from "react-toastify";
 import { LogOut, ChevronsLeftRight } from "lucide-react";
 import { useParams } from "react-router-dom";
 import { ChevronDown } from 'lucide-react'
+import { useState } from "react";
 import "./TopBar.css";
+import AdminProfileModal from "../Modais/AdminProfile/AdminProfileModal";
 
 export default function TopBar() {
     const { user, token, logout } = useAppContext();
     const { navigate } = useContext(NavigationContext);
     const { editalId } = useParams();
+
+    const [openModal, setOpenModal] = useState(false);
+
+    function onCloseModal() {
+        setOpenModal(false);
+    }
 
     async function handlerLogOut() {
         try {
@@ -45,6 +53,8 @@ export default function TopBar() {
             {/* Spacer */}
             <div className="flex-1" />
 
+            <AdminProfileModal openModal={openModal} onCloseModal={onCloseModal}/>
+
             {/* Right Item */}
             <Dropdown
                 arrowIcon={false}
@@ -56,10 +66,12 @@ export default function TopBar() {
                     </div>
                 }
             >
-                <DropdownHeader className="w-56">
+            <button onClick={() => setOpenModal(true)}>
+                <DropdownHeader className="w-56 justify-items-start cursor-pointer">
                     <span id="dropdown-open-nome">{user?.nome}</span>
                     <span id="dropdown-open-email">{user?.email}</span>
                 </DropdownHeader>
+            </button>
                 <DropdownItem icon={ChevronsLeftRight} onClick={handleChangeEdital}>
                     Mudar de edital
                 </DropdownItem>
