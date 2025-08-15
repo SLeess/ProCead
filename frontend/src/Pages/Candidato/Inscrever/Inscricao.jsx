@@ -60,11 +60,9 @@ const Inscricao = () => {
       <div className="max-w-7xl mx-auto">
         {/* Breadcrumbs */}
         <div className="mb-4 text-sm text-gray-500 dark:text-gray-400">
-          <a href="#" className="hover:underline">Meus Processos</a>
+          <a onClick={() => navigate('/')} className="hover:underline cursor-pointer">Meus Processos</a>
           <span className="mx-2">&gt;</span>
-          <a href="#" className="hover:underline">Edital 04/2025 - Coordenação de Curso de Especialização para Atuar no Âmbito do Sistema Universidade Aberta do Brasil (UAB)</a>
-          <span className="mx-2">&gt;</span>
-          <span className="text-gray-700 dark:text-gray-200">Inscrição</span>
+          <a className="text-gray-700 dark:text-gray-200 cursor-default">Edital 04/2025 - Coordenação de Curso de Especialização para Atuar no Âmbito do Sistema Universidade Aberta do Brasil (UAB)</a>
         </div>
 
 
@@ -189,7 +187,7 @@ const Inscricao = () => {
             </div>
             
             {/* Anexos */}
-            <div>
+            <div className='pb-4'>
                 <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Anexos</h2>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-4">
                     <div className="space-y-1">

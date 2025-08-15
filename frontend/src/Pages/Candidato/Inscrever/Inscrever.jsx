@@ -117,7 +117,7 @@ const Inscrever = () => {
             } else {
                 localStorage.setItem('token', result.data.token);
                 toast.success((result.message || "Inscrição realizada com sucesso! Redirecionando..."));
-                new Promise(resolve => setTimeout(resolve, 5000)).then(() => navigate(`/inscricao/${editalId}`));
+                new Promise(resolve => setTimeout(resolve, 3000)).then(() => navigate(`/inscricao/${editalId}`));
             }
         } catch (error) {
             toast.error(error.toString());

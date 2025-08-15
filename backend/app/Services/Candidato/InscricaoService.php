@@ -71,7 +71,7 @@ class InscricaoService
             // etc
             'termo_responsabilidade' => $data['termo_responsabilidade'],
             'contexto_id' => $data['editalId'],
-            'status' => $data['status'] ?? 'Pendente', // You can set a default status
+            'status' => $data['status'] ?? 'Em análise', 
             'motivo' => $data['motivo'] ?? null,
             'user_uuid' => $data['user']['uuid'],
             'edital_id' => $data['editalId'],
