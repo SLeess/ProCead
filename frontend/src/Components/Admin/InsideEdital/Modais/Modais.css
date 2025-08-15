@@ -52,3 +52,32 @@
 #tabs-nav-button {
     @apply whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm;
 }
+
+/* Access Buttons */
+#create-btn {
+    @apply px-4 py-2.5 text-sm font-semibold text-white bg-[var(--admin-button)] rounded-md hover:bg-[var(--admin-button-hover)] focus:outline-none cursor-pointer;
+}
+
+#acoes-icons {
+    @apply p-1 hover:bg-[#F8F2FF] rounded-full border-1 cursor-pointer;
+}
+
+#edit-btn {
+    @apply h-5 w-5 text-yellow-500;
+}
+
+#show-btn {
+    @apply h-5 w-5 text-blue-500;
+}
+
+#avaliate-btn {
+    @apply h-5 w-5 text-green-500;
+}
+
+#delete-btn {
+    @apply h-5 w-5 text-red-500;
+}
+
+#list-btn {
+
+}

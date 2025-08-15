@@ -27,16 +27,16 @@ export const getColumns = (navigate) => [
         return (
         <div className="flex items-center space-x-2 justify-center">
           <button onClick={() => navigate(`admin/perfis/${row.original.id}/permissoes`)} className="p-1 hover:bg-gray-200 rounded-full">
-              <List className="h-5 w-5 text-green-500" />
+              <List id='avaliate-btn' />
           </button>
           <button onClick={() => {}} className="p-1 hover:bg-gray-200 rounded-full">
-              <Eye className="h-5 w-5 text-blue-500" />
+              <Eye id='show-btn' />
           </button>
           <button onClick={() => {}} className="p-1 hover:bg-gray-200 rounded-full">
-              <Pencil className="h-5 w-5 text-yellow-500" />
+              <Pencil id='edit-btn' />
           </button>
           <button onClick={() => {}} className="p-1 hover:bg-gray-200 rounded-full">
-              <Trash className="h-5 w-5 text-red-500" />
+              <Trash id='delete-btn' />
           </button>
         </div>
       )},

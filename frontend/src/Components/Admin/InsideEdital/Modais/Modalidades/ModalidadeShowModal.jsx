@@ -12,8 +12,8 @@ const ModalidadeShowModal = () => {
     }
     return (
         <>
-            <button onClick={() => setOpenModal(true)} className="p-1 hover:bg-gray-200 rounded-full">
-                <Eye className="h-5 w-5 text-blue-500" />
+            <button onClick={() => setOpenModal(true)} id="acoes-icons">
+                <Eye id='show-btn' />
             </button>
             <Modal show={openModal} onClose={onCloseModal} popup>
 

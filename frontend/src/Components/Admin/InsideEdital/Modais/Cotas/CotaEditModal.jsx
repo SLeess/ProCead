@@ -16,8 +16,8 @@ export default function CotaEditModal() {
 
     return (
         <>
-            <button onClick={() => setOpenModal(true)} className="p-1 hover:bg-gray-200 rounded-full">
-                <Pencil className="h-5 w-5 text-yellow-500" />
+            <button onClick={() => setOpenModal(true)} id="acoes-icons">
+                <Pencil id='edit-btn' />
             </button>
             <Modal show={openModal} onClose={onCloseModal} popup>
 

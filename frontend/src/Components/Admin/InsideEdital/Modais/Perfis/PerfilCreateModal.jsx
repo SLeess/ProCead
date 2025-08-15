@@ -11,7 +11,7 @@ const PerfilCreateModal = ({enableGlobal = true}) => {
     }
     return (
         <>
-            <button onClick={() => setOpenModal(true)} className="px-4 py-2.5 text-sm font-semibold text-white bg-[var(--admin-button)] rounded-md hover:bg-[var(--admin-button-hover)] focus:outline-none cursor-pointer">
+            <button onClick={() => setOpenModal(true)} id='create-btn'>
                 <Plus className="inline" />
                 <span className='ml-1'>Cadastrar Perfil</span>
             </button>

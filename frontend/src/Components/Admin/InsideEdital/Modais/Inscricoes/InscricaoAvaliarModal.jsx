@@ -16,8 +16,8 @@ export default function InscricaoAvaliarModal() {
 
     return (
         <>
-            <button onClick={() => setOpenModal(true)} className="p-1 hover:bg-gray-200 rounded-full">
-                <Check className="h-5 w-5 text-green-500" />
+            <button onClick={() => setOpenModal(true)} id="acoes-icons">
+                <Check id='avaliate-btn' />
             </button>
             <Modal show={openModal} onClose={onCloseModal} popup>
 
