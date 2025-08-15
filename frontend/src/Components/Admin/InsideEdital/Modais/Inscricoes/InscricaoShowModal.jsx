@@ -3,6 +3,7 @@ import { Eye } from "lucide-react";
 import { useState } from "react";
 import { FormField, SelectInput, AnexoButton, TextInput} from "@/Components/Global/ui/modals";
 import CabecalhoModal from "@/Components/Global/Modais/CabecalhoModal";
+import "./InscricaoModal.css"
 
 export default function InscricaoShowModal() {
     const [openModal, setOpenModal] = useState(false);
@@ -41,19 +42,20 @@ export default function InscricaoShowModal() {
 
                 <ModalBody >
 
-                    <div className="flex justify-between items-center my-1">
+                    <div id="inscricao-data-e-status-div">
                         <p id="date-inscricao">Data de Inscrição: 04/07/2025</p>
-                        <span className="ml-4 bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full">Deferido</span>
+                        <span id="inscricao-status-text">Deferido</span>
                     </div>
 
                     {/* Tabs Navigation */}
-                    <div className="border-b border-gray-200 mb-4">
-                        <nav className="-mb-px flex space-x-8" aria-label="Tabs">
+                    <div id="inscricao-tabs">
+                        <nav id="inscricao-navs" aria-label="Tabs">
                             {tabs.map(tab => (
                                 <button
+                                    id="inscricao-nav-button"
                                     key={tab}
                                     onClick={() => setActiveTab(tab)}
-                                    className={`whitespace-nowrap pt-4 pb-2 px-1 border-b-2 font-medium text-sm ${activeTab === tab
+                                    className={`${activeTab === tab
                                         ? 'border-blue-500 text-blue-600'
                                         : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                                         }`}
@@ -148,9 +150,9 @@ export default function InscricaoShowModal() {
                     )}
                     {activeTab === 'Vaga' && (
                         <div>
-                            <div className="flex flex-col items-center">
-                                <div className="w-full max-w-lg border border-gray-200 rounded-md p-6">
-                                    <h3 className="text-lg font-semibold text-gray-800">Lato Sensu em Alfabetização e Multiletramentos</h3>
+                            <div id="inscricao-vaga-content">
+                                <div id="inscricao-vaga-container">
+                                    <h3 id="inscricao-vaga-title">Lato Sensu em Alfabetização e Multiletramentos</h3>
                                     <p id='subtitle-edital'>Montes Claros | MG</p>
                                     <div className="space-y-4">
                                         <TextInput readOnly={true} value="Modalidade 3: Negros e Pardos" />
@@ -158,7 +160,7 @@ export default function InscricaoShowModal() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="mt-6 flex justify-end items-center w-full space-x-4">
+                            <div id="buttons-container">
                                 <button onClick={handleBack} id='modal-white-button'>Voltar</button>
                                 <button onClick={handleNext} id='modal-purple-button'>Próximo: Anexos</button>
                             </div>
@@ -166,15 +168,15 @@ export default function InscricaoShowModal() {
                     )}
                     {activeTab === 'Anexos e Situação' && (
                         <div>
-                            <h2 className="text-xl font-semibold text-gray-800 mb-2">Anexos</h2>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+                            <h2 id="inscricao-documentos-title">Anexos</h2>
+                            <div id="inscricao-documentos-grid">
                                 <AnexoButton label="Identidade:" />
                                 <AnexoButton label="Comprovante:" />
                                 <AnexoButton label="Histórico:" />
                                 <AnexoButton label="Auto Declaração:" />
                             </div>
 
-                            <h2 className="text-xl font-semibold text-gray-800 mb-2">Situação</h2>
+                            <h2 id="inscricao-situacao-title">Situação</h2>
                             <div id='rows-3-input'>
                                 <FormField label="Status" className="md:col-span-1">
                                     <SelectInput readOnly={true} value="Deferido" options={['Deferido', 'Indeferido', 'Em Análise']} />
@@ -183,7 +185,7 @@ export default function InscricaoShowModal() {
                                     <textarea
                                         readOnly
                                         rows="4"
-                                        className="bg-gray-100 border border-gray-200 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+                                        id="inscricao-observacoes-textarea"
                                         value="Informamos que a inscrição de Vossa Senhoria no presente processo seletivo foi indeferida em razão do não atendimento aos requisitos formais estabelecidos no edital, especificamente pela ausência da documentação comprobatória exigida para a função pretendida, inviabilizando a devida análise e homologação da candidatura."
                                     />
                                 </FormField>

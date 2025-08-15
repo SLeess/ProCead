@@ -5,6 +5,7 @@ import { Check, Eye, Pencil } from "lucide-react";
 import { useState } from "react";
 import { FormField, SelectInput, AnexoButton } from "@/Components/Global/ui/modals";
 import CabecalhoModal from "@/Components/Global/Modais/CabecalhoModal";
+import "./InscricaoModal.css"
 
 export default function InscricaoAvaliarModal() {
     const [openModal, setOpenModal] = useState(false);
@@ -28,19 +29,19 @@ export default function InscricaoAvaliarModal() {
 
                     <div id="subtitle-inscricao">
                         <p id="date-inscricao">Data de Inscrição: 04/07/2025</p>
-                        <span className="ml-4 bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full">Deferido</span>
+                        <span id="inscricao-status-text">Deferido</span>
                     </div>
 
                     <div>
-                        <h2 className="text-xl font-semibold text-gray-800 mb-2">Anexos</h2>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+                        <h2 id="inscricao-documentos-title">Anexos</h2>
+                        <div id="inscricao-documentos-grid">
                             <AnexoButton label="Identidade:" />
                             <AnexoButton label="Comprovante:" />
                             <AnexoButton label="Histórico:" />
                             <AnexoButton label="Auto Declaração:" />
                         </div>
 
-                        <h2 className="text-xl font-semibold text-gray-800 mb-2">Situação</h2>
+                        <h2 id="inscricao-situacao-title">Situação</h2>
                         <div id='rows-3-input'>
                             <FormField label="Status" className="md:col-span-1">
                                 <SelectInput value="Deferido" options={['Deferido', 'Indeferido', 'Em Análise']} />
@@ -48,7 +49,7 @@ export default function InscricaoAvaliarModal() {
                             <FormField label="Observações" className="md:col-span-3">
                                 <textarea
                                     rows="4"
-                                    className="bg-gray-100 border border-gray-200 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+                                    id="inscricao-observacoes-textarea"
                                     defaultValue="Informamos que a inscrição de Vossa Senhoria no presente processo seletivo foi indeferida em razão do não atendimento aos requisitos formais estabelecidos no edital, especificamente pela ausência da documentação comprobatória exigida para a função pretendida, inviabilizando a devida análise e homologação da candidatura."
                                 />
                             </FormField>
