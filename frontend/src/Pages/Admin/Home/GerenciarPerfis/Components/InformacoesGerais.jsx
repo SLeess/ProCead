@@ -1,7 +1,7 @@
 import { FormField, SelectInput, TextInput } from "@/Components/Global/ui/modals";
 import { useMemo } from "react";
 
-export default function InformacoesGerais({role, setRole})
+export default function InformacoesGerais({role, setRole, readOnly = false})
 {
     const selectedScopeLabel = useMemo(() => {
         if (role.escopo === 'local') {
@@ -23,13 +23,13 @@ export default function InformacoesGerais({role, setRole})
         <h2>Informações Gerais</h2>
         <div className="grid grid-cols-12 sm:mt-3">
             <FormField label="Nome do Perfil" className="mt-3 sm:mt-0 sm:mr-4">
-                <TextInput value={role.nome} onChange={(e) => setRole((p) => ({...p, nome: e.target.value}))} readOnly={false}/>
+                <TextInput value={role.nome} onChange={(e) => setRole((p) => ({...p, nome: e.target.value}))} readOnly={readOnly}/>
             </FormField>
             <FormField label="Escopo do Perfil" className="mt-3 sm:mt-0">
                 <SelectInput
                     value={selectedScopeLabel}
                     onChange={handleScopeChange}
-                    readOnly={false}
+                    readOnly={readOnly}
                     options={['Perfil Local', 'Perfil Global']}
                 />
             </FormField>

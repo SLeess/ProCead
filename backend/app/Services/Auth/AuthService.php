@@ -27,7 +27,16 @@ class AuthService implements IAuthService
             /** @var \App\Models\User $user */
             $user->tokens()->delete();
 
-            $data['token'] = $user->createToken('auth_token')->plainTextToken;
+            $expirationMinutes = config('sanctum.expiration');
+
+            $token = $user->createToken(
+                name: 'auth_token',
+                abilities: ['*'],
+                expiresAt: now()->addMinutes(intval($expirationMinutes))
+            );
+
+            $data['token'] = $token->plainTextToken;
+            $data['expires_at'] = $token->accessToken->expires_at;
 
             DB::commit();
             return $data;
@@ -43,6 +52,7 @@ class AuthService implements IAuthService
             throw new AuthenticationException('Credenciais não encontradas no sistema.');
         }
 
+
         $user = Auth::user();
 
         if ($user->dontHaveAnyPermissionOrRole()) {
@@ -51,9 +61,17 @@ class AuthService implements IAuthService
 
         DB::beginTransaction();
         try {
-
             $user->tokens()->delete();
-            $data['token'] = $user->createToken('auth_token_admin')->plainTextToken;
+
+            $expirationMinutes = config('sanctum.expiration');
+
+            $token = $user->createToken(
+                name: 'auth_token_admin',
+                abilities: ['*'],
+                expiresAt: now()->addMinutes(intval($expirationMinutes))
+            );
+            $data['token'] = $token->plainTextToken;
+            $data['expires_at'] = $token->accessToken->expires_at;
 
             DB::commit();
             return $data;

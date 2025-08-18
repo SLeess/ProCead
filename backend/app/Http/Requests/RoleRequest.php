@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SyncRolePermissionsRequest extends FormRequest
+class RoleRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,36 +23,29 @@ class SyncRolePermissionsRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'role_id' => [
+            "id" => [
                 'required',
                 'integer',
-                'exists:roles,id',
+                'exists:roles,id'
             ],
-            // 'role_data' => [
-            //     'present',
-            //     'array',
-            // ],
-            // 'role_data.*' => [
-            //     'required',
-            // ],
-            'permissions' => [
-                'present',
-                'array',
-            ],
-
-            'permissions.*' => [
+            "name" => [
                 'required',
-                'integer',
-                'exists:permissions,id',
-            ]
+                'string',
+                'max:255',
+            ],
+            "scope" => [
+                'required',
+                'in:local,global'
+            ],
         ];
     }
 
     public function attributes(): array
     {
         return [
-            'role_id' => 'Cargo',
-            'permissions' => 'Permissões',
+            'id' => 'ID do Cargo',
+            'name' => 'Nome do Cargo',
+            'scope' => 'Escopo do Cargo',
         ];
     }
 }

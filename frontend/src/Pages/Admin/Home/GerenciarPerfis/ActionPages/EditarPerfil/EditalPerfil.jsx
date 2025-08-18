@@ -1,4 +1,4 @@
-import "./GerenciarPerfisPermissoes.css";
+import "./EditalPerfil.css";
 import MainTable from "@/Components/Global/Tables/MainTable/MainTable";
 import getColumns from "./columns";
 import { useContext, useEffect, useMemo, useState } from "react";
@@ -9,7 +9,7 @@ import LoaderPages from "@/Components/Global/LoaderPages/LoaderPages";
 import { toast } from "react-toastify";
 import { NavigationContext } from "@/Contexts/NavigationContext";
 
-export default function GerenciarPerfisPermissoes()
+export default function EditalPerfil()
 {
     const { perfilId } = useParams();
     const { token, verifyStatusRequest } = useAppContext();
@@ -52,7 +52,7 @@ export default function GerenciarPerfisPermissoes()
             setLoading(true);
             // await new Promise(resolve => setTimeout(resolve, 5000));
             try {
-                const resRolePermissions = await fetch(`/api/super-admin/roles-with-permissions/${perfilId}/`, {
+                const resRolePermissions = await fetch(`/api/super-admin/roles/${perfilId}/`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -263,8 +263,9 @@ export default function GerenciarPerfisPermissoes()
                 // },
                 _method: 'PUT',
             };
+            console.log(formData);
 
-            const res = await fetch(`/api/super-admin/roles-with-permissions/${role.id}`, {
+            const res = await fetch(`/api/super-admin/roles/${role.id}`, {
                 method: 'POST',
                 body: JSON.stringify(formData),
                 headers: {
@@ -277,6 +278,7 @@ export default function GerenciarPerfisPermissoes()
 
             if (!result.success || !res.ok) {
                 if (result.errors) {
+                    console.log(result);
                     Object.values(result.errors).forEach(errorArray => {
                         errorArray.forEach((errorMessage) => toast.error(errorMessage));
                     });
@@ -319,8 +321,7 @@ export default function GerenciarPerfisPermissoes()
                     hasCountSelectedLines={false}
                 />
                 <form onSubmit={handleOnSubmit}>
-                    <button type="button" onClick={() => navigate(-1)} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 cursor-pointer focus:outline-none">Cancelar</button>
-                    <button type="submit" className="px-4 py-2.5 text-sm font-semibold text-white bg-[var(--admin-button)] rounded-md hover:bg-[var(--admin-button-hover)] focus:outline-none cursor-pointer">Salvar</button>
+                    <button className="px-4 py-2.5 text-sm font-semibold text-white bg-[var(--admin-button)] rounded-md hover:bg-[var(--admin-button-hover)] focus:outline-none cursor-pointer">Enviar</button>
                 </form>
             </div>
         </section>
