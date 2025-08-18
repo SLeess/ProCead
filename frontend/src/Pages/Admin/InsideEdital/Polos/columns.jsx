@@ -17,10 +17,10 @@ const columns = [
     {
       id: "actions",
       header: "Ações",
-      cell: () => (
+      cell: ({ row, table }) => (
         <div className="flex items-center space-x-2 justify-center">
-          <PoloEditModal/>
-          <PoloDeleteModal/>
+          <PoloEditModal polo={row.original} setNeedUpdate={table.options.meta.setNeedUpdate}/>
+          <PoloDeleteModal polo={row.original} setNeedUpdate={table.options.meta.setNeedUpdate}/>
         </div>
       ),
       enableSorting: false,

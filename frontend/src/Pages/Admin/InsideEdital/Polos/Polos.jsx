@@ -18,13 +18,12 @@ const Polos = () => {
   useEffect(() => {
     const fetchProcessos = async () => {
       setLoading(true);
-      // await new Promise(resolve => setTimeout(resolve, 5000));
       try {
-        const res = await fetch(`/api/admin/polos/${editalId}`, { // Substitua pela URL real da sua API
+        const res = await fetch(`/api/admin/polos/${editalId}`, { 
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`, // Descomente se precisar de token
+            'Authorization': `Bearer ${token}`, 
           },
         });
 
@@ -64,7 +63,7 @@ const Polos = () => {
                 <MapPin className="text-[var(--admin-stats-card-text)] absolute top-4 right-4" />
               </StatsCard>
             </div>
-            <MainTable data={polos} columns={columns} title={"Polos"} />
+            <MainTable data={polos} columns={columns} title={"Polos"} setNeedUpdate={setNeedUpdate} />
           </div>
         }
       </>
