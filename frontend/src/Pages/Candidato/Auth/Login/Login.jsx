@@ -10,7 +10,7 @@ import LoaderPages from "@/Components/Global/LoaderPages/LoaderPages";
 import Loader from "@/Components/Global/Loader/Loader";
 
 export default function Login() {
-    const { setToken, theme } = useContext(AppContext);
+    const { theme, login } = useContext(AppContext);
     const { navigate } = useContext(NavigationContext);
     const { inputRef } = useRef(`border-[#004da9]`);
 
@@ -58,9 +58,7 @@ export default function Login() {
                     });
                 }
             } else{
-                localStorage.setItem('token', result.data.token);
-                setToken(result.data.token);
-
+                login(result);
                 toast.success((result.message || "Autenticado com sucesso!"));
                 navigate('/');
             }

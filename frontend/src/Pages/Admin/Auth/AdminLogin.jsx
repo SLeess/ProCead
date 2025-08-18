@@ -6,7 +6,7 @@ import { NavigationContext } from "@/Contexts/NavigationContext";
 import LoaderPages from "@/Components/Global/LoaderPages/LoaderPages";
 
 export default function Login() {
-    const { setToken } = useContext(AppContext);
+    const { login } = useContext(AppContext);
     const { navigate } = useContext(NavigationContext);
 
     const [formData, setFormData] = useState({
@@ -54,8 +54,7 @@ export default function Login() {
                     Object(result.errors).forEach((er) => toast.error(er));
                 }
             } else{
-                localStorage.setItem('token', result.data.token);
-                setToken(result.data.token);
+                login(result);
                 navigate('/admin/');
                 toast.success(result.message || "Autenticado com sucesso!");
             }

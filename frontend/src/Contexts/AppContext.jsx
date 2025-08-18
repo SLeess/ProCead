@@ -1,10 +1,20 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import Swal from 'sweetalert2';
 
 export const AppContext = createContext();
 
 export default function AppProvider({ children }) {
     const [token, setToken] = useState(localStorage.getItem('token'));
+    const [expireTime, setExpireTime] = useState(localStorage.getItem('expireTime'))
+    const [remainingTime, setRemainingTime] = useState(() => {
+        
+        const expirationTimestamp = Number(expireTime);
+        const now = new Date().getTime();
+        const millisecondsLeft = expirationTimestamp - now;
+        
+        return Math.ceil(millisecondsLeft / 1000 / 60);     
+    });
     const [user, setUser] = useState(null);
 
     /** Global Permissions and roles */
@@ -19,7 +29,46 @@ export default function AppProvider({ children }) {
     const [loading, setLoading] = useState(true);
     const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
 
+    /////////-------------------------------------------------AUTH CONTEXT FUNCTIONS-------------------------------------------------/////////
+    useEffect(() => {
+        async function fetchUser() {
+            if (!token) {
+                setLoading(false);
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/usuario/permissions', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Accept': 'application/json',
+                    }
+                });
+                if (response.ok) {
+                    const res = await response.json();
+                    const data = res.data;
 
+                    setUser(data.user);
+
+                    if (data.admin_access) {
+                        setGlobalPermissions(data.admin_access.global_permissions || []);
+                        setGlobalRoles(data.admin_access.global_roles || []);
+                        setPermissionsWithRolesByEdital(data.admin_access.editals_access || {});
+                    }
+
+                }
+                if (!response.ok) {
+                    verifyStatusRequest(response);
+                }
+            } catch (error) {
+                console.error("Erro ao buscar dados do usuário:", error);
+                toast.error("Erro ao conectar com o servidor.");
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchUser();
+    }, [token]);
     /**
      * Função utilizada para tratar casos de exceção de resposta do servidor, dar um alerta e fazer o logout da aplicação
      * @param {*} response 
@@ -28,20 +77,55 @@ export default function AppProvider({ children }) {
         switch (response.status) {
             case 401:
                 toast.info("Sessão expirada. Por favor, faça login novamente.");
+                logout();
                 break;
             case 403:
                 toast.info("Você não possui cadastro de candidato, favor realizar seu cadastro novamente.");
+                logout();
                 break;
             case 429:
                 toast.info("Usuário desconectado por excesso de requisições realizadas.", {
                     autoClose: true,
                 });
+                logout();
                 break;
             default:
-                toast.info("Erro desconhecido. Desconectado por segurança.")
+                toast.info(`Erro desconhecido: ${response.statusText}.`)
                 break;
         }
-        logout();
+    }
+
+    const login = (apiResponse) => {
+        console.log(apiResponse);
+        const { token, expires_at } = apiResponse.data;
+        localStorage.setItem('token', token);
+        const expirationTime = new Date(expires_at).getTime();
+        localStorage.removeItem('expireTime');
+        localStorage.setItem('expireTime', expirationTime);
+
+        setToken(token);
+    };
+
+    /**
+     * Função para aparecer o alerta custom de que o usuário teve sua sessão encerrada, solicitando que ele refaça o login
+     */
+    const [swalLogoutVisible, setSwalLogoutVisible] = useState(false);
+    const requestLogout = () => {
+        setSwalLogoutVisible(true); 
+
+        Swal.fire({
+            title: "Sessão Expirada",
+            text: "Sua sessão foi encerrada por inatividade. Por favor, faça login novamente.",
+            icon: 'warning',
+            confirmButtonText: "Fazer Login",
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                toast.info("Faça login novamente informando seu email ou cpf e a senha.");
+                logout();
+            }
+        });
     }
 
     /**
@@ -49,13 +133,49 @@ export default function AppProvider({ children }) {
      */
     const logout = () => {
         localStorage.removeItem('token');
+        localStorage.removeItem('expireTime');
         setToken(null);
         setUser(null);
+        setRemainingTime(null);
+        setExpireTime(null);
         setGlobalPermissions([]);
         setGlobalRoles([]);
         setPermissionsWithRolesByEdital({});
     };
 
+    // ==========================================================
+    // EFEITO "VIGIA" PARA EXPIRAÇÃO AUTOMÁTICA
+    // ==========================================================
+    useEffect(() => {
+        if (!token || swalLogoutVisible) {
+            return;
+        }
+
+        const interval = setInterval(() => {
+            const expirationTimeString = localStorage.getItem('expireTime');
+            if (!expirationTimeString) return;
+
+            const expirationTimestamp = Number(expirationTimeString);
+            const now = new Date().getTime();
+
+            if (now > expirationTimestamp) {
+                setRemainingTime(0);
+                requestLogout();
+            } else {
+                const millisecondsLeft = expirationTimestamp - now;
+                const minutesLeft = Math.ceil(millisecondsLeft / 1000 / 60); 
+                setRemainingTime(minutesLeft);
+            }
+        }, 30000); // 30 segundos
+
+        return () => clearInterval(interval);
+
+    }, [expireTime, token]);
+
+    /////////------------------------------------------------------------------------------------------------------------------------/////////
+
+
+    /////////------------------------------------------ROLES & PERMISSIONS CONTEXT FUNCTIONS------------------------------------------/////////
     /**
      * Verifica se o usuário tem um cargo global específico.
      * @param {string} roleName
@@ -126,52 +246,14 @@ export default function AppProvider({ children }) {
         return hasGlobalRole('super-Admin');
     }
 
+    /////////-------------------------------------------------------------------------------------------------------------------------/////////
+
     /**
      * Função para trocar o tema da aplicação de modo global
      */
     const toggleTheme = () => {
         setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
     };
-
-    useEffect(() => {
-        async function fetchUser() {
-            if (!token) {
-                setLoading(false);
-                return;
-            }
-            
-            try {
-                const response = await fetch('/api/usuario/permissions', {
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Accept': 'application/json',
-                    }
-                });
-                if (response.ok) {
-                    const res = await response.json();
-                    const data = res.data;
-
-                    setUser(data.user);
-
-                    if (data.admin_access) {
-                        setGlobalPermissions(data.admin_access.global_permissions || []);
-                        setGlobalRoles(data.admin_access.global_roles || []);
-                        setPermissionsWithRolesByEdital(data.admin_access.editals_access || {});
-                    }
-
-                }
-                if (!response.ok) {
-                    verifyStatusRequest(response);
-                }
-            } catch (error) {
-                console.error("Erro ao buscar dados do usuário:", error);
-                toast.error("Erro ao conectar com o servidor.");
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchUser();
-    }, [token]);
 
     useEffect(() => {
         const root = window.document.documentElement;
@@ -184,11 +266,16 @@ export default function AppProvider({ children }) {
         user, 
         setUser, 
         token, 
-        setToken, 
+        setToken,
+        remainingTime,
+        setRemainingTime,
+        // expireTime,
+        // setExpireTime,
         loading, 
         setLoading,
         toggleTheme, 
         theme, 
+        login,
         logout, 
         hasGlobalRole,
         hasGlobalPermission,
