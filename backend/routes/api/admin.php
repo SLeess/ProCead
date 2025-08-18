@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\EditalController;
+use App\Http\Controllers\Admin\PolosController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\ManageUserController;
 use App\Http\Controllers\Admin\RelatorioController;
@@ -20,6 +21,8 @@ Route::prefix('/admin')->name('admin.')->group( function () {
         // Route::get('inscricoes', [InscricaoController::class, 'index'])->name('inscricoes.index');
         });
     });
+
+    Route::resource('/polos', PolosController::class)->except('index');
 
     Route::middleware(['throttle:heavy'])->post('/export', [RelatorioController::class, 'export'])->name('export');
 });
