@@ -20,6 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'admin-access' => \App\Http\Middleware\CheckIfUserHasAnyPermissionOrRole::class,
             'abilities' => \Laravel\Sanctum\Http\Middleware\CheckAbilities::class,
             'ability' => \Laravel\Sanctum\Http\Middleware\CheckForAnyAbility::class,
+            'extends-sanctum-token-life' => \App\Http\Middleware\ExtendSanctumTokenLifetime::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
