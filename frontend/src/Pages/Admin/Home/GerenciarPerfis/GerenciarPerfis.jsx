@@ -1,7 +1,6 @@
 import MainTable from "@/Components/Global/Tables/MainTable/MainTable";
 import "./GerenciarPerfis.css";
 import { UserRoundPen } from "lucide-react";
-import data from "./data";
 import getColumns from "./columns";
 import PerfilCreateModal from "@/Components/Admin/InsideEdital/Modais/Perfis/PerfilCreateModal";
 import { NavigationContext } from "@/Contexts/NavigationContext";
