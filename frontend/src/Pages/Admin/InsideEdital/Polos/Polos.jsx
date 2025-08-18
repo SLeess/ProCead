@@ -13,7 +13,7 @@ const Polos = () => {
   const { hasPermissionForEdital, isSuperAdmin, verifyStatusRequest, token } = useContext(AppContext);
   const [polos, setPolos] = useState([]);
   const [loading, setLoading] = useState(true);
-  // const [needUpdate, setNeedUpdate] = useState(false);
+  const [needUpdate, setNeedUpdate] = useState(false);
 
   useEffect(() => {
     const fetchProcessos = async () => {
@@ -44,7 +44,7 @@ const Polos = () => {
       }
     };
     fetchProcessos();
-  }, []);
+  }, [needUpdate]);
 
 
   if (hasPermissionForEdital('visualizar-campus', editalId) || isSuperAdmin())
@@ -57,7 +57,7 @@ const Polos = () => {
           <div>
             <div className="flex items-center justify-between mb-4">
               <h1 className="text-2xl font-bold">Polos</h1>
-              <PoloCreateModal/>
+              <PoloCreateModal setNeedUpdate={setNeedUpdate}/>
             </div>
             <div className="flex gap-4 mb-4">
               <StatsCard title={"Nº de Polos"} quant={polos.length}>
