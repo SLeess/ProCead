@@ -46,6 +46,7 @@ const PerfilDeleteModal = ({ perfil }) => {
                             <h2 className="text-xl font-bold text-gray-800 mb-2">Atenção!</h2>
                             <p className="text-gray-600 mb-8">
                                 Tem certeza que deseja deletar o perfil?
+                                Ao fazer isso, os usuários que possuem esse cargo perderão as respectivas permissões que lhe foram providas.
                             </p>
                             <div className="flex justify-center items-center space-x-4">
                                 <button
