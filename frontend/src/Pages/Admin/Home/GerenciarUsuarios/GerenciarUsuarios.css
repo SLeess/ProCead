@@ -1,7 +1,7 @@
 @reference "@/index.css";
 
 section#gerenciar_usuarios_global{
-    @apply mt-0;
+    @apply mt-5;
 }
 section#gerenciar_usuarios_global header h1{
     @apply text-white text-[22px] not-italic font-bold leading-[normal] mx-0;

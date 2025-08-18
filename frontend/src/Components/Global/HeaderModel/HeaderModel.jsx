@@ -40,18 +40,18 @@ export default function HeaderModel({ headerid, children }){
 
 
                     </Navbar>
-                    <div className='flex flex-row-reverse mx-5 mt-2 text-black'>
+                    <div className='flex flex-row-reverse min-w-[310px] max-w-screen-xl mt-2 text-black'>
                         {
                         remainingTime !== null && remainingTime !== 0 &&
-                        <p className="text-sm">Sua sessão expira em {remainingTime} min.</p>
+                        <p className="text-sm my-1">Sua sessão expira em {remainingTime} min.</p>
                         }
                         {
                         remainingTime === 0 &&
-                        <p className="text-sm">Sua sessão expirou!</p>
+                        <p className="text-sm my-1">Sua sessão expirou!</p>
                         }
                         {
                         remainingTime === null &&
-                        <p></p>
+                        <p className="text-sm my-1">&nbsp;</p>
                         }
                     </div>
             </header>

@@ -1,7 +1,7 @@
 @reference "@/index.css";
 
 section#novoEdital{
-    @apply mt-0;
+    @apply mt-5;
 }
 section#novoEdital header h1{
     @apply text-white text-[22px] not-italic font-bold leading-[normal] mx-0;
