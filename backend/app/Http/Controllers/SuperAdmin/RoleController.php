@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\SuperAdmin;
 
-use App\Http\Requests\RoleRequest;
 use App\Http\Resources\Admin\RoleCollection;
 use App\Interfaces\Admin\RoleService\IRoleService;
 use App\Models\Role;
-use Illuminate\Http\Request;
+use Illuminate\Auth\Access\AuthorizationException;
 use Symfony\Component\HttpFoundation\Response;
 
 class RoleController extends __SuperAdminController
@@ -26,7 +25,18 @@ class RoleController extends __SuperAdminController
         }
     }
 
-    public function update(RoleRequest $request)
+    public function store(\App\Http\Requests\StoreRoleRequest $request)
+    {
+        $roleData = $request->validated();
+
+        try {
+            $this->roleService->createRole($roleData);
+            return $this->sendResponse([], "Cargo registrado com sucesso!");
+        } catch (\Exception $e) {
+            return $this->sendError("Erro inesperado.", [0 => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+    public function update(\App\Http\Requests\UpdateRoleRequest $request)
     {
         $roleData = $request->validated();
 
@@ -38,8 +48,15 @@ class RoleController extends __SuperAdminController
         }
     }
 
-    public function destroy()
+    public function destroy(Role $role)
     {
-
+        try {
+            $this->roleService->destroyRole($role);
+            return $this->sendResponse([], "Cargo deletado com sucesso!");
+        } catch (AuthorizationException $e){
+            return $this->sendError($e->getMessage(), [0 => $e->getMessage()], Response::HTTP_UNAUTHORIZED);
+        } catch (\Exception $e) {
+            return $this->sendError("Erro inesperado.", [0 => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 }
