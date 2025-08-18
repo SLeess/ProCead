@@ -96,14 +96,15 @@ export default function AppProvider({ children }) {
     }
 
     const login = (apiResponse) => {
-        console.log(apiResponse);
         const { token, expires_at } = apiResponse.data;
+
+        const expirationTimestamp = new Date(expires_at).getTime();
+
         localStorage.setItem('token', token);
-        const expirationTime = new Date(expires_at).getTime();
-        localStorage.removeItem('expireTime');
-        localStorage.setItem('expireTime', expirationTime);
+        localStorage.setItem('expireTime', expirationTimestamp);
 
         setToken(token);
+        setExpireTime(expirationTimestamp); 
     };
 
     /**
@@ -148,29 +149,41 @@ export default function AppProvider({ children }) {
     // ==========================================================
     useEffect(() => {
         if (!token || swalLogoutVisible) {
+            setRemainingTime(null);
             return;
         }
 
-        const interval = setInterval(() => {
+        const checkExpiration = () => {
             const expirationTimeString = localStorage.getItem('expireTime');
-            if (!expirationTimeString) return;
+            
+            if (!expirationTimeString) {
+                setRemainingTime(null);
+                return;
+            }
 
             const expirationTimestamp = Number(expirationTimeString);
             const now = new Date().getTime();
 
-            if (now > expirationTimestamp) {
-                setRemainingTime(0);
-                requestLogout();
-            } else {
-                const millisecondsLeft = expirationTimestamp - now;
-                const minutesLeft = Math.ceil(millisecondsLeft / 1000 / 60); 
-                setRemainingTime(minutesLeft);
+            if (!isNaN(expirationTimestamp)) {
+                if (now > expirationTimestamp) {
+                    if (!swalLogoutVisible) { 
+                        requestLogout();
+                    }
+                } else {
+                    const millisecondsLeft = expirationTimestamp - now;
+                    const minutesLeft = Math.ceil(millisecondsLeft / 1000 / 60);
+                    setRemainingTime(minutesLeft);
+                }
             }
-        }, 30000); // 30 segundos
+        };
+
+        checkExpiration();
+
+        const interval = setInterval(checkExpiration, 30000);
 
         return () => clearInterval(interval);
 
-    }, [expireTime, token]);
+    }, [token, swalLogoutVisible]);
 
     /////////------------------------------------------------------------------------------------------------------------------------/////////
 
