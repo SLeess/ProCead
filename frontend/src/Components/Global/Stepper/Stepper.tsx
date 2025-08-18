@@ -34,13 +34,13 @@ interface TabItem {
 interface StepperProps {
     tabsData: TabItem[];
     activeTabIndex: number;
-    enabledTabs: Array<string>;
+    enabledTabs: Array<string>|null;
     setActiveTabIndex: (index: number) => void;
 }
 
 
 
-export default function Stepper({ tabsData, activeTabIndex, setActiveTabIndex, enabledTabs }: StepperProps){
+export default function Stepper({ tabsData, activeTabIndex, setActiveTabIndex, enabledTabs = null }: StepperProps){
     return (
        <>
             {
@@ -53,7 +53,12 @@ export default function Stepper({ tabsData, activeTabIndex, setActiveTabIndex, e
                                     className: 'step-icon',
                                 })
                             }
-                            onClick={() => enabledTabs.includes(tab.label) ? setActiveTabIndex(index) : console.log("desabilitado")}
+                            onClick={() => {
+                                if(enabledTabs !== null)
+                                    return enabledTabs.includes(tab.label) ? setActiveTabIndex(index) : null
+                                else
+                                    return setActiveTabIndex(index)
+                            }}
                             label={tab.label}
                             isActive={index === activeTabIndex}
                             isCompleted={index < activeTabIndex}
