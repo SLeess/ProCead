@@ -18,25 +18,13 @@ class ManageRolePermissionsController extends __SuperAdminController
         parent::__construct();
     }
 
-    public function index(){
-        try {
-            return $this->sendResponse(
-                RoleCollection::make(Role::all()),
-                "Cargos enviados com sucesso."
-            );
-        } catch (\Exception $e) {
-            return $this->sendError("Erro inesperado.", [0 => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
-    }
-
     public function update(SyncRolePermissionsRequest $request)
     {
         try {
             $validatedData = $request->validated();
 
-            $this->rolePermissionService->updateRoleAndSyncPermissions(
+            $this->rolePermissionService->syncPermissionsToRole(
                 $validatedData['role_id'],
-                $validatedData['role_data'],
                 $validatedData['permissions']
             );
 
