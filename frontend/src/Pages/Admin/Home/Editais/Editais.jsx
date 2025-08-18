@@ -33,7 +33,8 @@ function Editais() {
           }
 
           const result = await res.json();
-          setProcessos(result.data.editais);
+
+          setProcessos(result.data.data);
       } catch (err) {
             setError("Não foi possível carregar seus processos seletivos. " + (err.message ? ` (${err.message})` : ''));
             setProcessos([]);
