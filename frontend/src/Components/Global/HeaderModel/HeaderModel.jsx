@@ -1,9 +1,12 @@
 import { Navbar, NavbarBrand, NavbarCollapse, NavbarToggle } from "flowbite-react";
 import UserDropdown from "../UserDropdown/UserDropdown";
 import ThemeToggleBtn from "../ThemeToggleBtn/ThemeToggleBtn";
-
+import { useAppContext } from '@/Contexts/AppContext';
 
 export default function HeaderModel({ headerid, children }){
+    const { remainingTime } = useAppContext();
+
+
 
     return(
             <header id={headerid}>
@@ -37,6 +40,20 @@ export default function HeaderModel({ headerid, children }){
 
 
                     </Navbar>
+                    <div className='flex flex-row-reverse mx-5 mt-2 text-black'>
+                        {
+                        remainingTime !== null && remainingTime !== 0 &&
+                        <p className="text-sm">Sua sessão expira em {remainingTime} min.</p>
+                        }
+                        {
+                        remainingTime === 0 &&
+                        <p className="text-sm">Sua sessão expirou!</p>
+                        }
+                        {
+                        remainingTime === null &&
+                        <p></p>
+                        }
+                    </div>
             </header>
     );
 
