@@ -67,7 +67,7 @@ export default function TopBar() {
                 }
             >
             <button onClick={() => setOpenModal(true)}>
-                <DropdownHeader className="w-56 justify-items-start cursor-pointer">
+                <DropdownHeader id="dropdown-profile">
                     <span id="dropdown-open-nome">{user?.nome}</span>
                     <span id="dropdown-open-email">{user?.email}</span>
                 </DropdownHeader>

@@ -24,3 +24,7 @@
 #dropdown-open-email {
     @apply block truncate text-sm font-medium;
 }
+
+#dropdown-profile {
+    @apply w-56 justify-items-start cursor-pointer hover:bg-gray-100;
+}

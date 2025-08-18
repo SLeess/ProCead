@@ -12,9 +12,9 @@ const FormField = ({ label, children, className = '', textWrap = true, obrigator
     </div>
 );
 
-const TextInput = ({ value, readOnly, placeholder, onChange = null, onBlur = null }) => (
+const TextInput = ({ value, readOnly, placeholder, onChange = null, onBlur = null, type = 'text' }) => (
     <input
-        type="text"
+        type={type}
         defaultValue={value}
         className={`${readOnly !== true ? 'bg-white': 'bg-gray-50'} border border-gray-50 rounded-md px-4 py-2 focus:outline-none w-full`}
         readOnly={readOnly}
