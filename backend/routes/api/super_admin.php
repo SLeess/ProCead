@@ -4,14 +4,19 @@ use App\Http\Controllers\SuperAdmin\ManageRolePermissionsController;
 use App\Http\Controllers\SuperAdmin\EditalController;
 use App\Http\Controllers\SuperAdmin\ManageUserPermissionsController;
 use App\Http\Controllers\SuperAdmin\PermissionsController;
+use App\Http\Controllers\SuperAdmin\RoleController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix("/super-admin")->name('super-Admin.')->middleware(['role:super-Admin'])->group(function(){
     Route::resource('/edital', EditalController::class)->only(['index', 'show', 'store', 'update', 'destroy']);
 
-    Route::prefix("/roles")->name("role.")->group(function(){
-        Route::resource('', ManageRolePermissionsController::class)
-                ->only(['index', 'show', 'store', 'update', 'destroy'])
+    Route::name("roles.")->group(function(){
+        Route::resource('/roles-with-permissions', ManageRolePermissionsController::class)
+                ->only(['show', 'update'])
+                ->parameter('roles-with-permissions' , 'role');
+
+        Route::resource('/roles', RoleController::class)
+                ->only(['index', 'store', 'update', 'destroy'])
                 ->parameter('' , 'role');
     });
 
