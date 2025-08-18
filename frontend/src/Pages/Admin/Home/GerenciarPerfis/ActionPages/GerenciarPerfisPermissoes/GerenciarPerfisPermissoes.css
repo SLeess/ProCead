@@ -24,3 +24,7 @@ section#gerenciar_perfis_permissoes div#content div h2{
 section#gerenciar_perfis_permissoes div#content div#informacoes_gerais div > div{
     @apply col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3 sm:max-w-[296px];
 }
+
+section#gerenciar_perfis_permissoes div#content form{
+    @apply space-x-4 flex md:justify-end justify-evenly;
+}
