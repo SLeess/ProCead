@@ -15,16 +15,10 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         User::create([
-            'nome' => 'Admin User',
-            'email' => 'asd@asd.com',
-            'cpf' => '20745630006',
-            'password' => Hash::make('asdasdasd'), // Use a secure password
+            'nome' => env("APP_ADMIN_NAME"),
+            'email' => env("APP_ADMIN_EMAIL"),
+            'cpf' => env("APP_ADMIN_CPF"),
+            'password' => Hash::make(env("APP_ADMIN_PASSWORD")), // Use a secure password
         ]);
-        // User::create([
-        //     'nome' => 'Cotas User',
-        //     'email' => 'cotas@asd.com',
-        //     'cpf' => '94692719044',
-        //     'password' => Hash::make('asdasdasd'), // Use a secure password
-        // ]);
     }
 }
