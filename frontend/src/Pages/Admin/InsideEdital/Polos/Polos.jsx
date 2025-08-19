@@ -13,18 +13,17 @@ const Polos = () => {
   const { hasPermissionForEdital, isSuperAdmin, verifyStatusRequest, token } = useContext(AppContext);
   const [polos, setPolos] = useState([]);
   const [loading, setLoading] = useState(true);
-  // const [needUpdate, setNeedUpdate] = useState(false);
+  const [needUpdate, setNeedUpdate] = useState(false);
 
   useEffect(() => {
     const fetchProcessos = async () => {
       setLoading(true);
-      // await new Promise(resolve => setTimeout(resolve, 5000));
       try {
-        const res = await fetch(`/api/admin/polos/${editalId}`, { // Substitua pela URL real da sua API
+        const res = await fetch(`/api/admin/polos/${editalId}`, { 
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`, // Descomente se precisar de token
+            'Authorization': `Bearer ${token}`, 
           },
         });
 
@@ -44,7 +43,7 @@ const Polos = () => {
       }
     };
     fetchProcessos();
-  }, []);
+  }, [needUpdate]);
 
 
   if (hasPermissionForEdital('visualizar-campus', editalId) || isSuperAdmin())
@@ -57,14 +56,14 @@ const Polos = () => {
           <div>
             <div className="flex items-center justify-between mb-4">
               <h1 className="text-2xl font-bold">Polos</h1>
-              <PoloCreateModal/>
+              <PoloCreateModal setNeedUpdate={setNeedUpdate}/>
             </div>
             <div className="flex gap-4 mb-4">
               <StatsCard title={"Nº de Polos"} quant={polos.length}>
                 <MapPin className="text-[var(--admin-stats-card-text)] absolute top-4 right-4" />
               </StatsCard>
             </div>
-            <MainTable data={polos} columns={columns} title={"Polos"} />
+            <MainTable data={polos} columns={columns} title={"Polos"} setNeedUpdate={setNeedUpdate} />
           </div>
         }
       </>

@@ -34,7 +34,7 @@ class PolosController extends APIController
     {
         $polos = Polo::where('edital_id',$id)->get();
         // dd($polos);
-        return $this->sendResponse($polos, "Polos buscados com sucesso.");
+        return $this->sendResponse($polos, "Polos buscados com sucesso.",200);
     }
 
     /**
@@ -42,7 +42,17 @@ class PolosController extends APIController
      */
     public function update(Request $request, string $id)
     {
-        //
+        // dd($request->nome);
+        DB::beginTransaction();
+        try{
+            $polo = Polo::find($id);
+            $polo->update(["nome" => $request->nome]);
+            DB::commit();
+            return $this->sendResponse($polo,'Polo atualizado com sucesso!',200);
+        }catch(Exception $e){
+            DB::rollBack();
+            return $this->sendError($polo,'Não foi possível atualizar o polo',400);
+        }
     }
 
     /**
@@ -50,6 +60,17 @@ class PolosController extends APIController
      */
     public function destroy(string $id)
     {
-        //
+        // dd($id);
+        DB::beginTransaction();
+        try{
+            $polo = Polo::find($id);
+            $polo->delete();
+            DB::commit();
+            return $this->sendResponse($polo,'Polo deletado com sucesso',200);
+        }catch(Exception $e){
+            DB::rollBack();
+            return $this->sendError($e,"Não foi possível deletar o polo",400);
+        }
+        
     }
 }

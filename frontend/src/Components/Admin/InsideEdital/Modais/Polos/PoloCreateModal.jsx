@@ -9,7 +9,7 @@ import { useAppContext } from '@/Contexts/AppContext';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-const PoloCreateModal = () => {
+const PoloCreateModal = ({setNeedUpdate}) => {
     const [openModal, setOpenModal] = useState(false);
     const [loading, setLoading] = useState(false);
     const { token } = useAppContext();
@@ -56,13 +56,12 @@ const PoloCreateModal = () => {
                         toast.error("Ocorreu um erro inesperado. Por favor, tente novamente.");
                     }
                 } else {
-                    localStorage.setItem('token', result.data.token);
                     toast.success((result.message || "Polo cadastrado com sucesso!"));
                 }
             } catch (error) {
                 toast.error(error.toString());
             } finally{
-                // setNeedUpdate(true);
+                setNeedUpdate(prev => !prev);
                 // window.location.reload();
                 setLoading(false);
                 onCloseModal();

@@ -16,7 +16,7 @@ import HideColumnsDropdown from "./Components/HideColumnsDropdown";
 import ExportModuleTable from "./Components/ExportModuleTable";
 import SearchRowsTable from "./Components/SearchRowsTable";
 
-const MainTable = ({ data, columns, title, hasShadowBorderStyle = true, hasPaddingStyle = true, canExport = true, canHiddenColumns = true, hasSelectForRows = true, hasCountSelectedLines = true }) => {
+const MainTable = ({ data, columns, title, hasShadowBorderStyle = true, hasPaddingStyle = true, canExport = true, canHiddenColumns = true, hasSelectForRows = true, hasCountSelectedLines = true, setNeedUpdate }) => {
   const [columnFilters, setColumnFilters] = useState([]);
   const [rowSelection, setRowSelection] = useState({});
   const [globalFilter, setGlobalFilter] = useState('');
@@ -29,6 +29,9 @@ const MainTable = ({ data, columns, title, hasShadowBorderStyle = true, hasPaddi
     data,
     columns,
     title,
+    meta: {
+      setNeedUpdate,
+    },
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),

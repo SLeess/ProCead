@@ -1,15 +1,48 @@
+import LoaderPages from '@/Components/Global/LoaderPages/LoaderPages';
+import { useAppContext } from '@/Contexts/AppContext';
 import { Modal, ModalBody, ModalHeader } from 'flowbite-react';
 import { Trash, TriangleAlert } from 'lucide-react';
 import React, { useState } from 'react'
+import { toast } from 'react-toastify';
 
-const CursoDeleteModal = () => {
+const CursoDeleteModal = ({curso,setNeedUpdate}) => {
 
-    const [isOpen] = useState(true);
     const [openModal, setOpenModal] = useState(false);
-    function onCloseModal() {
-        setOpenModal(false);
-    }
-    if (!isOpen) return null;
+        const { token } = useAppContext();
+        const [loading, setLoading] = useState(false);
+    
+        function onCloseModal() {
+            setOpenModal(false);
+        }
+    
+        const handleDelete = async () => {
+            setLoading(true);
+            try {
+                const res = await fetch(`/api/admin/cursos/${curso.id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    },
+                });
+    
+                if (!res.ok) {
+                    const result = await res.json().catch(() => ({}));
+                    toast.error(result.message || 'Erro ao deletar curso.');
+                    return;
+                }
+                
+                toast.success("Curso deletado com sucesso!");
+                if(setNeedUpdate) {
+                    setNeedUpdate(prev => !prev);
+                }
+                onCloseModal();
+    
+            } catch (error) {
+                toast.error('Erro ao conectar com o servidor: ' + error);
+            } finally {
+                setLoading(false);
+            }
+        };
 
     return (
         <>
@@ -17,6 +50,7 @@ const CursoDeleteModal = () => {
                 <Trash className="h-5 w-5 text-red-500" />
             </button>
             <Modal show={openModal} onClose={onCloseModal} popup>
+                {loading && <LoaderPages/>}
                 <ModalHeader />
                 <ModalBody >
                     <div className="flex items-center justify-center p-4 font-sans">
@@ -36,10 +70,10 @@ const CursoDeleteModal = () => {
                                     Cancelar
                                 </button>
                                 <button
-                                    onClick={onCloseModal}
+                                    onClick={handleDelete}
                                     className="px-8 py-2.5 text-sm font-semibold text-white bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                                 >
-                                    Deletar
+                                    {loading ? 'Deletando...' : 'Deletar'}
                                 </button>
                             </div>
                         </div>
