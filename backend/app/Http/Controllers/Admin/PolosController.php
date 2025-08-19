@@ -34,7 +34,7 @@ class PolosController extends APIController
     {
         $polos = Polo::where('edital_id',$id)->get();
         // dd($polos);
-        return $this->sendResponse($polos, "Polos buscados com sucesso.");
+        return $this->sendResponse($polos, "Polos buscados com sucesso.",200);
     }
 
     /**
