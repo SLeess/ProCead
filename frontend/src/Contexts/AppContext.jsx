@@ -185,6 +185,11 @@ export default function AppProvider({ children }) {
 
     }, [token, swalLogoutVisible]);
 
+    const changeExpireTime = (expires_at) => {
+        const expirationTimestamp = new Date(expires_at).getTime();
+        localStorage.setItem('expireTime', expirationTimestamp);
+    }
+
     /////////------------------------------------------------------------------------------------------------------------------------/////////
 
 
@@ -275,6 +280,76 @@ export default function AppProvider({ children }) {
         localStorage.setItem('theme', theme);
     }, [theme]);
 
+    /**
+     * Extrai todas as mensagens de erro (strings) de um objeto ou array,
+     * não importa o quão aninhado ele esteja.
+     * @param {any} errorObject - O objeto ou array de erros.
+     * @returns {string[]} - Um array plano com todas as mensagens de erro encontradas.
+     */
+    const extractErrorMessages = (errorObject) => {
+
+        const findMessages = (value) => {
+            if (typeof value === 'string') {
+                toast.error(value);
+            } 
+            else if (Array.isArray(value)) {
+                value.forEach(item => findMessages(item));
+            } 
+            else if (typeof value === 'object' && value !== null) {
+                Object.values(value).forEach(val => findMessages(val));
+            }
+        };
+
+        findMessages(errorObject);
+        // return messages;
+    };
+
+    async function apiAsyncFetch (method = 'GET', url = ``, body = null, isProtected = true){
+        const headers = {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        };
+
+        if (isProtected) {
+            const token = localStorage.getItem('token');
+            if (token) {
+                headers['Authorization'] = `Bearer ${token}`;
+            } else {
+                throw new Error("Token de autenticação não encontrado.");
+            }
+        }
+
+        const options = {
+            method: method,
+            headers: headers,
+        };
+        
+        if (method !== 'GET' && method !== 'HEAD' && body) {
+            options.body = JSON.stringify(body);
+        }
+
+        const res = await fetch(url, options);
+
+        const newExpiresAt = res.headers.get('x-session-expires-at');
+        if (newExpiresAt) {
+            changeExpireTime(newExpiresAt);
+        }
+
+        if (!res.ok) {
+            const errorResult = await res.json().catch(() => null);
+
+            if (errorResult && errorResult.errors) {
+                // Mostra os toasts
+                extractErrorMessages(errorResult.errors); 
+            } else {
+                // Para outros erros (401, 403, 500)
+                verifyStatusRequest(res);
+            }
+            throw new Error(errorResult?.message || `Erro: ${res.status}`);
+        }
+        return res.json();
+    }
+
     const contextValue = { 
         user, 
         setUser, 
@@ -282,6 +357,8 @@ export default function AppProvider({ children }) {
         setToken,
         remainingTime,
         setRemainingTime,
+        changeExpireTime,
+        apiAsyncFetch,
         // expireTime,
         // setExpireTime,
         loading, 

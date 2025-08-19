@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 require __DIR__.'/api/guest.php';
 
 
-Route::middleware(['auth:sanctum'])->group(function () {
+Route::middleware(['auth:sanctum', 'extends-sanctum-token-life'])->group(function () {
 
     Route::middleware(['throttle:user'])->group(function(){
         require __DIR__.'/api/auth.php';

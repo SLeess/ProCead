@@ -5,6 +5,8 @@ import { Modal, ModalBody, ModalHeader } from 'flowbite-react';
 import { Plus } from 'lucide-react';
 import React, { useMemo, useState } from 'react'
 import { toast } from 'react-toastify';
+import z from 'zod/v4';
+import { perfilCreateSchema } from './perfilCreateSchema';
 
 const PerfilCreateModal = ({enableGlobal = true}) => {
     const [openModal, setOpenModal] = useState(false);
@@ -12,7 +14,7 @@ const PerfilCreateModal = ({enableGlobal = true}) => {
         setOpenModal(false);
     }
 
-    const { token, verifyStatusRequest } = useAppContext();
+    const { apiAsyncFetch } = useAppContext();
     const [role, setRole] = useState({
         name: "",
         scope: "",
@@ -31,7 +33,7 @@ const PerfilCreateModal = ({enableGlobal = true}) => {
     const handleScopeChange = (e) => {
         const selectedLabel = e.target.value;
         const newScopeValue = selectedLabel === 'Perfil Local' ? 'local' : 'global';
-        setRole((prevRole) => ({ ...prevRole, scope: newScopeValue }));
+        setRole((prev) => ({ ...prev, scope: newScopeValue }));
     };
     const handleNameChange = (e) => {
         const name = e.target.value;
@@ -42,29 +44,28 @@ const PerfilCreateModal = ({enableGlobal = true}) => {
     async function handleOnSubmit() 
     {
         try {
-            const res = await fetch(`/api/super-admin/roles`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                method: 'POST',
-                body: JSON.stringify(role)
-            });
-
-            if (!res.ok) {
-                if (res.errors) {
-                    Object(res.errors).forEach((er) => toast.error(er));
-                } else{
-                    verifyStatusRequest(res);
-                }
-                throw new Error(`Erro ao criar o Perfil: ${res.status} ${res.statusText}`);
-            } else {
-                const result = await res.json();
-
-                onCloseModal();
-                toast.success(result.message);
-                window.location.reload();
+            const validation = perfilCreateSchema.safeParse({ ...role });
+                                
+            if (!validation.success) {
+                const formattedErrors = z.treeifyError(validation.error);
+                Object.values(formattedErrors.properties).forEach(fieldErrors => {
+                    if(fieldErrors.errors) {
+                        fieldErrors.errors.forEach(err => toast.error(err));
+                    }
+                });
+    
+                return;
             }
+            
+            const result = await apiAsyncFetch(
+                'POST', 
+                `/api/super-admin/roles`, 
+                role,
+            );
+
+            onCloseModal();
+            toast.success(result.message);
+            window.location.reload();
         } catch (error) {
             toast.error(error);
         }
@@ -93,11 +94,16 @@ const PerfilCreateModal = ({enableGlobal = true}) => {
                     <div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 mb-6">
                             <FormField label="Nome do Perfil">
-                                <TextInput className="md:col-span-1" placeholder="Ex: controle-acadêmico" />
+                                <TextInput value={role.name} onChange={handleNameChange} className="md:col-span-1" placeholder="Ex: controle-acadêmico" />
                             </FormField>
                             <FormField label="Tipo">
-                                <SelectInput className="md:col-span-2" value="Local" options={ (enableGlobal == true ) ? ['Global', 'Local'] : ['Local']} />
-                                {/* <TextInput className="md:col-span-2" placeholder="Administrador" /> */}
+                                <SelectInput 
+                                    className="md:col-span-2" 
+                                    defaultOption={true}
+                                    value={selectedScopeLabel}
+                                    onChange={handleScopeChange}
+                                    options={['Perfil Local', 'Perfil Global']}
+                                />
                             </FormField>
                         </div>
                     </div>
@@ -111,7 +117,7 @@ const PerfilCreateModal = ({enableGlobal = true}) => {
                             Cancelar
                         </button>
                         <button
-                            onClick={onCloseModal}
+                            onClick={handleOnSubmit}
                             id='modal-purple-button'
                         >
                             Salvar

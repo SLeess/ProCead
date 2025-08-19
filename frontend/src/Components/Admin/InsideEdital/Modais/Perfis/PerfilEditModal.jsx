@@ -2,9 +2,12 @@ import CabecalhoModal from '@/Components/Global/Modais/CabecalhoModal';
 import { FormField, SelectInput, TextInput } from '@/Components/Global/ui/modals';
 import { useAppContext } from '@/Contexts/AppContext';
 import { Modal, ModalBody, ModalHeader } from 'flowbite-react';
-import { Pencil } from 'lucide-react';
+import { Pencil, Trash } from 'lucide-react';
 import React, { useMemo, useState } from 'react'
 import { toast } from 'react-toastify';
+import { perfilEditSchema } from './perfilEditSchema';
+import z from 'zod/v4';
+import Swal from 'sweetalert2';
 
 const PerfilEditModal = ({perfil = {name: "", scope: "", id: ""}}) => {
     const { token, verifyStatusRequest } = useAppContext();
@@ -35,9 +38,40 @@ const PerfilEditModal = ({perfil = {name: "", scope: "", id: ""}}) => {
         setOpenModal(false);
     }
 
+    function confirmSubmit(){
+        Swal.fire({
+            title: 'Deseja prosseguir com a alteração dos dados?',
+            text: "Essa ação não poderá ser reversível!",
+            // type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Prosseguir com as alterações!',
+            cancelButtonText: 'Cancelar',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                handleOnSubmit();
+            }
+        });
+    }
     async function handleOnSubmit() 
     {
         try {
+
+            const validation = perfilEditSchema.safeParse({ ...role });
+                    
+            if (!validation.success) {
+                const formattedErrors = z.treeifyError(validation.error);
+                
+                Object.values(formattedErrors.properties).forEach(fieldErrors => {
+                    if(fieldErrors.errors) {
+                        fieldErrors.errors.forEach(err => toast.error(err));
+                    }
+                });
+    
+                return;
+            }
+
             const res = await fetch(`/api/super-admin/roles/${role.id}`, {
                 headers: {
                     'Content-Type': 'application/json',
@@ -47,19 +81,20 @@ const PerfilEditModal = ({perfil = {name: "", scope: "", id: ""}}) => {
                 body: JSON.stringify({...role, _method: "PUT"})
             });
 
-            console.log(JSON.stringify({...role, _method: "PUT"}));
-
-
+            const result = await res.json();
+            
             if (!res.ok) {
-                if (res.errors) {
-                    Object(res.errors).forEach((er) => toast.error(er));
+                if (result.errors) {
+                    Object.values(result.errors).forEach(
+                        (er) => Object.values(er).forEach(
+                                    (e) => toast.error(e)
+                                )
+                    );
                 } else{
                     verifyStatusRequest(res);
                 }
                 throw new Error(`Erro ao atualizar os dados: ${res.status} ${res.statusText}`);
             } else {
-                const result = await res.json();
-
                 onCloseModal();
                 toast.success(result.message);
                 window.location.reload();
@@ -108,7 +143,7 @@ const PerfilEditModal = ({perfil = {name: "", scope: "", id: ""}}) => {
                             Cancelar
                         </button>
                         <button
-                            onClick={handleOnSubmit}
+                            onClick={confirmSubmit}
                             id='modal-purple-button'
                         >
                             Salvar
