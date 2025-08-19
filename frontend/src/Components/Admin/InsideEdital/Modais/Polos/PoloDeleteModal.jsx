@@ -1,15 +1,46 @@
 import { Modal, ModalBody, ModalHeader } from 'flowbite-react';
 import { Trash, TriangleAlert } from 'lucide-react';
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import { useAppContext } from '@/Contexts/AppContext';
+import { toast } from 'react-toastify';
 
-const PoloDeleteModal = () => {
-
-    const [isOpen] = useState(true);
+const PoloDeleteModal = ({ polo, setNeedUpdate }) => {
     const [openModal, setOpenModal] = useState(false);
+    const { token } = useAppContext();
+    const [loading, setLoading] = useState(false);
+
     function onCloseModal() {
         setOpenModal(false);
     }
-    if (!isOpen) return null;
+
+    const handleDelete = async () => {
+        setLoading(true);
+        try {
+            const res = await fetch(`/api/admin/polos/${polo.id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+
+            if (!res.ok) {
+                const result = await res.json().catch(() => ({}));
+                toast.error(result.message || 'Erro ao deletar polo.');
+                return;
+            }
+            
+            toast.success("Polo deletado com sucesso!");
+            if(setNeedUpdate) {
+                setNeedUpdate(prev => !prev);
+            }
+            onCloseModal();
+
+        } catch (error) {
+            toast.error('Erro ao conectar com o servidor.');
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <>
@@ -26,7 +57,7 @@ const PoloDeleteModal = () => {
                             </div>
                             <h2 className="text-xl font-bold text-gray-800 mb-2">Atenção!</h2>
                             <p className="text-gray-600 mb-8">
-                                Tem certeza que deseja deletar o curso?
+                                Tem certeza que deseja deletar o polo "{polo.nome}"?
                             </p>
                             <div className="flex justify-center items-center space-x-4">
                                 <button
@@ -36,10 +67,11 @@ const PoloDeleteModal = () => {
                                     Cancelar
                                 </button>
                                 <button
-                                    onClick={onCloseModal}
-                                    className="px-8 py-2.5 text-sm font-semibold text-white bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                                    onClick={handleDelete}
+                                    disabled={loading}
+                                    className="px-8 py-2.5 text-sm font-semibold text-white bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 disabled:opacity-50"
                                 >
-                                    Deletar
+                                    {loading ? 'Deletando...' : 'Deletar'}
                                 </button>
                             </div>
                         </div>
@@ -51,4 +83,4 @@ const PoloDeleteModal = () => {
     );
 }
 
-export default PoloDeleteModal
+export default PoloDeleteModal;

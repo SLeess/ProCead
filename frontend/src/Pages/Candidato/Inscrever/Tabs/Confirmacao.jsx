@@ -2,10 +2,10 @@ import { FormField, TextInput } from '@/Components/Global/ui/modals'
 import React from 'react'
 import VagaDetails from './VagaDetails'
 
-const Confirmacao = ({ handleBack, handleNext, formData, setFormData }) => {
+const Confirmacao = ({ handleBack,  formData, setFormData }) => {
 
   return (
-    <div className="bg-gray-100 dark:bg-slate-700 min-h-screen p-4 sm:p-6 md:p-8 font-sans animate-fade-in">
+    <div className="bg-gray-100 dark:bg-slate-700 min-h-screen md:p-8 font-sans animate-fade-in">
       <div className="max-w-6xl mx-auto">
 
         <div className="bg-blue-700 text-white p-6 rounded-t-2xl">
@@ -91,7 +91,7 @@ const Confirmacao = ({ handleBack, handleNext, formData, setFormData }) => {
           <button onClick={handleBack} className="px-6 py-2.5 mr-3 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50">
             Voltar
           </button>
-          <button type='submit' className="px-8 py-3 text-sm font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 ">
+          <button type='submit' disabled={!formData.termo_responsabilidade} className={`px-8 py-3 text-sm font-semibold rounded-lg text-white ${formData.termo_responsabilidade ? 'bg-blue-600 hover:bg-blue-700' : 'bg-gray-400 cursor-not-allowed'} transition-colors`}>
             Concluir
           </button>
 

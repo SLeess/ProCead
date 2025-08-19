@@ -1,17 +1,21 @@
 import "./GerenciarPerfisPermissoes.css";
 import MainTable from "@/Components/Global/Tables/MainTable/MainTable";
 import getColumns from "./columns";
-import { useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { useAppContext } from "@/Contexts/AppContext";
-import { useParams } from "react-router-dom";
-import InformacoesGerais from "./Components/InformacoesGerais";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import InformacoesGerais from "../../Components/InformacoesGerais";
 import LoaderPages from "@/Components/Global/LoaderPages/LoaderPages";
 import { toast } from "react-toastify";
+import { NavigationContext } from "@/Contexts/NavigationContext";
 
 export default function GerenciarPerfisPermissoes()
 {
     const { perfilId } = useParams();
     const { token, verifyStatusRequest } = useAppContext();
+    const { navigate } = useContext(NavigationContext);
+    // const navigate = useNavigate();
+    //  const location = useLocation();
     
     const [role, setRole] = useState({});
     
@@ -25,6 +29,17 @@ export default function GerenciarPerfisPermissoes()
     const [loading, setLoading] = useState(true);
 
     const [hasBeenUpdated, setHasBeenUpdated] = useState(false);
+
+    // useEffect(() => {
+    //     if (location.state?.error) {
+    //         console.log("MENSAGEM DE ERRO ENCONTRADA:", location.state.error);
+    //         toast.error(location.state.error);
+
+    //         // Limpa o estado para o toast não reaparecer
+    //         // window.history.replaceState({}, document.title) // Alternativa mais simples
+    //         navigate(location.pathname, { replace: true, state: {} });
+    //     }
+    // }, [location]); // Use `location` como dependência, é mais seguro
     
     // =================================================================================
     // HOOK DE EFEITO Nº 1: REQUISIÇÕES PARA BUSCAR OS DADOS ESPECIFICOS DO CARGO E SUAS
@@ -37,7 +52,7 @@ export default function GerenciarPerfisPermissoes()
             setLoading(true);
             // await new Promise(resolve => setTimeout(resolve, 5000));
             try {
-                const resRolePermissions = await fetch(`/api/super-admin/roles/${perfilId}/`, {
+                const resRolePermissions = await fetch(`/api/super-admin/roles-with-permissions/${perfilId}/`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -45,7 +60,23 @@ export default function GerenciarPerfisPermissoes()
                     },
                 });
 
+                if (resRolePermissions.status === 404) {
+                    // Se o recurso não foi encontrado (404 Not Found)
+                    // toast.error(`O perfil com ID ${perfilId} não foi encontrado.`);
+                    navigate(-1, { 
+                        state: { 
+                            error: `O perfil com ID ${perfilId} não foi encontrado.` 
+                        } 
+                    });
+                    return;
+                }
+
                 const resultRolePermissions = await resRolePermissions.json();
+                // if(!resultRolePermissions.success){
+                //     navigate(-1);
+                //     throw new Error("Erro na busca: " + resultRolePermissions.message);
+                // } 
+                // else 
                 if (!resRolePermissions.ok) {
                     verifyStatusRequest(resRolePermissions);
                     throw new Error(`Erro ao buscar as permissões atreladas ao cargo: ${resRolePermissions.status} ${resRolePermissions.statusText}`);
@@ -226,15 +257,14 @@ export default function GerenciarPerfisPermissoes()
             const formData = {
                 role_id: role.id,
                 permissions: selectedPermissions.permissions,
-                role_data: {
-                    name: role.nome,
-                    scope: role.escopo,
-                },
+                // role_data: {
+                //     name: role.nome,
+                //     scope: role.escopo,
+                // },
                 _method: 'PUT',
             };
-            console.log(formData);
 
-            const res = await fetch(`/api/super-admin/roles/${role.id}`, {
+            const res = await fetch(`/api/super-admin/roles-with-permissions/${role.id}`, {
                 method: 'POST',
                 body: JSON.stringify(formData),
                 headers: {
@@ -247,7 +277,6 @@ export default function GerenciarPerfisPermissoes()
 
             if (!result.success || !res.ok) {
                 if (result.errors) {
-                    console.log(result);
                     Object.values(result.errors).forEach(errorArray => {
                         errorArray.forEach((errorMessage) => toast.error(errorMessage));
                     });
@@ -276,7 +305,7 @@ export default function GerenciarPerfisPermissoes()
             </header>
             <div id="content">
                 <div id="informacoes_gerais" className="">
-                    <InformacoesGerais role={role} setRole={setRole}/>
+                    <InformacoesGerais role={role} setRole={setRole} readOnly={true}/>
                 </div>
                 <MainTable 
                     data={tableData} 
@@ -290,7 +319,8 @@ export default function GerenciarPerfisPermissoes()
                     hasCountSelectedLines={false}
                 />
                 <form onSubmit={handleOnSubmit}>
-                    <button className="px-4 py-2.5 text-sm font-semibold text-white bg-[var(--admin-button)] rounded-md hover:bg-[var(--admin-button-hover)] focus:outline-none cursor-pointer">Enviar</button>
+                    <button type="button" onClick={() => navigate(-1)} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 cursor-pointer focus:outline-none">Cancelar</button>
+                    <button type="submit" className="px-4 py-2.5 text-sm font-semibold text-white bg-[var(--admin-button)] rounded-md hover:bg-[var(--admin-button-hover)] focus:outline-none cursor-pointer">Salvar</button>
                 </form>
             </div>
         </section>

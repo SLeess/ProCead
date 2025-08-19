@@ -71,7 +71,7 @@ const DetalhesDaVaga = ({ formData, setFormData, handleBack, handleNext, setEnab
   };
 
   return (
-    <div className="bg-gray-100 dark:bg-slate-700 min-h-screen p-4 sm:p-6 md:p-8 font-sans animate-fade-in animate-spin">
+    <div className="bg-gray-100 dark:bg-slate-700 min-h-screen  md:p-8 font-sans animate-fade-in animate-spin">
       <div className="max-w-6xl mx-auto">
         <div className="bg-blue-700 text-white p-6 rounded-t-2xl">
           <h1 className="text-2xl font-semibold">

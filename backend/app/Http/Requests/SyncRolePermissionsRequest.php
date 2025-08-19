@@ -28,13 +28,13 @@ class SyncRolePermissionsRequest extends FormRequest
                 'integer',
                 'exists:roles,id',
             ],
-            'role_data' => [
-                'present',
-                'array',
-            ],
-            'role_data.*' => [
-                'required',
-            ],
+            // 'role_data' => [
+            //     'present',
+            //     'array',
+            // ],
+            // 'role_data.*' => [
+            //     'required',
+            // ],
             'permissions' => [
                 'present',
                 'array',

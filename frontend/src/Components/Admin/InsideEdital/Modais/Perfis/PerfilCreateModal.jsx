@@ -1,13 +1,73 @@
 import CabecalhoModal from '@/Components/Global/Modais/CabecalhoModal';
 import { FormField, TextInput, Checkbox, SelectInput } from '@/Components/Global/ui/modals';
+import { useAppContext } from '@/Contexts/AppContext';
 import { Modal, ModalBody, ModalHeader } from 'flowbite-react';
 import { Plus } from 'lucide-react';
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
+import { toast } from 'react-toastify';
 
 const PerfilCreateModal = ({enableGlobal = true}) => {
     const [openModal, setOpenModal] = useState(false);
     function onCloseModal() {
         setOpenModal(false);
+    }
+
+    const { token, verifyStatusRequest } = useAppContext();
+    const [role, setRole] = useState({
+        name: "",
+        scope: "",
+    });
+
+    const selectedScopeLabel = useMemo(() => {
+        if (role.scope === 'local') {
+            return 'Perfil Local';
+        }
+        if (role.scope === 'global') {
+            return 'Perfil Global';
+        }
+        return '';
+    }, [role.scope]);
+    
+    const handleScopeChange = (e) => {
+        const selectedLabel = e.target.value;
+        const newScopeValue = selectedLabel === 'Perfil Local' ? 'local' : 'global';
+        setRole((prevRole) => ({ ...prevRole, scope: newScopeValue }));
+    };
+    const handleNameChange = (e) => {
+        const name = e.target.value;
+        setRole((prev) => ({...prev, name: name}));
+    }
+
+
+    async function handleOnSubmit() 
+    {
+        try {
+            const res = await fetch(`/api/super-admin/roles`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                method: 'POST',
+                body: JSON.stringify(role)
+            });
+
+            if (!res.ok) {
+                if (res.errors) {
+                    Object(res.errors).forEach((er) => toast.error(er));
+                } else{
+                    verifyStatusRequest(res);
+                }
+                throw new Error(`Erro ao criar o Perfil: ${res.status} ${res.statusText}`);
+            } else {
+                const result = await res.json();
+
+                onCloseModal();
+                toast.success(result.message);
+                window.location.reload();
+            }
+        } catch (error) {
+            toast.error(error);
+        }
     }
     return (
         <>

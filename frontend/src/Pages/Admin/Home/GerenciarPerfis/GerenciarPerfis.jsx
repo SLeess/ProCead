@@ -69,7 +69,7 @@ export default function GerenciarPerfis()
                             <p className="text-2xl font-bold mb-1">{ perfis.length }</p>
                             <UserRoundPen className="absolute top-4 right-4 text-gray-500" />
                         </div>
-                            <PerfilCreateModal/>
+                        <PerfilCreateModal/>
                     </div>
                     {
                         loading && <LoaderPages/>
@@ -78,7 +78,7 @@ export default function GerenciarPerfis()
                         data={perfis} 
                         columns={columns} 
                         title={"Perfis"}
-                        canExport={true}
+                        canExport={false}
                         canHiddenColumns={false}
                         hasSelectForRows={false}
                     />
