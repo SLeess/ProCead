@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CursosController;
 use App\Http\Controllers\Admin\EditalController;
 use App\Http\Controllers\Admin\PolosController;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +24,7 @@ Route::prefix('/admin')->name('admin.')->group( function () {
     });
 
     Route::resource('/polos', PolosController::class)->except('index');
+    Route::resource('/cursos', CursosController::class)->except('index');
 
     Route::middleware(['throttle:heavy'])->post('/export', [RelatorioController::class, 'export'])->name('export');
 });
