@@ -7,9 +7,10 @@ import { useState } from "react";
 import ModalTabs from "../../Tabs/ModalTabs";
 import "./AdminProfileModal.css";
 
-const AdminProfileModal = ({openModal, onCloseModal}) => {
+const AdminProfileModal = ({openModal, onCloseModal, user}) => {
     const [activeTab, setActiveTab] = useState('Informações Pessoais');
     const tabs = ['Informações Pessoais', 'Alterar Senha'];
+    console.log(user);
 
     const handleNext = () => {
         const currentIndex = tabs.indexOf(activeTab);
@@ -28,7 +29,9 @@ const AdminProfileModal = ({openModal, onCloseModal}) => {
 
                 <ModalBody className={`px-0`}>
 
-                    <ModalTabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab}/>
+                    <div className="mx-4">
+                        <ModalTabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab}/>
+                    </div>
 
                     {activeTab === 'Informações Pessoais' && (
                         <div>
@@ -38,7 +41,7 @@ const AdminProfileModal = ({openModal, onCloseModal}) => {
                                     <User width={72} height={72} color="#6c4bc3" />
                                 </div>
                                 <div id="info-user">
-                                    <p id="email-user">exemploemail@gmail.com</p>
+                                    <p id="email-user">{user?.email || "Email não disponível"}</p>
                                     <p id="last-access-user">Último acesso há x minutos</p>
                                     <button id="change-pass" onClick={handleNext}>
                                         <Lock id="lock-icon"/>
@@ -52,19 +55,16 @@ const AdminProfileModal = ({openModal, onCloseModal}) => {
                             <div id="form-body">
                                 <div id="rows-2-input" className="mx-4">
                                     <FormField label="Nome Completo">
-                                        <TextInput className="md:col-span-1" value="Fulano de Tal" />
+                                        <TextInput className="md:col-span-1" value={user?.nome || "Nome não disponível"} />
                                     </FormField>
                                     <FormField label="E-mail">
-                                        <TextInput className="md:col-span-2" value="exemplo@gmail.com" />
+                                        <TextInput className="md:col-span-2" value={user?.email || "Email não disponível"} />
                                     </FormField>
                                 </div>
 
                                 <div id="rows-2-input" className="mx-4">
-                                    <FormField label="Telefone">
-                                        <TextInput className="md:col-span-1" value="(38) 9 9999-9999" />
-                                    </FormField>
-                                    <FormField label="Tipo">
-                                        <TextInput className="md:col-span-2" readOnly={true} value="Administrador" />
+                                    <FormField label="CPF">
+                                        <TextInput className="md:col-span-1" value={user?.cpf || "CPF não disponível"} />
                                     </FormField>
                                 </div>
                             </div>
@@ -77,7 +77,7 @@ const AdminProfileModal = ({openModal, onCloseModal}) => {
                             <div id="form-body">
                                 <div id="rows-2-input" className="mx-4">
                                     <FormField label="E-mail">
-                                        <TextInput readOnly={true} value="exemplo@gmail.com" />
+                                        <TextInput readOnly={true} value={user?.email || "Email não disponível"} />
                                     </FormField>
                                     <FormField label="Senha Antiga">
                                         {/* Adicionar type password */}

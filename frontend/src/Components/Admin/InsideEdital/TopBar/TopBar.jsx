@@ -53,7 +53,7 @@ export default function TopBar() {
             {/* Spacer */}
             <div className="flex-1" />
 
-            <AdminProfileModal openModal={openModal} onCloseModal={onCloseModal}/>
+            <AdminProfileModal openModal={openModal} onCloseModal={onCloseModal} user={user}/>
 
             {/* Right Item */}
             <Dropdown

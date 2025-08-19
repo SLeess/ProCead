@@ -4,7 +4,7 @@ import { useState } from "react";
 const ModalTabs = ({tabs, activeTab, setActiveTab}) => {
 
     return (
-        <div id="tabs-container" className="mx-4">
+        <div id="tabs-container">
             <nav id="tabs-navs" aria-label="Tabs">
                 {tabs.map(tab => (
                     <button
