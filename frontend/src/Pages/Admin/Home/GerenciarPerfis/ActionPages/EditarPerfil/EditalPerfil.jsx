@@ -257,10 +257,6 @@ export default function EditalPerfil()
             const formData = {
                 role_id: role.id,
                 permissions: selectedPermissions.permissions,
-                // role_data: {
-                //     name: role.nome,
-                //     scope: role.escopo,
-                // },
                 _method: 'PUT',
             };
             console.log(formData);
