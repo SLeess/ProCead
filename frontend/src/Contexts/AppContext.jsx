@@ -80,8 +80,8 @@ export default function AppProvider({ children }) {
                 logout();
                 break;
             case 403:
-                toast.info("Você não possui cadastro de candidato, favor realizar seu cadastro novamente.");
-                logout();
+                // toast.info("Você não possui cadastro de candidato, favor realizar seu cadastro novamente.");
+                // logout();
                 break;
             case 429:
                 toast.info("Usuário desconectado por excesso de requisições realizadas.", {
@@ -125,6 +125,7 @@ export default function AppProvider({ children }) {
             if (result.isConfirmed) {
                 toast.info("Faça login novamente informando seu email ou cpf e a senha.");
                 logout();
+                window.location.reload();
             }
         });
     }
@@ -304,7 +305,7 @@ export default function AppProvider({ children }) {
         // return messages;
     };
 
-    async function apiAsyncFetch (method = 'GET', url = ``, body = null, isProtected = true){
+    async function apiAsyncFetch (method = 'GET', url = ``, body = null, isProtected = true, customErrosTrait = (res, errorResult) => {}){
         const headers = {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
@@ -338,13 +339,20 @@ export default function AppProvider({ children }) {
         if (!res.ok) {
             const errorResult = await res.json().catch(() => null);
 
+            const errorWasHandled = customErrosTrait(res, errorResult);
+
+            if (errorWasHandled) {
+                const silentError = new Error("Handled");
+                silentError.handled = true;
+                throw silentError;
+            }
+
             if (errorResult && errorResult.errors) {
-                // Mostra os toasts
                 extractErrorMessages(errorResult.errors); 
             } else {
-                // Para outros erros (401, 403, 500)
                 verifyStatusRequest(res);
             }
+            
             throw new Error(errorResult?.message || `Erro: ${res.status}`);
         }
         return res.json();
