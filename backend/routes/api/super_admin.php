@@ -5,6 +5,7 @@ use App\Http\Controllers\SuperAdmin\EditalController;
 use App\Http\Controllers\SuperAdmin\ManageUserPermissionsController;
 use App\Http\Controllers\SuperAdmin\PermissionsController;
 use App\Http\Controllers\SuperAdmin\RoleController;
+use App\Http\Controllers\SuperAdmin\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix("/super-admin")->name('super-Admin.')->middleware(['role:super-Admin'])->group(function(){
@@ -20,6 +21,11 @@ Route::prefix("/super-admin")->name('super-Admin.')->middleware(['role:super-Adm
                 ->parameter('' , 'role');
     });
 
+    Route::prefix('/roles-scope')->name('roles-scope.')->group(function(){
+        Route::get('local',[ RoleController::class, 'indexLocal']);
+        Route::get('global',[ RoleController::class, 'indexGlobal']);
+    });
+
     Route::prefix("/permissions")->name('permissions.')->group(function(){
         Route::resource('', PermissionsController::class)
                 ->only(['index', 'show'])
@@ -30,7 +36,8 @@ Route::prefix("/super-admin")->name('super-Admin.')->middleware(['role:super-Adm
         Route::get('global',[ PermissionsController::class, 'indexGlobal']);
     });
 
-    Route::prefix('/usuarios')->name('usuarios.')->group(function(){
+    Route::prefix('/users')->name('usuarios.')->group(function(){
+        Route::get("", [UserController::class, 'index'])->name('index');
         Route::prefix('/{userId}/permissions')->name('permissions.')->group(function () {
             Route::singleton('', ManageUserPermissionsController::class)->only(['show', 'update']);
         });
