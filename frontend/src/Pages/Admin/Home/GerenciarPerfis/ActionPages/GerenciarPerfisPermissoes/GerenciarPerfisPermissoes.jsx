@@ -1,21 +1,19 @@
 import "./GerenciarPerfisPermissoes.css";
-import MainTable from "@/Components/Global/Tables/MainTable/MainTable";
-import getColumns from "./columns";
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useAppContext } from "@/Contexts/AppContext";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import InformacoesGerais from "../../Components/InformacoesGerais";
 import LoaderPages from "@/Components/Global/LoaderPages/LoaderPages";
 import { toast } from "react-toastify";
 import { NavigationContext } from "@/Contexts/NavigationContext";
+import Swal from "sweetalert2";
+import TableSetPermissionsToRole from "@/Components/Global/Tables/TableSetPermissionsToRole/TableSetPermissionsToRole";
 
 export default function GerenciarPerfisPermissoes()
 {
     const { perfilId } = useParams();
     const { token, verifyStatusRequest } = useAppContext();
     const { navigate } = useContext(NavigationContext);
-    // const navigate = useNavigate();
-    //  const location = useLocation();
     
     const [role, setRole] = useState({});
     
@@ -30,17 +28,6 @@ export default function GerenciarPerfisPermissoes()
 
     const [hasBeenUpdated, setHasBeenUpdated] = useState(false);
 
-    // useEffect(() => {
-    //     if (location.state?.error) {
-    //         console.log("MENSAGEM DE ERRO ENCONTRADA:", location.state.error);
-    //         toast.error(location.state.error);
-
-    //         // Limpa o estado para o toast não reaparecer
-    //         // window.history.replaceState({}, document.title) // Alternativa mais simples
-    //         navigate(location.pathname, { replace: true, state: {} });
-    //     }
-    // }, [location]); // Use `location` como dependência, é mais seguro
-    
     // =================================================================================
     // HOOK DE EFEITO Nº 1: REQUISIÇÕES PARA BUSCAR OS DADOS ESPECIFICOS DO CARGO E SUAS
     // Permissões atreladas, permitindo efetuar uma atualização posteriormente, só roda
@@ -61,22 +48,24 @@ export default function GerenciarPerfisPermissoes()
                 });
 
                 if (resRolePermissions.status === 404) {
-                    // Se o recurso não foi encontrado (404 Not Found)
-                    // toast.error(`O perfil com ID ${perfilId} não foi encontrado.`);
-                    navigate(-1, { 
-                        state: { 
-                            error: `O perfil com ID ${perfilId} não foi encontrado.` 
-                        } 
+                        Swal.fire({
+                        title: 'Erro ao Buscar Usuário',
+                        text: `Não foi possível encontrar o O perfil com ID ${perfilId} solicitado. Verifique o ID e tente novamente.`,
+                        icon: 'error',
+                        confirmButtonText: 'Voltar',
+                        confirmButtonColor: '#3085d6',
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,   
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            navigate(-1);
+                        }
                     });
-                    return;
+                    return true;
                 }
 
                 const resultRolePermissions = await resRolePermissions.json();
-                // if(!resultRolePermissions.success){
-                //     navigate(-1);
-                //     throw new Error("Erro na busca: " + resultRolePermissions.message);
-                // } 
-                // else 
+                
                 if (!resRolePermissions.ok) {
                     verifyStatusRequest(resRolePermissions);
                     throw new Error(`Erro ao buscar as permissões atreladas ao cargo: ${resRolePermissions.status} ${resRolePermissions.statusText}`);
@@ -118,129 +107,6 @@ export default function GerenciarPerfisPermissoes()
         fetchProcessos();
     }, [perfilId, token, hasBeenUpdated]);
 
-    // =================================================================================
-    // HOOK DE EFEITO Nº 2: APENAS PARA TRANSFORMAR OS DADOS PARA A TABELA
-    // Roda somente depois que os dados da API (allPermissions) forem carregados.
-    // =================================================================================
-
-    /**
-     * Opcional -- é uma função pra ordenar os grupos de permissões para exibir primeiro as linhas
-     * com mais permissões e por ultimo as que tem menos
-     * @param {*} a 
-     * @param {*} b 
-     * @returns 
-     */
-    const sortDataByQtdOfInputs = (a, b) => {
-        const qtdInputsA = Object.values(a).filter((e) => e=== true || e=== false).length;
-        const qtdInputsB = Object.values(b).filter((e) => e=== true || e=== false).length;
-        return qtdInputsB - qtdInputsA;
-    };
-    
-    useEffect(() => {
-        if (Object.keys(allPermissions).length === 0) {
-            setTableData([]);
-            return;
-        }
-
-        const selectedIdsSet = new Set(initialSelectedPermissions);
-
-        const formattedData = Object.entries(allPermissions)
-        .filter(([groupName, permissions]) => 
-            !groupName.includes('avaliar')
-        )
-        .map(([groupName, groupPerm]) => {
-            const permissionsMap = new Map(groupPerm.map(perm => [perm.name, perm]));
-
-            const visualizarPerm = permissionsMap.get(`visualizar-${groupName}`);
-            const criarPerm = permissionsMap.get(`cadastrar-${groupName}`);
-            const atualizarPerm = permissionsMap.get(`editar-${groupName}`);
-            const deletarPerm = permissionsMap.get(`deletar-${groupName}`);
-
-            return {
-                name_permission: String(groupName).toUpperCase().replace(/[-_]/g, ' '),
-                visualizar: visualizarPerm ? selectedIdsSet.has(visualizarPerm.id.toString()) : null,
-                criar: criarPerm ? selectedIdsSet.has(criarPerm.id.toString()) : null,
-                atualizar: atualizarPerm ? selectedIdsSet.has(atualizarPerm.id.toString()) : null,
-                deletar: deletarPerm ? selectedIdsSet.has(deletarPerm.id.toString()) : null,
-            };
-        });
-
-        setTableData(formattedData.sort((a, b) => sortDataByQtdOfInputs(a, b)));
-
-    }, [allPermissions, initialSelectedPermissions, hasBeenUpdated]); // Depende dos dados brutos
-
-    // =================================================================================
-    // HOOK DE EFEITO Nº 3: PARA SINCRONIZAR A TABELA COM A LISTA DE IDs
-    // Roda sempre que o usuário marca ou desmarca um checkbox (alterando tableData).
-    // =================================================================================
-    useEffect(() => {
-        if (Object.keys(allPermissions).length === 0) return;
-
-        const permissionNameToIdMap = new Map(
-            Object.values(allPermissions)
-                .flat()
-                .map(perm => [perm.name, perm.id.toString()])
-        );
-
-        const newSelectedIds = [];
-
-        tableData.forEach(row => {
-            const groupName = row.name_permission.toLowerCase().replace(/ /g, '-');
-
-            if (row.visualizar === true) {
-                const id = permissionNameToIdMap.get(`visualizar-${groupName}`);
-                if (id) newSelectedIds.push(id);
-            }
-            if (row.criar === true) {
-                const id = permissionNameToIdMap.get(`cadastrar-${groupName}`);
-                if (id) newSelectedIds.push(id);
-            }
-            if (row.atualizar === true) {
-                const id = permissionNameToIdMap.get(`editar-${groupName}`);
-                if (id) newSelectedIds.push(id);
-            }
-            if (row.deletar === true) {
-                const id = permissionNameToIdMap.get(`deletar-${groupName}`);
-                if (id) newSelectedIds.push(id);
-            }
-        });
-
-        setSelectedPermissions((f) => ({...f, permissions: newSelectedIds}));
-
-    }, [tableData]); // Depende de tableData e allPermissions
-
-    const updatePermission = (rowIndex, columnId, value) => {
-        setTableData(old =>
-            old.map((row, index) => {
-                if (index === rowIndex) {
-                    return {
-                        ...old[rowIndex],
-                        [columnId]: value,
-                    };
-                }
-                return row;
-            })
-        );
-    };
-
-    const toggleAllRowPermissions = (rowIndex, currentState) => {
-        const newValue = !currentState;
-        setTableData(old =>
-            old.map((row, index) => {
-                if (index === rowIndex) {
-                    return {
-                        ...row,
-                        visualizar: row["visualizar"] !== null ? newValue: null,
-                        criar: row["criar"] !== null ? newValue: null,
-                        atualizar: row["atualizar"] !== null ? newValue: null,
-                        deletar: row["deletar"] !== null ? newValue: null,
-                    };
-                }
-                return row;
-            })
-        );
-    };
-    const columns = useMemo(() => getColumns(updatePermission, toggleAllRowPermissions, setTableData), [hasBeenUpdated]);
     
     const handleOnSubmit = async (e) => {
         e.preventDefault();
@@ -307,16 +173,13 @@ export default function GerenciarPerfisPermissoes()
                 <div id="informacoes_gerais" className="">
                     <InformacoesGerais role={role} setRole={setRole} readOnly={true}/>
                 </div>
-                <MainTable 
-                    data={tableData} 
-                    columns={columns} 
-                    title={"Permissões"}
-                    hasShadowBorderStyle={false}
-                    hasPaddingStyle={false}
-                    canExport={false}
-                    canHiddenColumns={false}
-                    hasSelectForRows={false}
-                    hasCountSelectedLines={false}
+                <TableSetPermissionsToRole 
+                    allPermissions={allPermissions} 
+                    hasBeenUpdated={hasBeenUpdated}
+                    initialSelectedPermissions={initialSelectedPermissions}
+                    setTableData={setTableData}
+                    tableData={tableData}
+                    setSelectedPermissions={setSelectedPermissions}
                 />
                 <form onSubmit={handleOnSubmit}>
                     <button type="button" onClick={() => navigate(-1)} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 cursor-pointer focus:outline-none">Cancelar</button>
