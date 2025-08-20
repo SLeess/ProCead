@@ -61,6 +61,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Inscrever from './Pages/Candidato/Inscrever/Inscrever';
 import Inscricao from './Pages/Candidato/Inscrever/Inscricao';
+import Edital from './Pages/Admin/InsideEdital/Edital/Edital';
 
 
 function App() {
@@ -152,6 +153,7 @@ function App() {
             }
           >
             <Route index element={<Inscricoes />} />
+            <Route path='configuracoes' element={<Edital />} />
             <Route path='inscricoes' element={<Inscricoes />} />
             <Route path='quadro-vagas' element={<QuadroVagas />} />
             <Route path='cursos' element={<Cursos />} />

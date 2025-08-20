@@ -216,6 +216,9 @@ div.info-not-found-itens p#second{
     
     /* ----- Dentro do Edital ----- */
 
+    /* Página de Edital */
+    --admin-manage-edital-header: #6C4BC3;
+
     /* Sidebar */
     --admin-sidebar: #2A1670;
     --admin-sidebar-hover-and-select: #6C4BC3;
