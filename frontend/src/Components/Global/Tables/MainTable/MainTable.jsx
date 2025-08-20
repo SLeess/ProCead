@@ -16,14 +16,40 @@ import HideColumnsDropdown from "./Components/HideColumnsDropdown";
 import ExportModuleTable from "./Components/ExportModuleTable";
 import SearchRowsTable from "./Components/SearchRowsTable";
 
-const MainTable = ({ data, columns, title, hasShadowBorderStyle = true, hasPaddingStyle = true, canExport = true, canHiddenColumns = true, hasSelectForRows = true, hasCountSelectedLines = true, setNeedUpdate }) => {
+const MainTable = ({ 
+            data, 
+            columns, 
+            title, 
+            subtitle = null, 
+            hasShadowBorderStyle = true, 
+            hasPaddingStyle = true, 
+            canExport = true, 
+            canHiddenColumns = true, 
+            hasSelectForRows = true, 
+            hasCountSelectedLines = true, 
+            setNeedUpdate, 
+            enableDataFooter = true,
+            pageSize=10,
+            className = ``,
+  }) => {
   const [columnFilters, setColumnFilters] = useState([]);
   const [rowSelection, setRowSelection] = useState({});
   const [globalFilter, setGlobalFilter] = useState('');
-  const [columnVisibility, setColumnVisibility] = useState({})
+  const [columnVisibility, setColumnVisibility] = useState(() => {
+    const initialVisibility = columns.reduce((acc, column) => {
+      if (column.accessorKey && column.columnVisibility !== undefined) {
+        acc[column.accessorKey] = column.columnVisibility;
+      } else{
+        acc[column.accessorKey] = true;
+      }
+      return acc;
+    }, {});
+
+    return initialVisibility;
+  });
   const [pagination, setPagination] = useState({
     pageIndex: 0,
-    pageSize: 10,
+    pageSize: pageSize,
   });
   const table = useReactTable({
     data,
@@ -52,10 +78,16 @@ const MainTable = ({ data, columns, title, hasShadowBorderStyle = true, hasPaddi
   });
 
   return (
-    <div className={`${hasShadowBorderStyle === true ? "rounded-md border border-gray-200 shadow-md": ""} ${hasPaddingStyle === true ? "px-5 sm:px-7.5" : ""} bg-white pt-6 pb-2.5 xl:pb-1 `}>
-      <h4 id="table-title">
+    <div className={`main-table ${hasShadowBorderStyle === true ? "rounded-md border border-gray-200 shadow-md": ""} ${hasPaddingStyle === true ? "px-5 sm:px-7.5" : ""} bg-white pt-6 pb-2.5 xl:pb-1 ${className}`}>
+      <h4 className="table-title">
         {title}
       </h4>
+      {
+        subtitle !== null && 
+        <h5 className="table-subtitle">
+          {subtitle}
+        </h5>
+      }
       <div id="table-tools">
         <div id="table-search-container">
             <SearchRowsTable globalFilter={globalFilter} setGlobalFilter={setGlobalFilter}/>
@@ -77,8 +109,10 @@ const MainTable = ({ data, columns, title, hasShadowBorderStyle = true, hasPaddi
           <MainTableBody table={table} hasSelectForRows={hasSelectForRows} columns={columns}/>
         </Table>
       </div>
-
-      <CustomPagination table={table} hasCountSelectedLines={hasCountSelectedLines}/>
+      {
+        enableDataFooter && 
+        <CustomPagination table={table} hasCountSelectedLines={hasCountSelectedLines}/>
+      }
     </div>
   );
 };
