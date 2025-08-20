@@ -1,97 +1,103 @@
 @reference "@/index.css";
 
-h4#table-title {
+div.main-table h4.table-title {
     @apply text-xl font-semibold text-black mb-4
 }
 
-div#table-tools {
+div.main-table div#table-tools {
     @apply mb-6 grid grid-cols-12 lg:flex justify-between
 }
 
-div#table-search-container {
+div.main-table div#table-search-container {
     @apply col-span-12 flex w-full items-center space-x-4 justify-between lg:justify-start
 }
 
-div#table-search {
+div.main-table div#table-search {
     @apply relative w-full lg:w-[90%] lg:max-w-md
 }
 
-input#search-input {
+div.main-table input#search-input {
     @apply w-full rounded-md border border-gray-100 bg-white py-2 pl-10 pr-4 text-sm font-medium text-gray-700
 }
 
-span#search-icon {
+div.main-table span#search-icon {
     @apply absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none
 }
 
-div#table-other-tools {
+div.main-table div#table-other-tools {
     @apply justify-between mt-5 lg:mt-0 col-span-12 flex items-center gap-2
 }
 
-#columns-button {
+div.main-table #columns-button {
     @apply border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 dark:bg-gray-800 dark:text-white
 }
 
-#chevron {
+div.main-table #chevron {
     @apply ml-2 h-4 w-4
 }
 
-#dropdown-content {
+div.main-table #dropdown-content {
     @apply max-h-60 overflow-y-auto bg-white dark:bg-gray-800 z-50 border border-gray-200 rounded-md shadow-lg p-1
 }
 
-#dropdown-checkbox-item {
+div.main-table #dropdown-checkbox-item {
     @apply capitalize text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-md px-2 py-1.5 cursor-pointer flex items-center
 }
 
-#dropdown-checkbox {
+div.main-table #dropdown-checkbox {
     @apply mr-2 border border-gray-300 rounded-md
 }
 
-button#export-button {
+div.main-table button#export-button {
     @apply cursor-pointer md:text-nowrap px-4 py-2.5 text-sm font-semibold text-white rounded-md focus:outline-none
 }
 
 /* ---------- TABLE DATA ---------- */
 
-div#table-data-container {
+div.main-table div#table-data-container {
     @apply overflow-y-auto overflow-x-auto rounded-md
 }
 
-div#bottom-tools {
+div.main-table div#bottom-tools {
     @apply flex flex-row md:space-y-0 space-y-2 items-center justify-between p-4
 }
 
 @media (max-width: 900px) {
-    div#bottom-tools {
+    div.main-table div#bottom-tools {
         @apply flex-col gap-4
     }
 }
 
-div#rows-selected {
+div.main-table div#rows-selected {
     @apply text-sm text-muted-foreground justify-start
 }
 
-div#paginate {
+div.main-table div#paginate {
     @apply flex items-center justify-center space-x-4
 }
 
-button.paginate-buttons {
+div.main-table button.paginate-buttons {
     @apply px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed transition-colors
 }
 
-span#paginate-text {
+div.main-table span#paginate-text {
     @apply text-sm font-medium text-gray-700
 }
 
-div#pagesize {
+div.main-table div#pagesize {
     @apply flex items-center gap-2 ml-5 justify-end
 }
 
-span#pagesize-text {
+div.main-table span#pagesize-text {
     @apply text-sm font-medium text-gray-700 hidden md:block
 }
 
-select#pagesize-selector {
+div.main-table select#pagesize-selector {
     @apply min-w-[80px] px-2 py-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none
+}
+
+div.main-table h5.table-subtitle
+{
+    @apply text-[#727272] text-base not-italic font-normal leading-5 mb-2;
+    font-family: Sora;
 }
