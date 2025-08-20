@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\TipoUsuario;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -12,6 +13,7 @@ use Spatie\Permission\Traits\HasPermissions;
 use Spatie\Permission\Traits\HasRoles;
 use App\Notifications\UserResetPassword;
 use App\Traits\HasRolesAndPermissionsByEdital;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class User extends Authenticatable
 {
@@ -31,6 +33,16 @@ class User extends Authenticatable
         'cpf',
         'email',
         'password',
+    ];
+
+    /**
+     * Os atributos que devem ser anexados à forma de array/JSON do modelo.
+     *
+     * @var array<int, string>
+     */
+    protected $appends = [
+        'level_access',
+        'roles_and_permissions_by_edital',
     ];
 
     /**
@@ -78,8 +90,34 @@ class User extends Authenticatable
         return $this->belongsToMany(Edital::class, 'model_has_roles_by_edital', 'user_id', 'edital_id');
     }
 
+    protected function rolesAndPermissionsByEdital(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->getAllRolesAndPermissionsByEdital(),
+        );
+    }
 
-    public function setRolesAndPermissionsByEditais(){
-        $this->attributes['roles_permissions_by_editais'] = $this->getAllRolesAndPermissionsByEdital();
+    /**
+     * Define o atributo virtual 'level_access'.
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    protected function levelAccess(): Attribute
+    {
+        return Attribute::make(
+            get: function ($value, array $attributes) {
+                if ($this->hasRole('super-Admin')) {
+                    return TipoUsuario::getDescription(2);
+                }
+
+                if ($this->hasAnyPermission()
+                    || $this->rolesAndPermissionsByEdital !== []
+                ) {
+                    return TipoUsuario::getDescription(1);
+                }
+
+                return TipoUsuario::getDescription(0);
+            }
+        );
     }
 }
