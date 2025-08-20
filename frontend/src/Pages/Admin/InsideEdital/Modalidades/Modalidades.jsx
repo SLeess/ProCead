@@ -57,7 +57,7 @@ const Modalidades = () => {
           <div>
             <div className="flex items-center justify-between mb-4">
               <h1 className="text-2xl font-bold">Modalidades</h1>
-              <ModalidadeCreateModal />
+              <ModalidadeCreateModal setNeedUpdate={setNeedUpdate} />
             </div>
             <div className="flex gap-4 mb-4">
               <StatsCard title={"Nº de Modalidades"} quant={modalidades.length}>

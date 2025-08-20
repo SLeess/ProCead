@@ -9,13 +9,13 @@ class Modalidade extends Model
     protected $table = 'modalidades';
     protected $fillable = [
         'sigla',
-        'nome',
-        'tipo_avaliacao'
+        'descricao',
+        'edital_id'
     ];
     protected $logAttributes = [
         'sigla',
-        'nome',
-        'tipo_avaliacao'
+        'descricao',
+        'edital_id'
     ];
 
     protected static $logOnlyDirty = true;

@@ -17,11 +17,11 @@ class TiposAvaliacaoSeeder extends Seeder
     {
         // DB::beginTransaction();
         // try{
-            TipoAvaliacao::create(['tipo' => 'socioeconomico']);
-            TipoAvaliacao::create(['tipo' => 'heteroidentificacao']);
-            TipoAvaliacao::create(['tipo' => 'junta_medica']);
-            TipoAvaliacao::create(['tipo' => 'etnica']);
-            TipoAvaliacao::create(['tipo' => 'identidade_genero'])->time;
+            TipoAvaliacao::create(['tipo' => 'Socioeconômica']);
+            TipoAvaliacao::create(['tipo' => 'Heteroidentificação']);
+            TipoAvaliacao::create(['tipo' => 'Junta Médica']);
+            TipoAvaliacao::create(['tipo' => 'Étnica']);
+            TipoAvaliacao::create(['tipo' => 'Identidade de Gênero'])->time;
             // DB::commit();
         // }catch(Exception $e){
             // DB::rollBack();
