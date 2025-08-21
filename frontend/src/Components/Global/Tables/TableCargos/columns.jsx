@@ -21,7 +21,7 @@ function IndeterminateCheckbox({ indeterminate, className = '', ...rest }) {
 }
 
 
-export const TabelaPerfisGlobaisColumns = (navigate) => [
+export const TabelaPerfisColumns = (navigate) => [
   {
     accessorKey: "nome",
     header: ({ table }) => (

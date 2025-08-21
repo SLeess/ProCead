@@ -9,7 +9,7 @@ import InformacoesGerais from "../../Components/InformacoesGerais";
 import Swal from "sweetalert2";
 import LoaderPages from "@/Components/Global/LoaderPages/LoaderPages";
 import columnsGerenciarUsuariosPerfisPermissoes from "./columns";
-import TabelaCargosGlobais from "@/Components/Global/Tables/TableCargosGlobais/TabelaCargosGlobais";
+import TabelaCargos from "@/Components/Global/Tables/TableCargos/TabelaCargos";
 import TabelaPermissoesGlobais from "@/Components/Global/Tables/TablePermissoesGlobais/TabelaPermissoesGlobais";
 
 export default function GerenciarUsuariosPerfisPermissoes()
@@ -95,7 +95,7 @@ export default function GerenciarUsuariosPerfisPermissoes()
                     </div>
                     <div id="relacoes_globais">
                         <div id="atribuir_cargos_globais" className="col-span-12 sm:col-span-1 md:col-span-6">
-                            <TabelaCargosGlobais perfisGlobais={globalRoles}/>
+                            <TabelaCargos perfis={globalRoles} escopo={"Globais"}/>
                         </div>
                         <div id="atribuir_permissoes_globais" className="col-span-12 sm:col-span-1 md:col-span-6">
                             <TabelaPermissoesGlobais permissoesGlobais={globalPermissions}/>

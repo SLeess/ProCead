@@ -6,6 +6,8 @@ import { NavigationContext } from "@/Contexts/NavigationContext";
 import LoaderPages from "@/Components/Global/LoaderPages/LoaderPages";
 import InformacoesGeraisComEditall from "../../Components/InformacoesGeraisComEditall";
 import Swal from "sweetalert2";
+import TableSetPermissionsToRole from "@/Components/Global/Tables/TableSetPermissionsToRole/TableSetPermissionsToRole";
+import TabelaCargos from "@/Components/Global/Tables/TableCargos/TabelaCargos";
 
 export default function GerenciarUsuariosPerfisPermissoesPorEdital()
 {
@@ -13,12 +15,14 @@ export default function GerenciarUsuariosPerfisPermissoesPorEdital()
     const { userId, editalId } = useParams();
     const { navigate } = useContext(NavigationContext);
     const [user, setUser] = useState({});
-    const [localPermissions, setLocalPermissions] = useState([]);
-    const [localRoles, setLocalRoles] = useState([]);
+    const [allLocalPermissions, setAllLocalPermissions] = useState([]);
+    const [allLocalRoles, setAllLocalRoles] = useState([]);
+    const [tablePermissionsData, setTablePermissionsData] = useState([]);
+    const [initialSelectedPermissions, setInitialSelectedPermissions] = useState([]);
+    const [selectedPermissions, setSelectedPermissions] = useState({});
     const [edital, setEdital] = useState([]);
 
-    // const columns = useMemo(() => columnsGerenciarUsuariosPerfisPermissoes(navigate, userId), [navigate, userId]);
-
+    const [hasBeenUpdated, setHasBeenUpdated] = useState(false);
     const [loading, setLoading] = useState(true);
     const [cantShow, setCantShow] = useState(true);
 
@@ -27,33 +31,27 @@ export default function GerenciarUsuariosPerfisPermissoesPorEdital()
             setLoading(true);
 
             try {
-                const result = await apiAsyncFetch(
-                    'GET', 
-                    `/api/super-admin/users/${userId}/permissions`, 
-                    null,
-                    true,
-                    false,
-                );
+                
+                const result = await apiAsyncFetch({
+                    url: `/api/super-admin/users/${userId}/permissions`, 
+                    enableToast: false,
+                });
 
-                const resRoles = await apiAsyncFetch(
-                    'GET', 
-                    `/api/super-admin/roles-scope/local`, 
-                );
-                const resPerms = await apiAsyncFetch(
-                    'GET', 
-                    `/api/super-admin/permissions-scope/local`, 
-                );
+                const resRoles = await apiAsyncFetch({
+                    url: `/api/super-admin/roles-scope/local`, 
+                });
+                const resPerms = await apiAsyncFetch({
+                    url: `/api/super-admin/permissions-scope/local`, 
+                });
+                const resEditais = await apiAsyncFetch({
+                    url: `/api/admin/editais/${editalId}`,
+                    enableToast: false,
+                });
 
-                const resEditais = await apiAsyncFetch(
-                    'GET',
-                    `/api/admin/editais/${editalId}`,
-                    null,
-                    true,
-                    false,
-                );
-                setLocalRoles(resRoles.data.roles);
-                setLocalPermissions(Object.values(resPerms.data.permissions).flat());
+                setAllLocalRoles(resRoles.data.roles);
+                setAllLocalPermissions(resPerms.data.permissions);
                 setUser(result.data.user);
+                setInitialSelectedPermissions(result.data.admin_access.editals_access[editalId]);
                 setEdital(resEditais.data);
                 setCantShow(false);
             } catch (err) {
@@ -77,7 +75,7 @@ export default function GerenciarUsuariosPerfisPermissoesPorEdital()
             }
         }
         fetchData();
-    }, [userId, editalId]);
+    }, [userId, editalId, hasBeenUpdated]);
 
     const handleOnSubmit = async () => {
 
@@ -98,25 +96,19 @@ export default function GerenciarUsuariosPerfisPermissoesPorEdital()
                             </div>
                             <div id="relacoes_globais">
                                 <div id="atribuir_cargos_globais" className="col-span-12 sm:col-span-1 md:col-span-6">
-                                    {/* <TabelaCargosGlobais perfisGlobais={globalRoles}/> */}
-                                </div>
-                                <div id="atribuir_permissoes_globais" className="col-span-12 sm:col-span-1 md:col-span-6">
-                                    {/* <TabelaPermissoesGlobais permissoesGlobais={localPermissions}/> */}
+                                    <TabelaCargos perfis={allLocalRoles} escopo={"Locais"}/>
                                 </div>
                             </div>
-                            {/* <MainTable 
-                                data={editais} 
-                                columns={columns} 
-                                title={"Atribuir Perfis por Edital"}
-                                subtitle={"As permissões relacionadas aos perfis por edital são locais, ou seja, somente são conferidas ao respectivo usuário dentro do edital escolhido abaixo."}
-                                hasShadowBorderStyle={false}
-                                hasPaddingStyle={false}
-                                canExport={false}
-                                canHiddenColumns={false}
-                                hasSelectForRows={false}
-                                hasCountSelectedLines={false}
-                                pageSize={5}
-                            /> */}
+                            <div id="tables">
+                                <TableSetPermissionsToRole
+                                    tableData={tablePermissionsData}
+                                    setTableData={setTablePermissionsData}
+                                    allPermissions={allLocalPermissions}
+                                    initialSelectedPermissions={initialSelectedPermissions}
+                                    hasBeenUpdated={hasBeenUpdated}
+                                    setSelectedPermissions={setSelectedPermissions}
+                                />
+                            </div>
                             <form onSubmit={handleOnSubmit}>
                                 <button type="button" onClick={() => navigate(-1)} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 cursor-pointer focus:outline-none">Cancelar</button>
                                 <button type="submit" className="px-4 py-2.5 text-sm font-semibold text-white bg-[var(--admin-button)] rounded-md hover:bg-[var(--admin-button-hover)] focus:outline-none cursor-pointer">Salvar</button>

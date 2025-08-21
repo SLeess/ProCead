@@ -1,18 +1,18 @@
 import React, { useContext, useMemo } from 'react';
 import MainTable from '@/Components/Global/Tables/MainTable/MainTable'; // Ajuste o caminho para seu MainTable
-import { TabelaPerfisGlobaisColumns } from './columns';
+import { TabelaPerfisColumns } from './columns';
 import { NavigationContext } from '@/Contexts/NavigationContext';
 
-export default function TabelaCargosGlobais({perfisGlobais}) {
-  const data = useMemo(() => perfisGlobais, [perfisGlobais]);
+export default function TabelaCargos({perfis, escopo}) {
+  const data = useMemo(() => perfis, [perfis]);
 
   const { navigate } = useContext(NavigationContext);
 
-  const columns = useMemo(() => TabelaPerfisGlobaisColumns(navigate), [navigate]);
+  const columns = useMemo(() => TabelaPerfisColumns(navigate), [navigate]);
   
   return (
     <div className="w-full md:w-md lg:w-lg max-w-full rounded-lg">
-        <h2>Atribuir Perfis Globais</h2>
+        <h5 className='text-xl font-semibold text-black'>Atribuir Perfis {escopo}</h5>
         {/* <h3>As permissões atribuídas aos usuários através dos perfis globais valem independentemente do edital acessado.</h3> */}
         <MainTable
             data={data}

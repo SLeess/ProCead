@@ -12,7 +12,7 @@ export default function TabelaPermissoesGlobais({permissoesGlobais}) {
   
   return (
     <div className="w-full md:w-md lg:w-lg  max-w-full rounded-lg">
-        <h2>Atribuir Permissões Globais</h2>
+        <h5 className='text-xl font-semibold text-black'>Atribuir Permissões Globais</h5>
         {/* <h3>As permissões atribuídas aos usuários através dos perfis globais valem independentemente do edital acessado.</h3> */}
         <MainTable
             data={data}
