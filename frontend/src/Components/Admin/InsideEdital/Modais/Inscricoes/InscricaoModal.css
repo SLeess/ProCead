@@ -1,0 +1,37 @@
+@reference "@/index.css";
+
+#inscricao-data-e-status-div {
+    @apply flex justify-between items-center my-1;
+}
+
+#inscricao-status-text {
+    @apply ml-4 bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full;
+}
+
+#inscricao-vaga-content {
+    @apply flex flex-col items-center;
+}
+
+#inscricao-vaga-container {
+    @apply w-full max-w-lg border border-gray-200 rounded-md p-6;
+}
+
+#inscricao-vaga-title {
+    @apply text-lg font-semibold text-gray-800;
+}
+
+#inscricao-documentos-title {
+    @apply text-xl font-semibold text-gray-800 mb-2;
+}
+
+#inscricao-documentos-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-8;
+}
+
+#inscricao-situacao-title {
+    @apply text-xl font-semibold text-gray-800 mb-2;
+}
+
+#inscricao-observacoes-textarea {
+    @apply bg-gray-100 border border-gray-200 rounded-md px-4 py-2 focus:outline-none w-full;
+}

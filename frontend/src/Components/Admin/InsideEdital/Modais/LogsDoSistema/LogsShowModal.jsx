@@ -5,6 +5,8 @@ import { Eye } from "lucide-react";
 import { useState } from "react";
 import { FormField, SelectInput, AnexoButton, TextInput, DetailRow, AlterationRow } from "@/Components/Global/ui/modals";
 import CabecalhoModal from "@/Components/Global/Modais/CabecalhoModal";
+import "./LogsModal.css";
+import ModalTabs from "../../Tabs/ModalTabs";
 
 export default function LogsShowModal() {
 
@@ -51,8 +53,8 @@ export default function LogsShowModal() {
 
     return (
         <>
-            <button onClick={() => setOpenModal(true)} className="p-1 hover:bg-gray-200 rounded-full">
-                <Eye className="h-5 w-5 text-blue-500" />
+            <button onClick={() => setOpenModal(true)} id="acoes-icons">
+                <Eye id='show-btn' />
             </button>
             <Modal show={openModal} onClose={onCloseModal} popup>
 
@@ -64,37 +66,18 @@ export default function LogsShowModal() {
                     {/* <div className="bg-gray-100 min-h-screen flex items-center justify-center p-4 font-sans">
                         <div className="w-full max-w-4xl bg-white rounded-2xl shadow-lg p-8"> */}
 
-                    <div className="flex justify-between items-start mb-4">
-                        <div>
-                            <div>
-                                <p className="text-gray-500 text-xs/5 font-semibold">Edital Referente: Processo de Seleção de Discentes para os Cursos de Especialização da Unimontes – Modalidade Educação a Distância – Sistema Universidade Aberta do Brasil (UAB) – Edital Nº 08/2025</p>
-                            </div>
-                        </div>
-                    </div>
+                    <p id='subtitle-edital'>
+                        Edital Referente: Processo de Seleção de Discentes para os Cursos de Especialização da Unimontes – Modalidade Educação a Distância – Sistema Universidade Aberta do Brasil (UAB) – Edital Nº 08/2025
+                    </p>
 
                     {/* Tabs Navigation */}
-                    <div className="border-b border-gray-200 mb-4">
-                        <nav className="-mb-px flex space-x-8" aria-label="Tabs">
-                            {tabs.map(tab => (
-                                <button
-                                    key={tab}
-                                    onClick={() => setActiveTab(tab)}
-                                    className={`whitespace-nowrap pb-2 px-1 border-b-2 font-medium text-sm ${activeTab === tab
-                                        ? 'border-blue-500 text-blue-600'
-                                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                                        }`}
-                                >
-                                    {tab}
-                                </button>
-                            ))}
-                        </nav>
-                    </div>
+                    <ModalTabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab}/>
 
                     {/* Form Content - Only showing the active tab's content */}
                     {/* Tab Content */}
                     {activeTab === 'Dados' && (
                         <div>
-                            <div className="border border-gray-200 rounded-md overflow-hidden">
+                            <div id="logs-table">
                                 <DetailRow field="Campo" value="Valor" isHeader={true} />
                                 <div className="bg-white">
                                     {logData.map((item, index) => (
@@ -118,7 +101,7 @@ export default function LogsShowModal() {
 
                     {activeTab === 'Alterações' && (
                         <div>
-                            <div className="border border-gray-200 rounded-md overflow-hidden">
+                            <div id="logs-table">
                                 <AlterationRow attribute="Atributo" oldValue="Valor Antigo" newValue="Valor Novo" isHeader={true} />
                                 <div className="bg-white">
                                     {alterationsData.map((item, index) => (

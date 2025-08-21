@@ -5,6 +5,7 @@ import { Eye } from "lucide-react";
 import { useState } from "react";
 import { FormField, SelectInput, AnexoButton, TextInput } from "@/Components/Global/ui/modals";
 import CabecalhoModal from "@/Components/Global/Modais/CabecalhoModal";
+import "./RecursoModal.css";
 
 export default function RecursoShowModal() {
     const [openModal, setOpenModal] = useState(false);
@@ -15,8 +16,8 @@ export default function RecursoShowModal() {
 
     return (
         <>
-            <button onClick={() => setOpenModal(true)} className="p-1 hover:bg-gray-200 rounded-full">
-                <Eye className="h-5 w-5 text-blue-500" />
+            <button onClick={() => setOpenModal(true)} id="acoes-icons">
+                <Eye id='show-btn' />
             </button>
             <Modal show={openModal} onClose={onCloseModal} popup>
 
@@ -32,7 +33,7 @@ export default function RecursoShowModal() {
                     </div>
 
                     <div>
-                        <h2 className="text-xl font-semibold text-gray-800 mb-2">Situação</h2>
+                        <h2 id='recurso-situacao-text'>Situação</h2>
                         
                         <div id='rows-2-input'>
                             <FormField label="Tipo de recurso" className="col-span-1">
@@ -47,7 +48,7 @@ export default function RecursoShowModal() {
                                 <textarea
                                     readOnly
                                     rows="6"
-                                    className="bg-gray-100 border border-gray-200 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+                                    id='recurso-textarea'
                                     value="Informamos que a inscrição de Vossa Senhoria no presente processo seletivo foi indeferida em razão do não atendimento aos requisitos formais estabelecidos no edital, especificamente pela ausência da documentação comprobatória exigida para a função pretendida, inviabilizando a devida análise e homologação da candidatura."
                                 />
                             </FormField>
@@ -55,7 +56,7 @@ export default function RecursoShowModal() {
                                 <textarea
                                     readOnly
                                     rows="6"
-                                    className="bg-gray-100 border border-gray-200 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
+                                    id='recurso-textarea'
                                     value="Ex: Em resposta ao recurso apresentado, referente ao Edital nº 04/2025, a Comissão de Avaliação do Processo Seletivo esclarece que as exigências do subitem 1.3.6 e alíneas correspondentes foram estabelecidas como critérios objetivos e pré-requisitos para participação no certame."
                                 />
                             </FormField>

@@ -13,8 +13,8 @@ const AlocarModal = ({row}) => {
     return (
         <>
             <div className="flex items-center space-x-2">
-                <button onClick={() => handleButtonClick(row)} className="p-1 hover:bg-gray-200 rounded-full">
-                    <List className="h-5 w-5 text-yellow-500" />
+                <button onClick={() => handleButtonClick(row)} id="acoes-icons">
+                    <List id='edit-btn' />
                 </button>
             </div>
         </>

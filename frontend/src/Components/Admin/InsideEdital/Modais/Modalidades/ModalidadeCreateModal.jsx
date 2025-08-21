@@ -2,7 +2,8 @@ import CabecalhoModal from '@/Components/Global/Modais/CabecalhoModal';
 import { FormField, TextInput, Checkbox } from '@/Components/Global/ui/modals';
 import { Modal, ModalBody, ModalHeader } from 'flowbite-react';
 import { Pencil, Plus } from 'lucide-react';
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import "./ModalidadeModal.css";
 
 const ModalidadeCreateModal = () => {
     const [openModal, setOpenModal] = useState(false);
@@ -11,7 +12,7 @@ const ModalidadeCreateModal = () => {
     }
     return (
         <>
-            <button onClick={() => setOpenModal(true)} className="px-4 py-2.5 text-sm font-semibold text-white bg-[var(--admin-button)] rounded-md hover:bg-[var(--admin-button-hover)] focus:outline-none cursor-pointer">
+            <button onClick={() => setOpenModal(true)} id='create-btn'>
                 <Plus className="inline" />
                 <span className='ml-1'>Cadastrar Modalidade</span>
             </button>
@@ -37,8 +38,8 @@ const ModalidadeCreateModal = () => {
                         </div>
 
                         <div>
-                            <h3 className="text-sm font-medium text-gray-600 mb-3">Tipo de Avaliação</h3>
-                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-5">
+                            <h3 id='tipo-avaliacao-title'>Tipo de Avaliação</h3>
+                            <div id='tipo-avaliacao-grid'>
                                 <Checkbox label="Socioeconômica" />
                                 <Checkbox label="Heteroidentificação" />
                                 <Checkbox label="Junta Médica" />

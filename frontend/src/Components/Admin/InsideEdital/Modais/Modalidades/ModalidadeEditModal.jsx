@@ -3,6 +3,7 @@ import { FormField, TextInput, Checkbox } from '@/Components/Global/ui/modals';
 import { Modal, ModalBody, ModalHeader } from 'flowbite-react';
 import { Pencil, Plus } from 'lucide-react';
 import React, { useState } from 'react'
+import "./ModalidadeModal.css";
 
 const ModalidadeEditModal = () => {
     const [openModal, setOpenModal] = useState(false);
@@ -11,8 +12,8 @@ const ModalidadeEditModal = () => {
     }
     return (
         <>
-            <button onClick={() => setOpenModal(true)} className="p-1 hover:bg-gray-200 rounded-full">
-                    <Pencil className="h-5 w-5 text-yellow-500" />
+            <button onClick={() => setOpenModal(true)} id="acoes-icons">
+                    <Pencil id='edit-btn' />
                   </button>
             <Modal show={openModal} onClose={onCloseModal} popup>
 
@@ -36,8 +37,8 @@ const ModalidadeEditModal = () => {
                         </div>
 
                         <div>
-                            <h3 className="text-sm font-medium text-gray-600 mb-3">Tipo de Avaliação</h3>
-                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-5">
+                            <h3 id='tipo-avaliacao-title'>Tipo de Avaliação</h3>
+                            <div id='tipo-avaliacao-grid'>
                                 <Checkbox checked={true} label="Socioeconômica" />
                                 <Checkbox checked={true} label="Heteroidentificação" />
                                 <Checkbox label="Junta Médica" />

@@ -1,0 +1,21 @@
+@reference "@/index.css";
+
+#img-logo {
+    @apply w-[92px] h-[40px];
+}
+
+#nav-item {
+    @apply hidden md:flex lg:gap-12 md:gap-6;
+}
+
+#desktop-buttons-div {
+    @apply hidden md:flex;
+}
+
+#mobile-buttons-div {
+    @apply md:hidden flex;
+}
+
+#menu-responsive {
+    @apply flex flex-col items-center;
+}

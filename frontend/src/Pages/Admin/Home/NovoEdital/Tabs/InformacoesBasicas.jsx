@@ -7,7 +7,7 @@ export default function InformacoesBasicas({formData, handleOnChangeAttr}){
             <h1 className="text-black text-2xl not-italic font-normal leading-[normal]" style={{fontFamily : "Sora, sans-serif"}}>
                 Informações Básicas
             </h1>
-            <div className="grid grid-cols-1 sm:grid-cols-6 lg:grid-cols-11  gap-x-8 gap-y-6">
+            <div className="grid grid-cols-1 sm:grid-cols-6 lg:grid-cols-11 gap-x-8 gap-y-6">
                 {/* Row 1 */}
                 <FormField label="Edital referente" className="sm:col-span-2 lg:col-span-2">
                     <TextInput value={formData.referencia} onChange={(e) => handleOnChangeAttr(e, "referencia")} placeholder="Ex: 00/0000" />

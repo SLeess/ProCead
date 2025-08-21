@@ -2,7 +2,8 @@ import CabecalhoModal from '@/Components/Global/Modais/CabecalhoModal';
 import { FormField, TextInput, Checkbox } from '@/Components/Global/ui/modals';
 import { Modal, ModalBody, ModalHeader } from 'flowbite-react';
 import { Eye, Pencil, Plus } from 'lucide-react';
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import "./ModalidadeModal.css";
 
 const ModalidadeShowModal = () => {
     const [openModal, setOpenModal] = useState(false);
@@ -11,8 +12,8 @@ const ModalidadeShowModal = () => {
     }
     return (
         <>
-            <button onClick={() => setOpenModal(true)} className="p-1 hover:bg-gray-200 rounded-full">
-                <Eye className="h-5 w-5 text-blue-500" />
+            <button onClick={() => setOpenModal(true)} id="acoes-icons">
+                <Eye id='show-btn' />
             </button>
             <Modal show={openModal} onClose={onCloseModal} popup>
 
@@ -36,8 +37,8 @@ const ModalidadeShowModal = () => {
                         </div>
 
                         <div>
-                            <h3 className="text-sm font-medium text-gray-600 mb-3">Tipo de Avaliação</h3>
-                            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 gap-5">
+                            <h3 id='tipo-avaliacao-title'>Tipo de Avaliação</h3>
+                            <div id='tipo-avaliacao-grid'>
                                 <Checkbox readOnly={true} checked={true} label="Socioeconômica" />
                                 <Checkbox readOnly={true} checked={true} label="Heteroidentificação" />
                                 <Checkbox readOnly={true} label="Junta Médica" />

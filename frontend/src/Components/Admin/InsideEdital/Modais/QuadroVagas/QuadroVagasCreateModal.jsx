@@ -6,6 +6,8 @@ import { useState } from "react";
 import { FormField, SelectInput, AnexoButton, TextInput } from "@/Components/Global/ui/modals";
 import CabecalhoModal from "@/Components/Global/Modais/CabecalhoModal";
 import CategoriaCreateModal from "./CategoriaCreateModal";
+import "./QuadroVagasModal.css";
+import ModalTabs from "../../Tabs/ModalTabs";
 
 export default function QuadroVagasCreateModal() {
     const [openModal, setOpenModal] = useState(false);
@@ -33,7 +35,7 @@ export default function QuadroVagasCreateModal() {
 
     return (
         <>
-            <button onClick={() => setOpenModal(true)} className="px-4 py-2.5 text-sm font-semibold text-white bg-[var(--admin-button)] rounded-md hover:bg-[var(--admin-button-hover)] focus:outline-none cursor-pointer">
+            <button onClick={() => setOpenModal(true)} id='create-btn'>
                 <Plus className="inline" />
                 <span className='ml-1'>Novo Quadro de Vagas</span>
             </button>
@@ -54,22 +56,7 @@ export default function QuadroVagasCreateModal() {
                     </p>
 
                     {/* Tabs Navigation */}
-                    <div className="border-b border-gray-200 mb-4">
-                        <nav className="-mb-px flex space-x-8" aria-label="Tabs">
-                            {tabs.map(tab => (
-                                <button
-                                    key={tab}
-                                    onClick={() => setActiveTab(tab)}
-                                    className={`whitespace-nowrap pb-2 px-1 border-b-2 font-medium text-sm ${activeTab === tab
-                                        ? 'border-blue-500 text-blue-600'
-                                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                                        }`}
-                                >
-                                    {tab}
-                                </button>
-                            ))}
-                        </nav>
-                    </div>
+                    <ModalTabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab}/>
 
                     {/* Form Content - Only showing the active tab's content */}
                     {activeTab === 'Dados' && (
@@ -96,7 +83,7 @@ export default function QuadroVagasCreateModal() {
                     {/* Tab Content: Distribuição de Vagas */}
                     {activeTab === 'Distribuição de Vagas' && (
                         <div>
-                            <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-5 gap-x-3 gap-y-2">
+                            <div id="distribuicao-vagas-options">
                                 <FormField label="AC"><TextInput /></FormField>
                                 <FormField label="NP"><TextInput /></FormField>
                                 <FormField label="I"><TextInput /></FormField>
@@ -113,15 +100,15 @@ export default function QuadroVagasCreateModal() {
                     {/* Tab Content: Categorias Customizadas */}
                     {activeTab === 'Categorias Customizadas' && (
                         <div>
-                            <div className="border border-gray-200 rounded-md overflow-hidden">
+                            <div id="categorias-customizadas-table">
                                 {/* Table Header */}
-                                <div className="flex bg-blue-50 px-6 py-3">
-                                    <div className="w-16 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">#</div>
-                                    <div className="flex-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nome da Categoria</div>
+                                <div id="categorias-customizadas-header">
+                                    <div id="categorias-customizadas-header-text" className="w-16">#</div>
+                                    <div id="categorias-customizadas-header-text" className="flex-1">Nome da Categoria</div>
                                 </div>
                                 {/* Table Body */}
                                 <div className="bg-white">
-                                        <div className="flex h-12 justify-center items-center border border-dashed border-green-400">
+                                        <div id="categorias-customizadas-create">
                                             <CategoriaCreateModal />
                                         </div>
                                 </div>

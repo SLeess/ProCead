@@ -25,7 +25,7 @@ const AvaliacoesDoUsuario = () => {
                     </button>
                 </div>
                 <div className="border-b px-2 bg-white mb-2 rounded-md shadow-md" >
-                    <nav className="-mb-px flex space-x-8" aria-label="Tabs">
+                    <nav id='tabs-navs' aria-label="Tabs">
                         {tabs.map(tab => (
                             <button
                                 key={tab}
