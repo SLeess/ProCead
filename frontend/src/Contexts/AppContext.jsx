@@ -73,10 +73,11 @@ export default function AppProvider({ children }) {
      * Função utilizada para tratar casos de exceção de resposta do servidor, dar um alerta e fazer o logout da aplicação
      * @param {*} response 
      */
-    const verifyStatusRequest = (response) => {
+    const verifyStatusRequest = (response, enableToast = true) => {
         switch (response.status) {
             case 401:
-                toast.info("Sessão expirada. Por favor, faça login novamente.");
+                if(enableToast)
+                    toast.info("Sessão expirada. Por favor, faça login novamente.");
                 logout();
                 break;
             case 403:
@@ -84,13 +85,15 @@ export default function AppProvider({ children }) {
                 // logout();
                 break;
             case 429:
-                toast.info("Usuário desconectado por excesso de requisições realizadas.", {
+                if(enableToast)
+                    toast.info("Usuário desconectado por excesso de requisições realizadas.", {
                     autoClose: true,
                 });
                 logout();
                 break;
             default:
-                toast.info(`Erro desconhecido: ${response.statusText}.`)
+                if(enableToast)
+                    toast.info(`Erro desconhecido: ${response.statusText}.`);
                 break;
         }
     }
@@ -304,8 +307,26 @@ export default function AppProvider({ children }) {
         findMessages(errorObject);
         // return messages;
     };
-
-    async function apiAsyncFetch (method = 'GET', url = ``, body = null, isProtected = true, customErrosTrait = (res, errorResult) => {}){
+    /**
+     * Realiza uma requisição assíncrona para a API com tratamento de erros centralizado.
+     * @param {object} options As opções da requisição.
+     * @param {'GET'|'POST'|'PUT'|'DELETE'|'PATCH'} options.method O método HTTP.
+     * @param {string} options.url O endpoint da API.
+     * @param {object|null} [options.body=null] O corpo da requisição para POST, PUT, etc.
+     * @param {boolean} [options.isProtected=true] Se a rota requer um token de autenticação.
+     * @param {function(Response, object): boolean|void} [options.customErrorHandler = null=null] Uma função para tratamento de erro customizado.
+     * @param {boolean} [options.enableToast=true] Habilita toasts de erro padrão para erros não tratados.
+     * @returns {Promise<any>} Retorna os dados da resposta em caso de sucesso.
+     * @throws {Error} Lança um erro em caso de falha na requisição.
+     */
+    
+    async function apiAsyncFetch (
+        method = 'GET', 
+        url = ``, 
+        body = null, 
+        isProtected = true, 
+        enableToast = true,
+    ){
         const headers = {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
@@ -338,19 +359,11 @@ export default function AppProvider({ children }) {
 
         if (!res.ok) {
             const errorResult = await res.json().catch(() => null);
-
-            const errorWasHandled = customErrosTrait(res, errorResult);
-
-            if (errorWasHandled) {
-                const silentError = new Error("Handled");
-                silentError.handled = true;
-                throw silentError;
-            }
-
+            
             if (errorResult && errorResult.errors) {
                 extractErrorMessages(errorResult.errors); 
             } else {
-                verifyStatusRequest(res);
+                verifyStatusRequest(res, enableToast);
             }
             
             throw new Error(errorResult?.message || `Erro: ${res.status}`);
