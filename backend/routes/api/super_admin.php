@@ -9,7 +9,7 @@ use App\Http\Controllers\SuperAdmin\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix("/super-admin")->name('super-Admin.')->middleware(['role:super-Admin'])->group(function(){
-    Route::resource('/edital', EditalController::class)->only(['index', 'show', 'store', 'update', 'destroy']);
+    Route::resource('/editais', EditalController::class)->only(['store', 'update', 'destroy']);
 
     Route::name("roles.")->group(function(){
         Route::resource('/roles-with-permissions', ManageRolePermissionsController::class)
@@ -38,7 +38,7 @@ Route::prefix("/super-admin")->name('super-Admin.')->middleware(['role:super-Adm
 
     Route::prefix('/users')->name('usuarios.')->group(function(){
         Route::get("", [UserController::class, 'index'])->name('index');
-        Route::prefix('/{userId}/permissions')->name('permissions.')->group(function () {
+        Route::prefix('/{user}/permissions')->name('permissions.')->group(function () {
             Route::singleton('', ManageUserPermissionsController::class)->only(['show', 'update']);
         });
     });

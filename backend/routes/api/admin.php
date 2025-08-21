@@ -18,8 +18,9 @@ Route::prefix('/admin')->name('admin.')->group( function () {
     Route::prefix('/editais')->name('editais.')->group(function(){
         Route::get('', [EditalController::class, 'index'])->name('index');
 
-        Route::prefix('{edital}')->name('manage.')->group(function(){
-        // Route::get('inscricoes', [InscricaoController::class, 'index'])->name('inscricoes.index');
+        Route::prefix('{edital}')->group(function(){
+            Route::get('', [EditalController::class, 'show'])->name('show');
+            // Route::get('inscricoes', [InscricaoController::class, 'index'])->name('.manage.inscricoes.index');
         });
     });
 
