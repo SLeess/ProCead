@@ -35,10 +35,8 @@ const Cursos = () => {
           throw new Error(`Erro ao buscar processos: ${res.status} ${res.statusText}`);
         }
 
-        console.log(result);
         setCursos(result.data);
       } catch (error) {
-        console.log(error);
         setCursos([]);
       } finally {
         setLoading(false);

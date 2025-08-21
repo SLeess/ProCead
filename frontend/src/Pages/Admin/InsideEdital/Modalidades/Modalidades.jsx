@@ -32,11 +32,10 @@ const Modalidades = () => {
         }
 
         const result = await res.json();
-        console.log(result.data);
         setModalidades(result.data);
       } catch (error) {
-        console.log(error);
         setModalidades([]);
+        throw new Error(`Erro : ${error}`);
       } finally {
         setLoading(false);
       }
@@ -44,10 +43,6 @@ const Modalidades = () => {
     fetchProcessos();
   }, [needUpdate]);
 
-  useEffect(() => {
-    console.log("Modalidades: ");
-    console.log(modalidades);
-  }, [modalidades]);
 
   if (hasPermissionForEdital('visualizar-modalidades', editalId) || isSuperAdmin())
     return (

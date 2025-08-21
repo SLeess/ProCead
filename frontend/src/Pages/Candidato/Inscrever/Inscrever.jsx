@@ -87,7 +87,6 @@ const Inscrever = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        console.log(formData);
         try {
             const res = await fetch('/api/inscricao', {
                 method: 'post',
