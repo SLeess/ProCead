@@ -140,19 +140,19 @@ export default function TestTable({ rows, cols, tableName, titulo, details, visi
             const errorMessages = Object.values(errorData.errors || { general: [errorData.message || 'Erro desconhecido'] }).flat();
             errorMessages.forEach((e) => toast.error(e));
             } else {
-            if (!response.ok) {
-                verifyStatusRequest(response);
-                throw new Error(`Erro na rede: ${response.status} ${response.statusText}`);
-            }
-            const blob = await response.blob();
-            const url = window.URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.setAttribute('download', 'relatorio.pdf');
-            document.body.appendChild(link);
-            link.click();
-            link.parentNode.removeChild(link);
-            window.URL.revokeObjectURL(url);
+                const blob = await response.blob();
+                if (!response.ok) {
+                    verifyStatusRequest(response, blob);
+                    throw new Error(`Erro na rede: ${response.status} ${response.statusText}`);
+                }
+                const url = window.URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', 'relatorio.pdf');
+                document.body.appendChild(link);
+                link.click();
+                link.parentNode.removeChild(link);
+                window.URL.revokeObjectURL(url);
             }
         } catch (error) {
             toast.error(error.message || 'Falha na comunicação com a API.');

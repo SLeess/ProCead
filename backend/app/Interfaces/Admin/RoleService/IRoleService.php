@@ -6,6 +6,16 @@ use App\Models\Role;
 
 interface IRoleService{
     /**
+     * Função para apenas criar um cargo ou retornar qualquer exceção do tipo attribute unique, etc.
+     * espera receber um array de dados validados na requisição com
+     * {
+     *  "name": "....",
+     *  "scope": "local|global",
+     * }
+     */
+    public function createRole(array $roleData): void;
+
+    /**
      * função para apenas atualizar os dados do cargo, como nome
      * e escopo
      * @param array $data
@@ -30,4 +40,11 @@ interface IRoleService{
      * @return void
      */
     public function updateScopeRole(Role $role, string $scope): void;
+
+    /**
+     * Função para destruir uma model específica enviada de cargos
+     * @param \App\Models\Role $role
+     * @return void
+     */
+    public function destroyRole(Role $role): void;
 }

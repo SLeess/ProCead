@@ -1,0 +1,13 @@
+@reference "@/index.css";
+
+#card-container {
+    @apply bg-[var(--admin-stats-card)] shadow-md rounded-md p-5 w-xs relative flex flex-col justify-between h-30;
+}
+
+#card-title {
+    @apply text-[var(--admin-stats-card-text)] mb-1;
+}
+
+#card-quant {
+    @apply text-[var(--admin-stats-card-text)] text-2xl font-bold mb-1;
+}

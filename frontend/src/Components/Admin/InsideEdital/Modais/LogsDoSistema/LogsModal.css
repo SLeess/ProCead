@@ -1,0 +1,5 @@
+@reference "@/index.css";
+
+#logs-table {
+    @apply border border-gray-200 rounded-md overflow-hidden;
+}

@@ -15,22 +15,13 @@ class ManageUserPermissionsController extends __SuperAdminController
         parent::__construct();
     }
 
-    public function show(string $userId)
+    public function show(User $user)
     {
-        try {
-            $user = User::find($userId);
-
-            if(!$user) throw new ModelNotFoundException('Erro ao buscar o usuário.');
-
-            return $this->sendResponse(
-                UserDataPermissionsAndRoles::make($user),
-                'Dados de permissões do usuário recuperados com sucesso.',
-                Response::HTTP_OK
-            );
-        } catch (ModelNotFoundException $e) {
-            if(!$user)
-                return $this->sendError($e->getMessage(), ['Usuário não encontrado nos registros']);
-        }
+        return $this->sendResponse(
+            UserDataPermissionsAndRoles::make($user),
+            'Dados de permissões do usuário recuperados com sucesso.',
+            Response::HTTP_OK
+        );
     }
 
      /**

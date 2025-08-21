@@ -13,8 +13,8 @@ const DisciplinaDeleteModal = () => {
 
     return (
         <>
-            <button onClick={() => setOpenModal(true)} className="p-1 hover:bg-gray-200 rounded-full">
-                <Trash className="h-5 w-5 text-red-500" />
+            <button onClick={() => setOpenModal(true)} id="acoes-icons">
+                <Trash id='delete-btn' />
             </button>
             <Modal show={openModal} onClose={onCloseModal} popup>
                 <ModalHeader />

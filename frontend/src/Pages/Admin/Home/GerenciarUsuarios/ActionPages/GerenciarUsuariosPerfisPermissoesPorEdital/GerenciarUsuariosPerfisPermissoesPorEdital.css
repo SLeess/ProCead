@@ -1,0 +1,45 @@
+@reference "@/index.css";
+
+section#gerenciar_usuarios_perfis_permissoes_por_id{
+    @apply mt-5;
+}
+section#gerenciar_usuarios_perfis_permissoes_por_id header h1{
+    @apply text-white text-[22px] not-italic font-bold leading-[normal] mx-0;
+    font-family: Sora;
+}
+section#gerenciar_usuarios_perfis_permissoes_por_id header{
+    @apply absolute top-0 left-0 w-full px-6 py-4 rounded-t-xl bg-[var(--header-admin-primary)] border-2;
+}
+
+section#gerenciar_usuarios_perfis_permissoes_por_id div#content{
+    @apply mt-20 md:mt-15 mb-2 lg:px-4 mx-4 md:mx-0;
+}
+
+section#gerenciar_usuarios_perfis_permissoes_por_id div#content h2{
+    @apply text-black text-2xl not-italic font-normal leading-[normal];
+    font-family: Sora;
+}
+
+section#gerenciar_usuarios_perfis_permissoes_por_id div#content div#informacoes_gerais div > div{
+    @apply col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3 sm:max-w-[296px];
+}
+
+section#gerenciar_usuarios_perfis_permissoes_por_id div#content form{
+    @apply space-x-4 flex md:justify-end justify-evenly;
+}
+
+section#gerenciar_usuarios_perfis_permissoes_por_id div#table-data-container{
+    /* @apply shadow-2xl shadow-black; */
+    filter: drop-shadow(0 6px 24px rgba(0, 0, 0, 0.05)) drop-shadow(0 0 0 rgba(0, 0, 0, 0.08));
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+}
+
+section#gerenciar_usuarios_perfis_permissoes_por_id div#content div#relacoes_globais
+{
+    /* @apply grid md:flex justify-between md:space-x-4 space-y-4 md:space-y-2; */
+    /* @apply flex flex-wrap gap-4 justify-between; */
+    @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-12 gap-6 mb-8 xl:flex lg:justify-between lg:space-x-4
+}
+
+/* grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-8
+md:col-span-1 */

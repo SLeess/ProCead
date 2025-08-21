@@ -1,0 +1,42 @@
+@reference "@/index.css";
+
+#informations-user {
+    @apply flex bg-gray-100 py-2 px-4 gap-6;
+    /* @apply flex bg-white py-2 px-4 gap-6; */
+}
+
+#photo-user {
+    @apply bg-gray-200 rounded-full p-4;
+}
+
+#info-user {
+    @apply flex flex-1 flex-col gap-1;
+}
+
+#email-user {
+    @apply font-semibold;
+}
+
+#last-access-user {
+    @apply text-gray-700 font-semibold text-sm;
+}
+
+#change-pass {
+    @apply flex gap-1 mt-1 cursor-pointer;
+}
+
+#lock-icon {
+    @apply text-red-700 h-4 w-4;
+}
+
+#change-pass-text {
+    @apply text-red-700 font-semibold text-sm;
+}
+
+#form-title {
+    @apply m-4 text-xl font-semibold text-gray-700;
+}
+
+#form-body {
+    @apply flex flex-col gap-2;
+}

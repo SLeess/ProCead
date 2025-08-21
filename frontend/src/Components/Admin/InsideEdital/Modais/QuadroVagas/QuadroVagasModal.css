@@ -1,0 +1,25 @@
+@reference "@/index.css";
+
+#distribuicao-vagas-options {
+    @apply grid grid-cols-1 sm:grid-cols-3 md:grid-cols-5 gap-x-3 gap-y-2;
+}
+
+#categorias-customizadas-table {
+    @apply border border-gray-200 rounded-md overflow-hidden;
+}
+
+#categorias-customizadas-header {
+    @apply flex bg-blue-50 px-6 py-3;    
+}
+
+#categorias-customizadas-header-text {
+    @apply text-left text-xs font-medium text-gray-500 uppercase tracking-wider;
+}
+
+#categorias-customizadas-body-text {
+    @apply text-sm text-gray-900;
+}
+
+#categorias-customizadas-create {
+    @apply flex h-12 justify-center items-center border border-dashed border-green-400;
+}

@@ -6,11 +6,20 @@ import { toast } from "react-toastify";
 import { LogOut, ChevronsLeftRight } from "lucide-react";
 import { useParams } from "react-router-dom";
 import { ChevronDown } from 'lucide-react'
+import { useState } from "react";
+import "./TopBar.css";
+import AdminProfileModal from "../Modais/AdminProfile/AdminProfileModal";
 
 export default function TopBar() {
     const { user, token, logout } = useAppContext();
     const { navigate } = useContext(NavigationContext);
     const { editalId } = useParams();
+
+    const [openModal, setOpenModal] = useState(false);
+
+    function onCloseModal() {
+        setOpenModal(false);
+    }
 
     async function handlerLogOut() {
         try {
@@ -35,30 +44,34 @@ export default function TopBar() {
     }
 
     return (
-        <div className="flex items-center w-full px-4 py-2 bg-white shadow rounded-md mb-4">
+        <div id="header-container">
             {/* Left Item */}
-            <div className="font-medium text-[var(--admin-topbar-flag-text)] bg-[var(--admin-topbar-flag)] py-1 px-2 rounded-md">
+            <div id="header-edital">
                 Edital: {editalId}
             </div>
 
             {/* Spacer */}
             <div className="flex-1" />
 
+            <AdminProfileModal openModal={openModal} onCloseModal={onCloseModal} user={user}/>
+
             {/* Right Item */}
             <Dropdown
                 arrowIcon={false}
                 inline
                 label={
-                    <div className="flex items-center gap-1 cursor-pointer rounded-2xl bg-white py-2 px-4">
-                        <span className="font-semibold text-gray-700">Olá, {user?.nome?.split(' ')[0] || 'Usuário'}</span>
+                    <div id="dropdown-close">
+                        <span id="dropdown-close-nome">Olá, {user?.nome?.split(' ')[0] || 'Usuário'}</span>
                         <ChevronDown />
                     </div>
                 }
             >
-                <DropdownHeader className="w-56">
-                    <span className="block text-sm">{user?.nome}</span>
-                    <span className="block truncate text-sm font-medium">{user?.email}</span>
+            <button onClick={() => setOpenModal(true)}>
+                <DropdownHeader id="dropdown-profile">
+                    <span id="dropdown-open-nome">{user?.nome}</span>
+                    <span id="dropdown-open-email">{user?.email}</span>
                 </DropdownHeader>
+            </button>
                 <DropdownItem icon={ChevronsLeftRight} onClick={handleChangeEdital}>
                     Mudar de edital
                 </DropdownItem>

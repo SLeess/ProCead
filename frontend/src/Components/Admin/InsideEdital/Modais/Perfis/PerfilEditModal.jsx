@@ -2,12 +2,15 @@ import CabecalhoModal from '@/Components/Global/Modais/CabecalhoModal';
 import { FormField, SelectInput, TextInput } from '@/Components/Global/ui/modals';
 import { useAppContext } from '@/Contexts/AppContext';
 import { Modal, ModalBody, ModalHeader } from 'flowbite-react';
-import { Pencil } from 'lucide-react';
+import { Pencil, Trash } from 'lucide-react';
 import React, { useMemo, useState } from 'react'
 import { toast } from 'react-toastify';
+import { perfilEditSchema } from './perfilEditSchema';
+import z from 'zod/v4';
+import Swal from 'sweetalert2';
 
 const PerfilEditModal = ({perfil = {name: "", scope: "", id: ""}}) => {
-    const { token, verifyStatusRequest } = useAppContext();
+    const { apiAsyncFetch } = useAppContext();
     const [openModal, setOpenModal] = useState(false);
     const [role, setRole] = useState(perfil);
 
@@ -35,35 +38,49 @@ const PerfilEditModal = ({perfil = {name: "", scope: "", id: ""}}) => {
         setOpenModal(false);
     }
 
+    function confirmSubmit(){
+        Swal.fire({
+            title: 'Deseja prosseguir com a alteração dos dados?',
+            text: "Essa ação não poderá ser reversível!",
+            // type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Prosseguir com as alterações!',
+            cancelButtonText: 'Cancelar',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                handleOnSubmit();
+            }
+        });
+    }
     async function handleOnSubmit() 
     {
         try {
-            const res = await fetch(`/api/super-admin/roles/${role.id}`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                method: 'POST',
-                body: JSON.stringify({...role, _method: "PUT"})
-            });
 
-            console.log(JSON.stringify({...role, _method: "PUT"}));
-
-
-            if (!res.ok) {
-                if (res.errors) {
-                    Object(res.errors).forEach((er) => toast.error(er));
-                } else{
-                    verifyStatusRequest(res);
-                }
-                throw new Error(`Erro ao atualizar os dados: ${res.status} ${res.statusText}`);
-            } else {
-                const result = await res.json();
-
-                onCloseModal();
-                toast.success(result.message);
-                window.location.reload();
+            const validation = perfilEditSchema.safeParse({ ...role });
+                    
+            if (!validation.success) {
+                const formattedErrors = z.treeifyError(validation.error);
+                
+                Object.values(formattedErrors.properties).forEach(fieldErrors => {
+                    if(fieldErrors.errors) {
+                        fieldErrors.errors.forEach(err => toast.error(err));
+                    }
+                });
+    
+                return;
             }
+
+            const response = await apiAsyncFetch({
+                url: `/api/super-admin/roles/${role.id}`,
+                method: 'POST',
+                body: {...role, _method: "PUT"},
+            });
+            
+            onCloseModal();
+            toast.success(response.message);
+            window.location.reload();
         } catch (error) {
             toast.error(error);
         }
@@ -71,8 +88,8 @@ const PerfilEditModal = ({perfil = {name: "", scope: "", id: ""}}) => {
 
     return (
         <>
-            <button onClick={() => setOpenModal(true)} className="p-1 hover:bg-gray-200 rounded-full">
-                <Pencil className="h-5 w-5 text-yellow-500" />
+            <button onClick={() => setOpenModal(true)} id="acoes-icons">
+                <Pencil id='edit-btn' />
             </button>
             <Modal show={openModal} onClose={onCloseModal} popup>
                 <CabecalhoModal titleModal = {"Editar Perfil"}/>
@@ -108,7 +125,7 @@ const PerfilEditModal = ({perfil = {name: "", scope: "", id: ""}}) => {
                             Cancelar
                         </button>
                         <button
-                            onClick={handleOnSubmit}
+                            onClick={confirmSubmit}
                             id='modal-purple-button'
                         >
                             Salvar

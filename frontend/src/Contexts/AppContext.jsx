@@ -44,8 +44,8 @@ export default function AppProvider({ children }) {
                         'Accept': 'application/json',
                     }
                 });
+                const res = await response.json();
                 if (response.ok) {
-                    const res = await response.json();
                     const data = res.data;
 
                     setUser(data.user);
@@ -56,9 +56,8 @@ export default function AppProvider({ children }) {
                         setPermissionsWithRolesByEdital(data.admin_access.editals_access || {});
                     }
 
-                }
-                if (!response.ok) {
-                    verifyStatusRequest(response);
+                } else{
+                    verifyStatusRequest(response.status, res);
                 }
             } catch (error) {
                 console.error("Erro ao buscar dados do usuário:", error);
@@ -73,24 +72,30 @@ export default function AppProvider({ children }) {
      * Função utilizada para tratar casos de exceção de resposta do servidor, dar um alerta e fazer o logout da aplicação
      * @param {*} response 
      */
-    const verifyStatusRequest = (response) => {
-        switch (response.status) {
+    const verifyStatusRequest = async (status, data, enableToast = true) => {
+        switch (status) {
             case 401:
-                toast.info("Sessão expirada. Por favor, faça login novamente.");
+                if(enableToast)
+                    toast.info("Sessão expirada. Por favor, faça login novamente.");
                 logout();
                 break;
             case 403:
-                toast.info("Você não possui cadastro de candidato, favor realizar seu cadastro novamente.");
-                logout();
+                // toast.info("Você não possui cadastro de candidato, favor realizar seu cadastro novamente.");
+                // logout();
                 break;
             case 429:
-                toast.info("Usuário desconectado por excesso de requisições realizadas.", {
-                    autoClose: true,
-                });
+                if (enableToast) {
+                    toast.info(data?.message || "Muitas requisições. Tente novamente mais tarde.", {
+                        autoClose: true,
+                    });
+                }
                 logout();
                 break;
             default:
-                toast.info(`Erro desconhecido: ${response.statusText}.`)
+                 if (enableToast) {
+                    const defaultMessage = `Ocorreu um erro inesperado (Status: ${status}).`;
+                    toast.error(data?.message || defaultMessage);
+                }
                 break;
         }
     }
@@ -125,6 +130,7 @@ export default function AppProvider({ children }) {
             if (result.isConfirmed) {
                 toast.info("Faça login novamente informando seu email ou cpf e a senha.");
                 logout();
+                window.location.reload();
             }
         });
     }
@@ -184,6 +190,11 @@ export default function AppProvider({ children }) {
         return () => clearInterval(interval);
 
     }, [token, swalLogoutVisible]);
+
+    const changeExpireTime = (expires_at) => {
+        const expirationTimestamp = new Date(expires_at).getTime();
+        localStorage.setItem('expireTime', expirationTimestamp);
+    }
 
     /////////------------------------------------------------------------------------------------------------------------------------/////////
 
@@ -275,6 +286,99 @@ export default function AppProvider({ children }) {
         localStorage.setItem('theme', theme);
     }, [theme]);
 
+    /**
+     * Extrai todas as mensagens de erro (strings) de um objeto ou array,
+     * não importa o quão aninhado ele esteja.
+     * @param {any} errorObject - O objeto ou array de erros.
+     * @returns {string[]} - Um array plano com todas as mensagens de erro encontradas.
+     */
+    const extractErrorMessages = (errorObject) => {
+
+        const findMessages = (value) => {
+            if (typeof value === 'string') {
+                toast.error(value);
+            } 
+            else if (Array.isArray(value)) {
+                value.forEach(item => findMessages(item));
+            } 
+            else if (typeof value === 'object' && value !== null) {
+                Object.values(value).forEach(val => findMessages(val));
+            }
+        };
+
+        findMessages(errorObject);
+        // return messages;
+    };
+    /**
+     * Realiza uma requisição assíncrona para a API com tratamento de erros centralizado.
+     * @param {object} options As opções da requisição.
+     * @param {'GET'|'POST'|'PUT'|'DELETE'|'PATCH'} options.method O método HTTP.
+     * @param {string} options.url O endpoint da API.
+     * @param {object|null} [options.body=null] O corpo da requisição para POST, PUT, etc.
+     * @param {boolean} [options.isProtected=true] Se a rota requer um token de autenticação.
+     * @param {boolean} [options.enableToast=true] Habilita toasts de erro padrão para erros não tratados.
+     * @returns {Promise<any>} Retorna os dados da resposta em caso de sucesso.
+     * @throws {Error} Lança um erro em caso de falha na requisição.
+     */
+    
+    async function apiAsyncFetch(params) {
+        const {
+            url,
+            method = 'GET',
+            body = null,
+            isProtected = true,
+            enableToast = true
+        } = params;
+
+        if (!url) {
+            throw new Error("A URL é um parâmetro obrigatório.");
+        }
+
+        const headers = {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        };
+
+        if (isProtected) {
+            if (token) {
+                headers['Authorization'] = `Bearer ${token}`;
+            } else {
+                console.error("Token não encontrado para uma rota protegida.");
+                return;
+            }
+        }
+
+        const options = {
+            method,
+            headers,
+        };
+
+        if (body && method !== 'GET') {
+            options.body = JSON.stringify(body);
+        }
+
+        const response = await fetch(url, options);
+        const responseData = await response.json().catch(() => null); // Tenta parsear JSON, mas não falha se o corpo for vazio
+
+        const newExpiresAt = response.headers.get('x-session-expires-at');
+        if (newExpiresAt) {
+            changeExpireTime(newExpiresAt);
+        }
+        if (!response.ok) {
+            const errorResult = {...responseData};
+            
+            if (errorResult && errorResult.errors) {
+                extractErrorMessages(errorResult.errors); 
+            } else {
+                verifyStatusRequest(response.status, responseData, enableToast);
+            }
+            
+            throw new Error(errorResult?.message || `Erro: ${response.status}`);
+        }
+
+        return responseData;
+    }
+
     const contextValue = { 
         user, 
         setUser, 
@@ -282,6 +386,8 @@ export default function AppProvider({ children }) {
         setToken,
         remainingTime,
         setRemainingTime,
+        changeExpireTime,
+        apiAsyncFetch,
         // expireTime,
         // setExpireTime,
         loading, 

@@ -5,6 +5,7 @@ import { Modal, ModalBody, ModalHeader, TextInput } from "flowbite-react";
 import { MinusCircle, PlusCircle } from "lucide-react";
 import { useContext, useEffect, useState, useRef, useCallback, useMemo } from "react";
 import { toast } from "react-toastify";
+import "./ModalExportarRelatorio.css";
 
 export default function ModalExportarRelatorio({ openModal, onCloseModal, table, title }) {
 
@@ -214,11 +215,12 @@ export default function ModalExportarRelatorio({ openModal, onCloseModal, table,
           return toast.error(e);
         });
       } else {
+        const blob = await response.blob();
+        
         if (!response.ok) {
-            verifyStatusRequest(response);
+            verifyStatusRequest(response.status, blob);
             throw new Error(`Erro na rede: ${response.status} ${response.statusText}`);
         }
-        const blob = await response.blob();
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
@@ -249,8 +251,8 @@ export default function ModalExportarRelatorio({ openModal, onCloseModal, table,
           <div id='rows-3-input'>
             <FormField className="md:col-span-3" label="Título do PDF">
               <textarea
+                id="titulo-pdf-textarea"
                 rows={3}
-                className="bg-gray-100 border border-gray-200 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full"
                 value={titulo}
                 onChange={(e) => setTitulo(e.target.value)}
               >
@@ -265,22 +267,23 @@ export default function ModalExportarRelatorio({ openModal, onCloseModal, table,
             </FormField>
           </div>
           <div className="mt-4">
-            <button onClick={() => enableGroupBy(showGroupBy)} className="text-sm font-semibold text-[var(--admin-add-group-by)] hover:underline">
+            <button id="relatorio-special-options" onClick={() => enableGroupBy(showGroupBy)}>
               {showGroupBy ? 'Desabilitar Agrupamento' : 'Agrupar por Coluna'}
             </button>
           </div>
           {showGroupBy && (
             <>
-              <hr className="my-4 h-1 bg-gray-300 border-0 rounded-md dark:bg-gray-700" />
+              <hr id="relatorio-special-options-divisor" />
               <div id='rows-3-input'>
                 <FormField className="md:col-span-3" label="Agrupar por">
                   <div className="space-y-2">
                     {groupByFields.map((field, index) => (
-                      <div key={index} className="flex items-center gap-2">
+                      <div id="relatorio-group-by-column-container" key={index}>
                         <button
+                          id="relatorio-group-by-column-button"
                           type="button"
                           onClick={index === 0 ? addGroupByField : () => removeGroupByField(index)}
-                          className={`p-1 rounded-full transition-colors ${index === 0
+                          className={`${index === 0
                             ? 'cursor-pointer text-[var(--admin-add-group-by)] hover:bg-[var(--admin-add-group-by-hover)]'
                             : 'cursor-pointer text-red-600 hover:bg-red-100'
                             }`}
@@ -304,27 +307,27 @@ export default function ModalExportarRelatorio({ openModal, onCloseModal, table,
             </>
           )}
           <div className="mt-4">
-            <button onClick={() => enableColumnWidth(showColumnWidth)} className="text-sm font-semibold text-[var(--admin-add-group-by)] hover:underline">
+            <button id="relatorio-special-options" onClick={() => enableColumnWidth(showColumnWidth)}>
               {showColumnWidth ? 'Desabilitar Ajuste de Colunas' : 'Ajustar Largura das Colunas'}
             </button>
           </div>
           {showColumnWidth && (
             <>
-              <hr className="my-4 h-1 bg-gray-300 border-0 rounded-md dark:bg-gray-700" />
+              <hr id="relatorio-special-options-divisor" />
               <div className="mt-6">
-                <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">Pré-visualização de colunas</h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mb-3">Arraste as divisórias para ajustar a largura das colunas para a exportação em PDF.</p>
-                <div ref={previewContainerRef} className="flex w-full h-12 bg-gray-50 border border-gray-300 rounded-md overflow-hidden select-none">
+                <h3 id="relatorio-column-adjustment-title">Pré-visualização de colunas</h3>
+                <p id="relatorio-column-adjustment-subtitle">Arraste as divisórias para ajustar a largura das colunas para a exportação em PDF.</p>
+                <div id="relatorio-column-adjustment-container" ref={previewContainerRef}>
                   {exportableColumns.map((column, index) => (
                     <div
+                      id="relatorio-column-adjustment-item-box"
                       key={column.id}
-                      className="h-full flex items-center justify-center border-r border-gray-300 relative text-center"
                       style={{ width: `${columnWidths[column.id] || 0}%` }}
                     >
-                      <span className="text-xs font-medium text-gray-700 truncate px-2">{column.columnDef.header}</span>
+                      <span id="relatorio-column-adjustment-item-text">{column.columnDef.header}</span>
                       {index < exportableColumns.length - 1 && (
                         <div
-                          className="absolute top-0 -right-1 h-full w-2 cursor-col-resize z-10"
+                          id="relatorio-column-adjustment-slide"
                           onMouseDown={(e) => handleMouseDown(e, index)}
                         >
                           <div className={`h-full w-px bg-gray-400 ${resizingColumnIndex === index ? 'bg-blue-600' : ''} hover:bg-blue-600`}></div>

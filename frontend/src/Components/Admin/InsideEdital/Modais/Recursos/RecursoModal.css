@@ -1,0 +1,9 @@
+@reference "@/index.css";
+
+#recurso-situacao-text {
+    @apply text-xl font-semibold text-gray-800 mb-2;
+}
+
+#recurso-textarea {
+    @apply bg-gray-100 border border-gray-200 rounded-md px-4 py-2 focus:outline-none w-full;
+}
