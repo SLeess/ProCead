@@ -1,5 +1,6 @@
 import React from 'react';
 import { CircleQuestionMark, Eye } from 'lucide-react';
+import { Tooltip } from 'flowbite-react';
 
 function IndeterminateCheckbox({ indeterminate, className = '', ...rest }) {
   const ref = React.useRef(null);
@@ -52,15 +53,17 @@ export const TabelaPermissoesGlobaisGlobais = () => [
     id: 'actions',
     header: () => <div className="text-right">Ação</div>,
     cell: ({ row }) => (
-      <div className="text-center">
-        <button 
-        //   onClick={() => navigate(`admin/perfis/${row.original.id}/permissoes`)}
-          className="p-1 text-blue-600 hover:bg-blue-100 rounded-full"
-          title="Visualizar Permissões"
-        >
-          {/* <Eye className="h-5 w-5" /> */}
-          <CircleQuestionMark className="h-5 w-5" />
-        </button>
+      <div className="flex justify-center">
+        <Tooltip content={row.original.description}>
+          <button 
+          //   onClick={() => navigate(`admin/perfis/${row.original.id}/permissoes`)}
+            className="p-1 text-blue-600 hover:bg-blue-100 rounded-full"
+            title="Visualizar Permissões"
+          >
+            {/* <Eye className="h-5 w-5" /> */}
+            <CircleQuestionMark className="h-5 w-5" />
+          </button>
+        </Tooltip>
       </div>
     ),
     enableSorting: false,
