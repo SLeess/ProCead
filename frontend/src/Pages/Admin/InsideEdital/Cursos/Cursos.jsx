@@ -37,7 +37,9 @@ const Cursos = () => {
 
         setCursos(result.data);
       } catch (error) {
+        
         setCursos([]);
+        throw new Error(`Erro ao buscar cursos: ${error}`)
       } finally {
         setLoading(false);
       }
@@ -58,7 +60,7 @@ const Cursos = () => {
               <CursoCreateModal setNeedUpdate={setNeedUpdate}/>
             </div>
             <div className="flex gap-4 mb-4">
-              <StatsCard title={"Nº de Cursos"} quant={3}>
+              <StatsCard title={"Nº de Cursos"} quant={cursos.length}>
                 <BookOpen className="text-[var(--admin-stats-card-text)] absolute top-4 right-4" />
               </StatsCard>
             </div>

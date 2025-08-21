@@ -23,6 +23,9 @@ class DatabaseSeeder extends Seeder
             $this->call(PermissionsSeeder::class);
             $this->call(EditalSeeder::class);
             $this->call(TiposAvaliacaoSeeder::class);
+            $this->call(PoloSeeder::class);
+            $this->call(ModalidadeSeeder::class);
+            $this->call(CursoSeeder::class);
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
