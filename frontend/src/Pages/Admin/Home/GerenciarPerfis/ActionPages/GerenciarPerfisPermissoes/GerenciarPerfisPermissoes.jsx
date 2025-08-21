@@ -89,7 +89,6 @@ export default function GerenciarPerfisPermissoes()
                 });
                 
                 const resultAllPermissions = await resAllPermissions.json();
-
                 if ( !resAllPermissions.ok) {
                     verifyStatusRequest(resAllPermissions);
                     throw new Error(`Erro ao buscar as permissões: ${resAllPermissions.status} ${resAllPermissions.statusText}`);

@@ -2,7 +2,7 @@ import StatusEditalPill from "@/Components/Global/Tables/MainTable/Components/Pi
 import { SquareArrowOutUpRight } from "lucide-react";
 import React from "react";
 
-export const columnsGerenciarUsuariosPerfisPermissoes = () => [
+export const columnsGerenciarUsuariosPerfisPermissoes = (navigate, userId) => [
   
     {
       accessorKey: "edital",
@@ -23,7 +23,7 @@ export const columnsGerenciarUsuariosPerfisPermissoes = () => [
         return (
         <div className="flex items-center space-x-2 justify-center">
           <button 
-            // onClick={() => navigate(`admin/usuarios/${row.original.id}/cargos-e-permissoes`)} 
+            onClick={() => navigate(`admin/usuarios/${userId}/cargos-e-permissoes/${row.original.id}`)} 
             className="p-1 hover:bg-gray-200 rounded-full">
               <SquareArrowOutUpRight className="h-5 w-5 text-[#1A72DA]" />
           </button>

@@ -31,6 +31,7 @@ import LayoutAdminInsideEdital from './Layouts/LayoutAdminInsideEdital';
   import GerenciarUsuarios from './Pages/Admin/Home/GerenciarUsuarios/GerenciarUsuarios';
   /** ------------------------------- Páginas de Gerência de Permissões e Perfis do Usuário ----------------------- */
     import GerenciarUsuariosPerfisPermissoes from './Pages/Admin/Home/GerenciarUsuarios/ActionPages/GerenciarUsuariosPerfisPermissoes/GerenciarUsuariosPerfisPermissoes';
+    import GerenciarUsuariosPerfisPermissoesPorEdital from './Pages/Admin/Home/GerenciarUsuarios/ActionPages/GerenciarUsuariosPerfisPermissoesPorEdital/GerenciarUsuariosPerfisPermissoesPorEdital';
   /** ------------------------------- Páginas de Gerência de Permissões e Perfis do Usuário ----------------------- */
 
   import RelatoriosCustom from './Pages/Admin/Home/RelatoriosCustom/RelatoriosCustom';
@@ -148,7 +149,10 @@ function App() {
             </Route>
             <Route path="usuarios" element={<GerenciarUsuarios/>} />
             <Route path="usuarios/:userId/" >
-              <Route path="cargos-e-permissoes" element={<GerenciarUsuariosPerfisPermissoes/>}></Route>
+              <Route path="cargos-e-permissoes">
+                <Route index element={<GerenciarUsuariosPerfisPermissoes/>}></Route>
+                <Route path=":editalId" element={<GerenciarUsuariosPerfisPermissoesPorEdital/>}></Route>
+              </Route>
             </Route>
             <Route path="relatorios-custom" element={<RelatoriosCustom/>} />
             {/* <Route path='manejar-usuarios/:userId' element={<UserManagePage />} /> */}

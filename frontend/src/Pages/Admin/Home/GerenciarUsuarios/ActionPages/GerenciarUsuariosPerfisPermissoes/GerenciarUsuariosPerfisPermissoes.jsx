@@ -2,7 +2,7 @@ import { NavigationContext } from "@/Contexts/NavigationContext";
 import "./GerenciarUsuariosPerfisPermissoes.css";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { useAppContext } from "@/Contexts/AppContext";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import MainTable from "@/Components/Global/Tables/MainTable/MainTable";
 import { toast } from "react-toastify";
 import InformacoesGerais from "../../Components/InformacoesGerais";
@@ -22,7 +22,7 @@ export default function GerenciarUsuariosPerfisPermissoes()
     const [globalRoles, setGlobalRoles] = useState([]);
     const [editais, setEditais] = useState([]);
 
-    const columns = useMemo(() => columnsGerenciarUsuariosPerfisPermissoes(), []);
+    const columns = useMemo(() => columnsGerenciarUsuariosPerfisPermissoes(navigate, userId), [navigate, userId]);
 
     const [loading, setLoading] = useState(true);
     const [cantShow, setCantShow] = useState(true);
@@ -38,24 +38,7 @@ export default function GerenciarUsuariosPerfisPermissoes()
                         `/api/super-admin/users/${userId}/permissions`, 
                         null,
                         true,
-                        (res, errorResult) => {
-                                if (res.status === 404) {
-                                     Swal.fire({
-                                        title: 'Erro ao Buscar Usuário',
-                                        text: "Não foi possível encontrar os dados do usuário solicitado. Verifique o ID e tente novamente.",
-                                        icon: 'error',
-                                        confirmButtonText: 'Voltar',
-                                        confirmButtonColor: '#3085d6',
-                                        allowOutsideClick: false,
-                                        allowEscapeKey: false,   
-                                    }).then((result) => {
-                                        if (result.isConfirmed) {
-                                            navigate(-1);
-                                        }
-                                    });
-                                    return true;
-                                }
-                            }
+                        true,
                     );
 
                     const resRoles = await apiAsyncFetch(
@@ -71,13 +54,11 @@ export default function GerenciarUsuariosPerfisPermissoes()
                         'GET',
                         `/api/admin/editais/`
                     );
-                    
                     setGlobalRoles(resRoles.data.roles);
                     setGlobalPermissions(Object.values(resPerms.data.permissions).flat());
                     setUser(result.data.user);
                     setEditais(resEditais.data.data);
                     setCantShow(false);
-                    // setPerfis(result.data.roles);
                 } catch (err) {
                     if (!err.handled) {
                         Swal.fire({
@@ -86,8 +67,8 @@ export default function GerenciarUsuariosPerfisPermissoes()
                             icon: 'error',
                             confirmButtonText: 'Voltar',
                             confirmButtonColor: '#3085d6',
-                            allowOutsideClick: false, // Impede que o usuário feche clicando fora
-                            allowEscapeKey: false,    // Impede que o usuário feche com a tecla Esc
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
                         }).then((result) => {
                             if (result.isConfirmed) {
                                 navigate(-1);
@@ -95,7 +76,6 @@ export default function GerenciarUsuariosPerfisPermissoes()
                         });
                     }
                 } finally{
-                    if(cantShow)
                         setLoading(false);
                 }
             }
@@ -118,7 +98,7 @@ export default function GerenciarUsuariosPerfisPermissoes()
                 !loading && !cantShow &&
                 <div id="content">
                     <div id="informacoes_gerais" className="">
-                        <InformacoesGerais user={user} readOnly={true}/>
+                        <InformacoesGerais user={user}/>
                     </div>
                     <div id="relacoes_globais">
                         <div id="atribuir_cargos_globais" className="col-span-12 sm:col-span-1 md:col-span-6">
