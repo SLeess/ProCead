@@ -33,27 +33,20 @@ export default function GerenciarUsuariosPerfisPermissoes()
                 setLoading(true);
 
                 try {
-                    const result = await apiAsyncFetch(
-                        'GET', 
-                        `/api/super-admin/users/${userId}/permissions`, 
-                        null,
-                        true,
-                        true,
-                    );
+                    const result = await apiAsyncFetch({
+                        url: `/api/super-admin/users/${userId}/permissions`, 
+                    });
 
-                    const resRoles = await apiAsyncFetch(
-                        'GET', 
-                        `/api/super-admin/roles-scope/global`, 
-                    );
-                    const resPerms = await apiAsyncFetch(
-                        'GET', 
-                        `/api/super-admin/permissions-scope/global`, 
-                    );
+                    const resRoles = await apiAsyncFetch({
+                        url: `/api/super-admin/roles-scope/global`, 
+                    });
+                    const resPerms = await apiAsyncFetch({
+                        url: `/api/super-admin/permissions-scope/global`, 
+                    });
 
-                    const resEditais = await apiAsyncFetch(
-                        'GET',
-                        `/api/admin/editais/`
-                    );
+                    const resEditais = await apiAsyncFetch({
+                        url: `/api/admin/editais/`,
+                    });
                     setGlobalRoles(resRoles.data.roles);
                     setGlobalPermissions(Object.values(resPerms.data.permissions).flat());
                     setUser(result.data.user);

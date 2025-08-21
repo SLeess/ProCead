@@ -10,7 +10,7 @@ import z from 'zod/v4';
 import Swal from 'sweetalert2';
 
 const PerfilEditModal = ({perfil = {name: "", scope: "", id: ""}}) => {
-    const { token, verifyStatusRequest } = useAppContext();
+    const { apiAsyncFetch } = useAppContext();
     const [openModal, setOpenModal] = useState(false);
     const [role, setRole] = useState(perfil);
 
@@ -72,33 +72,15 @@ const PerfilEditModal = ({perfil = {name: "", scope: "", id: ""}}) => {
                 return;
             }
 
-            const res = await fetch(`/api/super-admin/roles/${role.id}`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
+            const response = await apiAsyncFetch({
+                url: `/api/super-admin/roles/${role.id}`,
                 method: 'POST',
-                body: JSON.stringify({...role, _method: "PUT"})
+                body: {...role, _method: "PUT"},
             });
-
-            const result = await res.json();
             
-            if (!res.ok) {
-                if (result.errors) {
-                    Object.values(result.errors).forEach(
-                        (er) => Object.values(er).forEach(
-                                    (e) => toast.error(e)
-                                )
-                    );
-                } else{
-                    verifyStatusRequest(res);
-                }
-                throw new Error(`Erro ao atualizar os dados: ${res.status} ${res.statusText}`);
-            } else {
-                onCloseModal();
-                toast.success(result.message);
-                window.location.reload();
-            }
+            onCloseModal();
+            toast.success(response.message);
+            window.location.reload();
         } catch (error) {
             toast.error(error);
         }

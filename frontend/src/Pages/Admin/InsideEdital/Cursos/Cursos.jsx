@@ -28,12 +28,13 @@ const Cursos = () => {
           },
         });
 
+        const result = await res.json();
+
         if (!res.ok) {
-          verifyStatusRequest(res);
+          verifyStatusRequest(res.status, result);
           throw new Error(`Erro ao buscar processos: ${res.status} ${res.statusText}`);
         }
 
-        const result = await res.json();
         console.log(result);
         setCursos(result.data);
       } catch (error) {

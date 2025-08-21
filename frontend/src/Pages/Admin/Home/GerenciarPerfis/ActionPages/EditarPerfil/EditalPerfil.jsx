@@ -72,13 +72,9 @@ export default function EditalPerfil()
                 }
 
                 const resultRolePermissions = await resRolePermissions.json();
-                // if(!resultRolePermissions.success){
-                //     navigate(-1);
-                //     throw new Error("Erro na busca: " + resultRolePermissions.message);
-                // } 
-                // else 
+
                 if (!resRolePermissions.ok) {
-                    verifyStatusRequest(resRolePermissions);
+                    verifyStatusRequest(resRolePermissions.status, resultRolePermissions);
                     throw new Error(`Erro ao buscar as permissões atreladas ao cargo: ${resRolePermissions.status} ${resRolePermissions.statusText}`);
                 } else{
                     setRole((e) => ({...e, 
@@ -102,7 +98,7 @@ export default function EditalPerfil()
                 const resultAllPermissions = await resAllPermissions.json();
 
                 if ( !resAllPermissions.ok) {
-                    verifyStatusRequest(resAllPermissions);
+                    verifyStatusRequest(resAllPermissions.status, resultAllPermissions);
                     throw new Error(`Erro ao buscar as permissões: ${resAllPermissions.status} ${resAllPermissions.statusText}`);
                 } else {
                     setAllPermissions((a) => ({...a,
@@ -279,7 +275,7 @@ export default function EditalPerfil()
                         errorArray.forEach((errorMessage) => toast.error(errorMessage));
                     });
                 } else {
-                    verifyStatusRequest(res);
+                    verifyStatusRequest(res.status, result);
                     throw new Error(`Erro ao atualizar o cargo e suas permissões: ${res.status} ${res.statusText}`);
                 }
             } else {

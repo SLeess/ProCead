@@ -18,11 +18,11 @@ const PerfilDeleteModal = ({ perfil }) => {
         try {
             onCloseModal();
 
-            const result = await apiAsyncFetch(
-                'DELETE', 
-                `/api/super-admin/roles/${perfil.id}`, 
-                perfil,
-            );
+            const result = await apiAsyncFetch({
+                method: 'DELETE', 
+                url: `/api/super-admin/roles/${perfil.id}`, 
+                body: perfil,
+            });
             toast.success(result.message);
             window.location.reload();
         } catch (error) {

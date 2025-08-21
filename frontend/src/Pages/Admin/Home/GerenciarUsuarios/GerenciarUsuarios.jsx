@@ -25,14 +25,13 @@ export default function GerenciarUsuarios(){
         const fetchProcessos = async () => {
             setLoading(true);
             try{
-                const result = await apiAsyncFetch(
-                    'GET', 
-                    `/api/super-admin/users`, 
-                );
+                const result = await apiAsyncFetch({
+                    url: `/api/super-admin/users`, 
+                });
                 setUsuarios(result.data.users);
             } catch (err) {
-                    setError("Não foi possível carregar seus processos seletivos. " + (err.message ? ` (${err.message})` : ''));
-                    setUsuarios([]);
+                setError("Não foi possível carregar seus processos seletivos. " + (err.message ? ` (${err.message})` : ''));
+                setUsuarios([]);
             } finally {
                 setLoading(false);
             }

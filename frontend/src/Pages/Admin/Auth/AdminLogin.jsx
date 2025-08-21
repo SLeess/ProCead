@@ -6,7 +6,7 @@ import { NavigationContext } from "@/Contexts/NavigationContext";
 import LoaderPages from "@/Components/Global/LoaderPages/LoaderPages";
 
 export default function Login() {
-    const { login } = useContext(AppContext);
+    const { login, apiAsyncFetch } = useContext(AppContext);
     const { navigate } = useContext(NavigationContext);
 
     const [formData, setFormData] = useState({
@@ -42,24 +42,18 @@ export default function Login() {
         }
 
         try{
-            const res = await fetch('/api/admin/login', {
-                method: 'post',
-                body: JSON.stringify(formData),
+            const res = await apiAsyncFetch({
+                method: 'POST',
+                url: `/api/admin/login`,
+                body: formData,
+                isProtected: false,
             });
 
-            
-            const result = await res.json();
-            if (!result.success || !res.ok) {
-                if (result.errors) {
-                    Object(result.errors).forEach((er) => toast.error(er));
-                }
-            } else{
-                login(result);
-                navigate('/admin/');
-                toast.success(result.message || "Autenticado com sucesso!");
-            }
+            login(res);
+            navigate('/admin/');
+            toast.success(res.message || "Autenticado com sucesso!");
         } catch (error) {
-            toast.error(error.toString());
+            // toast.error(error.toString());
         } finally{
             setLoading(false);
         }

@@ -24,12 +24,13 @@ function MeusProcessos() {
               },
           });
 
+          const result = await res.json();
+
           if (!res.ok) {
-            verifyStatusRequest(res);
+            verifyStatusRequest(res.status, result);
             throw new Error(`Erro ao buscar processos: ${res.status} ${res.statusText}`);
           }
 
-          const result = await res.json();
           setMeusProcessos(result.data);
       } catch (err) {
           setError("Não foi possível carregar seus processos seletivos. " + (err.message ? ` (${err.message})` : ''));

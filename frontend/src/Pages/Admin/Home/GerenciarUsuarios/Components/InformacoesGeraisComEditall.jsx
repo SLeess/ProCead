@@ -1,8 +1,7 @@
-import { FormField, SelectInput, TextInput } from "@/Components/Global/ui/modals";
+import { FormField, TextInput } from "@/Components/Global/ui/modals";
 
 export default function InformacoesGeraisComEditall({user, edital})
 {
-    console.log(edital);
     return (<>
         <h2>Informações Gerais do Usuário e do Edital</h2>
         <aside className="container m-auto grid grid-cols-1 sm:grid-cols-12 gap-2">

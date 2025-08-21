@@ -215,11 +215,12 @@ export default function ModalExportarRelatorio({ openModal, onCloseModal, table,
           return toast.error(e);
         });
       } else {
+        const blob = await response.blob();
+        
         if (!response.ok) {
-            verifyStatusRequest(response);
+            verifyStatusRequest(response.status, blob);
             throw new Error(`Erro na rede: ${response.status} ${response.statusText}`);
         }
-        const blob = await response.blob();
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;

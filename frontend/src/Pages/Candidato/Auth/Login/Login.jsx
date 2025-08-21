@@ -10,7 +10,7 @@ import LoaderPages from "@/Components/Global/LoaderPages/LoaderPages";
 import Loader from "@/Components/Global/Loader/Loader";
 
 export default function Login() {
-    const { theme, login } = useContext(AppContext);
+    const { theme, login, apiAsyncFetch } = useContext(AppContext);
     const { navigate } = useContext(NavigationContext);
     const { inputRef } = useRef(`border-[#004da9]`);
 
@@ -44,26 +44,18 @@ export default function Login() {
         }
 
         try{
-            const res = await fetch('/api/login', {
-                method: 'post',
-                body: JSON.stringify(formData),
+            const res = await apiAsyncFetch({
+                method: 'POST',
+                url: `/api/login`,
+                body: formData,
+                isProtected: false,
             });
 
-            const result = await res.json();
-            
-            if (!result.success || !res.ok) {
-                if(result.errors){
-                    result.errors.forEach(errorMessage => {
-                        toast.error(errorMessage);
-                    });
-                }
-            } else{
-                login(result);
-                toast.success((result.message || "Autenticado com sucesso!"));
-                navigate('/');
-            }
+            login(res);
+            navigate('/');
+            toast.success(res.message || "Autenticado com sucesso!");
         } catch (error) {
-            toast.error(error.toString());
+            // toast.error(error.toString());
         } finally{
             setLoading(false);
         }
