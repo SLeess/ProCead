@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -36,26 +37,34 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
+        $exceptions->renderable(function (ThrottleRequestsException $e, $request) {
+            if ($request->is('api/*') || $request->wantsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Excesso de requisições enviadas! Tente novamente em '. $e->getHeaders()['Retry-After'].' segundos.',
+                ], $e->getStatusCode());
+            }
+        });
         $exceptions->renderable(function (NotFoundHttpException $e, $request) {
             if ($request->is('api/*') || $request->wantsJson()) {
                 $previous = $e->getPrevious();
 
-            $errorMessage = "";
+                $errorMessage = "";
 
-            if ($previous instanceof ModelNotFoundException) {
-                $modelFullName = $previous->getModel();
-                $translationKey = 'messages.models.' . $modelFullName;
-                $translatedModel = trans($translationKey, []);
+                if ($previous instanceof ModelNotFoundException) {
+                    $modelFullName = $previous->getModel();
+                    $translationKey = 'messages.models.' . $modelFullName;
+                    $translatedModel = trans($translationKey, []);
 
-                $errorMessage = trans('messages.model_not_found', ['model' => $translatedModel]);
-            } else{
-                $errorMessage = trans('messages.model_not_found', ['model' => "Elemento"]);
-            }
+                    $errorMessage = trans('messages.model_not_found', ['model' => $translatedModel]);
+                } else{
+                    $errorMessage = trans('messages.model_not_found', ['model' => "Elemento"]);
+                }
 
-            return response()->json([
-                'message' => $errorMessage,
-                'success' => false,
-            ], Response::HTTP_NOT_FOUND);
+                return response()->json([
+                    'message' => $errorMessage,
+                    'success' => false,
+                ], Response::HTTP_NOT_FOUND);
             }
         });
 
@@ -65,6 +74,7 @@ return Application::configure(basePath: dirname(__DIR__))
         // ===================================================================
         $exceptions->renderable(function (Throwable $e, Request $request) {
             if  ($request->is('api/*')) {
+                // dd($e);
                 if ($e instanceof HttpException) {
                     return response()->json([
                         'success' => false,
