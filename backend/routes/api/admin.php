@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\CursosController;
 use App\Http\Controllers\Admin\EditalController;
 use App\Http\Controllers\Admin\PolosController;
+use App\Http\Controllers\ModalidadesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\ManageUserController;
 use App\Http\Controllers\Admin\RelatorioController;
@@ -26,6 +27,7 @@ Route::prefix('/admin')->name('admin.')->group( function () {
 
     Route::resource('/polos', PolosController::class)->except('index');
     Route::resource('/cursos', CursosController::class)->except('index');
+    Route::resource('/modalidades', ModalidadesController::class)->except('index');
 
     Route::middleware(['throttle:heavy'])->post('/export', [RelatorioController::class, 'export'])->name('export');
 });

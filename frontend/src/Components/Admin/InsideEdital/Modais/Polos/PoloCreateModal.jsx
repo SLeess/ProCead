@@ -28,7 +28,6 @@ const PoloCreateModal = ({setNeedUpdate}) => {
     const handleSubmit = async (e) => {
             e.preventDefault();
             setLoading(true);
-            console.log(formData);
             try {
                 const res = await fetch('/api/admin/polos', {
                     method: 'post',
@@ -68,9 +67,6 @@ const PoloCreateModal = ({setNeedUpdate}) => {
             }
         };
 
-        useEffect(() => {
-            console.log("nome: " + formData.nome);
-        },[formData])
     return (
         <>
             <button onClick={() => setOpenModal(true)} id='create-btn'>

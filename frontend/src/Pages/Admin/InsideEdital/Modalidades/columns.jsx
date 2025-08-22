@@ -18,23 +18,33 @@ const columns = [
       cell: (props) => <span>{props.getValue()}</span>
     },
     {
-      accessorKey: "nome",
-      header: "Nome",
+      accessorKey: "descricao",
+      header: "Descrição",
       cell: (props) => <span>{props.getValue()}</span>
     },
     {
-      accessorKey: "avaliacao",
+      accessorKey: "tipos_avaliacoes",
       header: "Avaliação",
-      cell: (props) => <span>{props.getValue()}</span>
+      cell: (props) => {
+        const avaliacoes = props.getValue();
+        if (Array.isArray(avaliacoes)) {
+          return (
+            <span>
+              {avaliacoes.map(item => item).join(' | ')}
+            </span>
+          );
+        }
+        return <span></span>;
+      }
     },
     {
       id: "actions",
       header: "Ações",
-      cell: () => (
+      cell: ({row, table}) => (
         <div className="flex items-center space-x-2 justify-center">
-          <ModalidadeShowModal/>
-          <ModalidadeEditModal/>
-          <ModalidadeDeleteModal/>
+          {/* <ModalidadeShowModal/> */}
+          <ModalidadeEditModal modalidade={row.original} setNeedUpdate={table.options.meta.setNeedUpdate}/>
+          <ModalidadeDeleteModal modalidade={row.original} setNeedUpdate={table.options.meta.setNeedUpdate}/>
         </div>
       ),
       enableSorting: false,

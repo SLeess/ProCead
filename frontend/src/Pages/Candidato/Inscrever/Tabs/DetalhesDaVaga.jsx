@@ -21,7 +21,6 @@ const DetalhesDaVaga = ({ formData, setFormData, handleBack, handleNext, setEnab
       return modalidade && categoria && anexo_cpf && anexo_comprovante_residencia && anexo_historico && anexo_autodeclaracao;
     }).length;
 
-    console.log("ammount vagas filled: " + filledVagasCount + " numero de vagas: "+ formData.vagas.length)
     if (filledVagasCount == formData.vagas.length)
       setEnabledTabs(["Informações Básicas", "Endereço", "Escolha da Vaga", "Detalhes da Vaga", "Confirmação"]);
     else

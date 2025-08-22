@@ -34,11 +34,10 @@ const Polos = () => {
           throw new Error(`Erro ao buscar processos: ${res.status} ${res.statusText}`);
         }
 
-        console.log(result);
         setPolos(result.data);
       } catch (error) {
-        console.log(error);
         setPolos([]);
+        throw new Error(`Erro : ${error}`);
       } finally {
         setLoading(false);
       }
