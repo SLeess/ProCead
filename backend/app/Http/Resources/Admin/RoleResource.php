@@ -17,10 +17,11 @@ class RoleResource extends JsonResource
     {
          return [
             'id' => $this->id,
-            'nome' => Str::title($this->name),
+            'nome' => $this->name,
             'escopo' => $this->scope,
             'created_at' => $this->created_at ? $this->created_at->format('Y-m-d H:i:s') : null,
             'updated_at' => $this->updated_at ? $this->updated_at->format('Y-m-d H:i:s') : null,
+            // 'related_permissions_ids' => $this->permi
         ];
     }
 }
