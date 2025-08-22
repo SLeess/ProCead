@@ -31,10 +31,24 @@ const MainTable = ({
             enableDataFooter = true,
             pageSize=10,
             className = ``,
+            // ==========================================================
+            // 1. RECEBA AS PROPS DE SELEÇÃO DO COMPONENTE PAI
+            // ==========================================================
+            rowSelection: controlledRowSelection,
+            setRowSelection: setControlledRowSelection,
   }) => {
   const [columnFilters, setColumnFilters] = useState([]);
-  const [rowSelection, setRowSelection] = useState({});
+  const [internalRowSelection, setInternalRowSelection] = useState({});
   const [globalFilter, setGlobalFilter] = useState('');
+
+  // ==========================================================
+  // DECIDA QUAL ESTADO USAR (O DO PAI OU O INTERNO)
+  // ==========================================================
+  const isControlled = controlledRowSelection !== undefined;
+  const rowSelection = isControlled ? controlledRowSelection : internalRowSelection;
+  const setRowSelection = isControlled ? setControlledRowSelection : setInternalRowSelection;
+
+
   const [columnVisibility, setColumnVisibility] = useState(() => {
     const initialVisibility = columns.reduce((acc, column) => {
       if (column.accessorKey && column.columnVisibility !== undefined) {
