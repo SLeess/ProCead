@@ -12,4 +12,9 @@ class VagasPorModalidade extends Model
         'quadro_vaga_id',
         'quantidade'
     ];
+
+    public function modalidade()
+    {
+        return $this->belongsTo(Modalidade::class);
+    }
 }

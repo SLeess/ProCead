@@ -1,5 +1,5 @@
 import MainTable from '../../../../Components/Global/Tables/MainTable/MainTable'
-import React, { use, useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { AppContext } from '@/Contexts/AppContext';
 import AccessDenied from '../../../../Components/Global/AccessDenied/AccessDenied';
 import columns from './columns';
@@ -53,7 +53,14 @@ const QuadroVagas = () => {
     console.log("quadroVagas: ", quadroVagas);
   }, [quadroVagas]);
 
-  if (hasPermissionForEdital('visualizar-campi-cursos', editalId) || isSuperAdmin())
+  if (hasPermissionForEdital('visualizar-campi-cursos', editalId) || isSuperAdmin()) {
+    const totalVagas = quadroVagas && quadroVagas.length > 0 ? quadroVagas.reduce((total, quadro) => {
+      const vagasNesteQuadro = quadro.vagas_por_modalidade.reduce((subtotal, modalidade) => {
+        return subtotal + parseInt(modalidade.quantidade || 0, 10);
+      }, 0);
+      return total + vagasNesteQuadro;
+    }, 0) : 0;
+
     return (
       <>
         {loading && <LoaderPages />}
@@ -64,10 +71,10 @@ const QuadroVagas = () => {
               <QuadroVagasCreateModal setNeedUpdate={setNeedUpdate} />
             </div>
             <div className="flex gap-4 mb-4">
-              <StatsCard title={"Nº de Quadros"} quant={5}>
+              <StatsCard title={"Nº de Quadros"} quant={quadroVagas.length || 0}>
                 <Clipboard className="text-[var(--admin-stats-card-text)] absolute top-4 right-4" />
               </StatsCard>
-              <StatsCard title={"Total de Vagas"} quant={120}>
+              <StatsCard title={"Total de Vagas"} quant={totalVagas}>
                 <ContactRound className="text-[var(--admin-stats-card-text)] absolute top-4 right-4" />
               </StatsCard>
             </div>
@@ -76,6 +83,7 @@ const QuadroVagas = () => {
         }
       </>
     )
+  }
   else {
     return (
       <AccessDenied />
