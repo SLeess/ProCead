@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Eye, Undo2 } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
-import "./ChamadasModal.css";
 
 const ChamadaShowModal = () => {
     const navigate = useNavigate();
