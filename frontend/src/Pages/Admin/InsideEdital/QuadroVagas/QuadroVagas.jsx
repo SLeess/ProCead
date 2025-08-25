@@ -49,9 +49,6 @@ const QuadroVagas = () => {
     fetchQuadroVagas();
   }, [needUpdate]);
 
-  useEffect(() => {
-    console.log("quadroVagas: ", quadroVagas);
-  }, [quadroVagas]);
 
   if (hasPermissionForEdital('visualizar-campi-cursos', editalId) || isSuperAdmin()) {
     const totalVagas = quadroVagas && quadroVagas.length > 0 ? quadroVagas.reduce((total, quadro) => {

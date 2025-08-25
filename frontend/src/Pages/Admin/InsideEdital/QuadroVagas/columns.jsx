@@ -13,6 +13,11 @@ const columns = [
       cell: (props) => <span>{props.getValue()}</span>
     },
     {
+      accessorKey: "codigo",
+      header:"Código",
+      cell: (props) => <span>{props.getValue()}</span>
+    },
+    {
       accessorKey: "campus",
       header:"Campus",
       cell: (props) => <span>{props.getValue()}</span>
