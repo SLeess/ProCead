@@ -44,8 +44,8 @@ export default function AppProvider({ children }) {
                         'Accept': 'application/json',
                     }
                 });
+                const res = await response.json();
                 if (response.ok) {
-                    const res = await response.json();
                     const data = res.data;
 
                     setUser(data.user);
@@ -56,9 +56,8 @@ export default function AppProvider({ children }) {
                         setPermissionsWithRolesByEdital(data.admin_access.editals_access || {});
                     }
 
-                }
-                if (!response.ok) {
-                    verifyStatusRequest(response);
+                } else{
+                    verifyStatusRequest(response.status, res);
                 }
             } catch (error) {
                 console.error("Erro ao buscar dados do usuário:", error);
@@ -73,24 +72,30 @@ export default function AppProvider({ children }) {
      * Função utilizada para tratar casos de exceção de resposta do servidor, dar um alerta e fazer o logout da aplicação
      * @param {*} response 
      */
-    const verifyStatusRequest = (response) => {
-        switch (response.status) {
+    const verifyStatusRequest = async (status, data, enableToast = true) => {
+        switch (status) {
             case 401:
-                toast.info("Sessão expirada. Por favor, faça login novamente.");
+                if(enableToast)
+                    toast.info("Sessão expirada. Por favor, faça login novamente.");
                 logout();
                 break;
             case 403:
-                toast.info("Você não possui cadastro de candidato, favor realizar seu cadastro novamente.");
-                logout();
+                // toast.info("Você não possui cadastro de candidato, favor realizar seu cadastro novamente.");
+                // logout();
                 break;
             case 429:
-                toast.info("Usuário desconectado por excesso de requisições realizadas.", {
-                    autoClose: true,
-                });
+                if (enableToast) {
+                    toast.info(data?.message || "Muitas requisições. Tente novamente mais tarde.", {
+                        autoClose: true,
+                    });
+                }
                 logout();
                 break;
             default:
-                toast.info(`Erro desconhecido: ${response.statusText}.`)
+                 if (enableToast) {
+                    const defaultMessage = `Ocorreu um erro inesperado (Status: ${status}).`;
+                    toast.error(data?.message || defaultMessage);
+                }
                 break;
         }
     }
@@ -125,6 +130,7 @@ export default function AppProvider({ children }) {
             if (result.isConfirmed) {
                 toast.info("Faça login novamente informando seu email ou cpf e a senha.");
                 logout();
+                window.location.reload();
             }
         });
     }
@@ -303,51 +309,74 @@ export default function AppProvider({ children }) {
         findMessages(errorObject);
         // return messages;
     };
+    /**
+     * Realiza uma requisição assíncrona para a API com tratamento de erros centralizado.
+     * @param {object} options As opções da requisição.
+     * @param {'GET'|'POST'|'PUT'|'DELETE'|'PATCH'} options.method O método HTTP.
+     * @param {string} options.url O endpoint da API.
+     * @param {object|null} [options.body=null] O corpo da requisição para POST, PUT, etc.
+     * @param {boolean} [options.isProtected=true] Se a rota requer um token de autenticação.
+     * @param {boolean} [options.enableToast=true] Habilita toasts de erro padrão para erros não tratados.
+     * @returns {Promise<any>} Retorna os dados da resposta em caso de sucesso.
+     * @throws {Error} Lança um erro em caso de falha na requisição.
+     */
+    
+    async function apiAsyncFetch(params) {
+        const {
+            url,
+            method = 'GET',
+            body = null,
+            isProtected = true,
+            enableToast = true
+        } = params;
 
-    async function apiAsyncFetch (method = 'GET', url = ``, body = null, isProtected = true){
+        if (!url) {
+            throw new Error("A URL é um parâmetro obrigatório.");
+        }
+
         const headers = {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
         };
 
         if (isProtected) {
-            const token = localStorage.getItem('token');
             if (token) {
                 headers['Authorization'] = `Bearer ${token}`;
             } else {
-                throw new Error("Token de autenticação não encontrado.");
+                console.error("Token não encontrado para uma rota protegida.");
+                return;
             }
         }
 
         const options = {
-            method: method,
-            headers: headers,
+            method,
+            headers,
         };
-        
-        if (method !== 'GET' && method !== 'HEAD' && body) {
+
+        if (body && method !== 'GET') {
             options.body = JSON.stringify(body);
         }
 
-        const res = await fetch(url, options);
+        const response = await fetch(url, options);
+        const responseData = await response.json().catch(() => null); // Tenta parsear JSON, mas não falha se o corpo for vazio
 
-        const newExpiresAt = res.headers.get('x-session-expires-at');
+        const newExpiresAt = response.headers.get('x-session-expires-at');
         if (newExpiresAt) {
             changeExpireTime(newExpiresAt);
         }
-
-        if (!res.ok) {
-            const errorResult = await res.json().catch(() => null);
-
+        if (!response.ok) {
+            const errorResult = {...responseData};
+            
             if (errorResult && errorResult.errors) {
-                // Mostra os toasts
                 extractErrorMessages(errorResult.errors); 
             } else {
-                // Para outros erros (401, 403, 500)
-                verifyStatusRequest(res);
+                verifyStatusRequest(response.status, responseData, enableToast);
             }
-            throw new Error(errorResult?.message || `Erro: ${res.status}`);
+            
+            throw new Error(errorResult?.message || `Erro: ${response.status}`);
         }
-        return res.json();
+
+        return responseData;
     }
 
     const contextValue = { 

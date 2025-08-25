@@ -19,6 +19,7 @@ class UserResource extends JsonResource
             'nome' => $this->nome,
             'cpf' => $this->cpf,
             'email' => $this->email,
+            'level_access' => $this->level_access,
             'created_at' => $this->created_at ? $this->created_at->format('Y-m-d H:i:s') : null,
             'updated_at' => $this->updated_at ? $this->updated_at->format('Y-m-d H:i:s') : null,
         ];

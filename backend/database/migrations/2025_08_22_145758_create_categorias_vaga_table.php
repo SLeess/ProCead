@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tipos_avaliacao', function (Blueprint $table) {
+        Schema::create('categorias_vaga', function (Blueprint $table) {
             $table->id();
-            $table->enum('tipo_avaliacao', [
-            'GERAL',
-            'HETEROIDENTIFICACAO',
-            'ETNICA',
-            'SOCIOECONOMICA'])
-            ->default('GERAL');
+            $table->string('nome');
+            $table->integer('indice');
+            $table->foreignId('quadro_vaga_id')->constrained('quadro_vagas')->onDelete('cascade');
+            $table->unique(['indice', 'quadro_vaga_id']);
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tipos_avaliacao');
+        Schema::dropIfExists('categorias_vaga');
     }
 };

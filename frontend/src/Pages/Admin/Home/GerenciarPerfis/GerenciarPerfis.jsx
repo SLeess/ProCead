@@ -25,10 +25,9 @@ export default function GerenciarPerfis()
         const fetchProcessos = async () => {
             setLoading(true);
             try{
-                const result = await apiAsyncFetch(
-                    'GET', 
-                    `/api/super-admin/roles`, 
-                );
+                const result = await apiAsyncFetch({
+                    url: `/api/super-admin/roles`, 
+                });
                 setPerfis(result.data.roles);
             } catch (err) {
                     setError("Não foi possível carregar seus processos seletivos. " + (err.message ? ` (${err.message})` : ''));

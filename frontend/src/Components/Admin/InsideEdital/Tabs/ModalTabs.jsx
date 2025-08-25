@@ -8,6 +8,7 @@ const ModalTabs = ({tabs, activeTab, setActiveTab}) => {
             <nav id="tabs-navs" aria-label="Tabs">
                 {tabs.map(tab => (
                     <button
+                        type="button"
                         id="tabs-nav-button"
                         key={tab}
                         onClick={() => setActiveTab(tab)}

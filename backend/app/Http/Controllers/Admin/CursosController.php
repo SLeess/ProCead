@@ -17,12 +17,16 @@ class CursosController extends APIController
     {
         DB::beginTransaction();
         try{
-            $polo = Curso::create(['nome' => $request->nome,'edital_id' => $request->editalId]);
+            $curso = Curso::create(['nome' => $request->nome,'edital_id' => $request->editalId]);
+            $curso->vagas()->create([
+                'vagable_id' => $curso->id,
+                'vagable_type' => Curso::class
+            ]);
             DB::commit();
-            return $this->sendResponse($polo,'Curso criado com sucesso.',200);
+            return $this->sendResponse($curso,'Curso criado com sucesso.',200);
         }catch(Exception $e){
             DB::rollBack();
-            return $this->sendError($e,'Não foi possível cadastrar o curso', 400);
+            return $this->sendError($e,'Não foi possível cadastrar o curso: '.$e, 400);
         }
     }
 

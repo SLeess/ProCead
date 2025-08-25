@@ -17,7 +17,7 @@ const Cursos = () => {
   const [needUpdate, setNeedUpdate] = useState(false);
 
   useEffect(() => {
-    const fetchProcessos = async () => {
+    const fetchCursos = async () => {
       setLoading(true);
       try {
         const res = await fetch(`/api/admin/cursos/${editalId}`, {
@@ -28,22 +28,23 @@ const Cursos = () => {
           },
         });
 
+        const result = await res.json();
+
         if (!res.ok) {
-          verifyStatusRequest(res);
+          verifyStatusRequest(res.status, result);
           throw new Error(`Erro ao buscar processos: ${res.status} ${res.statusText}`);
         }
 
-        const result = await res.json();
-        console.log(result);
         setCursos(result.data);
       } catch (error) {
-        console.log(error);
+        
         setCursos([]);
+        throw new Error(`Erro ao buscar cursos: ${error}`)
       } finally {
         setLoading(false);
       }
     };
-    fetchProcessos();
+   fetchCursos();
   }, [needUpdate]);
 
   if (hasPermissionForEdital('visualizar-cursos', editalId) || isSuperAdmin())
@@ -59,7 +60,7 @@ const Cursos = () => {
               <CursoCreateModal setNeedUpdate={setNeedUpdate}/>
             </div>
             <div className="flex gap-4 mb-4">
-              <StatsCard title={"Nº de Cursos"} quant={3}>
+              <StatsCard title={"Nº de Cursos"} quant={cursos.length}>
                 <BookOpen className="text-[var(--admin-stats-card-text)] absolute top-4 right-4" />
               </StatsCard>
             </div>

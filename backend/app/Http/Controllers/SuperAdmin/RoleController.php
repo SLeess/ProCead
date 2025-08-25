@@ -6,6 +6,7 @@ use App\Http\Resources\Admin\RoleCollection;
 use App\Interfaces\Admin\RoleService\IRoleService;
 use App\Models\Role;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Database\Eloquent\Collection;
 use Symfony\Component\HttpFoundation\Response;
 
 class RoleController extends __SuperAdminController
@@ -13,11 +14,17 @@ class RoleController extends __SuperAdminController
     public function __construct(protected IRoleService $roleService){
         parent::__construct();
     }
+    public function indexGlobal(){
+        return $this->index(Role::where("scope", 'global')->get());
+    }
+    public function indexLocal(){
+        return $this->index(Role::where("scope", 'local')->get());
+    }
 
-    public function index(){
+    public function index(Collection $permissions = null){
         try {
             return $this->sendResponse(
-                RoleCollection::make(Role::all()),
+                RoleCollection::make($permissions ?? Role::all()),
                 "Cargos enviados com sucesso."
             );
         } catch (\Exception $e) {

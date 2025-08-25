@@ -22,11 +22,18 @@ import LayoutAdminInsideEdital from './Layouts/LayoutAdminInsideEdital';
 /** ------------------------------------ Páginas de Admin ------------------------------------ */
   import Editais from './Pages/Admin/Home/Editais/Editais';
   import NovoEdital from './Pages/Admin/Home/NovoEdital/NovoEdital';
+  
   import GerenciarPerfis from './Pages/Admin/Home/GerenciarPerfis/GerenciarPerfis';
   /** ------------------------------------ Páginas de Gerência de Permissões do Perfil ---------------------------- */
     import GerenciarPerfisPermissoes from './Pages/Admin/Home/GerenciarPerfis/ActionPages/GerenciarPerfisPermissoes/GerenciarPerfisPermissoes';
   /** ------------------------------------ Páginas de Gerência de Permissões do Perfil ---------------------------- */
+  
   import GerenciarUsuarios from './Pages/Admin/Home/GerenciarUsuarios/GerenciarUsuarios';
+  /** ------------------------------- Páginas de Gerência de Permissões e Perfis do Usuário ----------------------- */
+    import GerenciarUsuariosPerfisPermissoes from './Pages/Admin/Home/GerenciarUsuarios/ActionPages/GerenciarUsuariosPerfisPermissoes/GerenciarUsuariosPerfisPermissoes';
+    import GerenciarUsuariosPerfisPermissoesPorEdital from './Pages/Admin/Home/GerenciarUsuarios/ActionPages/GerenciarUsuariosPerfisPermissoesPorEdital/GerenciarUsuariosPerfisPermissoesPorEdital';
+  /** ------------------------------- Páginas de Gerência de Permissões e Perfis do Usuário ----------------------- */
+
   import RelatoriosCustom from './Pages/Admin/Home/RelatoriosCustom/RelatoriosCustom';
 
     /** ------------------------------------ Páginas Adm de Edital ---------------------------- */
@@ -142,6 +149,12 @@ function App() {
               <Route path='permissoes' element={<GerenciarPerfisPermissoes/>}></Route>
             </Route>
             <Route path="usuarios" element={<GerenciarUsuarios/>} />
+            <Route path="usuarios/:userId/" >
+              <Route path="cargos-e-permissoes">
+                <Route index element={<GerenciarUsuariosPerfisPermissoes/>}></Route>
+                <Route path=":editalId" element={<GerenciarUsuariosPerfisPermissoesPorEdital/>}></Route>
+              </Route>
+            </Route>
             <Route path="relatorios-custom" element={<RelatoriosCustom/>} />
             {/* <Route path='manejar-usuarios/:userId' element={<UserManagePage />} /> */}
           </Route>

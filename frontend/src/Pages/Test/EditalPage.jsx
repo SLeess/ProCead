@@ -22,7 +22,6 @@ export default function EditalPage() {
     const { editalId } = useParams();
     const { user, loading, permissions } = useAppContext();
 
-    console.log(permissions);
     
     if (loading) {
         return <div>Carregando permissões...</div>;

@@ -57,11 +57,11 @@ const PerfilCreateModal = ({enableGlobal = true}) => {
                 return;
             }
             
-            const result = await apiAsyncFetch(
-                'POST', 
-                `/api/super-admin/roles`, 
-                role,
-            );
+            const result = await apiAsyncFetch({
+                method: 'POST', 
+                url: `/api/super-admin/roles`, 
+                body: role,
+            });
 
             onCloseModal();
             toast.success(result.message);

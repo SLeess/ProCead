@@ -27,17 +27,17 @@ const Polos = () => {
           },
         });
 
+        const result = await res.json();
+
         if (!res.ok) {
-          verifyStatusRequest(res);
+          verifyStatusRequest(res.status, result);
           throw new Error(`Erro ao buscar processos: ${res.status} ${res.statusText}`);
         }
 
-        const result = await res.json();
-        console.log(result);
         setPolos(result.data);
       } catch (error) {
-        console.log(error);
         setPolos([]);
+        throw new Error(`Erro : ${error}`);
       } finally {
         setLoading(false);
       }

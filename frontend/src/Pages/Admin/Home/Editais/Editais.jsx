@@ -27,12 +27,12 @@ function Editais() {
               },
           });
 
+          const result = await res.json();
+
           if (!res.ok) {
-              verifyStatusRequest(res);
+              verifyStatusRequest(res.status, result);
               throw new Error(`Erro ao buscar processos: ${res.status} ${res.statusText}`);
           }
-
-          const result = await res.json();
 
           setProcessos(result.data.data);
       } catch (err) {

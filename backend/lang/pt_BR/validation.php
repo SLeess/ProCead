@@ -235,7 +235,19 @@ return [
         'modality' => 'modalidade',
         'category' => 'categoria',
         'blood_type' => 'tipo sanguíneo',
-        'birth_date' => 'data de nascimento'
+        'birth_date' => 'data de nascimento',
+
+        'nome_completo' => 'Nome Completo',
+        'email' => 'E-mail',
+        'cpf' => 'CPF',
+    ],
+
+    'values' => [
+        'process' => [
+            'reopcao' => 'REOPÇÃO (TRANSFERÊNCIA INTERNA)',
+            'transferencia_externa' => 'TRANSFERÊNCIA EXTERNA',
+            'obtencao_titulo' => 'OBTENÇÃO DE NOVO TÍTULO',
+        ],
     ],
 
 ];

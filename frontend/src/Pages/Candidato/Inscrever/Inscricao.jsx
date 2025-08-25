@@ -44,12 +44,6 @@ const Inscricao = () => {
     }
   }, [token, user?.uuid, editalId])
 
-  useEffect(() => {
-    console.log(formData)
-  }, [formData])
-  useEffect(() => {
-    console.log(user?.uuid)
-  }, [user])
 
   if (!formData) {
     return <LoaderPages />;

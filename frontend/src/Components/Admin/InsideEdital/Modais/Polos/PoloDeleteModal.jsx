@@ -36,7 +36,7 @@ const PoloDeleteModal = ({ polo, setNeedUpdate }) => {
             onCloseModal();
 
         } catch (error) {
-            toast.error('Erro ao conectar com o servidor.');
+            toast.error('Erro ao conectar com o servidor. ' + error);
         } finally {
             setLoading(false);
         }

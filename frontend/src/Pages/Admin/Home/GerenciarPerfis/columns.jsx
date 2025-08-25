@@ -32,9 +32,6 @@ export const getColumns = (navigate) => [
           <button onClick={() => navigate(`admin/perfis/${row.original.id}/permissoes`)} className="p-1 hover:bg-gray-200 rounded-full">
               <List id='avaliate-btn' />
           </button>
-          {/* <button onClick={() => {}} className="p-1 hover:bg-gray-200 rounded-full">
-              <Eye className="h-5 w-5 text-blue-500" />
-          </button> */}
           <PerfilShowModal perfil={{name: row.original.nome, scope: row.original.escopo}}/>
           <PerfilEditModal perfil={{name: row.original.nome, scope: row.original.escopo, id: row.original.id}}/>
           <PerfilDeleteModal perfil={{id: row.original.id}}/>

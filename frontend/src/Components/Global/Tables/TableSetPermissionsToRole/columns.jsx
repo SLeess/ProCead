@@ -49,7 +49,38 @@ const createActionColumn = (actionKey, label, updatePermission, setTableData) =>
     enableHiding: false,
 });
 
-const getColumns = (updatePermission, toggleAllRowPermissions, setTableData) => {
+const getColumns = (setTableData) => {
+    const updatePermission = (rowIndex, columnId, value) => {
+        setTableData(old =>
+            old.map((row, index) => {
+                if (index === rowIndex) {
+                    return {
+                        ...old[rowIndex],
+                        [columnId]: value,
+                    };
+                }
+                return row;
+            })
+        );
+    };
+
+    const toggleAllRowPermissions = (rowIndex, currentState) => {
+        const newValue = !currentState;
+        setTableData(old =>
+            old.map((row, index) => {
+                if (index === rowIndex) {
+                    return {
+                        ...row,
+                        visualizar: row["visualizar"] !== null ? newValue: null,
+                        criar: row["criar"] !== null ? newValue: null,
+                        atualizar: row["atualizar"] !== null ? newValue: null,
+                        deletar: row["deletar"] !== null ? newValue: null,
+                    };
+                }
+                return row;
+            })
+        );
+    };
     return [
         {
             accessorKey: "name_permission",
