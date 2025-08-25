@@ -2,16 +2,37 @@ import React from "react";
 import { useState } from "react";
 import "./PreviewChamadas.css";
 import { Undo2 } from "lucide-react";
-import { FormField, SelectInput } from "@/Components/Global/ui/modals";
 import dataPreview from "./dataPreview.js";
 import { useLocation, useNavigate } from "react-router-dom";
+
+// Prime React component imports.
+import { MultiSelect } from 'primereact/multiselect';
+import { TabView, TabPanel } from 'primereact/tabview';
+import "primereact/resources/themes/lara-light-purple/theme.css";
 
 const PreviewChamadas = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const showChamada = location.state;
-    const [activeTab, setActiveTab] = useState('Ampla Concorrência');
-    const tabs = ['Ampla Concorrência', 'Negros e Pardos', 'Pessoa com Deficiência', 'Transgênero e Travesti', 'Egresso de Escola Pública'];
+    const tabs = [
+        'Ampla Concorrência', 
+        'Negros e Pardos', 
+        'Pessoa com Deficiência', 
+        'Transgênero e Travesti', 
+        'Egresso de Escola Pública',
+        'Ver Todos'
+    ];
+
+    // filter by cursos.
+    const [selectedCursos, setSelectedCursos] = useState(null);
+    const cursos = [
+        { name: 'Especialização em Alfabetização e Multiletramentos' },
+        { name: 'Especialização em Arte e Cultura Visual' },
+        { name: 'Especialização em Apicultura' },
+        { name: 'Especialização em Artes Cênicas' },
+        { name: 'Especialização em Pecuária' },
+        { name: 'Especialização em Arqueologia' },
+    ];
 
     return (
         <div id="preview-content">
@@ -34,28 +55,25 @@ const PreviewChamadas = () => {
                 <></>
             )}
 
-            <div className="grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 mb-6">
-                <FormField label="Selecione um Curso">
-                    <SelectInput value="..." options={[]} />
-                </FormField>
+            <div className="card flex justify-content-center my-4">
+                <MultiSelect 
+                    value={selectedCursos} 
+                    onChange={(e) => setSelectedCursos(e.value)} 
+                    options={cursos} 
+                    optionLabel="name" 
+                    display="chip"
+                    placeholder="Selecione os Cursos" 
+                    className="w-[50%] md:w-20rem h-12 items-center" 
+                />
             </div>
 
-            <div className="border border-slate-100 mb-6 rounded-md bg-gray-100">
-                <nav className="flex justify-around" aria-label="Tabs">
-                    {tabs.map(tab => (
-                        <button
-                            key={tab}
-                            onClick={() => setActiveTab(tab)}
-                            className={`whitespace-nowrap py-2 px-1 font-medium text-sm w-full cursor-pointer ${activeTab === tab
-                                ? 'text-[#6C4BC3] font-semibold bg-[white] rounded-md m-0.5'
-                                : 'text-gray-500'
-                                }`}
-                        >
-                            {tab}
-                        </button>
-                    ))}
-                </nav>
-            </div>
+            <TabView scrollable >
+                {tabs.map((tab) => {
+                    return (
+                        <TabPanel className="text-sm" key={tab} header={tab}></TabPanel>
+                    );
+                })}
+            </TabView>
 
             <div className="shadow-sm mb-4">
                 <div className="flex bg-gray-100 py-2 px-4">
