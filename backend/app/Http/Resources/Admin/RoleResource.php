@@ -21,7 +21,8 @@ class RoleResource extends JsonResource
             'escopo' => $this->scope,
             'created_at' => $this->created_at ? $this->created_at->format('Y-m-d H:i:s') : null,
             'updated_at' => $this->updated_at ? $this->updated_at->format('Y-m-d H:i:s') : null,
-            // 'related_permissions_ids' => $this->permi
+            'related_permissions_names' => $this->getPermissionNames()->toArray(),
+            'related_permissions_ids' => $this->getAllPermissions()->pluck('id')->toArray(),
         ];
     }
 }

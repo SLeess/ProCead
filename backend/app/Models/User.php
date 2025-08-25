@@ -107,16 +107,17 @@ class User extends Authenticatable
         return Attribute::make(
             get: function ($value, array $attributes) {
                 if ($this->hasRole('super-Admin')) {
-                    return TipoUsuario::getDescription(2);
+                    return TipoUsuario::getDescription(TipoUsuario::ADMINISTRADOR);
                 }
 
-                if ($this->hasAnyPermission()
-                    || $this->rolesAndPermissionsByEdital !== []
+                if (   $this->roles()->exists()                     // Verifica se o usuário tem QUALQUER cargo global
+                    || $this->permissions()->exists()               // Verifica se tem QUALQUER permissão global direta
+                    || $this->rolesAndPermissionsByEdital !== []    // Verifica se o usuário tem qualquer permissão ou cargo local por edital
                 ) {
-                    return TipoUsuario::getDescription(1);
+                    return TipoUsuario::getDescription(TipoUsuario::MODERADOR);
                 }
 
-                return TipoUsuario::getDescription(0);
+                return TipoUsuario::getDescription(TipoUsuario::USUARIO);
             }
         );
     }

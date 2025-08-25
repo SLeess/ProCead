@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ManageUserController;
 use App\Http\Controllers\SuperAdmin\ManageRolePermissionsController;
 use App\Http\Controllers\SuperAdmin\EditalController;
 use App\Http\Controllers\SuperAdmin\ManageUserPermissionsController;
@@ -42,7 +43,9 @@ Route::prefix("/super-admin")->name('super-Admin.')->middleware(['role:super-Adm
     Route::prefix('/users')->name('usuarios.')->group(function(){
         Route::get("", [UserController::class, 'index'])->name('index');
         Route::prefix('/{user}/permissions')->name('permissions.')->group(function () {
-            Route::singleton('', ManageUserPermissionsController::class)->only(['show', 'update']);
+            Route::singleton('', ManageUserPermissionsController::class)->only(['show']);
         });
+        Route::patch("/{user}/set-roles-and-permissions/global", [ManageUserPermissionsController::class, 'updateGlobal']);
+        Route::patch("/{user}/set-roles-and-permissions/local", [ManageUserPermissionsController::class, 'updateLocal']);
     });
 });

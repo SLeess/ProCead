@@ -39,13 +39,13 @@ use Illuminate\Support\Facades\Route;class RouteServiceProvider extends ServiceP
     {
         // O Laravel já vem com este limitador padrão para a API. Pode mantê-lo.
         RateLimiter::for('api', function (Request $request) {
-            return Limit::perMinute(maxAttempts: 5)->by($request->user()?->id ?: $request->ip());
+            return Limit::perMinute(maxAttempts: 95)->by($request->user()?->id ?: $request->ip());
         });
 
         // --- SEU CÓDIGO DEVE SER COLADO AQUI DENTRO ---
 
         RateLimiter::for('global', function (Request $request) {
-            return Limit::perMinute(5)->by($request->ip());
+            return Limit::perMinute(95)->by($request->ip());
         });
 
         RateLimiter::for('user', function (Request $request) {
@@ -57,7 +57,7 @@ use Illuminate\Support\Facades\Route;class RouteServiceProvider extends ServiceP
         });
 
         RateLimiter::for('admin', function (Request $request) {
-            return Limit::perMinute(maxAttempts: 35)->by($request->user()?->id ?: $request->ip());
+            return Limit::perMinute(maxAttempts: 95)->by($request->user()?->id ?: $request->ip());
         });
         RateLimiter::for('heavy', function (Request $request) {
             return Limit::perMinute(5)->by($request->user()?->id); // Apenas 5 por minuto
