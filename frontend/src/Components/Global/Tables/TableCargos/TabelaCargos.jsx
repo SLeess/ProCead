@@ -32,7 +32,6 @@ export default function TabelaCargos({
         const selectedRowIndexes = Object.keys(rowSelection);
         const selectedIds = selectedRowIndexes.map(index => data[index].id);
         setSelectedRoles([...selectedIds]);
-        console.log(2);
     }, [rowSelection, data, setSelectedRoles]);
 
     return (

@@ -76,6 +76,7 @@ export default function TabelaPermissoesGlobais({
                 data={data}
                 columns={columns}
                 // Habilita e conecta a seleção de linhas
+                pageSize={permissoesGlobais.length}
                 hasSelectForRows={false}
                 rowSelection={rowSelection}
                 setRowSelection={setRowSelection}

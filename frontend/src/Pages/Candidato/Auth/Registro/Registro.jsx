@@ -2,11 +2,12 @@ import { AppContext } from "../../../../Contexts/AppContext";
 import { useContext, useState } from "react";
 import { toast } from "react-toastify";
 import "./Registro.css";
-import { maskCPF, registerSchema } from "./registroSchema";
+import { registerSchema } from "./registroSchema";
 import { NavigationContext } from "@/Contexts/NavigationContext";
 import z from 'zod/v4';
 import ThemeToggleBtn from "@/Components/Global/ThemeToggleBtn/ThemeToggleBtn";
 import LoaderPages from "@/Components/Global/LoaderPages/LoaderPages";
+import { maskCPF } from "@/Utils/formatters";
 
 export default function Registro(){
 

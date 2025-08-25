@@ -15,6 +15,7 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         User::create([
+            'uuid' => env("APP_ADMIN_UUID"),
             'nome' => env("APP_ADMIN_NAME"),
             'email' => env("APP_ADMIN_EMAIL"),
             'cpf' => env("APP_ADMIN_CPF"),
