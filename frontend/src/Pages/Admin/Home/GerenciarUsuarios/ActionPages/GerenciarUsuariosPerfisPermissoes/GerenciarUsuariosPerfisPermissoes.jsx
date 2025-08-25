@@ -135,7 +135,6 @@ export default function GerenciarUsuariosPerfisPermissoes()
             title: "Alteração em andamento.",
             text: `Atenção! Você confirma as alterações de cargos e de permissões do usuário '${user.nome}' ?`,
             // text: "Essa ação não poderá ser reversível!",
-            type: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
@@ -154,8 +153,8 @@ export default function GerenciarUsuariosPerfisPermissoes()
                 url: `/api/super-admin/users/${user.uuid}/set-roles-and-permissions/global`,
                 method: "PATCH",
                 body: {
-                    "global_roles": selectedRoles,
-                    "global_permissions": selectedPerms
+                    "roles": selectedRoles,
+                    "permissions": selectedPerms
                 }
             });
             toast.success("Alterações realizadas com sucesso!");
