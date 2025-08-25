@@ -20,7 +20,7 @@ const columns = [
     {
       accessorKey: "vaga",
       header:"Vaga",
-      cell: (props) => <span>{props.getValue()}</span>
+      cell: (props) => <span>{props.getValue()?.vagable?.nome}</span>
     },
     {
       accessorKey: "habilitacao",

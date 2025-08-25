@@ -17,7 +17,7 @@ const Cursos = () => {
   const [needUpdate, setNeedUpdate] = useState(false);
 
   useEffect(() => {
-    const fetchProcessos = async () => {
+    const fetchCursos = async () => {
       setLoading(true);
       try {
         const res = await fetch(`/api/admin/cursos/${editalId}`, {
@@ -44,7 +44,7 @@ const Cursos = () => {
         setLoading(false);
       }
     };
-    fetchProcessos();
+   fetchCursos();
   }, [needUpdate]);
 
   if (hasPermissionForEdital('visualizar-cursos', editalId) || isSuperAdmin())

@@ -18,6 +18,18 @@ class QuadroVagas extends Model
 
     public function vagasPorModalidade()
     {
-        return $this->hasMany(VagasPorModalidade::class);
+        return $this->hasMany(VagasPorModalidade::class, 'quadro_vaga_id');
+    }
+    public function categoriasCustomizadas()
+    {
+        return $this->hasMany(CategoriasVaga::class, 'quadro_vaga_id');
+    }
+    public function vaga()
+    {
+        return $this->belongsTo(Vaga::class);
+    }
+    public function polo()
+    {
+        return $this->belongsTo(Polo::class);
     }
 }

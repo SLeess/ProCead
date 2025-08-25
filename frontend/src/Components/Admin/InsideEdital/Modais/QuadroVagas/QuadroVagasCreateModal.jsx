@@ -1,6 +1,6 @@
 import { Modal, ModalBody } from "flowbite-react";
 import { Plus, ChevronUp, ChevronDown, Trash2 } from "lucide-react";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FormField, SelectInput, TextInput } from "@/Components/Global/ui/modals";
 import CabecalhoModal from "@/Components/Global/Modais/CabecalhoModal";
 import "./QuadroVagasModal.css";
@@ -19,6 +19,7 @@ export default function QuadroVagasCreateModal({ setNeedUpdate }) {
     const tabs = ['Dados', 'Distribuição de Vagas', 'Categorias Customizadas'];
     const [modalidades, setModalidades] =  useState([]);
     const [vagas, setVagas] =  useState([]);
+    const [polos, setPolos] =  useState([]);
     const [newCategoryName, setNewCategoryName] = useState("");
 
     const [formData, setFormData] = useState({
@@ -90,9 +91,32 @@ export default function QuadroVagasCreateModal({ setNeedUpdate }) {
     },[token, editalId]);
 
     useEffect(() => {
-        console.log("vagas: ")
-        console.log(vagas)
-    },[vagas]);
+        const fetchPolos = async () => {
+            try {
+                const res = await fetch(`/api/admin/polos/${editalId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,
+                    },
+                });
+
+                const result = await res.json();
+                if (!res.ok) {
+                    throw new Error(`Erro ao buscar polos: ${res.status} ${res.statusText}`);
+                }
+
+                setPolos(result.data);
+
+
+            } catch (error) {
+                setPolos([]);
+                throw new Error(`Erro ao buscar Polos: ${error}`)
+            }
+        };
+        fetchPolos();
+    },[token, editalId]);
+
 
     const handleOnChangeAttr = (e, attr) => {
         const { value } = e.target;
@@ -103,7 +127,7 @@ export default function QuadroVagasCreateModal({ setNeedUpdate }) {
         const { value } = e.target;
         setFormData(f => {
             const updatedModalidades = f.modalidades.map(m => {
-                if (m.hasOwnProperty(modalidadeSigla)) {
+                if (Object.prototype.hasOwnProperty.call(m, modalidadeSigla)) {
                     return { [modalidadeSigla]: value };
                 }
                 return m;
@@ -135,7 +159,7 @@ export default function QuadroVagasCreateModal({ setNeedUpdate }) {
         if (newCategoryName.trim()) {
             const newCategory = {
                 // The index is implicitly its position in the array
-                name: newCategoryName.trim()
+                nome: newCategoryName.trim()
             };
             setFormData(f => ({
                 ...f,
@@ -209,9 +233,6 @@ export default function QuadroVagasCreateModal({ setNeedUpdate }) {
         }
     };
 
-    useEffect(() => {
-        console.log("formData: ", formData);
-    }, [formData]);
 
     return (
         <>
@@ -242,12 +263,20 @@ export default function QuadroVagasCreateModal({ setNeedUpdate }) {
                                     <FormField label="Código"><TextInput value={formData.codigo} onChange={(e) => handleOnChangeAttr(e, "codigo")} /></FormField>
                                     <FormField label="Semestre"><SelectInput options={[1,2]} value={formData.semestre} onChange={(e) => handleOnChangeAttr(e, "semestre")} /></FormField>
                                     <FormField label="Edital Referente"><TextInput value="Edital Nº 08/2025" /></FormField>
-                                    <FormField label="Campus" className="md:col-span-1"><TextInput value={formData.campus} onChange={(e) => handleOnChangeAttr(e, "campus")} /></FormField>
+                                    <FormField label="Campus" className="md:col-span-1">
+                                        <SelectInput
+                                            value={formData.campus}
+                                            onChange={(e) => handleOnChangeAttr(e, "campus")}
+                                            defaultOption={true}
+                                            options={[ ...polos.map(polo => ({ value: polo.id, label: polo.nome })) ]}
+                                        />
+                                    </FormField>
                                     <FormField label="Vaga" className="md:col-span-2">
                                         <SelectInput
                                             value={formData.vaga}
                                             onChange={(e) => handleOnChangeAttr(e, "vaga")}
-                                            options={[{ value: "", label: "Selecione uma vaga" }, ...vagas.map(vaga => ({ value: vaga.id, label: vaga.nome })) ]}
+                                            defaultOption={true}
+                                            options={[ ...vagas.map(vaga => ({ value: vaga.id, label: vaga.nome })) ]}
                                         />
                                     </FormField>
                                     <FormField label="Habilitação" className="md:col-span-3"><TextInput value={formData.habilitacao} onChange={(e) => handleOnChangeAttr(e, "habilitacao")} /></FormField>
@@ -265,7 +294,7 @@ export default function QuadroVagasCreateModal({ setNeedUpdate }) {
                                     {modalidades.map((modalidade) => (
                                         <FormField key={modalidade.id} label={modalidade.sigla}>
                                             <TextInput
-                                                value={formData.modalidades.find(m => m.hasOwnProperty(modalidade.sigla))?.[modalidade.sigla] || ''}
+                                                value={formData.modalidades.find(m => Object.hasOwn(m, modalidade.sigla))?.[modalidade.sigla] || ''}
                                                 onChange={(e) => handleModalidadeSiglaChange(e, modalidade.sigla)}
                                             />
                                         </FormField>
@@ -310,7 +339,7 @@ export default function QuadroVagasCreateModal({ setNeedUpdate }) {
                                                 formData.categoriasCustomizadas.map((category, index) => (
                                                     <tr key={index} className="bg-white border-b hover:bg-gray-50">
                                                         <td className="px-4 py-4 text-center">{index + 1}</td>
-                                                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{category.name}</th>
+                                                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{category.nome}</th>
                                                         <td className="px-6 py-4">
                                                             <div className="flex items-center justify-center gap-2">
                                                                 <button type="button" onClick={() => handleMoveCategory(index, -1)} disabled={index === 0} className="p-1 rounded-full disabled:opacity-30 disabled:cursor-not-allowed hover:bg-gray-200">
