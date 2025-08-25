@@ -4,11 +4,12 @@ import "./PreviewChamadas.css";
 import { Undo2 } from "lucide-react";
 import { FormField, SelectInput } from "@/Components/Global/ui/modals";
 import dataPreview from "./dataPreview.js";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const PreviewChamadas = () => {
-    const { editalId } = useParams();
     const navigate = useNavigate();
+    const location = useLocation();
+    const showChamada = location.state;
     const [activeTab, setActiveTab] = useState('Ampla Concorrência');
     const tabs = ['Ampla Concorrência', 'Negros e Pardos', 'Pessoa com Deficiência', 'Transgênero e Travesti', 'Egresso de Escola Pública'];
 
@@ -16,12 +17,22 @@ const PreviewChamadas = () => {
         <div id="preview-content">
 
             <div id="preview-header">
-                <p id="preview-title">Pré-Visualização da Chamada</p>
+                {showChamada ? (
+                    <p id="preview-title">{showChamada.title}</p>
+                ) : (
+                    <p id="preview-title">Pré-Visualização da Chamada</p>
+                )}
                 <button onClick={() => navigate(-1) } id="back-btn">
                     <Undo2 className="inline" />
                     <span className="ml-1">Voltar</span>
                 </button>
             </div>
+            
+            {showChamada ? (
+                <p id="preview-editalref">Edital Referente: {showChamada.editalref}</p>
+            ) : (
+                <></>
+            )}
 
             <div className="grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 mb-6">
                 <FormField label="Selecione um Curso">
