@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CursosController;
+use App\Http\Controllers\Admin\DisciplinaController;
 use App\Http\Controllers\Admin\EditalController;
 use App\Http\Controllers\Admin\PolosController;
 use App\Http\Controllers\Admin\QuadroVagasController;
@@ -31,10 +32,10 @@ Route::prefix('/admin')->name('admin.')->group( function () {
     Route::resource('/polos', PolosController::class)->except(['index','create','edit']);
     Route::resource('/cursos', CursosController::class)->except(['index','create','edit']);
     Route::resource('/modalidades', ModalidadesController::class)->except(['index','create','edit']);
+    Route::get('/vagas/{editalId}', [VagasController::class, 'index']);
     Route::resource('/quadro-vagas', QuadroVagasController::class)->except(['index','create','edit','show']);
     Route::get('/quadro-vagas/{editalId}', [QuadroVagasController::class, 'index']);
-    Route::get('/quadro-vagas/{editalId}/{quadroId}', [QuadroVagasController::class, 'show']);
-    Route::get('/vagas/{editalId}', [VagasController::class, 'index']);
+    Route::resource('/disciplinas', DisciplinaController::class)->except(['index','create','edit']);
 
     Route::middleware(['throttle:heavy'])->post('/export', [RelatorioController::class, 'export'])->name('export');
 });
