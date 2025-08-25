@@ -9,6 +9,8 @@ import { UserRoundPen } from "lucide-react";
 import { useAppContext } from "@/Contexts/AppContext";
 import { NavigationContext } from "@/Contexts/NavigationContext";
 import GerenciarUsuariosColumns from "./columns";
+import Swal from "sweetalert2";
+import UserCreateModal from "@/Components/Admin/InsideEdital/Modais/Usuario/UserCreateModal";
 
 export default function GerenciarUsuarios(){
     const { apiAsyncFetch } = useAppContext();
@@ -21,6 +23,7 @@ export default function GerenciarUsuarios(){
     /** ------------------ Lidando com Filtros ------------------ **/
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [cantShow, setCantShow] = useState(true);
     useEffect(() => {
         const fetchProcessos = async () => {
             setLoading(true);
@@ -28,9 +31,25 @@ export default function GerenciarUsuarios(){
                 const result = await apiAsyncFetch({
                     url: `/api/super-admin/users`, 
                 });
-                setUsuarios(result.data.users);
+                setUsuarios(result?.data?.users);
+                setCantShow(false);
             } catch (err) {
-                setError("Não foi possível carregar seus processos seletivos. " + (err.message ? ` (${err.message})` : ''));
+                console.error(err);
+                if (!err.handled) {
+                    Swal.fire({
+                        title: 'Erro ao Buscar Usuário',
+                        text: "Não foi possível atualizar os dados do usuário. " + (err.message ? ` (${err.message})` : ''),
+                        icon: 'error',
+                        confirmButtonText: 'Voltar',
+                        confirmButtonColor: '#3085d6',
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            navigate(-1);
+                        }
+                    });
+                }
                 setUsuarios([]);
             } finally {
                 setLoading(false);
@@ -46,22 +65,28 @@ export default function GerenciarUsuarios(){
             </header>
             <div id="content">
                 <div className="lg:px-4">
-                    <div className="sm:flex items-center justify-between  mb-4">
-                        <div className="bg-white shadow-md rounded-md p-5 w-xs relative flex flex-col justify-between h-30">
-                            <p className="text-gray-600 mb-1">Nº de Usuários</p>
-                            <p className="text-2xl font-bold mb-1">4</p>
-                            <UserRoundPen className="absolute top-4 right-4 text-gray-500" />
+                {
+                    loading && <LoaderPages/>
+                }
+                {
+                    !loading && !cantShow &&
+                    <>
+                        <div className="sm:flex items-center justify-between  mb-4">
+                            <div className="bg-white shadow-md rounded-md p-5 w-xs relative flex flex-col justify-between h-30">
+                                <p className="text-gray-600 mb-1">Nº de Usuários</p>
+                                <p className="text-2xl font-bold mb-1">4</p>
+                                <UserRoundPen className="absolute top-4 right-4 text-gray-500" />
+                            </div>
+                            <UserCreateModal/>
                         </div>
-                        <PerfilCreateModal/>
-                    </div>
-                    {
-                        loading && <LoaderPages/>
-                    }
-                    <MainTable 
-                        data={usuarios} 
-                        columns={columns} 
-                        title={"Usuários"}
-                    />
+                        
+                        <MainTable 
+                            data={usuarios} 
+                            columns={columns} 
+                            title={"Usuários"}
+                        />
+                    </>
+                }
                 </div>
             </div>
         </section>
