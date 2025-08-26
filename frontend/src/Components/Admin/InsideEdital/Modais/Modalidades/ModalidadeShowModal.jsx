@@ -27,7 +27,7 @@ const ModalidadeShowModal = () => {
                         Edital Referente: Processo de Seleção de Discentes para os Cursos de Especialização da Unimontes – Modalidade Educação a Distância – Sistema Universidade Aberta do Brasil (UAB) – Edital Nº 08/2025
                     </p>
                     <div>
-                        <div id='rows-2-input' className='mb-4'>
+                        <div className="mb-4 rows-2-input">
                             <FormField  label="Sigla">
                                 <TextInput readOnly={true} className="md:col-span-1" value="AC" />
                             </FormField>

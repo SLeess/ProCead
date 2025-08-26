@@ -90,7 +90,7 @@ const PoloEditModal = ({ polo, setNeedUpdate }) => {
                     </p>
                     <form id="content" onSubmit={handleSubmit}>
                         <div>
-                            <div id='rows-3-input'>
+                            <div className='rows-3-input'>
                                 <FormField className="md:col-span-2" label="Nome do Polo">
                                     <TextInput value={formData.nome} onChange={(e) => handleOnChangeAttr(e, "nome")} />
                                 </FormField>

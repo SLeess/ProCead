@@ -52,7 +52,7 @@ const AdminProfileModal = ({openModal, onCloseModal, user}) => {
                             {/* Form */}
                             <p id="form-title">Informações Pessoais</p>
                             <div id="form-body">
-                                <div id="rows-2-input" className="mx-4">
+                                <div className="mx-4 rows-2-input">
                                     <FormField label="Nome Completo">
                                         <TextInput className="md:col-span-1" value={user?.nome || "Nome não disponível"} />
                                     </FormField>
@@ -61,7 +61,7 @@ const AdminProfileModal = ({openModal, onCloseModal, user}) => {
                                     </FormField>
                                 </div>
 
-                                <div id="rows-2-input" className="mx-4">
+                                <div className="mx-4 rows-2-input">
                                     <FormField label="CPF">
                                         <TextInput className="md:col-span-1" value={user?.cpf || "CPF não disponível"} />
                                     </FormField>
@@ -74,7 +74,7 @@ const AdminProfileModal = ({openModal, onCloseModal, user}) => {
                         <div>
                             <p id="form-title">Alterar Senha</p>
                             <div id="form-body">
-                                <div id="rows-2-input" className="mx-4">
+                                <div className="mx-4 rows-2-input">
                                     <FormField label="E-mail">
                                         <TextInput readOnly={true} value={user?.email || "Email não disponível"} />
                                     </FormField>
@@ -84,13 +84,13 @@ const AdminProfileModal = ({openModal, onCloseModal, user}) => {
                                     </FormField>
                                 </div>
 
-                                <div id="rows-2-input" className="mx-4">
+                                <div className="mx-4 rows-2-input">
                                     <FormField label="Nova Senha">
                                         <TextInput type="password" className="md:col-span-1" />
                                     </FormField>
                                 </div>
 
-                                <div id="rows-2-input" className="mx-4">
+                                <div className="mx-4 rows-2-input">
                                     <FormField label="Confirmar Senha">
                                         <TextInput type="password" className="md:col-span-1" />
                                     </FormField>

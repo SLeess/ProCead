@@ -42,7 +42,7 @@ export default function InscricaoAvaliarModal() {
                         </div>
 
                         <h2 id="inscricao-situacao-title">Situação</h2>
-                        <div id='rows-3-input'>
+                        <div className='rows-3-input'>
                             <FormField label="Status" className="md:col-span-1">
                                 <SelectInput value="Deferido" options={['Deferido', 'Indeferido', 'Em Análise']} />
                             </FormField>

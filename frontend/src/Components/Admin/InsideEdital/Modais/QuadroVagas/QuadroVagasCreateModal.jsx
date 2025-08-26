@@ -259,7 +259,7 @@ export default function QuadroVagasCreateModal({ setNeedUpdate }) {
                         {/* Form Content - Only showing the active tab's content */}
                         {activeTab === 'Dados' && (
                             <div>
-                                <div id='rows-3-input'>
+                                <div className='rows-3-input'>
                                     <FormField label="Código"><TextInput value={formData.codigo} onChange={(e) => handleOnChangeAttr(e, "codigo")} /></FormField>
                                     <FormField label="Semestre"><SelectInput options={[1,2]} value={formData.semestre} onChange={(e) => handleOnChangeAttr(e, "semestre")} /></FormField>
                                     <FormField label="Edital Referente"><TextInput value="Edital Nº 08/2025" /></FormField>

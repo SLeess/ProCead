@@ -88,7 +88,7 @@ const PoloCreateModal = ({setNeedUpdate}) => {
                     <form id="content" onSubmit={handleSubmit}>
                         
                         <div>
-                            <div id='rows-3-input'>
+                            <div className='rows-3-input'>
                                 {/* Row 1 */}
                                 <FormField className="md:col-span-2"  label="Nome do Polo"><TextInput value={formData.nome_completo} onChange={(e) => handleOnChangeAttr(e, "nome")}/></FormField>
                                 <FormField label="Edital Referente"><TextInput value="Edital Nº 08/2025" /></FormField>

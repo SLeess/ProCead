@@ -19,11 +19,13 @@
 }
 
 /* Body Inputs */
-#rows-2-input {
+#rows-2-input,
+.rows-2-input {
     @apply grid grid-cols-1 md:grid-cols-2 gap-x-3 gap-y-2;
 }
 
-#rows-3-input {
+#rows-3-input,
+.rows-2-input {
     @apply grid grid-cols-1 md:grid-cols-3 gap-x-3 gap-y-2;
 }
 

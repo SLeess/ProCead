@@ -35,7 +35,7 @@ export default function RecursoShowModal() {
                     <div>
                         <h2 id='recurso-situacao-text'>Situação</h2>
                         
-                        <div id='rows-2-input'>
+                        <div className="rows-2-input">
                             <FormField label="Tipo de recurso" className="col-span-1">
                                 <SelectInput readOnly={true} value="Interposição de Classificação" options={['Interposição de Classificação', 'Recurso de Prova', 'Recurso de Cota']} />
                             </FormField>

@@ -57,7 +57,7 @@ export default function InscricaoEditModal() {
                     {/* Form Content - Only showing the active tab's content */}
                     {activeTab === 'Informações Básicas' && (
                         <div>
-                            <div id='rows-3-input'>
+                            <div className='rows-3-input'>
                                 {/* Row 1 */}
                                 <FormField label="Nome Completo">
                                     <TextInput value="Daniel Damasceno Meira" />
@@ -121,7 +121,7 @@ export default function InscricaoEditModal() {
                     )}
                     {activeTab === 'Endereço' && (
                         <div>
-                            <div id='rows-3-input'>
+                            <div className='rows-3-input'>
                                 <FormField label="CEP"><TextInput value="39401-001" /></FormField>
                                 <FormField label="Rua"><TextInput value="Daniel Damasceno Meira" /></FormField>
                                 <FormField label="Número"><TextInput value="1012" /></FormField>
@@ -165,7 +165,7 @@ export default function InscricaoEditModal() {
                             </div>
 
                             <h2 id="inscricao-situacao-title">Situação</h2>
-                            <div id='rows-3-input'>
+                            <div className='rows-3-input'>
                                 <FormField label="Status" className="md:col-span-1">
                                     <SelectInput value="Deferido" options={['Deferido', 'Indeferido', 'Em Análise']} />
                                 </FormField>

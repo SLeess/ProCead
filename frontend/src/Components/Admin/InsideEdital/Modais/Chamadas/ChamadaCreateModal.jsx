@@ -34,7 +34,7 @@ const ChamadaCreateModal = () => {
                     <form>
                         <div>
 
-                            <div id='rows-2-input'>
+                            <div className="rows-2-input">
                                 {/* Row 1 */}
                                 <FormField className="md:col-span-1" label="Edital Referente">
                                     <TextInput />

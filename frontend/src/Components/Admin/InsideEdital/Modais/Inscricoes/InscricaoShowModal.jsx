@@ -54,7 +54,7 @@ export default function InscricaoShowModal() {
                     {/* Form Content - Only showing the active tab's content */}
                     {activeTab === 'Informações Básicas' && (
                         <div>
-                            <div id='rows-3-input'>
+                            <div className='rows-3-input'>
                                 {/* Row 1 */}
                                 <FormField label="Nome Completo" className="md:col-span-1">
                                     <TextInput readOnly={true} value="Daniel Damasceno Meira" />
@@ -118,7 +118,7 @@ export default function InscricaoShowModal() {
                     )}
                     {activeTab === 'Endereço' && (
                         <div>
-                            <div id='rows-3-input'>
+                            <div className='rows-3-input'>
                                 <FormField label="CEP"><TextInput readOnly={true} value="39401-001" /></FormField>
                                 <FormField label="Rua"><TextInput readOnly={true} value="Daniel Damasceno Meira" /></FormField>
                                 <FormField label="Número"><TextInput readOnly={true} value="1012" /></FormField>
@@ -162,7 +162,7 @@ export default function InscricaoShowModal() {
                             </div>
 
                             <h2 id="inscricao-situacao-title">Situação</h2>
-                            <div id='rows-3-input'>
+                            <div className='rows-3-input'>
                                 <FormField label="Status" className="md:col-span-1">
                                     <SelectInput readOnly={true} value="Deferido" options={['Deferido', 'Indeferido', 'Em Análise']} />
                                 </FormField>

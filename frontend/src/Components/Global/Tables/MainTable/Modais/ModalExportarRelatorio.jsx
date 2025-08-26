@@ -248,7 +248,7 @@ export default function ModalExportarRelatorio({ openModal, onCloseModal, table,
       <ModalBody >
 
         <div>
-          <div id='rows-3-input'>
+          <div className='rows-3-input'>
             <FormField className="md:col-span-3" label="Título do PDF">
               <textarea
                 id="titulo-pdf-textarea"
@@ -274,7 +274,7 @@ export default function ModalExportarRelatorio({ openModal, onCloseModal, table,
           {showGroupBy && (
             <>
               <hr id="relatorio-special-options-divisor" />
-              <div id='rows-3-input'>
+              <div className='rows-3-input'>
                 <FormField className="md:col-span-3" label="Agrupar por">
                   <div className="space-y-2">
                     {groupByFields.map((field, index) => (
