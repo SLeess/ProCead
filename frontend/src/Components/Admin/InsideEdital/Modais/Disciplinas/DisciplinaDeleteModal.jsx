@@ -1,15 +1,48 @@
+import LoaderPages from '@/Components/Global/LoaderPages/LoaderPages';
+import { useAppContext } from '@/Contexts/AppContext';
 import { Modal, ModalBody, ModalHeader } from 'flowbite-react';
 import { Trash, TriangleAlert } from 'lucide-react';
 import React, { useState } from 'react'
+import { toast } from 'react-toastify';
 
-const DisciplinaDeleteModal = () => {
+const DisciplinaDeleteModal = ({ disciplina, setNeedUpdate }) => {
 
-    const [isOpen] = useState(true);
     const [openModal, setOpenModal] = useState(false);
+    const { token } = useAppContext();
+    const [loading, setLoading] = useState(false);
+
     function onCloseModal() {
         setOpenModal(false);
     }
-    if (!isOpen) return null;
+
+    const handleDelete = async () => {
+        setLoading(true);
+        try {
+            const res = await fetch(`/api/admin/disciplinas/${disciplina.id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+
+            if (!res.ok) {
+                const result = await res.json().catch(() => ({}));
+                toast.error(result.message || 'Erro ao deletar disciplina.');
+                return;
+            }
+
+            toast.success("Disciplina deletado com sucesso!");
+            if (setNeedUpdate) {
+                setNeedUpdate(prev => !prev);
+            }
+            onCloseModal();
+
+        } catch (error) {
+            toast.error('Erro ao conectar com o servidor: ' + error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <>
@@ -19,6 +52,7 @@ const DisciplinaDeleteModal = () => {
             <Modal show={openModal} onClose={onCloseModal} popup>
                 <ModalHeader />
                 <ModalBody >
+                    {loading && <LoaderPages />}
                     <div className="flex items-center justify-center p-4 font-sans">
                         <div className=" relative text-center">
                             <div className="mb-4">
@@ -36,7 +70,7 @@ const DisciplinaDeleteModal = () => {
                                     Cancelar
                                 </button>
                                 <button
-                                    onClick={onCloseModal}
+                                    onClick={handleDelete}
                                     className="px-8 py-2.5 text-sm font-semibold text-white bg-red-600 rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
                                 >
                                     Deletar

@@ -5,44 +5,44 @@ import { Trash, TriangleAlert } from 'lucide-react';
 import React, { useState } from 'react'
 import { toast } from 'react-toastify';
 
-const CursoDeleteModal = ({curso,setNeedUpdate}) => {
+const CursoDeleteModal = ({ curso, setNeedUpdate }) => {
 
     const [openModal, setOpenModal] = useState(false);
-        const { token } = useAppContext();
-        const [loading, setLoading] = useState(false);
-    
-        function onCloseModal() {
-            setOpenModal(false);
-        }
-    
-        const handleDelete = async () => {
-            setLoading(true);
-            try {
-                const res = await fetch(`/api/admin/cursos/${curso.id}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                    },
-                });
-    
-                if (!res.ok) {
-                    const result = await res.json().catch(() => ({}));
-                    toast.error(result.message || 'Erro ao deletar curso.');
-                    return;
-                }
-                
-                toast.success("Curso deletado com sucesso!");
-                if(setNeedUpdate) {
-                    setNeedUpdate(prev => !prev);
-                }
-                onCloseModal();
-    
-            } catch (error) {
-                toast.error('Erro ao conectar com o servidor: ' + error);
-            } finally {
-                setLoading(false);
+    const { token } = useAppContext();
+    const [loading, setLoading] = useState(false);
+
+    function onCloseModal() {
+        setOpenModal(false);
+    }
+
+    const handleDelete = async () => {
+        setLoading(true);
+        try {
+            const res = await fetch(`/api/admin/cursos/${curso.id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+
+            if (!res.ok) {
+                const result = await res.json().catch(() => ({}));
+                toast.error(result.message || 'Erro ao deletar curso.');
+                return;
             }
-        };
+
+            toast.success("Curso deletado com sucesso!");
+            if (setNeedUpdate) {
+                setNeedUpdate(prev => !prev);
+            }
+            onCloseModal();
+
+        } catch (error) {
+            toast.error('Erro ao conectar com o servidor: ' + error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <>
@@ -50,7 +50,7 @@ const CursoDeleteModal = ({curso,setNeedUpdate}) => {
                 <Trash id='delete-btn' />
             </button>
             <Modal show={openModal} onClose={onCloseModal} popup>
-                {loading && <LoaderPages/>}
+                {loading && <LoaderPages />}
                 <ModalHeader />
                 <ModalBody >
                     <div className="flex items-center justify-center p-4 font-sans">

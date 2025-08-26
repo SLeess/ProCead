@@ -22,12 +22,16 @@ const columns = [
     {
       id: "actions",
       header: "Ações",
-      cell: () => (
-        <div className="flex items-center space-x-2 justify-center">
-          <DisciplinaEditModal/>
-          <DisciplinaDeleteModal/>
-        </div>
-      ),
+      cell: ({ row, table }) => {
+        const disciplina = row.original;
+        const { setNeedUpdate } = table.options.meta;
+        return (
+          <div className="flex items-center space-x-2 justify-center">
+            <DisciplinaEditModal disciplina={disciplina} setNeedUpdate={setNeedUpdate} />
+            <DisciplinaDeleteModal disciplina={disciplina} setNeedUpdate={setNeedUpdate} />
+          </div>
+        )
+      },
       enableSorting: false,
       enableHiding: false,
     },

@@ -38,10 +38,44 @@ class DisciplinaController extends APIController
                 'curso_id' => $request->curso_id,
                 'carga_horaria' => $request->carga_horaria,
             ]);
+            $disciplina->vagas()->create([
+                'vagable_id' => $disciplina->id,
+                'vagable_type' => Disciplina::class
+            ]);
 
             return $this->sendResponse($disciplina, 'Disciplina criada com sucesso.', 200);
         } catch (\Exception $e) {
             return $this->sendError('Error ao criar disciplina.', ['error' => $e->getMessage()], 400);
+        }
+    }
+    
+    public function update(Request $request, string $id)
+    {
+        $request->validate([
+            'nome' => 'required|string|max:255',
+            'edital_id' => 'required|integer|exists:editais,id',
+            'curso_id' => 'required|integer|exists:cursos,id',
+        ]);
+
+        try {
+            $disciplina = Disciplina::findOrFail($id);
+            $disciplina->update($request->only(['nome', 'edital_id', 'curso_id', 'carga_horaria']));
+
+            return $this->sendResponse($disciplina, 'Disciplina atualizada com sucesso.', 200);
+        } catch (\Exception $e) {
+            return $this->sendError('Error ao atualizar disciplina.', ['error' => $e->getMessage()], 400);
+        }
+    }
+
+    public function destroy(string $id)
+    {
+        try {
+            $disciplina = Disciplina::findOrFail($id);
+            $disciplina->delete();
+
+            return $this->sendResponse($disciplina, 'Disciplina deletada com sucesso.', 200);
+        } catch (\Exception $e) {
+            return $this->sendError('Error ao deletar disciplina.', ['error' => $e->getMessage()], 400);
         }
     }
 }
