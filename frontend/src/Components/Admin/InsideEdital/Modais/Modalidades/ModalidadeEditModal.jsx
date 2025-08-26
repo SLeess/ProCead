@@ -5,6 +5,7 @@ import { useAppContext } from '@/Contexts/AppContext';
 import { Modal, ModalBody } from 'flowbite-react';
 import { Pencil } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 const availableTiposAvaliacao = [
@@ -19,6 +20,7 @@ const ModalidadeEditModal = ({ setNeedUpdate, modalidade }) => {
     const [openModal, setOpenModal] = useState(false);
     const [loading, setLoading] = useState(false);
     const { token } = useAppContext();
+    const {editalId} = useParams();
     const [formData, setFormData] = useState({
         sigla: '',
         descricao: '',
@@ -65,7 +67,8 @@ const ModalidadeEditModal = ({ setNeedUpdate, modalidade }) => {
 
         const dataToSend = {
             ...formData,
-            tipos_avaliacao: selectedTipos
+            tipos_avaliacao: selectedTipos,
+            editalId: editalId
         };
 
         try {
