@@ -5,12 +5,14 @@ import { useAppContext } from '@/Contexts/AppContext';
 import { Modal, ModalBody, ModalHeader } from 'flowbite-react';
 import { Pencil } from 'lucide-react';
 import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 const CursoEditModal = ({ curso, setNeedUpdate }) => {
   const [openModal, setOpenModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const { token } = useAppContext();
+  const {editalId} = useParams();
   const [formData, setFormData] = useState({
     nome: '',
   });
@@ -38,7 +40,7 @@ const CursoEditModal = ({ curso, setNeedUpdate }) => {
     try {
       const res = await fetch(`/api/admin/cursos/${curso.id}`, {
         method: 'PUT',
-        body: JSON.stringify(formData),
+        body: JSON.stringify({...formData, editalId: editalId}),
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
