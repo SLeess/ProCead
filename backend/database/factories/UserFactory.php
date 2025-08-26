@@ -12,19 +12,24 @@ use Illuminate\Support\Str;
 class UserFactory extends Factory
 {
     /**
-     * The current password being used by the factory.
+     * A senha padrão para todos os usuários criados pela factory.
      */
     protected static ?string $password;
 
     /**
-     * Define the model's default state.
+     * Define o estado padrão do modelo.
      *
      * @return array<string, mixed>
      */
     public function definition(): array
     {
         return [
+            // ✅ Adicionado o campo 'nome'
             'nome' => fake()->name(),
+
+            // ✅ Adicionado o campo 'cpf' com um gerador de CPF (apenas números)
+            'cpf' => $this->generateCpf(),
+
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
@@ -33,12 +38,25 @@ class UserFactory extends Factory
     }
 
     /**
-     * Indicate that the model's email address should be unverified.
+     * Indica que o endereço de e-mail do modelo deve ser não verificado.
      */
     public function unverified(): static
     {
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
         ]);
+    }
+
+    /**
+     * Gera um número de CPF válido (apenas dígitos) para testes.
+     * Este é um método auxiliar simples e não gera CPFs matematicamente válidos,
+     * mas serve para popular o banco com o formato correto.
+     *
+     * @return string
+     */
+    private function generateCpf(): string
+    {
+        // Gera 11 dígitos aleatórios
+        return implode('', array_map(fn() => random_int(0, 9), range(1, 11)));
     }
 }
