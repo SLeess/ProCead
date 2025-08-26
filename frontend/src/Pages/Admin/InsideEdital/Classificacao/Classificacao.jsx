@@ -5,6 +5,9 @@ import { Plus, Undo2 } from "lucide-react";
 import { MultiSelect } from "primereact/multiselect";
 import { TabPanel, TabView } from "primereact/tabview";
 import { useParams } from "react-router-dom";
+import MainTable from "@/Components/Global/Tables/MainTable/MainTable";
+import columns from "./columns.jsx";
+import data from "./data.js";
 
 const Classificacao = () => {
     const tabs = [
@@ -34,7 +37,7 @@ const Classificacao = () => {
                 <p id="classificacao-title">Classificação</p>
                 <button id="aprovar-btn">
                     <Plus className="inline" />
-                    <span className='ml-1'>Aprovar Classificação</span>
+                    <span className='ml-1 text-sm'>Aprovar Classificação</span>
                 </button>
             </div>
 
@@ -58,26 +61,7 @@ const Classificacao = () => {
                 })}
             </TabView>
 
-            <div className="shadow-sm mb-4">
-                <div className="flex bg-gray-100 py-2 px-4">
-                    <div className="w-1/4 text-sm text-gray-600">Inscrição</div>
-                    <div className="w-1/4 text-sm text-gray-600">Nome</div>
-                    <div className="w-1/4 text-sm text-gray-600">CPF</div>
-                    <div className="w-1/4 text-sm text-gray-600">Modalidade</div>
-                </div>
-                <div className="bg-white">
-                    {dataPreview.map((item, index) => (
-                        <div key={index} className={`${index % 2 == 1 ? ' bg-slate-50' : ''}`}>
-                            <div className="flex border-t border-slate-100 py-2 px-4">
-                                <p className="w-1/4">{item.inscricao}</p>
-                                <p className="w-1/4">{item.nome}</p>
-                                <p className="w-1/4">{item.cpf}</p>
-                                <p className="w-1/4">{item.modalidade}</p>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </div>
+            <MainTable data = {data} columns = {columns} isClassificationTable={true} hasPaddingStyle={false} hasSelectForRows={false}/>
 
         </div>
     );
