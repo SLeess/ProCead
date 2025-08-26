@@ -78,17 +78,11 @@ const AdminProfileModal = ({openModal, onCloseModal, user}) => {
                                     <FormField label="E-mail">
                                         <TextInput readOnly={true} value={user?.email || "Email não disponível"} />
                                     </FormField>
-                                    <FormField label="Senha Antiga">
-                                        {/* Adicionar type password */}
-                                        <TextInput readOnly={true} type="password" value="senha" />
-                                    </FormField>
-                                </div>
-
-                                <div id="rows-2-input" className="mx-4">
                                     <FormField label="Nova Senha">
                                         <TextInput type="password" className="md:col-span-1" />
                                     </FormField>
                                 </div>
+
 
                                 <div id="rows-2-input" className="mx-4">
                                     <FormField label="Confirmar Senha">
