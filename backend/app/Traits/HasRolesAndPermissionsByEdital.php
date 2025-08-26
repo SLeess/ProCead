@@ -152,7 +152,7 @@ trait HasRolesAndPermissionsByEdital
         $permissionIds = $permissionsCollection->pluck('id')->all();
 
         DB::transaction(function () use ($editalId, $permissionIds) {
-            DB::table('model_has_permissions_by_edital')
+            DB::table('model_has_permission_by_edital')
                 ->where('user_id', $this->uuid)
                 ->where('edital_id', $editalId)
                 ->delete();
@@ -164,7 +164,7 @@ trait HasRolesAndPermissionsByEdital
                     'edital_id' => $editalId,
                 ])->all();
 
-                DB::table('model_has_permissions_by_edital')->insert($dataToInsert);
+                DB::table('model_has_permission_by_edital')->insert($dataToInsert);
             }
         });
 
