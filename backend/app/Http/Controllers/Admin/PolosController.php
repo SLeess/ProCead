@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\API\APIController;
+use App\Http\Requests\PoloRequest;
 use App\Models\Polo;
 use DB;
 use Exception;
@@ -13,17 +14,17 @@ class PolosController extends APIController
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(PoloRequest $request)
     {
-        // dd($request->all());
+        $data = $request->validated();
         DB::beginTransaction();
         try{
-            $polo = Polo::create(['nome' => $request->nome,'edital_id' => $request->editalId]);
+            $polo = Polo::create(['nome' => $data['nome'],'edital_id' => $data['editalId']]);
             DB::commit();
             return $this->sendResponse($polo,'Polo criado com sucesso.',200);
         }catch(Exception $e){
             DB::rollBack();
-            return $this->sendError($e,'Não foi possível cadastrar o polo', 400);
+            return $this->sendError($e,[/*'error' => 'Não foi possível cadastrar o polo',*/ 'error' => $e->getMessage()], 400);
         }
     }
 
@@ -33,20 +34,19 @@ class PolosController extends APIController
     public function show(string $id)
     {
         $polos = Polo::where('edital_id',$id)->get();
-        // dd($polos);
         return $this->sendResponse($polos, "Polos buscados com sucesso.",200);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(PoloRequest $request, string $id)
     {
-        // dd($request->nome);
         DB::beginTransaction();
+        $data = $request->validated();
         try{
             $polo = Polo::find($id);
-            $polo->update(["nome" => $request->nome]);
+            $polo->update(["nome" => $data['nome']]);
             DB::commit();
             return $this->sendResponse($polo,'Polo atualizado com sucesso!',200);
         }catch(Exception $e){
@@ -60,7 +60,6 @@ class PolosController extends APIController
      */
     public function destroy(string $id)
     {
-        // dd($id);
         DB::beginTransaction();
         try{
             $polo = Polo::find($id);

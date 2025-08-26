@@ -6,19 +6,23 @@ import React, { useEffect, useState } from 'react';
 import { useAppContext } from '@/Contexts/AppContext';
 import { toast } from 'react-toastify';
 import LoaderPages from '@/Components/Global/LoaderPages/LoaderPages';
+import { useParams } from 'react-router-dom';
 
 const PoloEditModal = ({ polo, setNeedUpdate }) => {
     const [openModal, setOpenModal] = useState(false);
     const [loading, setLoading] = useState(false);
     const { token } = useAppContext();
+    const {editalId} = useParams();
     const [formData, setFormData] = useState({
         nome: '',
+        editalId: ''
     });
 
     useEffect(() => {
         if (polo) {
             setFormData({
                 nome: polo.nome || '',
+                editalId: editalId || '',
             });
         }
     }, [polo]);
