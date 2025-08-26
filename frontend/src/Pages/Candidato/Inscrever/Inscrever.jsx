@@ -1,7 +1,7 @@
 import LoaderPages from '@/Components/Global/LoaderPages/LoaderPages';
 import Stepper from '@/Components/Global/Stepper/Stepper';
 import { CheckCheck, ListCheck, ListCollapse, MapPinHouse } from 'lucide-react';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { CiCircleInfo } from 'react-icons/ci';
 import InformacoesBasicas from './Tabs/InformacoesBasicas';
 import Endereco from './Tabs/Endereco';
@@ -14,7 +14,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 
 const Inscrever = () => {
-    const { token, user } = useAppContext();
+    const { token, user, verifyStatusRequest } = useAppContext();
+    const { editalId } = useParams();
     const [activeTabIndex, setActiveTabIndex] = useState(0);
     const [enabledTabs, setEnabledTabs] = useState([0]);
     const [loading, setLoading] = useState(false);
@@ -81,8 +82,39 @@ const Inscrever = () => {
         setFormData(f => ({ ...f, [attr]: value }));
     };
 
-    const {editalId} = useParams();
     const navigate = useNavigate();
+
+    const [vagas, setVagas] = useState([]);
+      useEffect(() => {
+        async function fetchVagas() {
+          setLoading(true);
+          try {
+            const res = await fetch(`/api/admin/vagas/${editalId}`, {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+              },
+            });
+    
+            const result = await res.json();
+    
+            if (!res.ok) {
+              verifyStatusRequest(res.status, result);
+              throw new Error(`Erro ao buscar Vagas: ${res.status} ${res.statusText}`);
+            }
+    
+            setVagas(result.data);
+          } catch (error) {
+    
+            setVagas([]);
+            throw new Error(`Erro ao buscar vagas: ${error}`)
+          } finally {
+            setLoading(false);
+          }
+        }
+        fetchVagas();
+      }, [token]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -158,10 +190,10 @@ const Inscrever = () => {
                     activeTabIndex === 1 && <Endereco formData={formData} handleOnChangeAttr={handleOnChangeAttr} handleNext={handleNext} handleBack={handleBack} enabledTabs={enabledTabs} setEnabledTabs={setEnabledTabs} />
                 }
                 {
-                    activeTabIndex === 2 && <EscolhaDaVaga formData={formData} setFormData={setFormData} handleNext={handleNext} handleBack={handleBack} enabledTabs={enabledTabs} setEnabledTabs={setEnabledTabs} />
+                    activeTabIndex === 2 && <EscolhaDaVaga vagas={vagas} formData={formData} setFormData={setFormData} handleNext={handleNext} handleBack={handleBack} enabledTabs={enabledTabs} setEnabledTabs={setEnabledTabs} />
                 }
                 {
-                    activeTabIndex === 3 && <DetalhesDaVaga formData={formData} setFormData={setFormData} handleNext={handleNext} handleBack={handleBack} enabledTabs={enabledTabs} setEnabledTabs={setEnabledTabs} />
+                    activeTabIndex === 3 && <DetalhesDaVaga vagas={vagas} formData={formData} setFormData={setFormData} handleNext={handleNext} handleBack={handleBack} enabledTabs={enabledTabs} setEnabledTabs={setEnabledTabs} />
                 }
                 {
                     activeTabIndex === 4 && <Confirmacao formData={formData} setFormData={setFormData} handleOnChangeAttr={handleOnChangeAttr} handleNext={handleNext} handleBack={handleBack} enabledTabs={enabledTabs} setEnabledTabs={setEnabledTabs} />
