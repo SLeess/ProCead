@@ -39,8 +39,11 @@ const AlterationRow = ({ attribute, oldValue, newValue, isHeader = false }) => (
     </div>
 );
 
-const MultiSelectTags = () => {
-    const [selectedItems, setSelectedItems] = useState(['Edital 1', 'Edital 2']);
+const MultiSelectTags = ({
+    readOnly = false,
+    listEditais = []
+}) => {
+    const [selectedItems, setSelectedItems] = useState(listEditais);
 
     const removeItem = (itemToRemove) => {
         setSelectedItems(selectedItems.filter(item => item !== itemToRemove));
@@ -52,9 +55,12 @@ const MultiSelectTags = () => {
                 {selectedItems.map(item => (
                     <div key={item} className="flex items-center bg-gray-200 text-gray-700 text-sm font-medium px-2 py-1 rounded-md">
                         <span>{item}</span>
-                        <button onClick={() => removeItem(item)} className="ml-2 text-gray-500 hover:text-gray-800">
-                            &times;
-                        </button>
+                        {
+                            !readOnly && 
+                            <button onClick={() => removeItem(item)} className="ml-2 text-gray-500 hover:text-gray-800">
+                                &times;
+                            </button>
+                        }
                     </div>
                 ))}
                  <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
