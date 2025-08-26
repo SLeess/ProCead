@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // para evitar os problemas com tipo de atributo (curso, disciplina, cargo), a vaga será uma tabela polimórfica
+        // que pode ser associada a diferentes modelos.
+        // deste modo, uma vaga pode ser um qualquer tipo de model, o que torna o sistema mais escalável.
         Schema::create('vagas', function (Blueprint $table) {
-            // essa tabela define cursos e cargos
             $table->id();
-            $table->string('descricao', length: 100);
-            $table->foreignId('edital_id')->references('id')->on('editais');
+            $table->morphs('vagable'); // cria 'vagable_id' (model_id) e 'vagable_type' (model_type)
             $table->timestamps();
         });
     }

@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('disciplinas', function (Blueprint $table) {
+        Schema::create('vagas_por_modalidade', function (Blueprint $table) {
             $table->id();
-            $table->string('descricao', length: 100);
-            $table->integer('carga_horaria');
-            $table->integer('num_bolsas');
-            $table->foreignId('curso_id')->references('id')->on('vagas');
+            $table->foreignId('modalidade_id')->constrained('modalidades')->onDelete('cascade');
+            $table->foreignId('quadro_vaga_id')->constrained('quadro_vagas')->onDelete('cascade');
+            $table->integer('quantidade');
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('disciplinas');
+        Schema::dropIfExists('vagas_por_modalidade');
     }
 };

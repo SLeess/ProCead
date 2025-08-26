@@ -10,7 +10,6 @@ import "./AdminProfileModal.css";
 const AdminProfileModal = ({openModal, onCloseModal, user}) => {
     const [activeTab, setActiveTab] = useState('Informações Pessoais');
     const tabs = ['Informações Pessoais', 'Alterar Senha'];
-    console.log(user);
 
     const handleNext = () => {
         const currentIndex = tabs.indexOf(activeTab);

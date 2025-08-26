@@ -13,6 +13,11 @@ const columns = [
       cell: (props) => <span>{props.getValue()}</span>
     },
     {
+      accessorKey: "codigo",
+      header:"Código",
+      cell: (props) => <span>{props.getValue()}</span>
+    },
+    {
       accessorKey: "campus",
       header:"Campus",
       cell: (props) => <span>{props.getValue()}</span>
@@ -20,7 +25,7 @@ const columns = [
     {
       accessorKey: "vaga",
       header:"Vaga",
-      cell: (props) => <span>{props.getValue()}</span>
+      cell: (props) => <span>{props.getValue()?.vagable?.nome}</span>
     },
     {
       accessorKey: "habilitacao",
@@ -35,10 +40,10 @@ const columns = [
     {
       id: "actions",
       header: "Ações",
-      cell: () => (
+      cell: ({ row, table }) => (
         <div className="flex items-center space-x-2 justify-center">
-          <QuadroVagasShowModal/>
-          <QuadroVagasEditModal/>
+          <QuadroVagasShowModal quadroVaga={row.original} setNeedUpdate={table.options.meta.setNeedUpdate}/>
+          <QuadroVagasEditModal quadroVaga={row.original} setNeedUpdate={table.options.meta.setNeedUpdate}/>
         </div>
       ),
       enableSorting: false,

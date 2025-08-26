@@ -1,5 +1,3 @@
-
-
 import { Button, Checkbox, Label, Modal, ModalBody, ModalHeader, } from "flowbite-react";
 import { Eye } from "lucide-react";
 import { useState } from "react";
@@ -8,15 +6,14 @@ import CabecalhoModal from "@/Components/Global/Modais/CabecalhoModal";
 import "./QuadroVagasModal.css";
 import ModalTabs from "../../Tabs/ModalTabs";
 
-export default function QuadroVagasShowModal() {
+
+export default function QuadroVagasShowModal({ quadroVaga }) {
     const [openModal, setOpenModal] = useState(false);
     const [activeTab, setActiveTab] = useState('Dados');
     const tabs = ['Dados', 'Distribuição de Vagas', 'Categorias Customizadas'];
-    const categoriesData = [
-    { id: 1, name: 'Comunidade Geral (Vagas Remanecentes)' },
-    { id: 2, name: 'Comunidade Geral (Vagas Remanecentes)' },
-    { id: 3, name: 'Comunidade Geral (Vagas Remanecentes)' },
-];
+    
+
+    
 
     const handleNext = () => {
         const currentIndex = tabs.indexOf(activeTab);
@@ -37,6 +34,8 @@ export default function QuadroVagasShowModal() {
         setOpenModal(false);
     }
 
+
+
     return (
         <>
             <button onClick={() => setOpenModal(true)} id="acoes-icons">
@@ -44,38 +43,34 @@ export default function QuadroVagasShowModal() {
             </button>
             <Modal show={openModal} onClose={onCloseModal} popup>
 
-                <CabecalhoModal titleModal = {"Visualizar Quadro de Vagas"}/>
+                <CabecalhoModal titleModal={"Visualizar Quadro de Vagas"} />
 
-                    <hr className='mb-3 mx-4'/>
+                <hr className='mb-3 mx-4' />
 
                 <ModalBody >
-                    {/* <div className="bg-gray-100 min-h-screen flex items-center justify-center p-4 font-sans">
-                        <div className="w-full max-w-4xl bg-white rounded-2xl shadow-lg p-8"> */}
-
-
                     {/* Sub-header */}
                     <p id='subtitle-edital'>
                         Edital Referente: Processo de Seleção de Discentes para os Cursos de Especialização da Unimontes – Modalidade Educação a Distância – Sistema Universidade Aberta do Brasil (UAB) – Edital Nº 08/2025
                     </p>
 
                     {/* Tabs Navigation */}
-                    <ModalTabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab}/>
+                    <ModalTabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
 
                     {/* Form Content - Only showing the active tab's content */}
                     {activeTab === 'Dados' && (
                         <div>
                             <div id='rows-3-input'>
                                 {/* Row 1 */}
-                                <FormField label="Código"><TextInput readOnly={true} value="1" /></FormField>
-                                <FormField label="Semestre"><TextInput readOnly={true} value="2" /></FormField>
-                                <FormField label="Edital Referente"><TextInput readOnly={true} value="Edital Nº 08/2025" /></FormField>
+                                <FormField label="Código"><TextInput readOnly={true} value={quadroVaga?.codigo || ''} /></FormField>
+                                <FormField label="Semestre"><TextInput readOnly={true} value={quadroVaga?.semestre || ''} /></FormField>
+                                <FormField label="Edital Referente"><TextInput readOnly={true} value={`Edital Nº ${quadroVaga?.edital_id}`} /></FormField>
 
                                 {/* Row 2 */}
-                                <FormField label="Campus" className="md:col-span-1"><TextInput readOnly={true} value="Campus Montes Claros" /></FormField>
-                                <FormField label="Vaga" className="md:col-span-2"><TextInput readOnly={true} value="Lato Sensu em Alfabetização e Multi..." /></FormField>
+                                <FormField label="Campus" className="md:col-span-1"><TextInput readOnly={true} value={quadroVaga?.campus || ''} /></FormField>
+                                <FormField label="Vaga" className="md:col-span-2"><TextInput readOnly={true} value={quadroVaga?.vaga?.vagable?.nome || ''} /></FormField>
 
                                 {/* Row 3 */}
-                                <FormField label="Habilitação" className="md:col-span-3"><TextInput readOnly={true} value="Pós Graduação" /></FormField>
+                                <FormField label="Habilitação" className="md:col-span-3"><TextInput readOnly={true} value={quadroVaga?.habilitacao || ''} /></FormField>
                             </div>
                             <div id="buttons-container">
                                 <button onClick={onCloseModal} id='modal-white-button'>Fechar</button>
@@ -87,12 +82,11 @@ export default function QuadroVagasShowModal() {
                     {activeTab === 'Distribuição de Vagas' && (
                         <div>
                             <div id="distribuicao-vagas-options">
-                                <FormField label="AC"><TextInput readOnly={true} value="80" /></FormField>
-                                <FormField label="NP"><TextInput readOnly={true} value="32" /></FormField>
-                                <FormField label="I"><TextInput readOnly={true} value="6" /></FormField>
-                                <FormField label="Q"><TextInput readOnly={true} value="4" /></FormField>
-                                <FormField label="PCD"><TextInput readOnly={true} value="6" /></FormField>
-                                <FormField label="TRANS"><TextInput readOnly={true} value="2" /></FormField>
+                                {quadroVaga?.vagas_por_modalidade?.map((vagaPorModalidade) => (
+                                    <FormField key={vagaPorModalidade.id} label={vagaPorModalidade.sigla}>
+                                        <TextInput readOnly={true} value={vagaPorModalidade.quantidade} />
+                                    </FormField>
+                                ))}
                             </div>
                             <div id="buttons-container">
                                 <button onClick={handleBack} id='modal-white-button'>Voltar</button>
@@ -111,10 +105,10 @@ export default function QuadroVagasShowModal() {
                                 </div>
                                 {/* Table Body */}
                                 <div className="bg-white">
-                                    {categoriesData.map((category, index) => (
-                                        <div key={category.id} className={`flex px-6 py-4 ${index !== categoriesData.length - 1 ? 'border-b border-gray-200' : ''}`}>
-                                            <div id="categorias-customizadas-body-text" className="w-16">{category.id}</div>
-                                            <div id="categorias-customizadas-body-text" className="flex-1">{category.name}</div>
+                                    {quadroVaga?.categorias_customizadas?.map((category, index) => (
+                                        <div key={category.id} className={`flex px-6 py-4 ${index !== quadroVaga.categorias_customizadas.length - 1 ? 'border-b border-gray-200' : ''}`}>
+                                            <div id="categorias-customizadas-body-text" className="w-16">{category.indice + 1}</div>
+                                            <div id="categorias-customizadas-body-text" className="flex-1">{category.nome}</div>
                                         </div>
                                     ))}
                                 </div>
@@ -125,10 +119,6 @@ export default function QuadroVagasShowModal() {
                             </div>
                         </div>
                     )}
-
-                    
-
-
                 </ModalBody>
             </Modal>
         </>

@@ -14,17 +14,29 @@ class CursoSeeder extends Seeder
      */
     public function run(): void
     {
-        Curso::create([
+        $curso = Curso::create([
             'nome' => 'Licenciatura em Matemática',
             'edital_id' => Edital::first()->id
         ]);
-        Curso::create([
+        $curso->vagas()->create([
+            'vagable_id' => $curso->id,
+            'vagable_type' => Curso::class,
+        ]);
+        $curso = Curso::create([
             'nome' => 'Licenciatura em Física',
             'edital_id' => Edital::first()->id
         ]);
-        Curso::create([
+        $curso->vagas()->create([
+            'vagable_id' => $curso->id,
+            'vagable_type' => Curso::class,
+        ]);
+        $curso = Curso::create([
             'nome' => 'Licenciatura em Química',
             'edital_id' => Edital::first()->id
+        ]);
+        $curso->vagas()->create([
+            'vagable_id' => $curso->id,
+            'vagable_type' => Curso::class,
         ]);
     }
 }

@@ -1,3 +1,5 @@
+import ChamadaEditModal from "@/Components/Admin/InsideEdital/Modais/Chamadas/ChamadaEditModal";
+import ChamadaShowModal from "@/Components/Admin/InsideEdital/Modais/Chamadas/ChamadaShowModal";
 import { ArrowUpDown } from "lucide-react";
 
 const columns = [
@@ -29,7 +31,9 @@ const columns = [
     cell: () => (
       <div className="flex items-center space-x-2 justify-center">
         {/* Chamada Show Modal */}
+        <ChamadaShowModal />
         {/* Chamada Edit Modal */}
+        <ChamadaEditModal />
       </div>
     ),
     enableSorting: false,
