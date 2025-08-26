@@ -15,7 +15,7 @@ const columns = [
       cell: (props) => <span>{props.getValue()}</span>
     },
     {
-      accessorKey: "curso",
+      accessorKey: "curso_nome",
       header: "Curso",
       cell: (props) => <span>{props.getValue()}</span>
     },

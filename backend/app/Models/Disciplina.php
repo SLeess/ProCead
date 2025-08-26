@@ -11,11 +11,13 @@ class Disciplina extends Vaga
     protected $fillable = [
         'nome',
         'curso_id',
+        'edital_id',
         'carga_horaria'
     ];
     protected $logAttributes = [
         'nome',
         'curso_id',
+        'edital_id',
         'carga_horaria'
     ];
     protected static $logOnlyDirty = true;
@@ -25,5 +27,9 @@ class Disciplina extends Vaga
     public function vagas(): MorphMany
     {
         return $this->morphMany(Vaga::class, 'vagable');
+    }
+    public function curso()
+    {
+        return $this->belongsTo(Curso::class, 'curso_id');
     }
 }

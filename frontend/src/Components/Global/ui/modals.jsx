@@ -69,7 +69,7 @@ const SelectInput = ({ value, options, readOnly, onChange = null, defaultOption 
     <div className="relative">
         <select
             disabled={readOnly}
-            value={value}
+            defaultValue={value}
             onChange={onChange}
             className={`${readOnly !== true ? 'bg-white': 'bg-gray-100'} appearance-none border border-gray-200 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full`}
         >
