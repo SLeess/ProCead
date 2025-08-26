@@ -31,22 +31,34 @@ class ManageUserPermissionsController extends __SuperAdminController
     public function updateGlobal(Request $request, User $user)
     {
         $data = $request->validate([
-            'global_roles' => 'nullable|array',
-            'global_roles.*' => ['string', Rule::exists('roles', 'id')], // Valida que os nomes de cargo existem
-            'global_permissions' => 'nullable|array',
-            'global_permissions.*' => ['string', Rule::exists('permissions', 'id')], // Valida que os nomes de permissão existem
-            // 'edital_roles' => 'nullable|array',
-            // 'edital_roles.*.*' => ['string', Rule::exists('roles', 'name')],
-            // 'edital_permissions' => 'nullable|array', // Estas são as 'direct_permissions'
-            // 'edital_permissions.*.*' => ['string', Rule::exists('permissions', 'name')],
+            'roles' => 'nullable|array',
+            'roles.*' => ['string', Rule::exists('roles', 'id')], // Valida que os nomes de cargo existem
+            'permissions' => 'nullable|array',
+            'permissions.*' => ['string', Rule::exists('permissions', 'id')], // Valida que os nomes de permissão existem
         ]);
 
-        try {
+        $this->iManageUserRolesAndPermissionsService->syncAllGlobalRolesAndPermissions(
+            data: $data,
+            involved_user: $user,
+            author: $request->user(),
+        );
+        return response()->json(['success' => true, 'message' => 'Permissões e cargos atualizados com sucesso.'], 200);
+    }
+    public function updateLocal(Request $request, User $user)
+    {
+        $data = $request->validate([
+            'roles' => 'nullable|array',
+            'roles.*.*' => ['string', Rule::exists('roles', 'name')],
+            'permissions' => 'nullable|array', // Estas são as 'direct_permissions'
+            'permissions.*.*' => ['string', Rule::exists('permissions', 'name')],
+            'edital_id' => ['string', Rule::exists('editais', 'id')]
+        ]);
 
-            $this->iManageUserRolesAndPermissionsService->syncAllGlobalRolesAndPermissions($data, $user);
-            return response()->json(['success' => true, 'message' => 'Permissões e cargos atualizados com sucesso.'], 200);
-        } catch (\Exception $e) {
-            // return $this->sendError('Não implementado ainda', [0 => 'Ainda não foi implementado'], Response::HTTP_NOT_IMPLEMENTED);
-        }
+        $this->iManageUserRolesAndPermissionsService->syncAllLocalRolesAndPermissions(
+            data: $data,
+            involved_user: $user,
+            author: $request->user(),
+        );
+        return response()->json(['success' => true, 'message' => 'Permissões e cargos atualizados com sucesso.'], 200);
     }
 }

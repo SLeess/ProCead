@@ -163,8 +163,8 @@ export default function GerenciarUsuariosPerfisPermissoes()
             console.error(error);
             if (!error.handled) {
                 Swal.fire({
-                    title: 'Erro ao Buscar Usuário',
-                    text: "Não foi possível atualizar os dados do usuário. " + (error.message ? ` (${error.message})` : ''),
+                    title: 'Erro ao Atualizar as permissões e cargos do Usuário.',
+                    text: "Não foi possível atualizar as permissões e cargos globais do usuário. " + (error.message ? ` (${error.message})` : ''),
                     icon: 'error',
                     confirmButtonText: 'Voltar',
                     confirmButtonColor: '#3085d6',

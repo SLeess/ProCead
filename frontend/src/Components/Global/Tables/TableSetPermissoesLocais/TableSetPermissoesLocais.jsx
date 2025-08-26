@@ -61,60 +61,7 @@ export default function TableSetPermissoesLocais({
             formattedData.sort((a,b) => String(a.name_permission).toLowerCase().localeCompare(String(b.name_permission)))
         );
 
-    }, [allPermissions, initialSelectedPermissions, hasBeenUpdated]);
-
-     useEffect(() => {
-        // console.log(allPermissions);
-        if (Object.keys(allPermissions).length === 0) {
-            setTableData([]);
-            return;
-        }
-
-        console.log(tableData);
-        console.log(initialSelectedPermissions);
-        const selectedIdsSet = new Set(initialSelectedPermissions);
-        const disabledIdsSet = new Set(disabledInheritPermissions);
-
-        /**
-         * Função auxiliar para criar o objeto de cada permissão.
-         * @param {object|null} perm - O objeto de permissão original.
-         * @returns {{checked: boolean, disabled: boolean}|null}
-         */
-        const createPermissionState = (perm) => {
-            if (!perm) {
-                return null;
-            }
-            
-            const permId = String(perm.id);
-            const isDisabled = disabledIdsSet.has(permId);
-            return {
-                checked: isDisabled || selectedIdsSet.has(permId),
-                disabled: isDisabled
-            };
-        };
-
-         const formattedData = Object.entries(allPermissions)
-            .filter(([groupName, _]) => !groupName.includes('avaliar'))
-            .map(([groupName, groupPerm]) => {
-                const permissionsMap = new Map(groupPerm.map(p => [p.name, p]));
-
-            return {
-                name_permission: String(groupName).toUpperCase().replace(/[-_]/g, ' '),
-                visualizar: createPermissionState(permissionsMap.get(`visualizar-${groupName}`)),
-                criar: createPermissionState(permissionsMap.get(`cadastrar-${groupName}`)),
-                atualizar: createPermissionState(permissionsMap.get(`editar-${groupName}`)),
-                deletar: createPermissionState(permissionsMap.get(`deletar-${groupName}`)),
-            };
-        });
-
-        setTableData(
-            /**
-            //  * Opcional -- é uma função pra ordenar os grupos de permissões para exibir em ordem alfabética
-            */
-            formattedData.sort((a,b) => String(a.name_permission).toLowerCase().localeCompare(String(b.name_permission)))
-        );
-
-    }, [hasBeenUpdated, disabledInheritPermissions]);
+    }, [allPermissions, initialSelectedPermissions, disabledInheritPermissions, hasBeenUpdated]);
 
     // =================================================================================
     // HOOK DE EFEITO Nº 3: PARA SINCRONIZAR A TABELA COM A LISTA DE IDs
@@ -130,7 +77,6 @@ export default function TableSetPermissoesLocais({
         );
 
         const newSelectedIds = [];
-        // console.log(tableData);
         tableData.forEach(row => {
             const groupName = row.name_permission.toLowerCase().replace(/ /g, '-');
             
@@ -151,9 +97,6 @@ export default function TableSetPermissoesLocais({
                 if (id) newSelectedIds.push(id);
             }
         });
-
-        // console.log("ids");
-        // console.log(newSelectedIds);
 
         setSelectedPermissions((f) => ({...f, permissions: newSelectedIds}));
 

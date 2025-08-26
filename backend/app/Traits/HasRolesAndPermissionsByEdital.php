@@ -2,7 +2,10 @@
 
 namespace App\Traits;
 
+use App\Models\Edital;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
+use InvalidArgumentException;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
@@ -93,78 +96,137 @@ trait HasRolesAndPermissionsByEdital
             && !$this->hasAnyPermissionByEdital();
     }
 
-
     /**
-     * Vincula um cargo a um usuário para um edital específico.
+     * Sincroniza os cargos de um usuário para um edital específico.
+     * Remove todos os cargos existentes e os substitui pelos fornecidos.
      *
-     * @param string|int|\Spatie\Permission\Models\Role $role
+     * @param array $roles Coleção de nomes, IDs ou objetos Role.
      * @param \App\Models\Edital|int $edital
-     * @return void
+     * @return self
      */
-    public function assignRoleForEdital($role, $edital): void
+    public function syncRolesForEdital(Collection|array $roles, $edital): self
     {
-        $roleId = $role instanceof Role ? $role->id : (is_string($role) ? Role::findByName($role)->id : $role);
-        $editalId = $edital instanceof \App\Models\Edital ? $edital->id : $edital;
+        $editalId = $edital instanceof Edital ? $edital->id : $edital;
 
-        DB::table('model_has_roles_by_edital')->updateOrInsert(
-            ['user_id' => $this->uuid, 'role_id' => $roleId, 'edital_id' => $editalId],
-            ['user_id' => $this->uuid, 'role_id' => $roleId, 'edital_id' => $editalId]
-        );
+        $rolesCollection = $roles instanceof Collection ? $roles : $this->convertToRoleCollection($roles);
+
+        $this->validateScope($rolesCollection, 'local', 'cargo');
+
+        $roleIds = $rolesCollection->pluck('id')->all();
+
+        DB::transaction(function () use ($editalId, $roleIds) {
+            DB::table('model_has_roles_by_edital')
+                ->where('user_id', $this->uuid)
+                ->where('edital_id', $editalId)
+                ->delete();
+
+            if (!empty($roleIds)) {
+                $dataToInsert = collect($roleIds)->map(fn ($roleId) => [
+                    'user_id' => $this->uuid,
+                    'role_id' => $roleId,
+                    'edital_id' => $editalId,
+                ])->all();
+
+                DB::table('model_has_roles_by_edital')->insert($dataToInsert);
+            }
+        });
+
+        return $this;
     }
 
     /**
-     * Remove um cargo de um usuário para um edital específico.
+     * Sincroniza as permissões diretas de um usuário para um edital específico.
      *
-     * @param string|int|\Spatie\Permission\Models\Role $role
+     * @param array $permissions Coleção de nomes, IDs ou objetos Permission.
      * @param \App\Models\Edital|int $edital
-     * @return int
+     * @return self
      */
-    public function removeRoleForEdital($role, $edital): int
+    public function syncPermissionsForEdital(Collection|array $permissions, $edital): self
     {
-        $roleId = $role instanceof Role ? $role->id : (is_string($role) ? Role::findByName($role)->id : $role);
-        $editalId = $edital instanceof \App\Models\Edital ? $edital->id : $edital;
+        $editalId = $edital instanceof Edital ? $edital->id : $edital;
+        $permissionsCollection = $permissions instanceof Collection ?
+                $permissions : $this->convertToPermissionCollection($permissions);
 
-        return DB::table('model_has_roles_by_edital')
-            ->where('user_id', $this->uuid)
-            ->where('role_id', $roleId)
-            ->where('edital_id', $editalId)
-            ->delete();
+        $this->validateScope($permissionsCollection, 'local', 'permissão');
+
+        $permissionIds = $permissionsCollection->pluck('id')->all();
+
+        DB::transaction(function () use ($editalId, $permissionIds) {
+            DB::table('model_has_permissions_by_edital')
+                ->where('user_id', $this->uuid)
+                ->where('edital_id', $editalId)
+                ->delete();
+
+            if (!empty($permissionIds)) {
+                $dataToInsert = collect($permissionIds)->map(fn ($id) => [
+                    'user_id' => $this->uuid,
+                    'permission_id' => $id,
+                    'edital_id' => $editalId,
+                ])->all();
+
+                DB::table('model_has_permissions_by_edital')->insert($dataToInsert);
+            }
+        });
+
+        return $this;
+    }
+
+    // ==========================================================
+    // MÉTODOS AUXILIARES
+    // ==========================================================
+
+    /**
+     * Valida se todos os itens em uma coleção têm o escopo esperado.
+     *
+     * @param \Illuminate\Database\Eloquent\Collection $collection
+     * @param string $scope
+     * @param string $type
+     * @throws \InvalidArgumentException
+     */
+    private function validateScope(Collection $collection, string $scope, string $type): void
+    {
+        $invalidItem = $collection->firstWhere('scope', '!=', $scope);
+
+        if ($invalidItem) {
+            throw new InvalidArgumentException(
+                "Não é possível sincronizar. O {$type} '{$invalidItem->name}' tem escopo '{$invalidItem->scope}', mas o esperado era '{$scope}'."
+            );
+        }
     }
 
     /**
-     * Vincula uma permissão direta a um usuário para um edital específico.
-     *
-     * @param string|int|\Spatie\Permission\Models\Permission $permission
-     * @param \App\Models\Edital|int $edital
-     * @return void
+     * Converte um array misto de cargos em uma coleção de Models Role.
      */
-    public function givePermissionToForEdital($permission, $edital): void
+    private function convertToRoleCollection(array $roles): Collection
     {
-        $permissionId = $permission instanceof Permission ? $permission->id : (is_string($permission) ? Permission::findByName($permission)->id : $permission);
-        $editalId = $edital instanceof \App\Models\Edital ? $edital->id : $edital;
-
-        DB::table('model_has_permissions_by_edital')->updateOrInsert(
-            ['user_id' => $this->uuid, 'permission_id' => $permissionId, 'edital_id' => $editalId],
-            ['user_id' => $this->uuid, 'permission_id' => $permissionId, 'edital_id' => $editalId]
-        );
+        return collect($roles)->map(function ($role) {
+            if ($role instanceof Role) {
+                return $role;
+            }
+            if (is_numeric($role)) {
+                return Role::findById($role, $this->getDefaultGuardName());
+            }
+            if (is_string($role)) {
+                return Role::findByName($role, $this->getDefaultGuardName());
+            }
+        })->filter();
     }
 
     /**
-     * Remove uma permissão direta de um usuário para um edital específico.
-     *
-     * @param string|int|\Spatie\Permission\Models\Permission $permission
-     * @param \App\Models\Edital|int $edital
-     * @return int
+     * Converte um array misto de permissões em uma coleção de Models Permission.
      */
-    public function revokePermissionFromForEdital($permission, $edital): int
+    private function convertToPermissionCollection(array $permissions): Collection
     {
-        $permissionId = $permission instanceof Permission ? $permission->id : (is_string($permission) ? Permission::findByName($permission)->id : $permission);
-        $editalId = $edital instanceof \App\Models\Edital ? $edital->id : $edital;
-
-        return DB::table('model_has_permissions_by_edital')
-            ->where('user_id', $this->uuid)
-            ->where('permission_id', $permissionId)
-            ->where('edital_id', $editalId)
-            ->delete();
+        return collect($permissions)->map(function ($permission) {
+            if ($permission instanceof Permission) {
+                return $permission;
+            }
+            if (is_numeric($permission)) {
+                return Permission::findById($permission, $this->getDefaultGuardName());
+            }
+            if (is_string($permission)) {
+                return Permission::findByName($permission, $this->getDefaultGuardName());
+            }
+        })->filter();
     }
 }
