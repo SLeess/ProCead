@@ -1,16 +1,23 @@
-import React, { useContext, useEffect, useState } from "react";
-import "./Classificacao.css";
-import { Plus, Undo2 } from "lucide-react";
-import { MultiSelect } from "primereact/multiselect";
-import { TabPanel, TabView } from "primereact/tabview";
-import { useParams } from "react-router-dom";
-import MainTable from "@/Components/Global/Tables/MainTable/MainTable";
-import columns from "./columns.jsx";
-import data from "./data.js";
-import { AppContext } from "@/Contexts/AppContext";
-import AccessDenied from "@/Components/Global/AccessDenied/AccessDenied";
+import React, { useContext, useEffect } from "react";
+import { useState } from "react";
+import "./PreviewChamadas.css";
+import { Undo2 } from "lucide-react";
+import data from "./dataPreview.js";
+import columns from "./columnsPreview.jsx";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
-const Classificacao = () => {
+// Prime React component imports.
+import { MultiSelect } from 'primereact/multiselect';
+import { TabView, TabPanel } from 'primereact/tabview';
+import "primereact/resources/themes/lara-light-purple/theme.css";
+import MainTable from "@/Components/Global/Tables/MainTable/MainTable";
+import { AppContext } from "@/Contexts/AppContext";
+
+const PreviewChamadas = () => {
+    const navigate = useNavigate();
+    const location = useLocation();
+    const showChamada = location.state;
+
     const [loading, setLoading] = useState([]);
     const { editalId } = useParams();
     const { hasPermissionForEdital, isSuperAdmin, token, verifyStatusRequest } = useContext(AppContext);
@@ -86,41 +93,51 @@ const Classificacao = () => {
 
     if (hasPermissionForEdital('visualizar-modalidades', editalId) && hasPermissionForEdital('visualizar-cursos', editalId) || isSuperAdmin())
 
-        return (
-            <div id="classificacao-content">
+    return (
+        <div id="preview-content">
 
-                <div id="classificacao-header">
-                    <p id="classificacao-title">Classificação</p>
-                    <button id="aprovar-btn">
-                        <Plus className="inline" />
-                        <span className='ml-1 text-sm'>Aprovar Classificação</span>
-                    </button>
-                </div>
-
-                <div className="card flex justify-content-center my-4">
-                    <MultiSelect 
-                        value={selectedCursos} 
-                        onChange={(e) => setSelectedCursos(e.value)} 
-                        options={cursos} 
-                        optionLabel="nome" 
-                        display="chip"
-                        placeholder="Selecione os Cursos" 
-                        className="w-[50%] md:w-20rem h-12 items-center" 
-                    />
-                </div>
-
-                <TabView scrollable >
-                    {modalidades.map((modalidade) => {
-                        return (
-                            <TabPanel className="text-sm" key={modalidade.id} header={modalidade.sigla}></TabPanel>
-                        );
-                    })}
-                </TabView>
-
-                <MainTable data = {data} columns = {columns} isClassificationTable={true} hasPaddingStyle={false} hasSelectForRows={false}/>
-
+            <div id="preview-header">
+                {showChamada ? (
+                    <p id="preview-title">{showChamada.title}</p>
+                ) : (
+                    <p id="preview-title">Pré-Visualização da Chamada</p>
+                )}
+                <button onClick={() => navigate(-1) } id="back-btn">
+                    <Undo2 className="inline" />
+                    <span className="ml-1">Voltar</span>
+                </button>
             </div>
-        );
+            
+            {showChamada ? (
+                <p id="preview-editalref">Edital Referente: {showChamada.editalref}</p>
+            ) : (
+                <></>
+            )}
+
+            <div className="card flex justify-content-center my-4">
+                <MultiSelect 
+                    value={selectedCursos} 
+                    onChange={(e) => setSelectedCursos(e.value)} 
+                    options={cursos} 
+                    optionLabel="nome" 
+                    display="chip"
+                    placeholder="Selecione os Cursos" 
+                    className="w-[50%] md:w-20rem h-12 items-center" 
+                />
+            </div>
+
+            <TabView scrollable >
+                {modalidades.map((modalidade) => {
+                    return (
+                        <TabPanel className="text-sm" key={modalidade.id} header={modalidade.sigla}></TabPanel>
+                    );
+                })}
+            </TabView>
+
+            <MainTable data = {data} columns = {columns} isClassificationTable={true} hasPaddingStyle={false} hasSelectForRows={false}/>
+
+        </div>
+    );
 
     else {
         return (
@@ -129,4 +146,4 @@ const Classificacao = () => {
     }
 }
 
-export default Classificacao;
+export default PreviewChamadas;
