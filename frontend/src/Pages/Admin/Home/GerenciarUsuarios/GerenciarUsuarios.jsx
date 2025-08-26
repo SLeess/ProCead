@@ -18,6 +18,7 @@ export default function GerenciarUsuarios(){
 
     const columns = useMemo(() => GerenciarUsuariosColumns(navigate), [navigate]);
 
+    const [totalUsuarios, setTotalUsuarios] = useState(null);
     const [usuarios, setUsuarios] = useState([]);
     
     /** ------------------ Lidando com Filtros ------------------ **/
@@ -31,6 +32,7 @@ export default function GerenciarUsuarios(){
                 const result = await apiAsyncFetch({
                     url: `/api/super-admin/users`, 
                 });
+                setTotalUsuarios(result?.data?.meta?.total);
                 setUsuarios(result?.data?.users);
                 setCantShow(false);
             } catch (err) {
@@ -74,7 +76,7 @@ export default function GerenciarUsuarios(){
                         <div className="sm:flex items-center justify-between  mb-4">
                             <div className="bg-white shadow-md rounded-md p-5 w-xs relative flex flex-col justify-between h-30">
                                 <p className="text-gray-600 mb-1">Nº de Usuários</p>
-                                <p className="text-2xl font-bold mb-1">4</p>
+                                <p className="text-2xl font-bold mb-1">{totalUsuarios}</p>
                                 <UserRoundPen className="absolute top-4 right-4 text-gray-500" />
                             </div>
                             <UserCreateModal/>

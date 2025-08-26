@@ -14,6 +14,7 @@ use Spatie\Permission\Traits\HasRoles;
 use App\Notifications\UserResetPassword;
 use App\Traits\HasRolesAndPermissionsByEdital;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class User extends Authenticatable
 {
@@ -88,6 +89,25 @@ class User extends Authenticatable
     public function editais()
     {
         return $this->belongsToMany(Edital::class, 'model_has_roles_by_edital', 'user_id', 'edital_id');
+    }
+
+    public function latestToken(): HasOne
+    {
+        return $this->hasOne(PersonalAccessToken::class, 'tokenable_id')->latestOfMany('last_used_at');
+    }
+
+    /**
+     * Retorna a data do último acesso do usuário com base no token mais recente.
+     *
+     * @return \Illuminate\Database\Eloquent\Casts\Attribute
+     */
+    protected function lastAccessAt(): Attribute
+    {
+        return Attribute::make(
+            // O operador "?->" (nullsafe) retorna null
+            // automaticamente se o usuário não tiver nenhum token, sem causar erro.
+            get: fn () => $this->latestToken?->last_used_at
+        );
     }
 
     protected function rolesAndPermissionsByEdital(): Attribute

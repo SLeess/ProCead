@@ -1,0 +1,43 @@
+@reference "@/index.css";
+
+#modal-show-profile-user #informations-user {
+    @apply flex bg-gray-100 py-2 px-4 gap-6;
+    /* @apply flex bg-white py-2 px-4 gap-6; */
+}
+
+#modal-show-profile-user #photo-user {
+    @apply bg-gray-200 rounded-full p-4;
+}
+
+#modal-show-profile-user #info-user {
+    @apply flex flex-1 flex-col gap-1;
+}
+
+#modal-show-profile-user #email-user {
+    @apply font-semibold mt-1 text-lg;
+}
+
+#modal-show-profile-user #last-access-user {
+    @apply text-gray-700 font-semibold text-xs;
+}
+
+#modal-show-profile-user #change-pass {
+    @apply flex gap-1 mt-1 cursor-pointer;
+}
+
+#modal-show-profile-user #lock-icon {
+    @apply text-red-700 h-4 w-4;
+}
+
+#modal-show-profile-user #change-pass-text {
+    @apply text-red-700 font-semibold text-sm;
+}
+
+#modal-show-profile-user #form-title,
+#modal-show-profile-user #form-subtitle {
+    @apply m-4 text-xl font-semibold text-gray-700;
+}
+
+#modal-show-profile-user #form-body {
+    @apply flex flex-col gap-2;
+}
