@@ -166,7 +166,7 @@ export default function GerenciarUsuariosPerfisPermissoesPorEdital()
                     method: "PATCH",
                     body: {
                         "roles": selectedRoles,
-                        "permissions": selectedPermissions,
+                        "permissions" : selectedPermissions?.permissions || [],
                         "edital_id": editalId
                     }
                 });
@@ -231,7 +231,6 @@ export default function GerenciarUsuariosPerfisPermissoesPorEdital()
                                 />
                             </div>
                             <form onSubmit={preventSubmit}>
-
                                 <div className="btnActions">
                                     <button type="button" onClick={() => navigate(-1)} className="px-6 py-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 cursor-pointer focus:outline-none">Cancelar</button>
                                     <button type="submit" className="px-4 py-2.5 text-sm font-semibold text-white bg-[var(--admin-button)] rounded-md hover:bg-[var(--admin-button-hover)] focus:outline-none cursor-pointer">Salvar</button>
