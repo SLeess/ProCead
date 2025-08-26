@@ -47,5 +47,9 @@ Route::prefix("/super-admin")->name('super-Admin.')->middleware(['role:super-Adm
         });
         Route::patch("/{user}/set-roles-and-permissions/global", [ManageUserPermissionsController::class, 'updateGlobal']);
         Route::patch("/{user}/set-roles-and-permissions/local", [ManageUserPermissionsController::class, 'updateLocal']);
+
+        Route::delete('/{user}', [UserController::class, 'update'])->name('update');
+        Route::delete('/{user}', [UserController::class, 'delete'])->name('delete');
+        Route::delete('/{user}', [UserController::class, 'destroy'])->name('destroy');
     });
 });
