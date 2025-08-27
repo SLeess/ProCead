@@ -1,7 +1,7 @@
 import { TableBody, TableCell, TableRow } from "@/Components/Global/ui/table";
 import { flexRender } from "@tanstack/react-table";
 
-export default function MainTableBody({table, hasSelectForRows, columns}){
+export default function MainTableBody({table, hasSelectForRows, columns, isClassificationTable}){
     return (
         <TableBody>
             {table.getRowModel().rows?.length ? (
@@ -9,6 +9,7 @@ export default function MainTableBody({table, hasSelectForRows, columns}){
                 <TableRow
                     key={row.id}
                     data-state={row.getIsSelected() && "selected"}
+                    className={`${isClassificationTable === true ? "bg-white" : "bg-white"}`}
                 >
                     
                     {

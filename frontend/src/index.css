@@ -230,6 +230,7 @@ div.info-not-found-itens p#second{
     /* Buttons */
     --admin-button: #6C4BC3;
     --admin-button-hover: #2A1670;
+    --admin-button-hover-2: #F8F2FF;
 
     /* Cards */
     --admin-stats-card: #D8C1FD;

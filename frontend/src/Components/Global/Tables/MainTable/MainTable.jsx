@@ -20,7 +20,8 @@ const MainTable = ({
             data, 
             columns, 
             title, 
-            subtitle = null, 
+            subtitle = null,
+            isClassificationTable = false,
             hasShadowBorderStyle = true, 
             hasPaddingStyle = true, 
             canExport = true, 
@@ -78,40 +79,55 @@ const MainTable = ({
   });
 
   return (
-    <div className={`main-table ${hasShadowBorderStyle === true ? "rounded-md border border-gray-200 shadow-md": ""} ${hasPaddingStyle === true ? "px-5 sm:px-7.5" : ""} bg-white pt-6 pb-2.5 xl:pb-1 ${className}`}>
-      <h4 className="table-title">
-        {title}
-      </h4>
+    <div className={`main-table 
+        ${hasShadowBorderStyle === true ? "rounded-md border border-gray-200 shadow-md": ""} 
+        ${hasPaddingStyle === true ? "px-5 sm:px-7.5" : ""}
+        ${isClassificationTable === true ? "bg-slate-100" : "bg-white pt-6 pb-2.5 xl:pb-1 "}
+        ${className}
+      `}>
+      
+      { 
+        isClassificationTable !== true &&
+        <h4 className="table-title">
+          {title}
+        </h4>
+      }
+      
       {
         subtitle !== null && 
         <h5 className="table-subtitle">
           {subtitle}
         </h5>
       }
-      <div id="table-tools">
-        <div id="table-search-container">
-            <SearchRowsTable globalFilter={globalFilter} setGlobalFilter={setGlobalFilter}/>
-        </div>
-        <div id="table-other-tools">
-          {
-            canHiddenColumns && 
-            <HideColumnsDropdown table={table} setColumnVisibility={setColumnVisibility}/>
-          }
 
-          <ExportModuleTable table={table} title={title} canExport={canExport}/>
+      {
+        isClassificationTable !== true &&
+        <div id="table-tools">
+          <div id="table-search-container">
+              <SearchRowsTable globalFilter={globalFilter} setGlobalFilter={setGlobalFilter}/>
+          </div>
+          <div id="table-other-tools">
+            {
+              canHiddenColumns && 
+              <HideColumnsDropdown table={table} setColumnVisibility={setColumnVisibility}/>
+            }
+
+            <ExportModuleTable table={table} title={title} canExport={canExport}/>
+          </div>
         </div>
-      </div>
+      }
+
 
       <div id="table-data-container" className={data.length > 10 ? 'h-[60vh]' : ''}>
         <Table>
-          <MainTableHeader table={table} hasSelectForRows={hasSelectForRows}/>
+          <MainTableHeader table={table} hasSelectForRows={hasSelectForRows} isClassificationTable={isClassificationTable}/>
           
-          <MainTableBody table={table} hasSelectForRows={hasSelectForRows} columns={columns}/>
+          <MainTableBody table={table} hasSelectForRows={hasSelectForRows} columns={columns} isClassificationTable={isClassificationTable}/>
         </Table>
       </div>
       {
         enableDataFooter && 
-        <CustomPagination table={table} hasCountSelectedLines={hasCountSelectedLines}/>
+        <CustomPagination table={table} hasCountSelectedLines={hasCountSelectedLines} isClassificationTable={isClassificationTable}/>
       }
     </div>
   );

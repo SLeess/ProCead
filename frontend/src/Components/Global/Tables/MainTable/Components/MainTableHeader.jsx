@@ -6,10 +6,10 @@ import {
 import { flexRender } from "@tanstack/react-table";
 import { FaSort, FaSortDown, FaSortUp } from "react-icons/fa";
 
-export default function MainTableHeader({table, hasSelectForRows}){
+export default function MainTableHeader({table, hasSelectForRows, isClassificationTable}){
 
     return (
-        <TableHeader className="bg-gray-50 sticky top-0">
+        <TableHeader className={`sticky top-0 ${isClassificationTable === true ? "bg-slate-100" : "bg-gray-50"}`}>
             {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
                     {

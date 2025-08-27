@@ -1,7 +1,7 @@
-export default function CustomPagination({table, hasCountSelectedLines})
+export default function CustomPagination({table, hasCountSelectedLines, isClassificationTable})
 {
     return (
-        <div id="bottom-tools">
+        <div id="bottom-tools" className={`${isClassificationTable === true ? "bg-white" : "bg-white"}`}>
                 <div id="rows-selected">
                 {
                     hasCountSelectedLines && 

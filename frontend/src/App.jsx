@@ -52,7 +52,9 @@ import LayoutAdminInsideEdital from './Layouts/LayoutAdminInsideEdital';
     import Chamadas from './Pages/Admin/InsideEdital/Chamadas/Chamadas';
     import Alocacao from './Pages/Admin/InsideEdital/Alocacao/Alocacao';
     import AvaliacoesDoUsuario from './Pages/Admin/InsideEdital/Alocacao/AvaliacoesDoUsuario';
-
+    import Edital from './Pages/Admin/InsideEdital/Edital/Edital';
+    import PreviewChamadas from './Pages/Admin/InsideEdital/Chamadas/Pre-Visualizacao/PreviewChamadas';
+    
 
     /** --------------------------------------------------------------------------------------- */
 
@@ -68,7 +70,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Inscrever from './Pages/Candidato/Inscrever/Inscrever';
 import Inscricao from './Pages/Candidato/Inscrever/Inscricao';
-import Edital from './Pages/Admin/InsideEdital/Edital/Edital';
+import Classificacao from './Pages/Admin/InsideEdital/Classificacao/Classificacao';
 
 
 function App() {
@@ -179,6 +181,8 @@ function App() {
             <Route path='cotas' element={<Cotas />} />
             <Route path='recursos' element={<Recursos />} />
             <Route path='chamadas' element={<Chamadas />} />
+            <Route path='preview-chamada' element={<PreviewChamadas />} />
+            <Route path='classificacao' element={<Classificacao />} />
             <Route path='alocacao' element={<Alocacao />} />
             <Route path='alocacao/user/:userId' element={<AvaliacoesDoUsuario />} />
           </Route>
