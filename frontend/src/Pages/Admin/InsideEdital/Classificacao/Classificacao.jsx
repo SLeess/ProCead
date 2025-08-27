@@ -117,7 +117,23 @@ const Classificacao = () => {
                     })}
                 </TabView>
 
-                <MainTable data = {data} columns = {columns} isClassificationTable={true} hasPaddingStyle={false} hasSelectForRows={false}/>
+                {selectedCursos && selectedCursos.length > 0 ? (
+                    <div>
+                        {selectedCursos.map((curso) => {
+                            return (
+                                <div>
+                                    <p className="mb-4 text-xl text-gray-600 font-semibold" key={curso.id}>{curso.nome}</p>
+                                    <MainTable data = {data} columns = {columns} isClassificationTable={true} hasPaddingStyle={false} hasSelectForRows={false}/>
+                                    <hr className="mt-4 mb-8"/>
+                                </div>
+                            );
+                        })}
+                    </div>
+                ) : (
+                    <div className="flex justify-center">
+                        <p className="text-red-500">Nenhum curso foi selecionado.</p>
+                    </div>
+                )}
 
             </div>
         );
