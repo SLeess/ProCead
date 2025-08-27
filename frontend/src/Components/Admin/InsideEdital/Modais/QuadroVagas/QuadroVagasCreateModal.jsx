@@ -1,7 +1,7 @@
 import { Modal, ModalBody } from "flowbite-react";
 import { Plus, ChevronUp, ChevronDown, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { FormField, SelectInput, TextInput } from "@/Components/Global/ui/modals";
+import { FormField, CheckboxMultiSelect, SelectInput, TextInput } from "@/Components/Global/ui/modals";
 import CabecalhoModal from "@/Components/Global/Modais/CabecalhoModal";
 import "./QuadroVagasModal.css";
 import ModalTabs from "../../Tabs/ModalTabs";
@@ -24,8 +24,8 @@ export default function QuadroVagasCreateModal({ setNeedUpdate }) {
 
     const [formData, setFormData] = useState({
         codigo: '',
-        semestre: '1', // Corrected: Set default value to prevent null
-        campus: '',
+        semestre: '1', 
+        campus: [],
         vaga: '',
         habilitacao: '',
         modalidades: [],
@@ -119,8 +119,12 @@ export default function QuadroVagasCreateModal({ setNeedUpdate }) {
 
 
     const handleOnChangeAttr = (e, attr) => {
-        const { value } = e.target;
-        setFormData(f => ({ ...f, [attr]: value }));
+        if (attr === 'campus') {
+            setFormData(f => ({ ...f, campus: e }));
+        } else {
+            const { value } = e.target;
+            setFormData(f => ({ ...f, [attr]: value }));
+        }
     };
 
     const handleModalidadeSiglaChange = (e, modalidadeSigla) => {
@@ -233,6 +237,10 @@ export default function QuadroVagasCreateModal({ setNeedUpdate }) {
         }
     };
 
+    useEffect(() => {
+        console.log(formData)
+    },[formData])
+
 
     return (
         <>
@@ -264,10 +272,9 @@ export default function QuadroVagasCreateModal({ setNeedUpdate }) {
                                     <FormField label="Semestre"><SelectInput options={[1,2]} value={formData.semestre} onChange={(e) => handleOnChangeAttr(e, "semestre")} /></FormField>
                                     <FormField label="Edital Referente"><TextInput value="Edital Nº 08/2025" /></FormField>
                                     <FormField label="Campus" className="md:col-span-1">
-                                        <SelectInput
+                                        <CheckboxMultiSelect
                                             value={formData.campus}
-                                            onChange={(e) => handleOnChangeAttr(e, "campus")}
-                                            defaultOption={true}
+                                            onChange={(newValue) => handleOnChangeAttr(newValue, "campus")}
                                             options={[ ...polos.map(polo => ({ value: polo.id, label: polo.nome })) ]}
                                         />
                                     </FormField>

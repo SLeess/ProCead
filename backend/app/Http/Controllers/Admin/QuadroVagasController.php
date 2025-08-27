@@ -43,6 +43,7 @@ class QuadroVagasController extends APIController
     public function store(QuadroVagaRequest $request)
     {
         $data = $request->validated();
+        dd($data);
         DB::beginTransaction();
         try {
 
