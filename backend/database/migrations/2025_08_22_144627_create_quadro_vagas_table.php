@@ -17,7 +17,6 @@ return new class extends Migration
             $table->enum('semestre', ['1', '2']);
             $table->foreignId('edital_id')->constrained('editais')->onDelete('cascade');
             $table->foreignId('vaga_id')->constrained()->onDelete('cascade');
-            $table->foreignId('polo_id')->constrained()->onDelete('cascade');
             $table->string('habilitacao');
             $table->timestamps();
         });

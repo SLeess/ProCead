@@ -10,6 +10,9 @@ class PolosVaga extends Model
     protected $fillable = ['vaga_id', 'polo_id'];
     protected $logAttributes = ['vaga_id', 'polo_id'];
 
-    
+    public function polo()
+    {
+        return $this->belongsTo(Polo::class);
+    }
     
 }

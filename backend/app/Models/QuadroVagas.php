@@ -30,6 +30,6 @@ class QuadroVagas extends Model
     }
     public function polos()
     {
-        return $this->hasMany(PolosVaga::class);
+        return $this->hasMany(PolosVaga::class,'quadro_vaga_id');
     }
 }

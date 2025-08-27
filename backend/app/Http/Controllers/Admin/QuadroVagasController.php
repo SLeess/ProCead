@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\API\APIController;
 use App\Http\Requests\QuadroVagaRequest;
+use App\Http\Requests\QuadroVagaUpdateRequest;
 use App\Models\Modalidade;
 use App\Models\QuadroVagas;
 use DB;
@@ -18,10 +19,11 @@ class QuadroVagasController extends APIController
     public function index($id)
     {
         try {
-            // $quadroVagas = QuadroVagas::where('edital_id', $id)->get();
             $quadroVagas = QuadroVagas::where('edital_id', $id)->get();
             $quadroVagas->map(function ($vaga) {
-                $vaga->campus = $vaga->polo->nome;
+                $vaga->campus = $vaga->polos->map(function ($poloVaga) {
+                    return $poloVaga->polo;
+                });
                 $vaga->vaga = $vaga->vaga->vagable->nome;
                 foreach ($vaga->vagasPorModalidade as $vpm) {
                     $vpm->sigla = $vpm->modalidade->sigla;
@@ -30,10 +32,9 @@ class QuadroVagasController extends APIController
                 $vaga->categorias_customizadas = $vaga->categoriasCustomizadas->sortBy('indice')->values();
                 return $vaga;
             });
-            // dd($quadroVagas);
             return $this->sendResponse($quadroVagas, "Quadro de Vagas buscado com sucesso.", 200);
         } catch (Exception $e) {
-            return $this->sendError($e, 'Não foi possível buscar o Quadro de Vagas: ' . $e->getMessage(), 400);
+            return $this->sendError($e, 'Não foi possível buscar o Quadro de Vagas: ' . $e, 400);
         }
     }
 
@@ -43,7 +44,7 @@ class QuadroVagasController extends APIController
     public function store(QuadroVagaRequest $request)
     {
         $data = $request->validated();
-        dd($data);
+        // dd($data);
         DB::beginTransaction();
         try {
 
@@ -52,7 +53,6 @@ class QuadroVagasController extends APIController
                 'semestre' => $data['semestre'],
                 'edital_id' => $data['edital_id'],
                 'vaga_id' => $data['vaga'],
-                'polo_id' => $data['campus'],
                 'habilitacao' => $data['habilitacao'],
             ]);
 
@@ -74,7 +74,7 @@ class QuadroVagasController extends APIController
                 ]);
             }
 
-            foreach ($data['polos'] as $poloId) {
+            foreach ($data['campus'] as $poloId) {
                 $quadro->polos()->create([
                     'polo_id' => $poloId,
                 ]);
@@ -84,7 +84,7 @@ class QuadroVagasController extends APIController
             return $this->sendResponse($quadro, 'Quadro de Vagas criado com sucesso.', 200);
         } catch (Exception $e) {
             DB::rollBack();
-            return $this->sendError($e, 'Não foi possível cadastrar o Quadro de Vagas: '.$e->getMessage(), 400);
+            return $this->sendError($e, 'Não foi possível cadastrar o Quadro de Vagas: '.$e->getMessage()." ".$e->getLine(), 400);
         }
     }
 
@@ -92,7 +92,7 @@ class QuadroVagasController extends APIController
     /**
      * Update the specified resource in storage.
      */
-    public function update(QuadroVagaRequest $request, string $id)
+    public function update(QuadroVagaUpdateRequest $request, string $id)
     {
         $data = $request->validated();
         DB::beginTransaction();
@@ -103,11 +103,9 @@ class QuadroVagasController extends APIController
                 'codigo' => $data['codigo'],
                 'semestre' => $data['semestre'],
                 'vaga_id' => $data['vaga'],
-                'polo_id' => $data['campus'],
                 'habilitacao' => $data['habilitacao'],
             ]);
 
-            // Sync Vagas por Modalidade
             $quadro->vagasPorModalidade()->delete();
             foreach ($data['modalidades'] as $modalidade) {
                 foreach ($modalidade as $key => $value) {
@@ -120,12 +118,18 @@ class QuadroVagasController extends APIController
                 }
             }
 
-            // Sync Categorias Customizadas
             $quadro->categoriasCustomizadas()->delete();
             foreach ($request->categoriasCustomizadas as $index => $categoria) {
                 $quadro->categoriasCustomizadas()->create([
                     'nome' => $categoria['nome'],
                     'indice' => $index,
+                ]);
+            }
+
+            $quadro->polos()->delete();
+            foreach ($data['campus'] as $poloId) {
+                $quadro->polos()->create([
+                    'polo_id' => $poloId,
                 ]);
             }
 

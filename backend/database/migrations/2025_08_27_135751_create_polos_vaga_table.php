@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('polos_vaga', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('vaga_id')->constrained('vagas')->onDelete('cascade');
+            $table->foreignId('quadro_vaga_id')->constrained('vagas')->onDelete('cascade');
             $table->foreignId('polo_id')->constrained('polos')->onDelete('cascade');
             $table->timestamps();
         });

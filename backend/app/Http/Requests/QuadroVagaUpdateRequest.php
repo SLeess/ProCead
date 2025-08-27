@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class QuadroVagaRequest extends FormRequest
+class QuadroVagaUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,7 @@ class QuadroVagaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'codigo' => 'required|string|max:255|unique:quadro_vagas,codigo',
+            'codigo' => 'required|string|max:255|exists:quadro_vagas,codigo',
             'semestre' => 'required|string|max:1|in:1,2',
             'edital_id' => 'required|integer|exists:editais,id',
             'vaga' => 'required|integer|exists:vagas,id',

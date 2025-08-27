@@ -9,6 +9,7 @@ import LoaderPages from '@/Components/Global/LoaderPages/LoaderPages';
 import { useAppContext } from '@/Contexts/AppContext';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { MultiSelect } from "primereact/multiselect";
 
 export default function QuadroVagasEditModal({ quadroVaga, setNeedUpdate }) {
     const [openModal, setOpenModal] = useState(false);
@@ -25,7 +26,7 @@ export default function QuadroVagasEditModal({ quadroVaga, setNeedUpdate }) {
     const [formData, setFormData] = useState({
         codigo: '',
         semestre: '1',
-        campus: '',
+        campus: [],
         vaga: '',
         habilitacao: '',
         modalidades: [],
@@ -66,9 +67,9 @@ export default function QuadroVagasEditModal({ quadroVaga, setNeedUpdate }) {
             }));
 
             setFormData({
-                codigo: quadroVaga.codigo || '',
+                codigo: quadroVaga.codigo ? String(quadroVaga.codigo) : '',
                 semestre: quadroVaga.semestre || '1',
-                campus: quadroVaga.polo_id || '',
+                campus: quadroVaga.campus || [],
                 vaga: quadroVaga.vaga_id || '',
                 habilitacao: quadroVaga.habilitacao || '',
                 modalidades: initialModalidades || [],
@@ -79,8 +80,12 @@ export default function QuadroVagasEditModal({ quadroVaga, setNeedUpdate }) {
 
 
     const handleOnChangeAttr = (e, attr) => {
-        const { value } = e.target;
-        setFormData(f => ({ ...f, [attr]: value }));
+        if (attr === 'campus') {
+            setFormData(f => ({ ...f, campus: e }));
+        } else {
+            const { value } = e.target;
+            setFormData(f => ({ ...f, [attr]: value }));
+        }
     };
 
     const handleModalidadeSiglaChange = (e, modalidadeSigla) => {
@@ -146,10 +151,17 @@ export default function QuadroVagasEditModal({ quadroVaga, setNeedUpdate }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
+
+        const dataToSend = {
+            ...formData,
+            campus: formData.campus.map(polo => polo.id),
+            edital_id: editalId
+        };
+
         try {
             const res = await fetch(`/api/admin/quadro-vagas/${quadroVaga.id}`, {
                 method: 'PUT',
-                body: JSON.stringify({ ...formData, edital_id: editalId }),
+                body: JSON.stringify(dataToSend),
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`,
@@ -194,12 +206,16 @@ export default function QuadroVagasEditModal({ quadroVaga, setNeedUpdate }) {
                                     <FormField label="Código"><TextInput value={formData.codigo} onChange={(e) => handleOnChangeAttr(e, "codigo")} /></FormField>
                                     <FormField label="Semestre"><SelectInput options={[1, 2]} value={formData.semestre} onChange={(e) => handleOnChangeAttr(e, "semestre")} /></FormField>
                                     <FormField label="Edital Referente"><TextInput disabled value={`Edital Nº ${editalId}`} /></FormField>
-                                    <FormField label="Campus" className="md:col-span-1">
-                                        <SelectInput
+                                    <FormField label="Campus" className="md:col-span-3">
+                                        <MultiSelect
                                             value={formData.campus}
-                                            onChange={(e) => handleOnChangeAttr(e, "campus")}
-                                            defaultOption={true}
-                                            options={polos.map(polo => ({ value: polo.id, label: polo.nome }))}
+                                            onChange={(e) => handleOnChangeAttr(e.value, "campus")}
+                                            options={polos}
+                                            optionLabel="nome"
+                                            display="chip"
+                                            placeholder="Selecione os Cursos"
+                                            className=" items-center"
+                                            id='multiselect-primereact'
                                         />
                                     </FormField>
                                     <FormField label="Vaga" className="md:col-span-2">
