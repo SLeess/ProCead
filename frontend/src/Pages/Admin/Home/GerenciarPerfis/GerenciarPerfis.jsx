@@ -67,7 +67,7 @@ export default function GerenciarPerfis()
                                 loading && <LoaderPages/>
                             }
                             <MainTable 
-                                data={perfis} 
+                                clientSideData={perfis} 
                                 columns={columns} 
                                 title={"Perfis"}
                                 canExport={false}

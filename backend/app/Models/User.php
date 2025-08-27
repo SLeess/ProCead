@@ -141,4 +141,16 @@ class User extends Authenticatable
             }
         );
     }
+
+    public function scopeSearch($query, $request)
+    {
+        // return $query->when($request->nome, function($query, $nome){
+        //     return $query->where('nome', 'like', '%'.$nome.'%');
+        // });
+        return $query->when($request->search, function($query, $searchTerm) {
+            return $query->where('nome', 'LIKE', "%{$searchTerm}%")
+                    ->orWhere('email', 'LIKE', "%{$searchTerm}%")
+                    ->orWhere('cpf', 'LIKE', "%{$searchTerm}%");
+        });
+    }
 }

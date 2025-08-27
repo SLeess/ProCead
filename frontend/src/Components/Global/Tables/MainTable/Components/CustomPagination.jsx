@@ -1,5 +1,11 @@
-export default function CustomPagination({table, hasCountSelectedLines})
+export default function CustomPagination({
+    table, 
+    hasCountSelectedLines, 
+    loading = false,
+})
 {
+    const isLastPage = !table.getCanNextPage();
+
     return (
         <div id="bottom-tools">
                 <div id="rows-selected">
@@ -18,30 +24,32 @@ export default function CustomPagination({table, hasCountSelectedLines})
                 }
                 </div>
             <div id="paginate">
-                {/* --- Previous Button --- */}
+                {/* --- Botão Anterior (sem mudanças) --- */}
                 <button
                     onClick={() => table.previousPage()}
-                    disabled={!table.getCanPreviousPage()}
+                    disabled={!table.getCanPreviousPage() || (loading)}
                     className="paginate-buttons"
                 >
                     Anterior
                 </button>
 
-                {/* --- Page Indicator --- */}
+                {/* --- Indicador de Página (sem mudanças) --- */}
                 <span id="paginate-text">
                     Página{' '}
-                    <span className="font-bold text-[var(--paginate-text)]">
-                    {table.getState().pagination.pageIndex + 1} de {table.getPageCount()}
+                    <span className="font-bold">
+                        {table.getState().pagination.pageIndex + 1} de {table.getPageCount()}
                     </span>
                 </span>
 
-                {/* --- Next Button --- */}
+                {/* --- Botão Próxima (COM A NOVA LÓGICA) --- */}
                 <button
                     onClick={() => table.nextPage()}
-                    disabled={!table.getCanNextPage()}
+                    // Desabilita se for a última página E não houver mais dados para carregar,
+                    disabled={isLastPage || loading}
                     className="paginate-buttons"
                 >
-                    Próxima
+                    {/* Muda o texto do botão se estiver carregando */}
+                    {loading ? 'Carregando...' : 'Próxima'}
                 </button>
             </div>
             <div id="pagesize">
@@ -69,13 +77,13 @@ export default function CustomPagination({table, hasCountSelectedLines})
                     min={1}
                     defaultValue={table.getState().pagination.pageSize}
                     onChange={e => {
-                    const size = e.target.value ? Number(e.target.value) : 0;
-                    table.setPageSize(size > 0 ? size : 10); 
+                        const size = e.target.value ? Number(e.target.value) : 0;
+                        table.setPageSize(size > 0 ? size : 10); 
                     }}
                     className="w-24 px-2 py-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                     placeholder="Qtd."
                 />
             </div>
-      </div>
+        </div>
     );
 }

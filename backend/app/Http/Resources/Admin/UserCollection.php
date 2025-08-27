@@ -21,7 +21,13 @@ class UserCollection extends ResourceCollection
         return [
             'users' => $this->collection,
             'meta' => [
-                'total' => $this->collection->count(),
+                'total' => $this->total(),
+                'per_page' => $this->perPage(),
+                'current_page' => $this->currentPage(),
+                'last_page' => $this->lastPage(),
+            ],
+            'links' => [
+                'next_page_url' => $this->nextPageUrl(),
             ],
         ];
     }
