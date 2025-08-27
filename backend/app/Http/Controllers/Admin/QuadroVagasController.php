@@ -72,6 +72,13 @@ class QuadroVagasController extends APIController
                     'indice' => $index,
                 ]);
             }
+
+            foreach ($data['polos'] as $poloId) {
+                $quadro->polos()->create([
+                    'polo_id' => $poloId,
+                ]);
+            }
+
             DB::commit();
             return $this->sendResponse($quadro, 'Quadro de Vagas criado com sucesso.', 200);
         } catch (Exception $e) {

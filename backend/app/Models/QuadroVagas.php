@@ -28,8 +28,8 @@ class QuadroVagas extends Model
     {
         return $this->belongsTo(Vaga::class);
     }
-    public function polo()
+    public function polos()
     {
-        return $this->belongsTo(Polo::class);
+        return $this->hasMany(PolosVaga::class);
     }
 }
