@@ -24,7 +24,8 @@ class StoreInscricaoRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        // dd($this->all(),$this['vagas']);
+        $rules =  [
             // informações básicas
             'nome_completo' => 'required|string|max:255',
             'cpf' => 'required|string|size:14', // formato xxxxxxxxxxx
@@ -46,7 +47,7 @@ class StoreInscricaoRequest extends FormRequest
             'bairro' => 'required|string|max:255',
             'cidade' => 'required|string|max:255',
             'uf' => 'required|string|size:2',
-            // 'numero' => 'number|max:255',
+            'numero' => 'max:255',
             'complemento' => 'nullable|string|max:255',
 
             // etc
@@ -56,6 +57,13 @@ class StoreInscricaoRequest extends FormRequest
             'motivo' => 'nullable|string',
             'user' => 'required|array',
             'user.uuid' => 'required|string|uuid',
+
+            //vaga
+            'vagas' => 'required|array',
+            'vagas.*.vaga' => 'required|exists:quadro_vagas,id',
+            'vagas.*.modalidade' => 'required|exists:modalidades,id',
+            'vagas.*.categoria' => 'nullable|exists:categorias_vaga,id',
         ];
+        return $rules;
     }
 }

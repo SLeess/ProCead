@@ -41,38 +41,27 @@ const Inscrever = () => {
     };
 
     const [formData, setFormData] = useState({
-        nome_completo: '',
-        cpf: '',
-        email: '',
-        data_nascimento: '',
-        telefone: '',
-        genero: '',
+        nome_completo: 'John Doe',
+        cpf: '123.456.789-00',
+        email: 'john.doe@example.com',
+        data_nascimento: '1990-01-01',
+        telefone: '(11) 99999-9999',
+        genero: 'Masculino',
         nome_social: '',
         identidade_genero: '',
-        rg: '',
-        estado_civil: '',
-        uf_nascimento: '',
-        nacionalidade: '',
-        naturalidade: '',
-        cep: '',
-        rua: '',
-        bairro: '',
-        numero: '',
-        complemento: '',
-        cidade: '',
-        uf: '',
-        vagas: [
-            {
-                vaga: '',
-                polo: '',
-                modalidade: '',
-                categoria: '',
-                anexo_cpf: null,
-                anexo_comprovante_residencia: null,
-                anexo_historico: null,
-                anexo_autodeclaracao: null,
-            },
-        ],
+        rg: '12.345.678-9',
+        estado_civil: 'Solteiro(a)',
+        uf_nascimento: 'SP',
+        nacionalidade: 'Brasileiro(a)',
+        naturalidade: 'São Paulo',
+        cep: '12345-678',
+        rua: 'Rua dos Bobos',
+        bairro: 'Centro',
+        numero: '0',
+        complemento: 'Apto 123',
+        cidade: 'São Paulo',
+        uf: 'SP',
+        vagas: [],
         termo_responsabilidade: false,
 
     });
@@ -85,36 +74,36 @@ const Inscrever = () => {
     const navigate = useNavigate();
 
     const [vagas, setVagas] = useState([]);
-      useEffect(() => {
+    useEffect(() => {
         async function fetchVagas() {
-          setLoading(true);
-          try {
-            const res = await fetch(`/api/admin/vagas/${editalId}`, {
-              method: 'GET',
-              headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`,
-              },
-            });
-    
-            const result = await res.json();
-    
-            if (!res.ok) {
-              verifyStatusRequest(res.status, result);
-              throw new Error(`Erro ao buscar Vagas: ${res.status} ${res.statusText}`);
+            setLoading(true);
+            try {
+                const res = await fetch(`/api/admin/quadro-vagas/${editalId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,
+                    },
+                });
+
+                const result = await res.json();
+
+                if (!res.ok) {
+                    verifyStatusRequest(res.status, result);
+                    throw new Error(`Erro ao buscar Vagas: ${res.status} ${res.statusText}`);
+                }
+
+                setVagas(result.data);
+            } catch (error) {
+
+                setVagas([]);
+                throw new Error(`Erro ao buscar vagas: ${error}`)
+            } finally {
+                setLoading(false);
             }
-    
-            setVagas(result.data);
-          } catch (error) {
-    
-            setVagas([]);
-            throw new Error(`Erro ao buscar vagas: ${error}`)
-          } finally {
-            setLoading(false);
-          }
         }
         fetchVagas();
-      }, [token]);
+    }, [token]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -122,7 +111,7 @@ const Inscrever = () => {
         try {
             const res = await fetch('/api/inscricao', {
                 method: 'post',
-                body: JSON.stringify({...formData, user,editalId: editalId}),
+                body: JSON.stringify({ ...formData, user, editalId: editalId }),
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`, // Descomente se precisar de token
@@ -152,7 +141,7 @@ const Inscrever = () => {
             }
         } catch (error) {
             toast.error(error.toString());
-        } finally{
+        } finally {
             setLoading(false);
         }
     };
@@ -190,13 +179,13 @@ const Inscrever = () => {
                     activeTabIndex === 1 && <Endereco formData={formData} handleOnChangeAttr={handleOnChangeAttr} handleNext={handleNext} handleBack={handleBack} enabledTabs={enabledTabs} setEnabledTabs={setEnabledTabs} />
                 }
                 {
-                    activeTabIndex === 2 && <EscolhaDaVaga vagas={vagas} formData={formData} setFormData={setFormData} handleNext={handleNext} handleBack={handleBack} enabledTabs={enabledTabs} setEnabledTabs={setEnabledTabs} />
+                    activeTabIndex === 2 && <EscolhaDaVaga  vagas={vagas} formData={formData} setFormData={setFormData} handleNext={handleNext} handleBack={handleBack} enabledTabs={enabledTabs} setEnabledTabs={setEnabledTabs} />
                 }
                 {
-                    activeTabIndex === 3 && <DetalhesDaVaga vagas={vagas} formData={formData} setFormData={setFormData} handleNext={handleNext} handleBack={handleBack} enabledTabs={enabledTabs} setEnabledTabs={setEnabledTabs} />
+                    activeTabIndex === 3 && <DetalhesDaVaga  vagas={vagas} formData={formData} setFormData={setFormData} handleNext={handleNext} handleBack={handleBack} enabledTabs={enabledTabs} setEnabledTabs={setEnabledTabs} />
                 }
                 {
-                    activeTabIndex === 4 && <Confirmacao formData={formData} setFormData={setFormData} handleOnChangeAttr={handleOnChangeAttr} handleNext={handleNext} handleBack={handleBack} enabledTabs={enabledTabs} setEnabledTabs={setEnabledTabs} />
+                    activeTabIndex === 4 && <Confirmacao vagas={vagas} formData={formData} setFormData={setFormData} handleOnChangeAttr={handleOnChangeAttr} handleNext={handleNext} handleBack={handleBack} enabledTabs={enabledTabs} setEnabledTabs={setEnabledTabs} />
                 }
             </form>
         </div>

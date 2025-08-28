@@ -2,7 +2,9 @@ import { FormField, TextInput } from '@/Components/Global/ui/modals'
 import React from 'react'
 import VagaDetails from './VagaDetails'
 
-const Confirmacao = ({ handleBack,  formData, setFormData }) => {
+const Confirmacao = ({ handleBack,  formData, setFormData, vagas }) => {
+  console.log("formData na confirmacao")
+  console.log(formData)
 
   return (
     <div className="bg-gray-100 dark:bg-slate-700 min-h-screen md:p-8 font-sans animate-fade-in">
@@ -68,7 +70,7 @@ const Confirmacao = ({ handleBack,  formData, setFormData }) => {
           <div className="grid grid-cols-1 md:grid-cols-2              
             gap-6 mb-8">
             {formData.vagas.map((vaga, index) => (
-              <VagaDetails key={index} vaga={vaga} />
+              <VagaDetails key={index} vaga={vaga} vagas={vagas} />
             ))}
           </div>
 
