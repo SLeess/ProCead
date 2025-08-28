@@ -1,4 +1,4 @@
-import { Calendar, FileText, X } from "lucide-react";
+import { Calendar, Eye, EyeOff, FileText, X } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { IMaskInput } from "react-imask";
 
@@ -12,18 +12,65 @@ const FormField = ({ label, children, className = '', textWrap = true, obrigator
     </div>
 );
 
-const TextInput = ({ value, readOnly, placeholder, onChange = null, onBlur = null, type = 'text', name="" }) => (
-    <input
-        type={type}
-        name={name}
-        defaultValue={value}
-        className={`${readOnly !== true ? 'bg-white': 'bg-gray-100'} border border-gray-50 rounded-md px-4 py-2 focus:outline-none w-full`}
-        readOnly={readOnly}
-        onChange={onChange}
-        onBlur={onBlur}
-        placeholder={placeholder}
-    />
-);
+const TextInput = ({ value, readOnly, placeholder, onChange = null, onBlur = null, type = 'text', name="", maxLength = null }) => {
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+    if (type !== 'password') {
+        return (
+            <input
+                type={type}
+                name={name}
+                value={value}
+                className={`${readOnly ? 'bg-gray-100' : 'bg-white'} border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 w-full`}
+                readOnly={readOnly}
+                onChange={onChange}
+                onBlur={onBlur}
+                maxLength={maxLength}
+                placeholder={placeholder}
+            />
+        );
+    }
+
+    const togglePasswordVisibility = () => {
+        setIsPasswordVisible(!isPasswordVisible);
+    };
+
+    return (
+        <div className="relative w-full">
+            <input
+                type={isPasswordVisible ? 'text' : 'password'}
+                name={name}
+                value={value}
+                className="border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 w-full pr-10"
+                onChange={onChange}
+                onBlur={onBlur}
+                maxLength={maxLength}
+                placeholder={placeholder}
+            />
+            <button
+                type="button"
+                className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
+                onClick={togglePasswordVisibility}
+            >
+                {isPasswordVisible ? (
+                    <EyeOff className="h-5 w-5 text-gray-400" />
+                ) : (
+                    <Eye className="h-5 w-5 text-gray-400" />
+                )}
+            </button>
+        </div>
+    );
+    // <input
+    //     type={type}
+    //     name={name}
+    //     value={value}
+    //     className={`${readOnly !== true ? 'bg-white': 'bg-gray-100'} border border-gray-50 rounded-md px-4 py-2 focus:outline-none w-full`}
+    //     readOnly={readOnly}
+    //     onChange={onChange}
+    //     onBlur={onBlur}
+    //     maxLength={maxLength}
+    //     placeholder={placeholder}
+    // />
+};
 
 const DetailRow = ({ field, value, isHeader = false }) => (
     <div className={`flex px-6 py-3 ${isHeader ? 'bg-blue-50' : ''}`}>
