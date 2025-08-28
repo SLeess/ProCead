@@ -24,7 +24,6 @@ const UserCreateModal = () => {
         const attr = e.target.name;
         
         var finalValue = e.target.value;
-
         if (attr === 'cpf') {
             finalValue = maskCPF(e.target.value);
         }
@@ -38,6 +37,11 @@ const UserCreateModal = () => {
     };
     function onCloseModal() {
         setOpenModal(false);
+        setFormData({
+            nome: '',
+            email: '',
+            cpf: '',
+        });
     }
 
     function confirmSubmit(e){
@@ -84,8 +88,7 @@ const UserCreateModal = () => {
             });
             
             toast.success((response.message ||  "Registrado com sucesso!"));
-            setFormData({email: '', cpf: '', nome: ''});
-            setOpenModal(false);
+            onCloseModal();
         } catch (error) {
             toast.error(error.toString());
         } finally {
@@ -117,7 +120,7 @@ const UserCreateModal = () => {
                                 <TextInput name='nome' className="md:col-span-1" onChange={updateAttr} value={formData.nome} placeholder="João da Silva" />
                             </FormField>
                             <FormField label="CPF">
-                                <TextInput name='cpf' className="md:col-span-1" onChange={updateAttr} value={formData.cpf} placeholder="000.000.000-00" />
+                                <TextInput name='cpf' className="md:col-span-1" onChange={updateAttr} value={formData.cpf} placeholder="000.000.000-00" maxLength={14} />
                             </FormField>
                         </div>
                     </div>

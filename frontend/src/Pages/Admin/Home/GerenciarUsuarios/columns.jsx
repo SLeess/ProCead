@@ -2,6 +2,7 @@ import PerfilDeleteModal from "@/Components/Admin/InsideEdital/Modais/Perfis/Per
 import PerfilEditModal from "@/Components/Admin/InsideEdital/Modais/Perfis/PerfilEditModal";
 import PerfilShowModal from "@/Components/Admin/InsideEdital/Modais/Perfis/PerfilShowModal";
 import UserEditModal from "@/Components/Admin/InsideEdital/Modais/Usuario/UserEditModal";
+import UserEditProfileModal from "@/Components/Admin/InsideEdital/Modais/Usuario/UserEditProfileModal";
 import UserShowModal from "@/Components/Admin/InsideEdital/Modais/Usuario/UserShowModal";
 import UserShowProfileModal from "@/Components/Admin/InsideEdital/Modais/Usuario/UserShowProfileModal";
 import CPFPill from "@/Components/Global/Tables/Components/Pills/CPFPill";
@@ -50,7 +51,8 @@ export const GerenciarUsuariosColumns = (navigate) => [
           </button>
           {/* <UserShowModal user={row.original}></UserShowModal> */}
           <UserShowProfileModal user={row.original}></UserShowProfileModal>
-          <UserEditModal user={row.original}></UserEditModal>
+          <UserEditProfileModal user={row.original}></UserEditProfileModal>
+          {/* <UserEditModal user={row.original}></UserEditModal> */}
           {/* <PerfilEditModal perfil={{name: row.original.nome, scope: row.original.escopo, id: row.original.id}}/> */}
           <PerfilDeleteModal perfil={{id: row.original.id}}/>
         </div>
