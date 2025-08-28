@@ -47,7 +47,20 @@ class InscricaoController extends APIController
     }
     public function show($userUuid, $editalId)
     {
-        $inscricao = Inscricao::where('user_uuid', $userUuid)->where('edital_id', $editalId)->get();
-        return $this->sendResponse($inscricao, "inscrição buscada com sucesso.", 200);
+        try{
+
+            $inscricao = Inscricao::with([
+                'vagas_inscricao.vaga.vaga.vagable',
+                'vagas_inscricao.polo',
+                'vagas_inscricao.modalidade',
+                'vagas_inscricao.categoria'
+                ])->where('user_uuid', $userUuid)->where('edital_id', $editalId)->first();
+                return $this->sendResponse($inscricao, "Inscrição buscada com sucesso.", 200);
+            }catch(Exception $e){
+                return $this->sendError('Erro ao buscar inscrição.', $e->getMessage(), 400);
+            }
+
+
+
     }
 }
