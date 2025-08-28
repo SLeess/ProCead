@@ -7,6 +7,7 @@ use App\Http\Resources\UserDataPermissionsAndRoles;
 use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class UserService implements \App\Interfaces\User\IUserService{
     public function getProfileData(User $user): UserResource
@@ -38,5 +39,19 @@ class UserService implements \App\Interfaces\User\IUserService{
     {
         // Reutiliza o seu Resource, o que é uma ótima prática.
         return UserDataPermissionsAndRoles::make($user);
+    }
+
+    public function admin_userRegister(array $data): string
+    {
+
+        DB::beginTransaction();
+        try {
+            User::create(array_merge($data, ['password' => Str::password()]));
+            DB::commit();
+            return "Usuário cadastrado com sucesso";
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw new Exception($e->getMessage());
+        }
     }
 }

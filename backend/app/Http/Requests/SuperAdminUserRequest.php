@@ -11,7 +11,7 @@ class SuperAdminUserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->user() && auth()->user()->hasRole('super-Admin');
+        return  $this->user() &&  $this->user()->hasRole('super-Admin');
     }
 
     /**

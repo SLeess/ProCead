@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\SuperAdmin;
 
+use App\Http\Requests\SuperAdminStoreUserRegisterRequest;
 use App\Http\Requests\SuperAdminUserRequest;
 use App\Http\Resources\Admin\UserCollection;
+use App\Interfaces\User\IUserService;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -13,6 +15,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends __SuperAdminController
 {
+    public function __construct(protected IUserService $iUserService){
+        $this->middleware('role:super-Admin');
+    }
     public function index(SuperAdminUserRequest $request)
     {
         $validated = $request->validated();
@@ -58,6 +63,20 @@ class UserController extends __SuperAdminController
         }
     }
 
+    public function store(SuperAdminStoreUserRegisterRequest $request)
+    {
+        $validated = $request->validated();
+        try {
+            $result = $this->iUserService->admin_userRegister($validated);
+            return $this->sendResponse(
+                [],
+                $result
+            );
+        } catch (\Exception $e) {
+            Log::error('Erro ao registrar o usuário: ' . $e->getMessage());
+            return $this->sendError("Erro inesperado.", [0 => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
     public function update()
     {
         throw new NotImplementedException("update UserController");

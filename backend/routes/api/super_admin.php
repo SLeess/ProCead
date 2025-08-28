@@ -42,14 +42,15 @@ Route::prefix("/super-admin")->name('super-Admin.')->middleware(['role:super-Adm
 
     Route::prefix('/users')->name('usuarios.')->group(function(){
         Route::get("", [UserController::class, 'index'])->name('index');
-        Route::prefix('/{user}/permissions')->name('permissions.')->group(function () {
-            Route::singleton('', ManageUserPermissionsController::class)->only(['show']);
-        });
-        Route::patch("/{user}/set-roles-and-permissions/global", [ManageUserPermissionsController::class, 'updateGlobal']);
-        Route::patch("/{user}/set-roles-and-permissions/local", [ManageUserPermissionsController::class, 'updateLocal']);
+        Route::post('/register', [UserController::class, 'store'])->name('store');
 
-        Route::delete('/{user}', [UserController::class, 'update'])->name('update');
-        Route::delete('/{user}', [UserController::class, 'delete'])->name('delete');
-        Route::delete('/{user}', [UserController::class, 'destroy'])->name('destroy');
+        Route::prefix('/{user}')->name('permissions.')->group(function () {
+            Route::singleton('/permissions', ManageUserPermissionsController::class)->only(['show']);
+            Route::patch("/set-roles-and-permissions/global", [ManageUserPermissionsController::class, 'updateGlobal']);
+            Route::patch("/set-roles-and-permissions/local", [ManageUserPermissionsController::class, 'updateLocal']);
+            Route::patch('', [UserController::class, 'update'])->name('update');
+            Route::delete('/delete', [UserController::class, 'delete'])->name('delete');
+            Route::delete('/destroy', [UserController::class, 'destroy'])->name('destroy');
+        });
     });
 });
