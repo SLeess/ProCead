@@ -12,7 +12,7 @@ const EscolhaDaVaga = ({ formData, setFormData, handleBack, handleNext, setEnabl
     setEnabledTabs(isValid ? ["Informações Básicas", "Endereço", "Escolha da Vaga", "Detalhes da Vaga"] : ["Informações Básicas", "Endereço", "Escolha da Vaga"]);
   }, [formData.vagas]);
 
-  const VagaCard = ({ title, isSelected, onSelect, onCampusChange, selectedValue }) => (
+  const VagaCard = ({ title, isSelected, onSelect, onCampusChange, selectedValue, campus }) => (
     <div
       onClick={onSelect}
       className={`cursor-pointer border-2 rounded-lg p-4 flex flex-col justify-between h-48 transition-colors ${isSelected ? 'bg-yellow-300 border-yellow-400' : 'bg-white border-gray-200 hover:border-blue-500'}`}
@@ -26,10 +26,12 @@ const EscolhaDaVaga = ({ formData, setFormData, handleBack, handleNext, setEnabl
           className="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none"
           disabled={!isSelected}
         >
-          <option value="" disabled selected>Selecione o Campus</option>
-          <option value="Montes Claros">Campus: Montes Claros</option>
-          <option value="Januária">Campus: Januária</option>
-          <option value="Salinas">Campus: Salinas</option>
+          <option value="" disabled>Selecione o Campus</option>
+          {campus && campus.map(c => (
+            <option key={c.id} value={c.id}>
+              {c.nome}
+            </option>
+          ))}
         </select>
         <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
           <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" /></svg>
@@ -43,7 +45,7 @@ const EscolhaDaVaga = ({ formData, setFormData, handleBack, handleNext, setEnabl
       const isSelected = prevFormData.vagas.some(v => v.vaga === vagaId);
       const newVagas = isSelected
         ? prevFormData.vagas.filter(v => v.vaga !== vagaId)
-        : [...prevFormData.vagas, { vaga: vagaId, title: vagaTitle, polo: '', modalidade: '', categoria: '' }];
+        : [...prevFormData.vagas, { vaga: vagaId, title: vagaTitle, polo: '', modalidade: '', categoria: '', anexo_cpf: null, anexo_comprovante_residencia: null, anexo_historico: null, anexo_autodeclaracao: null }];
 
       return { ...prevFormData, vagas: newVagas.filter(v => v.vaga) };
     });
@@ -79,10 +81,11 @@ const EscolhaDaVaga = ({ formData, setFormData, handleBack, handleNext, setEnabl
               return (
                 <VagaCard
                   key={vaga.id}
-                  title={vaga.nome}
+                  title={vaga.vaga.vagable.nome}
+                  campus={vaga.campus}
                   isSelected={!!selectedVaga}
                   selectedValue={selectedVaga ? selectedVaga.polo : ''}
-                  onSelect={() => handleVagaSelect(vaga.id, vaga.nome)}
+                  onSelect={() => handleVagaSelect(vaga.id, vaga.vaga.vagable.nome)}
                   onCampusChange={(e) => handleCampusChange(vaga.id, e.target.value)}
                 />
               );

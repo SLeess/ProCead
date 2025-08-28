@@ -25,6 +25,14 @@ class InscricaoService
 
             $inscricao = Inscricao::create($inscricaoData);
 
+            foreach($data['vagas'] as $vaga){
+                $inscricao->vagas_inscricao()->create([
+                    'quadro_vaga_id' => $vaga['vaga'],
+                    'modalidade_id' => $vaga['modalidade'],
+                    'categoria_vaga_id' => $vaga['categoria'] ?? null,
+                ]);
+            }
+
             DB::commit();
 
             return $inscricao;
@@ -76,6 +84,9 @@ class InscricaoService
             'motivo' => $data['motivo'] ?? null,
             'user_uuid' => $data['user']['uuid'],
             'edital_id' => $data['editalId'],
+
+            //vaga
+            'vagas' => $data['vagas'],
         ];
     }
 }
