@@ -10,9 +10,9 @@ import {
   FiPieChart, FiHelpCircle, FiAward, FiBell, FiUserPlus,
   FiFileText, FiDatabase, FiHome, FiCheckSquare, FiFlag
 } from 'react-icons/fi';
-import { List } from 'lucide-react';
+import { AlignJustify, List } from 'lucide-react';
 
-const Sidebar = () => {
+const Sidebar = ({openSidebar, setOpenSidebar}) => {
   
   const { hasGlobalPermission } = useContext(AppContext);
   const { editalId } = useParams();
@@ -96,49 +96,106 @@ const Sidebar = () => {
   }
 
   return (
-    <div id='Sidebar-admin' className="w-67 h-screen bg-[var(--admin-sidebar)] flex flex-col font-sans rounded-tr-[15px] rounded-br-[15px]">
-      <div
-        className="p-5 text-2xl font-bold text-white flex items-center flex-shrink-0 cursor-pointer"
-        onClick={() => navigate(`/admin`)}
-      >
-        <img src="/img/logo_cead_bg_white.png" className="mr-2.5" width="50px" />
-        PROCEAD
-      </div>
-      <div className="flex-grow overflow-y-auto scrollbar scrollbar-thumb-white scrollbar-track-transparent scrollbar-w-[6px]">
-        {menuData.map(section => (
-          <div key={section.title} className="py-2">
-            <div
-              className={`px-4 py-2.5 flex items-center justify-between cursor-pointer rounded-md m-1 mx-2 transition-colors duration-50 ease-in-out hover:bg-[var(--admin-sidebar-hover-and-select)]`}
-              onClick={() => handleToggleSection(section.title)}
-            >
-              <span className="flex items-center gap-3 text-[0.95rem] text-white">
-                {section.icon}
-                {section.title}
-              </span>
-              {openSections[section.title]
-                ? <FiChevronUp color="white" />
-                : <FiChevronDown color="white" />
-              }
+    <>
+      {/*---------- NORMAL ----------*/}
+      <div className="hidden md:flex w-67 h-screen bg-[var(--admin-sidebar)] flex-col font-sans rounded-tr-[15px] rounded-br-[15px]">
+        <div
+          className="p-5 text-2xl font-bold text-white flex items-center flex-shrink-0 cursor-pointer"
+          onClick={() => navigate(`/admin`)}
+          >
+          <img src="/img/logo_cead_bg_white.png" className="mr-2.5" width="50px" />
+          PROCEAD
+        </div>
+        <div className="flex-grow overflow-y-auto scrollbar scrollbar-thumb-white scrollbar-track-transparent scrollbar-w-[6px]">
+          {menuData.map(section => (
+            <div key={section.title} className="py-2">
+              <div
+                className={`px-4 py-2.5 flex items-center justify-between cursor-pointer rounded-md m-1 mx-2 transition-colors duration-50 ease-in-out hover:bg-[var(--admin-sidebar-hover-and-select)]`}
+                onClick={() => handleToggleSection(section.title)}
+                >
+                <span className="flex items-center gap-3 text-[0.95rem] text-white">
+                  {section.icon}
+                  {section.title}
+                </span>
+                {openSections[section.title]
+                  ? <FiChevronUp color="white" />
+                  : <FiChevronDown color="white" />
+                }
+              </div>
+              <div
+                className={`overflow-hidden transition-[max-height] duration-300 ease-in-out pl-4 ${openSections[section.title] ? 'max-h-[500px]' : 'max-h-0'}`}
+                >
+                {section.items.filter((link) => link !== null).map(item => (
+                  <div
+                    key={item.name}
+                    className={`flex justify-start items-center gap-3 py-1.5 pr-4 pl-[30px] text-[#ffffff] cursor-pointer m-1 mx-2 rounded-md text-[1rem] transition-colors duration-200 hover:bg-[var(--admin-sidebar-hover-and-select)] ${activeItem === item.name ? 'bg-[var(--admin-sidebar-hover-and-select)] text-white font-medium' : ''}`
+                    }
+                    onClick={() => handleItemClick(item.name, item.href)}
+                    >
+                    {item.icon}
+                    {item.name}
+                  </div>
+                ))}
+              </div>
             </div>
+          ))}
+        </div>
+      </div>
+
+      {/*---------- RESPONSIVE ----------*/}
+        <div 
+        className={`flex md:hidden flex-col fixed z-999 bg-[var(--admin-sidebar)] w-[60%] h-full 
+          rounded-tr-[15px] rounded-br-[15px] transition-transform duration-500 ease-in-out 
+          ${openSidebar ? 'transform translate-x-0' : 'transform -translate-x-full'}`}
+        >
+          <div className='flex justify-between'>
             <div
-              className={`overflow-hidden transition-[max-height] duration-300 ease-in-out pl-4 ${openSections[section.title] ? 'max-h-[500px]' : 'max-h-0'}`}
-            >
-              {section.items.filter((link) => link !== null).map(item => (
+              className="p-5 text-2xl font-bold text-white flex items-center flex-shrink-0 cursor-pointer"
+              onClick={() => navigate(`/admin`)}
+              >
+              <img src="/img/logo_cead_bg_white.png" className="mr-2.5" width="40px" />
+              <span className='text-lg'>PRO<span className='italic font-medium'>CEAD</span></span>
+            </div>
+            <button onClick={() => setOpenSidebar(false)} className='px-4'>
+                <AlignJustify color={"white"} strokeWidth={"2.5px"} size={"32px"} />
+            </button>
+          </div>
+          <div className="flex-grow overflow-y-auto scrollbar scrollbar-thumb-white scrollbar-track-transparent scrollbar-w-[6px]">
+            {menuData.map(section => (
+              <div key={section.title} className="py-2">
                 <div
-                  key={item.name}
-                  className={`flex justify-start items-center gap-3 py-1.5 pr-4 pl-[30px] text-[#ffffff] cursor-pointer m-1 mx-2 rounded-md text-[1rem] transition-colors duration-200 hover:bg-[var(--admin-sidebar-hover-and-select)] ${activeItem === item.name ? 'bg-[var(--admin-sidebar-hover-and-select)] text-white font-medium' : ''}`
+                  className={`px-4 py-2.5 flex items-center justify-between cursor-pointer rounded-md m-1 mx-2 transition-colors duration-50 ease-in-out hover:bg-[var(--admin-sidebar-hover-and-select)]`}
+                  onClick={() => handleToggleSection(section.title)}
+                  >
+                  <span className="flex items-center gap-3 text-[0.95rem] text-white">
+                    {section.icon}
+                    {section.title}
+                  </span>
+                  {openSections[section.title]
+                    ? <FiChevronUp color="white" />
+                    : <FiChevronDown color="white" />
+                  }
+                </div>
+                <div
+                  className={`overflow-hidden transition-[max-height] duration-300 ease-in-out pl-4 ${openSections[section.title] ? 'max-h-[500px]' : 'max-h-0'}`}
+                >
+                  {section.items.filter((link) => link !== null).map(item => (
+                    <div
+                    key={item.name}
+                    className={`flex justify-start items-center gap-3 py-1.5 pr-4 pl-[30px] text-white cursor-pointer m-1 mx-2 rounded-md text-[1rem] transition-colors duration-200 hover:bg-[var(--admin-sidebar-hover-and-select)] ${activeItem === item.name ? 'bg-[var(--admin-sidebar-hover-and-select)] text-white font-medium' : ''}`
                   }
                   onClick={() => handleItemClick(item.name, item.href)}
-                >
-                  {item.icon}
-                  {item.name}
+                  >
+                      {item.icon}
+                      {item.name}
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-    </div>
+        </div>
+    </>
   );
 };
 

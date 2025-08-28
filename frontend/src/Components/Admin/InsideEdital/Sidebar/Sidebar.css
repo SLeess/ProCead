@@ -2,11 +2,12 @@
 
 div#Sidebar-admin ::-webkit-scrollbar { 
     @apply w-[6px];
-    /* @apply my-[20px]; */
 }
+
 div#Sidebar-admin ::-webkit-scrollbar-track {
     @apply bg-transparent;
 }
+
 div#Sidebar-admin ::-webkit-scrollbar-thumb {
     @apply rounded-[10px];
 
@@ -15,3 +16,6 @@ div#Sidebar-admin ::-webkit-scrollbar-thumb {
     /* Dark mode */
     @apply dark:bg-[white];
 }
+
+
+/* -------------------- RESPONSIVO -------------------- */
