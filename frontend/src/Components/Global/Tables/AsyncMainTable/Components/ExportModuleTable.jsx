@@ -7,7 +7,6 @@ export default function ExportModuleTable({
     table, 
     title, 
     pagesCached = [],
-    isServerSide = false,
     rowSelection,
     // setRowSelection,
 })
@@ -23,21 +22,13 @@ export default function ExportModuleTable({
 
         let allSelectedRows = [];
 
-        if (isServerSide) {
-            // Junta todos os dados de todas as páginas cacheadas em um único array
-            const allCachedData = Object.values(pagesCached).flat();
-            
-            // Cria um Set para uma busca rápida
-            const selectedIdsSet = new Set(selectedIds);
-            // Filtra os dados cacheados para encontrar os objetos completos dos usuários selecionados
-            allSelectedRows = allCachedData.filter(row => selectedIdsSet.has(row.uuid));
-
-        } else {
-            // ===============================================
-            // LÓGICA PARA PAGINAÇÃO NO FRONTEND (como antes)
-            // ===============================================
-            allSelectedRows = table.getFilteredSelectedRowModel().rows.map(row => row.original);
-        }
+        // Junta todos os dados de todas as páginas cacheadas em um único array
+        const allCachedData = Object.values(pagesCached).flat();
+        
+        // Cria um Set para uma busca rápida
+        const selectedIdsSet = new Set(selectedIds);
+        // Filtra os dados cacheados para encontrar os objetos completos dos usuários selecionados
+        allSelectedRows = allCachedData.filter(row => selectedIdsSet.has(row.uuid));
 
         if (selectedIds.length === 0 && allSelectedRows.length === 0) {
             toast.error('Selecione pelo menos uma linha antes de gerar o relatório.');

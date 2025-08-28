@@ -17,6 +17,7 @@ import ExportModuleTable from "./Components/ExportModuleTable";
 import SearchRowsTable from "./Components/SearchRowsTable";
 import Loader from "../../Loader/Loader";
 import { useAppContext } from "@/Contexts/AppContext";
+import Swal from "sweetalert2";
 
 const AsyncMainTable = ({ 
     // ================== Props Essenciais ==================
@@ -31,8 +32,7 @@ const AsyncMainTable = ({
     /**
      * (MODO FRONTEND) Array de dados para paginação e busca no cliente.
      */
-      clientSideData = [],
-
+    // 
     // ================== Props de Configuração Opcionais ==================
       pageSize = 15,
       subtitle = null,
@@ -52,18 +52,14 @@ const AsyncMainTable = ({
       setMetaData = null, // Callback para enviar metadados para o pai
   }) => {
   const { apiAsyncFetch } = useAppContext();
-    
-  const isServerSide = !!serverSideDataUrl;
-
   // ================== Estados Internos ==================
-  const [data, setData] = useState(() => isServerSide ? [] : clientSideData);
+  const [data, setData] = useState([]);
   const [pagesCache, setPagesCache] = useState({});
   const [pageCount, setPageCount] = useState(0);
-  const [loading, setLoading] = useState(isServerSide);
+  const [loading, setLoading] = useState(true);
   
   // Estados da TanStack Table
   const [columnFilters, setColumnFilters] = useState([]);
-  const [globalFilter, setGlobalFilter] = useState('');               // Para a busca local
   const [serverSearchTerm, setServerSearchTerm] = useState('');       // Para a busca no backend
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(''); // Termo "atrasado" para evitar muitas requisições
   
@@ -104,14 +100,14 @@ const AsyncMainTable = ({
     enableRowSelection: true,        
     enableMultiRowSelection: true,
 
-    manualPagination: isServerSide,
-    manualFiltering: isServerSide,
+    manualPagination: true,
+    manualFiltering: true,
     
     // ATIVANDO A ORDENAÇÃO MANUAL
-    manualSorting: isServerSide,
+    manualSorting: true,
     onSortingChange: setSorting,
 
-    pageCount: isServerSide ? pageCount : undefined,
+    pageCount: pageCount,
     // onPaginationChange: setPagination,
     onPaginationChange: (updater) => {
       if (typeof updater === 'function') {
@@ -120,7 +116,7 @@ const AsyncMainTable = ({
           setPagination(updater);
       }
     },
-    onGlobalFilterChange: isServerSide ? setServerSearchTerm : setGlobalFilter,
+    onGlobalFilterChange: setServerSearchTerm,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -130,7 +126,7 @@ const AsyncMainTable = ({
     onColumnVisibilityChange: setColumnVisibility,
     state: {
         pagination,
-        globalFilter: isServerSide ? serverSearchTerm : globalFilter,
+        globalFilter: serverSearchTerm,
         rowSelection,
         columnFilters,
         columnVisibility,
@@ -158,23 +154,20 @@ const AsyncMainTable = ({
 
   }, [rowSelection, table.getRowModel().rows]);
 
-  // Efeito para debounce da busca (atraso na digitação)
+  // Efeito para debounce da busca (atraso na digitação e na ordenação)
   useEffect(() => {
     const timer = setTimeout(() => {
         setDebouncedSearchTerm(serverSearchTerm);
         // Reseta para a primeira página ao fazer uma nova busca
         setPagination(p => ({ ...p, pageIndex: 0 })); 
-        if (isServerSide) {
-          // setRowSelection([]);
-          setPagesCache({}); // Limpa o cache ao fazer uma nova busca
-        }
+        setPagesCache({}); // Limpa o cache ao fazer uma nova busca
     }, 500); // Espera 500ms após o usuário parar de digitar
     return () => clearTimeout(timer);
-  }, [serverSearchTerm, isServerSide, pagination.pageSize]);
+  }, [serverSearchTerm, pagination.pageSize, sorting]);
 
   // EFEITO PARA BUSCAR DADOS DO BACKEND
   useEffect(() => {
-    if (!isServerSide || sorting[0]?.id === "actions") return;
+    if (sorting[0]?.id === "actions") return;
 
     const fetchPageData = async () => {
       setLoading(true);
@@ -193,7 +186,7 @@ const AsyncMainTable = ({
         
         const url = `${serverSideDataUrl}?${params.toString()}`;
         const result = await apiAsyncFetch({ url });
-        
+
         setData(result.data.users);
         setPageCount(result.data.meta.last_page);
         if (typeof setMetaData === 'function') {
@@ -201,6 +194,21 @@ const AsyncMainTable = ({
         }
 
       } catch (error) {
+        if(error.toString() === "Error: O campo de itens por página não pode ser superior a 999."){
+          Swal.fire({
+              title: 'Erro ao Buscar os dados',
+              text: `Não foi possível buscar mais que o limite por requisição, que é 999 itens por vez. Definindo a busca para 15 itens.`,
+              icon: 'error',
+              confirmButtonText: 'Confirmar',
+              // confirmButtonColor: '#3085d6',
+              allowOutsideClick: false,
+              allowEscapeKey: false,   
+          }).then((result) => {
+              if (result.isConfirmed) {
+                  table.setPageSize(15);
+              }
+          });
+        }
         console.error("Falha ao buscar dados paginados:", error);
         setData([]);
       } finally {
@@ -210,12 +218,7 @@ const AsyncMainTable = ({
     
     fetchPageData();
   // O useEffect agora depende de todas as variáveis que disparam uma nova busca
-  }, [isServerSide, pagination, debouncedSearchTerm, sorting, apiAsyncFetch, serverSideDataUrl, setMetaData]);
-
-  // Efeito para sincronizar dados no modo frontend
-  useEffect(() => {
-    if (!isServerSide) setData(clientSideData);
-  }, [clientSideData, isServerSide]);
+  }, [pagination, debouncedSearchTerm, apiAsyncFetch, serverSideDataUrl, setMetaData]);
 
   return (
       <div className={`async-main-table ${hasShadowBorderStyle ? "rounded-md border border-gray-200 shadow-md" : ""} ${hasPaddingStyle ? "px-5 sm:px-7.5" : ""} bg-white pt-6 pb-2.5 xl:pb-1 ${className}`}>
@@ -226,8 +229,8 @@ const AsyncMainTable = ({
           <div id="table-search-container">
             {/* O componente de busca agora usa o state correto dependendo do modo */}
             <SearchRowsTable 
-                globalFilter={isServerSide ? serverSearchTerm : globalFilter} 
-                setGlobalFilter={isServerSide ? setServerSearchTerm : setGlobalFilter}
+                globalFilter={serverSearchTerm} 
+                setGlobalFilter={setServerSearchTerm}
             />
           </div>
           <div id="table-other-tools">
@@ -236,7 +239,6 @@ const AsyncMainTable = ({
               title={title} 
               canExport={canExport} 
               pagesCached={pagesCache} 
-              isServerSide={isServerSide}
               rowSelection={selectedRowsDataCache}
               // setRowSelection={setSelectedRowsDataCache}
             />
@@ -245,7 +247,7 @@ const AsyncMainTable = ({
 
         <div id="table-data-container" style={{ position: 'relative', minHeight: '300px' }}>
           {/* Loader sobrepõe a tabela no modo backend */}
-          {isServerSide && loading && (
+          {loading && (
             <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-75 z-10">
                 <Loader />
             </div>

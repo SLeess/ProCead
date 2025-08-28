@@ -79,6 +79,7 @@ export default function CustomPagination({
                     id="pagesize-input"
                     type="number"
                     min={1}
+                    max={999}
                     value={pageSizeValue}
                     onChange={e => setPageSizeValue(e.target.value)}
                     onBlur={applyPageSize}
