@@ -337,6 +337,7 @@ export default function AppProvider({ children }) {
         const headers = {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
+            'Accept-Language': 'pt-BR'
         };
 
         if (isProtected) {
