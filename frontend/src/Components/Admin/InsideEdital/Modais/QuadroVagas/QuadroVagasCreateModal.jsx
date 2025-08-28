@@ -170,7 +170,7 @@ export default function QuadroVagasCreateModal({ setNeedUpdate }) {
                 ...f,
                 categoriasCustomizadas: [...f.categoriasCustomizadas, newCategory]
             }));
-            setNewCategoryName(""); // Clear input after adding
+            setNewCategoryName(''); // Clear input after adding
         }
     };
 
