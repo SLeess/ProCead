@@ -222,6 +222,7 @@ div.info-not-found-itens p#second{
     /* Sidebar */
     --admin-sidebar: #2A1670;
     --admin-sidebar-hover-and-select: #6C4BC3;
+    --admin-sidebar-scroll: #4D2F99;
 
     /* Topbar */
     --admin-topbar-flag: #F8F2FF;

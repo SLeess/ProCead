@@ -63,16 +63,16 @@ export default function TopBar({setOpenSidebar}) {
                         arrowIcon={false}
                         inline
                         label={
-                            <div id="dropdown-close">
-                                <span id="dropdown-close-nome">Olá, {user?.nome?.split(' ')[0] || 'Usuário'}</span>
+                            <div className="dropdown-close">
+                                <span className="dropdown-close-nome">Olá, {user?.nome?.split(' ')[0] || 'Usuário'}</span>
                                 <ChevronDown />
                             </div>
                         }
                         >
                     <button onClick={() => setOpenModal(true)}>
-                        <DropdownHeader id="dropdown-profile">
-                            <span id="dropdown-open-nome">{user?.nome}</span>
-                            <span id="dropdown-open-email">{user?.email}</span>
+                        <DropdownHeader className="dropdown-profile">
+                            <span className="dropdown-open-nome">{user?.nome}</span>
+                            <span className="dropdown-open-email">{user?.email}</span>
                         </DropdownHeader>
                     </button>
                         <DropdownItem icon={ChevronsLeftRight} onClick={handleChangeEdital}>
@@ -95,8 +95,35 @@ export default function TopBar({setOpenSidebar}) {
                     </button>
                 </div>
 
-                <div onClick={() => navigate(`/admin`)}>
-                    <img src="/img/logo_cead_bg.png" className="mr-2.5" width="80px" />
+                <div className="ml-8" onClick={() => navigate(`/admin`)}>
+                    <img src="/img/logo_cead_bg.png" width="80px" />
+                </div>
+
+                <div>
+                    <Dropdown
+                        arrowIcon={false}
+                        inline
+                        label={
+                            <div className="dropdown-close">
+                                <span className="dropdown-close-nome">Olá, {user?.nome?.split(' ')[0] || 'Usuário'}</span>
+                                <ChevronDown />
+                            </div>
+                        }
+                        >
+                    <button onClick={() => setOpenModal(true)}>
+                        <DropdownHeader className="dropdown-profile">
+                            <span className="dropdown-open-nome">{user?.nome}</span>
+                            <span className="dropdown-open-email">{user?.email}</span>
+                        </DropdownHeader>
+                    </button>
+                        <DropdownItem icon={ChevronsLeftRight} onClick={handleChangeEdital}>
+                            Mudar de edital
+                        </DropdownItem>
+                        <DropdownDivider />
+                        <DropdownItem icon={LogOut} onClick={handlerLogOut}>
+                            Sair
+                        </DropdownItem>
+                    </Dropdown>
                 </div>
             </div>
         </>

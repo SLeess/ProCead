@@ -98,7 +98,7 @@ const Sidebar = ({openSidebar, setOpenSidebar}) => {
   return (
     <>
       {/*---------- NORMAL ----------*/}
-      <div className="hidden md:flex w-67 h-screen bg-[var(--admin-sidebar)] flex-col font-sans rounded-tr-[15px] rounded-br-[15px]">
+      <div id='sidebar-admin'>
         <div
           className="p-5 text-2xl font-bold text-white flex items-center flex-shrink-0 cursor-pointer"
           onClick={() => navigate(`/admin`)}
@@ -143,11 +143,8 @@ const Sidebar = ({openSidebar, setOpenSidebar}) => {
       </div>
 
       {/*---------- RESPONSIVE ----------*/}
-        <div 
-        className={`flex md:hidden flex-col fixed z-999 bg-[var(--admin-sidebar)] w-[60%] h-full 
-          rounded-tr-[15px] rounded-br-[15px] transition-transform duration-500 ease-in-out 
-          ${openSidebar ? 'transform translate-x-0' : 'transform -translate-x-full'}`}
-        >
+        <div id='sidebar-admin-mobile'
+        className={`${openSidebar ? 'transform translate-x-0' : 'transform -translate-x-full'}`}>
           <div className='flex justify-between'>
             <div
               className="p-5 text-2xl font-bold text-white flex items-center flex-shrink-0 cursor-pointer"
