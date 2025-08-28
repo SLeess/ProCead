@@ -8,6 +8,7 @@ import z from 'zod/v4';
 import ThemeToggleBtn from "@/Components/Global/ThemeToggleBtn/ThemeToggleBtn";
 import LoaderPages from "@/Components/Global/LoaderPages/LoaderPages";
 import { maskCPF } from "@/Utils/formatters";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function Registro(){
 
@@ -100,6 +101,14 @@ export default function Registro(){
             return remainErrors;
         });
     };
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+    const [isConfirmPasswordVisible, setIsConfirmPasswordVisibility] = useState(false);
+    const togglePasswordVisibility = () => {
+        setIsPasswordVisible(!isPasswordVisible);
+    };
+    const toggleConfirmPasswordVisibility = () => {
+        setIsConfirmPasswordVisibility(!isConfirmPasswordVisible);
+    };
 
     return(
         <>
@@ -190,17 +199,30 @@ export default function Registro(){
                                 <label htmlFor="password"><strong>Senha</strong></label>
                             </div>
                             <div className="mt-2">
-                                <input 
-                                    type="password" 
-                                    name={`password`} 
-                                    id={`password`} 
-                                    value={formData.password} 
-                                    autoComplete="current-password" 
-                                    placeholder="*********" 
-                                    onChange={updateAttr} 
-                                    required 
-                                    className={` ${errors.password ? 'outline-red-600' : 'outline-gray-300'}`}
-                                />
+                                <div className="relative w-full">
+                                    <input 
+                                        type={isPasswordVisible ? 'text' : 'password'} 
+                                        name={`password`} 
+                                        id={`password`} 
+                                        value={formData.password} 
+                                        autoComplete="current-password" 
+                                        placeholder="*********" 
+                                        onChange={updateAttr} 
+                                        required 
+                                        className={` ${errors.password ? 'outline-red-600' : 'outline-gray-300'}`}
+                                    />
+                                    <button
+                                        type="button"
+                                        className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
+                                        onClick={togglePasswordVisibility}
+                                    >
+                                        {isPasswordVisible ? (
+                                            <EyeOff className="h-5 w-5 text-gray-400" />
+                                        ) : (
+                                            <Eye className="h-5 w-5 text-gray-400" />
+                                        )}
+                                    </button>
+                                </div>
                                 {
                                     errors.password && (
                                         <span id="nome-span" className="invalid-feedback px-3">{errors.password[0]}</span>
@@ -214,17 +236,30 @@ export default function Registro(){
                                 <label htmlFor="password_confirmation"><strong>Confirmar Senha</strong></label>
                             </div>
                             <div className="mt-2">
-                                <input 
-                                    type="password" 
-                                    name={`confirm_password`} 
-                                    id={`confirm_password`} 
-                                    autoComplete="current-password" 
-                                    placeholder="*********"
-                                    value={formData.confirm_password}  
-                                    onChange={updateAttr} 
-                                    required 
-                                    className={` ${errors.confirm_password ? 'outline-red-600' : 'outline-gray-300'}`}
-                                />
+                                <div className="relative w-full">
+                                    <input 
+                                        type={isConfirmPasswordVisible ? 'text' : 'password'}
+                                        name={`confirm_password`} 
+                                        id={`confirm_password`} 
+                                        autoComplete="current-password" 
+                                        placeholder="*********"
+                                        value={formData.confirm_password}  
+                                        onChange={updateAttr} 
+                                        required 
+                                        className={` ${errors.confirm_password ? 'outline-red-600' : 'outline-gray-300'}`}
+                                    />
+                                    <button
+                                        type="button"
+                                        className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
+                                        onClick={toggleConfirmPasswordVisibility}
+                                    >
+                                        {isConfirmPasswordVisible ? (
+                                            <EyeOff className="h-5 w-5 text-gray-400" />
+                                        ) : (
+                                            <Eye className="h-5 w-5 text-gray-400" />
+                                        )}
+                                    </button>
+                                </div>
                                 {
                                     errors.confirm_password && (
                                         <span id="nome-span" className="invalid-feedback px-3">{errors.confirm_password[0]}</span>
