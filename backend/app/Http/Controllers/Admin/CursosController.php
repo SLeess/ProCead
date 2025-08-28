@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\API\APIController;
+use App\Http\Requests\CursoRequest;
 use App\Models\Curso;
 use DB;
 use Exception;
@@ -13,11 +14,12 @@ class CursosController extends APIController
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CursoRequest $request)
     {
+        $data = $request->validated();
         DB::beginTransaction();
         try{
-            $curso = Curso::create(['nome' => $request->nome,'edital_id' => $request->editalId]);
+            $curso = Curso::create(['nome' => $data['nome'],'edital_id' => $data['editalId']]);
             $curso->vagas()->create([
                 'vagable_id' => $curso->id,
                 'vagable_type' => Curso::class
@@ -42,12 +44,13 @@ class CursosController extends APIController
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CursoRequest $request, string $id)
     {
+        $data = $request->validated();
         DB::beginTransaction();
         try{
             $curso = Curso::find($id);
-            $curso->update(["nome" => $request->nome]);
+            $curso->update(["nome" => $data['nome']]);
             DB::commit();
             return $this->sendResponse($curso,'Curso atualizado com sucesso!',200);
         }catch(Exception $e){

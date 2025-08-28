@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\API\APIController;
+use App\Http\Requests\ModalidadeRequest;
 use App\Models\Modalidade;
 use App\Models\ModalidadeTipoAvaliacao;
 use App\Models\TipoAvaliacao;
@@ -18,18 +19,19 @@ class ModalidadesController extends APIController
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ModalidadeRequest $request)
     {
         DB::beginTransaction();
+        $data = $request->validated();
         try {
             $modalidade = Modalidade::create([
-                "sigla" => $request->sigla,
-                "descricao" => $request->descricao,
-                "edital_id" => $request->editalId
+                "sigla" => $data['sigla'],
+                "descricao" => $data['descricao'],
+                "edital_id" => $data['editalId']
             ]);
 
-            if ($request->has('tipos_avaliacao')) {
-                foreach ($request->tipos_avaliacao as $tipo) {
+            if (isset($data['tipos_avaliacao'])) {
+                foreach ($data['tipos_avaliacao'] as $tipo) {
                     $tipoModel = TipoAvaliacao::where("tipo", $tipo)->first();
                     if ($tipoModel) {
                         ModalidadeTipoAvaliacao::create([
@@ -69,20 +71,21 @@ class ModalidadesController extends APIController
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ModalidadeRequest $request, string $id)
     {
         DB::beginTransaction();
+        $data = $request->validated();
         try {
             $modalidade = Modalidade::findOrFail($id);
             $modalidade->update([
-                'sigla' => $request->sigla,
-                'descricao' => $request->descricao
+                'sigla' => $data['sigla'],
+                'descricao' => $data['descricao']
             ]);
 
             $modalidade->tipo_avaliacao()->delete();
 
-            if ($request->has('tipos_avaliacao')) {
-                foreach ($request->tipos_avaliacao as $tipo) {
+            if (isset($data['tipos_avaliacao'])) {
+                foreach ($data['tipos_avaliacao'] as $tipo) {
                     $tipoModel = TipoAvaliacao::where("tipo", $tipo)->first();
                     if ($tipoModel) {
                         ModalidadeTipoAvaliacao::create([

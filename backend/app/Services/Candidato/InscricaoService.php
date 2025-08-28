@@ -43,12 +43,13 @@ class InscricaoService
      */
     private function prepareDataForStorage(array $data): array
     {
+        // dd($data);
         return [
             // informações básicas
             'nome_completo' => $data['nome_completo'],
             'cpf' => str_replace(['.', '-'], '', $data['cpf']),
             'email' => $data['email'],
-            'data_nascimento' => Carbon::parse($data['data_nascimento'])->format('Y-m-d'),
+            'data_nascimento' => Carbon::createFromFormat('d/m/Y', $data['data_nascimento'])->format('Y-m-d'),
             'telefone' => str_replace(['(', ')', ' ', '-'], '', $data['telefone']),
             'genero' => $data['genero'],
             'nome_social' => $data['nome_social'] ?? null,
@@ -65,7 +66,7 @@ class InscricaoService
             'bairro' => $data['bairro'],
             'cidade' => $data['cidade'],
             'uf' => $data['uf'],
-            'numero' => $data['numero'],
+            'numero' => $data['numero'] ?? null,
             'complemento' => $data['complemento'] ?? null,
 
             // etc

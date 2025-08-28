@@ -41,8 +41,8 @@ return new class extends Migration
             $table->boolean('termo_responsabilidade');
             $table->unsignedBigInteger('edital_id');
             $table->foreign('edital_id')->references('id')->on('editais');
-            $table->unsignedBigInteger('modalidade_id');
-            $table->foreign('modalidade_id')->references('id')->on('modalidades');
+            // $table->unsignedBigInteger('modalidade_id');
+            // $table->foreign('modalidade_id')->references('id')->on('modalidades');
             $table->string('status')->nullable();
             $table->string('motivo')->nullable();
             $table->uuid('user_uuid');

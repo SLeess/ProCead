@@ -1,19 +1,52 @@
 import { Button, Checkbox, Label, Modal, ModalBody, ModalHeader, } from "flowbite-react";
 import { Eye } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FormField, SelectInput, AnexoButton, TextInput } from "@/Components/Global/ui/modals";
 import CabecalhoModal from "@/Components/Global/Modais/CabecalhoModal";
 import "./QuadroVagasModal.css";
 import ModalTabs from "../../Tabs/ModalTabs";
+import { MultiSelect } from "primereact/multiselect";
+import { useAppContext } from "@/Contexts/AppContext";
+import { useParams } from "react-router-dom";
 
 
 export default function QuadroVagasShowModal({ quadroVaga }) {
     const [openModal, setOpenModal] = useState(false);
     const [activeTab, setActiveTab] = useState('Dados');
     const tabs = ['Dados', 'Distribuição de Vagas', 'Categorias Customizadas'];
-    
+    const { token } = useAppContext();
+    const { editalId } = useParams();
+    const [polos, setPolos] = useState([]);
 
-    
+
+
+    useEffect(() => {
+        const fetchPolos = async () => {
+            try {
+                const res = await fetch(`/api/admin/polos/${editalId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,
+                    },
+                });
+
+                const result = await res.json();
+                if (!res.ok) {
+                    throw new Error(`Erro ao buscar polos: ${res.status} ${res.statusText}`);
+                }
+
+                setPolos(result.data);
+
+
+            } catch (error) {
+                setPolos([]);
+                throw new Error(`Erro ao buscar Polos: ${error}`)
+            }
+        };
+        if(openModal) fetchPolos();
+    }, [token, editalId, openModal]);
+
 
     const handleNext = () => {
         const currentIndex = tabs.indexOf(activeTab);
@@ -66,8 +99,19 @@ export default function QuadroVagasShowModal({ quadroVaga }) {
                                 <FormField label="Edital Referente"><TextInput readOnly={true} value={`Edital Nº ${quadroVaga?.edital_id}`} /></FormField>
 
                                 {/* Row 2 */}
-                                <FormField label="Campus" className="md:col-span-1"><TextInput readOnly={true} value={quadroVaga?.campus || ''} /></FormField>
-                                <FormField label="Vaga" className="md:col-span-2"><TextInput readOnly={true} value={quadroVaga?.vaga?.vagable?.nome || ''} /></FormField>
+                                <FormField label="Campus" className="md:col-span-3">
+                                    <MultiSelect
+                                        value={quadroVaga?.campus}
+                                        options={polos}
+                                        optionLabel="nome"
+                                        display="chip"
+                                        placeholder="Nenhum campus selecionado"
+                                        className=" items-center"
+                                        id='multiselect-primereact'
+                                        readOnly={true}
+                                    />
+                                </FormField>
+                                <FormField label="Vaga" className="md:col-span-2"><TextInput readOnly={true} value={quadroVaga?.vaga.vagable.nome || ''} /></FormField>
 
                                 {/* Row 3 */}
                                 <FormField label="Habilitação" className="md:col-span-3"><TextInput readOnly={true} value={quadroVaga?.habilitacao || ''} /></FormField>

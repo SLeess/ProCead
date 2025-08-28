@@ -23,3 +23,7 @@
 #categorias-customizadas-create {
     @apply flex h-12 justify-center items-center border border-dashed border-green-400;
 }
+
+#multiselect-primereact #p-multiselect-token{
+    @apply bg-blue-600 text-blue-800;
+}

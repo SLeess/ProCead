@@ -29,7 +29,7 @@ class StoreInscricaoRequest extends FormRequest
             'nome_completo' => 'required|string|max:255',
             'cpf' => 'required|string|size:14', // formato xxxxxxxxxxx
             'email' => 'required|email|max:255',
-            'data_nascimento' => 'required|date',
+            'data_nascimento' => 'required',
             'telefone' => 'required|string|size:15',
             'genero' => 'required|string',
             'nome_social' => 'nullable|string|max:255',
@@ -46,7 +46,7 @@ class StoreInscricaoRequest extends FormRequest
             'bairro' => 'required|string|max:255',
             'cidade' => 'required|string|max:255',
             'uf' => 'required|string|size:2',
-            'numero' => 'required|string|max:255',
+            // 'numero' => 'number|max:255',
             'complemento' => 'nullable|string|max:255',
 
             // etc

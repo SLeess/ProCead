@@ -271,4 +271,68 @@ const DateTimePicker = ({ value, placeholder = null, readOnly = false, onChange 
 }
 
 
-export { FormField, TextInput, SelectInput, AnexoButton, Checkbox, MultiSelectTags, DetailRow, AlterationRow, DateTimeInput, DateTimePicker };
+const CheckboxMultiSelect = ({ options, value, onChange, placeholder = "Selecione" }) => {
+    const [isOpen, setIsOpen] = useState(false);
+    const ref = useRef(null);
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (ref.current && !ref.current.contains(event.target)) {
+                setIsOpen(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, [ref]);
+
+    const handleSelect = (optionValue) => {
+        const newValue = [...value];
+        const index = newValue.indexOf(optionValue);
+        if (index > -1) {
+            newValue.splice(index, 1);
+        } else {
+            newValue.push(optionValue);
+        }
+        onChange(newValue);
+    };
+
+    const selectedLabels = options
+        .filter(opt => value.includes(opt.value))
+        .map(opt => opt.label)
+        .join(', ');
+
+    return (
+        <div className="relative" ref={ref}>
+            <button
+                type="button"
+                className="bg-white border border-gray-200 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full text-left"
+                onClick={() => setIsOpen(!isOpen)}
+            >
+                {selectedLabels || placeholder}
+            </button>
+            {isOpen && (
+                <div className="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-md shadow-lg">
+                    <ul>
+                        {options.map(opt => (
+                            <li key={opt.value} className="px-4 py-2 hover:bg-gray-100">
+                                <label className="flex items-center space-x-2">
+                                    <input
+                                        type="checkbox"
+                                        checked={value.includes(opt.value)}
+                                        onChange={() => handleSelect(opt.value)}
+                                        className="h-4 w-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                                    />
+                                    <span>{opt.label}</span>
+                                </label>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            )}
+        </div>
+    );
+};
+
+export { FormField, TextInput, SelectInput, AnexoButton, Checkbox, MultiSelectTags, DetailRow, AlterationRow, DateTimeInput, DateTimePicker, CheckboxMultiSelect };

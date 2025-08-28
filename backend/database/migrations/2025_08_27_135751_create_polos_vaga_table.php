@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('quadro_vagas', function (Blueprint $table) {
+        Schema::create('polos_vaga', function (Blueprint $table) {
             $table->id();
-            $table->integer('codigo')->unique();
-            $table->enum('semestre', ['1', '2']);
-            $table->foreignId('edital_id')->constrained('editais')->onDelete('cascade');
-            $table->foreignId('vaga_id')->constrained()->onDelete('cascade');
-            $table->string('habilitacao');
+            $table->foreignId('quadro_vaga_id')->constrained('vagas')->onDelete('cascade');
+            $table->foreignId('polo_id')->constrained('polos')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('quadro_vagas');
+        Schema::dropIfExists('polos_vaga');
     }
 };
