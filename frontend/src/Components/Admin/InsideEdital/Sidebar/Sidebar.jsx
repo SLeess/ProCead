@@ -104,7 +104,7 @@ const Sidebar = ({openSidebar, setOpenSidebar}) => {
           onClick={() => navigate(`/admin`)}
           >
           <img src="/img/logo_cead_bg_white.png" className="mr-2.5" width="50px" />
-          PROCEAD
+          <span className='text-lg'>PRO<span className='italic font-medium'>CEAD</span></span>
         </div>
         <div className="flex-grow overflow-y-auto scrollbar scrollbar-thumb-white scrollbar-track-transparent scrollbar-w-[6px]">
           {menuData.map(section => (
