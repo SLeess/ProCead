@@ -6,10 +6,12 @@ use App\Http\Resources\Admin\UserResource;
 use App\Http\Resources\UserDataPermissionsAndRoles;
 use App\Models\User;
 use Exception;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
-class UserService implements \App\Interfaces\User\IUserService{
+class UserService implements \App\Interfaces\User\IUserService, \App\Interfaces\SuperAdmin\ISuperAdminUserManagerService{
     public function getProfileData(User $user): UserResource
     {
         // Simplesmente retorna o usuário. Poderia carregar relações aqui se necessário.
@@ -53,5 +55,38 @@ class UserService implements \App\Interfaces\User\IUserService{
             DB::rollBack();
             throw new Exception($e->getMessage());
         }
+    }
+
+    public function admin_userUpdate(array $data, User $user): string
+    {
+        DB::beginTransaction();
+
+        $dataUpdateInfo = Arr::except($data, ['password', 'confirm_password']);
+        $dataUpdatePassword = Arr::only($data, ['password', 'confirm_password']);
+        try {
+            $user->fill($dataUpdateInfo);
+
+            if($dataUpdatePassword['password'] !== null)
+            {
+                $response = $this->admin_userUpdatePassword($dataUpdatePassword, $user);
+            }
+            
+            $user->save();
+
+            DB::commit();
+
+            return "Dados do usuário foram atualizados com sucesso!";
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw new Exception($e->getMessage());
+        }
+    }
+
+    public function admin_userUpdatePassword(array $data, User $user): string
+    {
+        $password = Hash::make($data['password']);
+        $user->fill(['password' => $password]);
+
+        return "Senha alterada com sucesso!";
     }
 }
