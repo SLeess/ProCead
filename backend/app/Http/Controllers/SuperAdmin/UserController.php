@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\SuperAdmin;
 
-use App\Http\Requests\SuperAdminStoreUserRegisterRequest;
+use App\Http\Requests\SuperAdminStoreUserRequest;
+use App\Http\Requests\SuperAdminUpdateUserRequest;
 use App\Http\Requests\SuperAdminUserRequest;
 use App\Http\Resources\Admin\UserCollection;
-use App\Interfaces\User\IUserService;
+use App\Interfaces\SuperAdmin\ISuperAdminUserManagerService;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
 use Nette\NotImplementedException;
@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends __SuperAdminController
 {
-    public function __construct(protected IUserService $iUserService){
+    public function __construct(protected ISuperAdminUserManagerService $iSuperAdminUserManagerService){
         $this->middleware('role:super-Admin');
     }
     public function index(SuperAdminUserRequest $request)
@@ -63,11 +63,11 @@ class UserController extends __SuperAdminController
         }
     }
 
-    public function store(SuperAdminStoreUserRegisterRequest $request)
+    public function store(SuperAdminStoreUserRequest $request)
     {
         $validated = $request->validated();
         try {
-            $result = $this->iUserService->admin_userRegister($validated);
+            $result = $this->iSuperAdminUserManagerService->admin_userRegister($validated);
             return $this->sendResponse(
                 [],
                 $result
@@ -77,9 +77,20 @@ class UserController extends __SuperAdminController
             return $this->sendError("Erro inesperado.", [0 => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
-    public function update()
+    public function update(SuperAdminUpdateUserRequest $request, User $user)
     {
-        throw new NotImplementedException("update UserController");
+        $validated = $request->validated();
+        try {
+            $result = $this->iSuperAdminUserManagerService->admin_userUpdate($validated, $user);
+            return $this->sendResponse(
+                [],
+                $result
+            );
+        } catch (\Exception $e) {
+            Log::error('Erro ao atualizar os dados do usuário: ' . $e->getMessage());
+            return $this->sendError("Erro inesperado.", [0 => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
     }
     public function delete()
     {

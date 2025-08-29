@@ -7,15 +7,21 @@ import { useState } from "react";
 import ModalTabs from "../../Tabs/ModalTabs";
 import "./UserProfileModals.css";
 import { formatCPF, maskCPF } from "@/Utils/formatters";
+import { toast } from "react-toastify";
+import z from "zod/v4";
+import { useAppContext } from "@/Contexts/AppContext";
+import Swal from "sweetalert2";
+import { editUserSchema } from "./userEditSchema";
 
 const UserEditProfileModal = ({user}) => {
+    const { apiAsyncFetch } = useAppContext();
     const [activeTab, setActiveTab] = useState('Informações Pessoais');
     const [openModal, setOpenModal] = useState(false);
     const [loading, setLoading] = useState(false);
     const [personalInfoData, setPersonalInfoData] = useState(() => ({
         "nome": user.nome, 
         "email": user.email, 
-        "cpf": user.cpf
+        "cpf": maskCPF(user.cpf)
     }));
 
     const [passwordData, setPasswordData] = useState({
@@ -56,6 +62,59 @@ const UserEditProfileModal = ({user}) => {
         if (currentIndex < tabs.length - 1) {
             setActiveTab(tabs[currentIndex + 1]);
         }
+    };
+
+    function confirmSubmit(e){
+        if(loading == true) 
+            return;
+        e.preventDefault();
+
+        Swal.fire({
+            title: 'Deseja prosseguir com a alteração de dados do usuário?',
+            text: "Essa ação poderá ser reversível a partir da re-alteração do registro posteriormente!",
+            // type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Prosseguir com as alterações!',
+            cancelButtonText: 'Cancelar',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                handleRegister();
+            }
+        });
+    }
+    async function handleRegister() 
+    {
+        setLoading(true);
+
+        try {
+            const validatedData = editUserSchema.safeParse({...personalInfoData,...passwordData, 'uuid': user?.uuid});
+
+            if (!validatedData.success) {
+                const formattedErrors = z.treeifyError(validatedData.error);
+                                        
+                Object.values(formattedErrors.properties).forEach(fieldErrors => {
+                    if(fieldErrors.errors) {
+                        fieldErrors.errors.forEach(err => toast.error(err));
+                    }
+                });
+                return;
+            }
+
+            const response = await apiAsyncFetch({
+                url: `/api/super-admin/users/${validatedData.data.uuid}`,
+                method: 'PATCH',
+                body: validatedData.data,
+            });
+            toast.success((response.message ||  "Dados do usuário foram atualizados com sucesso!"));
+            onCloseModal();
+        } catch (error) {
+            toast.error(error.toString());
+        } finally {
+            setLoading(false);
+        }
+
     };
 
     return (
@@ -119,16 +178,7 @@ const UserEditProfileModal = ({user}) => {
                         )}
                         {activeTab === 'Alterar Senha' && (
                             <div>
-                                {/* <p id="form-title">Informações Pessoais</p> */}
                                 <div id="form-body">
-                                    {/* <div className="mx-4 rows-5-input">
-                                        <FormField label="Nome completo" className="md:col-span-3">
-                                            <TextInput value={user?.nome || "Nome não disponível"} readOnly={true}/>
-                                        </FormField>
-                                        <FormField label="E-mail" className="md:col-span-2">
-                                            <TextInput value={user?.email || "Email não disponível"} readOnly={true}/>
-                                        </FormField>
-                                    </div> */}
                                     <p id="form-subtitle">Alterar Senha</p>
                                     <div className="mx-4 rows-2-input sm:grid-cols-2">
                                         <FormField label="Nova Senha" className="sm:col-span-1 md:mr-5" >
@@ -171,7 +221,7 @@ const UserEditProfileModal = ({user}) => {
                     {/* Action Buttons */}
                     <div className="mr-4" id="buttons-container">
                         <button onClick={onCloseModal} id='modal-white-button'>Cancelar</button>
-                        <button onClick={onCloseModal} id='modal-purple-button'>Salvar</button>
+                        <button onClick={confirmSubmit} id='modal-purple-button'>Salvar</button>
                     </div>
                 </ModalBody>
 
