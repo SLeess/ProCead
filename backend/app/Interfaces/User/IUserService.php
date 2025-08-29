@@ -21,11 +21,4 @@ interface IUserService{
      * Pega as insformações do usuário, suas permissões e perfis.
      */
     public function getUserDataPermissions(User $user): UserDataPermissionsAndRoles;
-
-    /**
-     * Função para efetuar o registro de um usuário manualmente por um super-Administrador
-     * @param array $data
-     * @return string
-     */
-    public function admin_userRegister(array $data): string;
 }
