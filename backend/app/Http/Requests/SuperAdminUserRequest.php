@@ -28,14 +28,4 @@ class SuperAdminUserRequest extends FormRequest
             'sort_dir' => 'in:asc,desc|nullable',
         ];
     }
-
-    public function attributes(): array
-    {
-        return [
-            'per_page' => 'de itens por página',
-            'search' => 'de busca geral',
-            'sort_by' => 'Ordenador',
-            'sort_dir' => 'Direção de ordenação',
-        ];
-    }
 }
