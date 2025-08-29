@@ -15,7 +15,7 @@ const FormField = ({ label, children, className = '', textWrap = true, obrigator
 const TextInput = ({ value, readOnly, placeholder, onChange = null, onBlur = null, type = 'text' }) => (
     <input
         type={type}
-        defaultValue={value}
+        value={value}
         className={`${readOnly !== true ? 'bg-white': 'bg-gray-100'} border border-gray-50 rounded-md px-4 py-2 focus:outline-none w-full`}
         readOnly={readOnly}
         onChange={onChange}

@@ -61,6 +61,7 @@ class StoreInscricaoRequest extends FormRequest
             //vaga
             'vagas' => 'required|array',
             'vagas.*.vaga' => 'required|exists:quadro_vagas,id',
+            'vagas.*.polo' => 'required|exists:polos,id',
             'vagas.*.modalidade' => 'required|exists:modalidades,id',
             'vagas.*.categoria' => 'nullable|exists:categorias_vaga,id',
         ];
