@@ -25,6 +25,14 @@ class InscricaoService
 
             $inscricao = Inscricao::create($inscricaoData);
 
+            foreach($data['vagas'] as $vaga){
+                $inscricao->vagas_inscricao()->create([
+                    'quadro_vaga_id' => $vaga['vaga'],
+                    'modalidade_id' => $vaga['modalidade'],
+                    'categoria_vaga_id' => $vaga['categoria'] ?? null,
+                ]);
+            }
+
             DB::commit();
 
             return $inscricao;
@@ -43,12 +51,13 @@ class InscricaoService
      */
     private function prepareDataForStorage(array $data): array
     {
+        // dd($data);
         return [
             // informações básicas
             'nome_completo' => $data['nome_completo'],
             'cpf' => str_replace(['.', '-'], '', $data['cpf']),
             'email' => $data['email'],
-            'data_nascimento' => Carbon::parse($data['data_nascimento'])->format('Y-m-d'),
+            'data_nascimento' => Carbon::createFromFormat('d/m/Y', $data['data_nascimento'])->format('Y-m-d'),
             'telefone' => str_replace(['(', ')', ' ', '-'], '', $data['telefone']),
             'genero' => $data['genero'],
             'nome_social' => $data['nome_social'] ?? null,
@@ -65,7 +74,7 @@ class InscricaoService
             'bairro' => $data['bairro'],
             'cidade' => $data['cidade'],
             'uf' => $data['uf'],
-            'numero' => $data['numero'],
+            'numero' => $data['numero'] ?? null,
             'complemento' => $data['complemento'] ?? null,
 
             // etc
@@ -75,6 +84,9 @@ class InscricaoService
             'motivo' => $data['motivo'] ?? null,
             'user_uuid' => $data['user']['uuid'],
             'edital_id' => $data['editalId'],
+
+            //vaga
+            'vagas' => $data['vagas'],
         ];
     }
 }

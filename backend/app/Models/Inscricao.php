@@ -73,6 +73,11 @@ class Inscricao extends Model
         'user_id',
     ];
 
+    public function vagas_inscricao()
+    {
+        return $this->hasMany(VagaInscricao::class, 'inscricao_id');
+    }
+
     protected static $logOnlyDirty = true;
 
     protected static $submitEmptyLogs = false;

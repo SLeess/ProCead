@@ -53,7 +53,7 @@ import LayoutAdminInsideEdital from './Layouts/LayoutAdminInsideEdital';
     import Alocacao from './Pages/Admin/InsideEdital/Alocacao/Alocacao';
     import AvaliacoesDoUsuario from './Pages/Admin/InsideEdital/Alocacao/AvaliacoesDoUsuario';
     import Edital from './Pages/Admin/InsideEdital/Edital/Edital';
-    import PreviewChamadas from './Pages/Admin/InsideEdital/Chamadas/PreviewChamadas';
+    import PreviewChamadas from './Pages/Admin/InsideEdital/Chamadas/Pre-Visualizacao/PreviewChamadas';
     
 
     /** --------------------------------------------------------------------------------------- */

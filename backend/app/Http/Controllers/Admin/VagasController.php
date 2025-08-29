@@ -24,6 +24,7 @@ class VagasController extends APIController
                 'nome' => $vaga->vagable->nome,
             ];
         });
+        
 
         return $this->sendResponse($vagas, "Vagas buscadas com sucesso.", 200);
     }

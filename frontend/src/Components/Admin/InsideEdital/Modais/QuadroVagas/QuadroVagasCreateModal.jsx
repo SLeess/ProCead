@@ -1,7 +1,7 @@
 import { Modal, ModalBody } from "flowbite-react";
 import { Plus, ChevronUp, ChevronDown, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { FormField, SelectInput, TextInput } from "@/Components/Global/ui/modals";
+import { FormField, CheckboxMultiSelect, SelectInput, TextInput } from "@/Components/Global/ui/modals";
 import CabecalhoModal from "@/Components/Global/Modais/CabecalhoModal";
 import "./QuadroVagasModal.css";
 import ModalTabs from "../../Tabs/ModalTabs";
@@ -9,23 +9,24 @@ import LoaderPages from '@/Components/Global/LoaderPages/LoaderPages';
 import { useAppContext } from '@/Contexts/AppContext';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { MultiSelect } from "primereact/multiselect";
 
 export default function QuadroVagasCreateModal({ setNeedUpdate }) {
     const [openModal, setOpenModal] = useState(false);
     const [loading, setLoading] = useState(false);
     const { token } = useAppContext();
-    const {editalId} = useParams();
+    const { editalId } = useParams();
     const [activeTab, setActiveTab] = useState('Dados');
     const tabs = ['Dados', 'Distribuição de Vagas', 'Categorias Customizadas'];
-    const [modalidades, setModalidades] =  useState([]);
-    const [vagas, setVagas] =  useState([]);
-    const [polos, setPolos] =  useState([]);
+    const [modalidades, setModalidades] = useState([]);
+    const [vagas, setVagas] = useState([]);
+    const [polos, setPolos] = useState([]);
     const [newCategoryName, setNewCategoryName] = useState("");
 
     const [formData, setFormData] = useState({
         codigo: '',
-        semestre: '1', // Corrected: Set default value to prevent null
-        campus: '',
+        semestre: '1',
+        campus: [],
         vaga: '',
         habilitacao: '',
         modalidades: [],
@@ -61,7 +62,7 @@ export default function QuadroVagasCreateModal({ setNeedUpdate }) {
             }
         };
         fetchModalidades();
-    },[token, editalId]);
+    }, [token, editalId]);
 
     useEffect(() => {
         const fetchVagas = async () => {
@@ -88,7 +89,7 @@ export default function QuadroVagasCreateModal({ setNeedUpdate }) {
             }
         };
         fetchVagas();
-    },[token, editalId]);
+    }, [token, editalId]);
 
     useEffect(() => {
         const fetchPolos = async () => {
@@ -115,12 +116,16 @@ export default function QuadroVagasCreateModal({ setNeedUpdate }) {
             }
         };
         fetchPolos();
-    },[token, editalId]);
+    }, [token, editalId]);
 
 
     const handleOnChangeAttr = (e, attr) => {
-        const { value } = e.target;
-        setFormData(f => ({ ...f, [attr]: value }));
+        if (attr === 'campus') {
+            setFormData(f => ({ ...f, campus: e }));
+        } else {
+            const { value } = e.target;
+            setFormData(f => ({ ...f, [attr]: value }));
+        }
     };
 
     const handleModalidadeSiglaChange = (e, modalidadeSigla) => {
@@ -153,7 +158,7 @@ export default function QuadroVagasCreateModal({ setNeedUpdate }) {
     function onCloseModal() {
         setOpenModal(false);
     }
-    
+
     // --- Category Handlers ---
     const handleAddCategory = () => {
         if (newCategoryName.trim()) {
@@ -184,7 +189,7 @@ export default function QuadroVagasCreateModal({ setNeedUpdate }) {
 
         // Swap elements
         [newCategories[index], newCategories[newIndex]] = [newCategories[newIndex], newCategories[index]];
-        
+
         setFormData(f => ({
             ...f,
             categoriasCustomizadas: newCategories
@@ -195,10 +200,17 @@ export default function QuadroVagasCreateModal({ setNeedUpdate }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
+
+        const dataToSend = {
+            ...formData,
+            campus: formData.campus.map(polo => polo.id),
+            edital_id: editalId
+        };
+
         try {
             const res = await fetch('/api/admin/quadro-vagas', {
                 method: 'post',
-                body: JSON.stringify({ ...formData, edital_id: editalId }),
+                body: JSON.stringify(dataToSend),
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`,
@@ -233,7 +245,6 @@ export default function QuadroVagasCreateModal({ setNeedUpdate }) {
         }
     };
 
-
     return (
         <>
             <button onClick={() => setOpenModal(true)} id='create-btn'>
@@ -261,14 +272,19 @@ export default function QuadroVagasCreateModal({ setNeedUpdate }) {
                             <div>
                                 <div className='rows-3-input'>
                                     <FormField label="Código"><TextInput value={formData.codigo} onChange={(e) => handleOnChangeAttr(e, "codigo")} /></FormField>
-                                    <FormField label="Semestre"><SelectInput options={[1,2]} value={formData.semestre} onChange={(e) => handleOnChangeAttr(e, "semestre")} /></FormField>
+                                    <FormField label="Semestre"><SelectInput options={[1, 2]} value={formData.semestre} onChange={(e) => handleOnChangeAttr(e, "semestre")} /></FormField>
                                     <FormField label="Edital Referente"><TextInput value="Edital Nº 08/2025" /></FormField>
-                                    <FormField label="Campus" className="md:col-span-1">
-                                        <SelectInput
+                                    <FormField label="Campus" className="md:col-span-3">
+                                        
+                                        <MultiSelect
                                             value={formData.campus}
-                                            onChange={(e) => handleOnChangeAttr(e, "campus")}
-                                            defaultOption={true}
-                                            options={[ ...polos.map(polo => ({ value: polo.id, label: polo.nome })) ]}
+                                            onChange={(e) => handleOnChangeAttr(e.value, "campus")}
+                                            options={(polos)}
+                                            optionLabel="nome"
+                                            display="chip"
+                                            placeholder="Selecione os Cursos"
+                                            className=" items-center"
+                                            id='multiselect-primereact'
                                         />
                                     </FormField>
                                     <FormField label="Vaga" className="md:col-span-2">
@@ -276,7 +292,7 @@ export default function QuadroVagasCreateModal({ setNeedUpdate }) {
                                             value={formData.vaga}
                                             onChange={(e) => handleOnChangeAttr(e, "vaga")}
                                             defaultOption={true}
-                                            options={[ ...vagas.map(vaga => ({ value: vaga.id, label: vaga.nome })) ]}
+                                            options={[...vagas.map(vaga => ({ value: vaga.id, label: vaga.nome }))]}
                                         />
                                     </FormField>
                                     <FormField label="Habilitação" className="md:col-span-3"><TextInput value={formData.habilitacao} onChange={(e) => handleOnChangeAttr(e, "habilitacao")} /></FormField>
@@ -287,7 +303,7 @@ export default function QuadroVagasCreateModal({ setNeedUpdate }) {
                                 </div>
                             </div>
                         )}
-                       {} {/* Tab Content: Distribuição de Vagas */}
+                        { } {/* Tab Content: Distribuição de Vagas */}
                         {activeTab === 'Distribuição de Vagas' && (
                             <div>
                                 <div id="distribuicao-vagas-options">

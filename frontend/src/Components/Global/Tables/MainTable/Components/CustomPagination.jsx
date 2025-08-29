@@ -2,12 +2,13 @@ export default function CustomPagination({
     table, 
     hasCountSelectedLines, 
     loading = false,
+    isClassificationTable
 })
 {
     const isLastPage = !table.getCanNextPage();
 
     return (
-        <div id="bottom-tools">
+        <div id="bottom-tools" className={`${isClassificationTable === true ? "bg-white" : "bg-white"}`}>
                 <div id="rows-selected">
                 {
                     hasCountSelectedLines && 

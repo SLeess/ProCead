@@ -17,7 +17,6 @@ const ModalidadeCreateModal = ({ setNeedUpdate }) => {
         sigla: '',
         descricao: '',
         tipos_avaliacao: [],
-        editalId: editalId
         });
 
     const availableTiposAvaliacao = [
@@ -66,7 +65,7 @@ const ModalidadeCreateModal = ({ setNeedUpdate }) => {
         try {
             const res = await fetch(`/api/admin/modalidades/`, {
                 method: 'POST',
-                body: JSON.stringify(formData),
+                body: JSON.stringify({...formData, editalId}),
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`,

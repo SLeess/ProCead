@@ -1,6 +1,5 @@
 import { AppContext } from '@/Contexts/AppContext';
 import React, { useContext, useEffect, useState } from 'react'
-import data from './data'
 import columns from './columns';
 import { List } from 'lucide-react';
 import MainTable from '@/Components/Global/Tables/MainTable/MainTable';
