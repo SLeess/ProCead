@@ -7,6 +7,7 @@ import PoloCreateModal from '@/Components/Admin/InsideEdital/Modais/Polos/PoloCr
 import { useParams } from 'react-router-dom';
 import StatsCard from '@/Components/Global/Cards/StatsCard';
 import LoaderPages from '@/Components/Global/LoaderPages/LoaderPages';
+import AccessDenied from '@/Components/Global/AccessDenied/AccessDenied';
 
 const Polos = () => {
   const { editalId } = useParams();

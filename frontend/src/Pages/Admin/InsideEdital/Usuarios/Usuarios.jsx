@@ -7,6 +7,7 @@ import columns from './columns';
 import MainTable from '@/Components/Global/Tables/MainTable/MainTable';
 import AdminCreateModal from '@/Components/Admin/InsideEdital/Modais/Usuario/AdminCreateModal';
 import StatsCard from '@/Components/Global/Cards/StatsCard';
+import AccessDenied from '@/Components/Global/AccessDenied/AccessDenied';
 
 const Usuarios = () => {
   
