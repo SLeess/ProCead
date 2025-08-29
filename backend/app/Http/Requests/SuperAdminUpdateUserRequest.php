@@ -6,7 +6,7 @@ use App\Rules\Cpf;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class SuperAdminStoreUserRegisterRequest extends FormRequest
+class SuperAdminUpdateUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,21 +29,13 @@ class SuperAdminStoreUserRegisterRequest extends FormRequest
                 'max:191',
                 "regex:/^[\pL\s]+$/u",
             ],
-            'email' => ['required', 'email', 'max:191', Rule::unique('users', 'email'),],
-            'cpf' => [
-                'required',
-                new Cpf,
-                Rule::unique('users', 'cpf'),
+            'email' => ['required', 'email', 'max:191', Rule::unique('users', 'email')->ignore($this->user)],
+            'cpf' => ['required', new Cpf, Rule::unique('users', 'cpf')->ignore($this->user)],
+            'password' => [
+                'nullable',
+                \Illuminate\Validation\Rules\Password::min(8),
             ],
-        ];
-    }
-
-    public function attributes()
-    {
-        return [
-            'cpf' => 'CPF',
-            'email' => 'Email',
-            'nome' => 'Nome'
+            'confirm_password' => 'required_with:password|same:password',
         ];
     }
 }
