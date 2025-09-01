@@ -1,6 +1,6 @@
 import { AppContext } from '@/Contexts/AppContext';
-import React, { useContext, useEffect, useState } from 'react'
-import columns from './columns';
+import React, { useContext, useEffect, useMemo, useState } from 'react'
+import { columnsPolos } from './columns';
 import { MapPin, GraduationCap, Plus } from 'lucide-react';
 import MainTable from '@/Components/Global/Tables/MainTable/MainTable';
 import PoloCreateModal from '@/Components/Admin/InsideEdital/Modais/Polos/PoloCreateModal';
@@ -15,6 +15,8 @@ const Polos = () => {
   const [polos, setPolos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [needUpdate, setNeedUpdate] = useState(false);
+
+  const columns = useMemo(() => columnsPolos(hasPermissionForEdital, editalId), [hasPermissionForEdital, editalId])
 
   useEffect(() => {
     const fetchProcessos = async () => {
@@ -47,7 +49,7 @@ const Polos = () => {
   }, [needUpdate]);
 
 
-  if (hasPermissionForEdital('visualizar-campus', editalId) || isSuperAdmin())
+  if (hasPermissionForEdital('visualizar-campus', editalId))
     return (
       <>
         {
@@ -57,7 +59,10 @@ const Polos = () => {
           <div>
             <div className="flex items-center justify-between mb-4">
               <h1 className="text-2xl font-bold">Polos</h1>
-              <PoloCreateModal setNeedUpdate={setNeedUpdate}/>
+              {
+                hasPermissionForEdital('cadastrar-campus', editalId) &&
+                <PoloCreateModal setNeedUpdate={setNeedUpdate}/>
+              }
             </div>
             <div className="flex gap-4 mb-4">
               <StatsCard title={"Nº de Polos"} quant={polos.length}>
