@@ -27,8 +27,7 @@ return new class extends Migration
                 'COORDENADOR_CURSO_GRADUACAO_TECNOLOGO',
                 'COORDENADOR_CURSO_POS_GRADUACAO_ESPECIALIZACAO',
                 'COORDENADOR_TUTORIA',
-                'COORDENADOR
-                _GERAL_UAB',
+                'COORDENADOR_GERAL_UAB',
                 'COORDENADOR_ADJUNTO_UAB',
                 'ESTAGIARIO',
             ])
