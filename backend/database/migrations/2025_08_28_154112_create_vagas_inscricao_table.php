@@ -16,7 +16,8 @@ return new class extends Migration
             $table->foreignId('inscricao_id')->constrained('inscricoes')->onDelete('cascade');
             $table->foreignId('quadro_vaga_id')->constrained('quadro_vagas')->onDelete('cascade');
             $table->foreignId('modalidade_id')->constrained('modalidades')->onDelete('cascade');
-            $table->foreignId('categoria_vaga_id')->constrained('categorias_vaga')->onDelete('cascade')->nullable();
+            $table->foreignId('categoria_vaga_id')->nullable()->constrained('categorias_vaga')->onDelete('cascade');
+            $table->foreignId('polo_id')->constrained('polos')->onDelete('cascade');
             $table->timestamps();
         });
     }

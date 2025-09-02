@@ -28,6 +28,7 @@ class InscricaoService
             foreach($data['vagas'] as $vaga){
                 $inscricao->vagas_inscricao()->create([
                     'quadro_vaga_id' => $vaga['vaga'],
+                    'polo_id' => $vaga['polo'],
                     'modalidade_id' => $vaga['modalidade'],
                     'categoria_vaga_id' => $vaga['categoria'] ?? null,
                 ]);

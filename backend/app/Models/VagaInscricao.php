@@ -13,12 +13,15 @@ class VagaInscricao extends Model
         'quadro_vaga_id',
         'modalidade_id',
         'categoria_vaga_id',
+        'polo_id'
     ];
     protected $logAttributes = [
         'inscricao_id',
         'quadro_vaga_id',
         'modalidade_id',
         'categoria_vaga_id',
+        'polo_id'
+
     ];
 
     protected $logOnlyDirty = true;
@@ -32,7 +35,7 @@ class VagaInscricao extends Model
 
     public function vaga()
     {
-        return $this->belongsTo(QuadroVagas::class, 'vaga_id');
+        return $this->belongsTo(QuadroVagas::class, 'quadro_vaga_id');
     }
 
     public function modalidade()
@@ -43,5 +46,10 @@ class VagaInscricao extends Model
     public function categoria()
     {
         return $this->belongsTo(CategoriasVaga::class, 'categoria_vaga_id');
+    }
+
+    public function polo()
+    {
+        return $this->belongsTo(Polo::class, 'polo_id');
     }
 }
