@@ -40,30 +40,32 @@ const Inscrever = () => {
         }
     };
 
+    const defaultFormData = true;
+
     const [formData, setFormData] = useState({
-        nome_completo: 'John Doe',
-        cpf: '123.456.789-00',
-        email: 'john.doe@example.com',
-        data_nascimento: '1990-01-01',
-        telefone: '(11) 99999-9999',
-        genero: 'Masculino',
-        nome_social: '',
-        identidade_genero: '',
-        rg: '12.345.678-9',
-        estado_civil: 'Solteiro(a)',
-        uf_nascimento: 'SP',
-        nacionalidade: 'Brasileiro(a)',
-        naturalidade: 'São Paulo',
-        cep: '12345-678',
-        rua: 'Rua dos Bobos',
-        bairro: 'Centro',
-        numero: '0',
-        complemento: 'Apto 123',
-        cidade: 'São Paulo',
-        uf: 'SP',
+        nome_completo: defaultFormData ? 'John Doe' : '',
+        cpf: defaultFormData ? '123.456.789-00' : '',
+        email: defaultFormData ? 'john.doe@example.com' : '',
+        data_nascimento: defaultFormData ? '1990-01-01' : '',
+        telefone: defaultFormData ? '(11) 99999-9999' : '',
+        genero: defaultFormData ? 'Masculino' : '',
+        nome_social: defaultFormData ? '' : '',
+        identidade_genero: defaultFormData ? 'Cisgênero' : '',
+        rg: defaultFormData ? '12.345.678-9' : '',
+        estado_civil: defaultFormData ? 'Solteiro(a)' : '',
+        uf_nascimento: defaultFormData ? 'SP' : '',
+        nacionalidade: defaultFormData ? 'Brasileiro(a)' : '',
+        naturalidade: defaultFormData ? 'São Paulo' : '',
+        cep: defaultFormData ? '12345-678' : '',
+        rua: defaultFormData ? 'Rua dos Bobos' : '',
+        bairro: defaultFormData ? 'Centro' : '',
+        numero: defaultFormData ? '0' : '',
+        complemento: defaultFormData ? 'Apto 123' : '',
+        cidade: defaultFormData ? 'São Paulo' : '',
+        uf: defaultFormData ? 'SP' : '',
         vagas: [],
         termo_responsabilidade: false,
-
+        user_uuid: user?.uuid
     });
 
     const handleOnChangeAttr = (e, attr) => {
@@ -109,12 +111,32 @@ const Inscrever = () => {
         e.preventDefault();
         setLoading(true);
         try {
+            const data = new FormData();
+
+            // Append all formData fields, handling nested 'vagas' array
+            Object.keys(formData).forEach(key => {
+                if (key === 'vagas') {
+                    formData.vagas.forEach((vaga, index) => {
+                        Object.keys(vaga).forEach(vagaKey => {
+                            data.append(`vagas[${index}][${vagaKey}]`, vaga[vagaKey]);
+                        });
+                    });
+                } else if (key === 'termo_responsabilidade') {
+                    data.append(key, formData[key] ? 1 : 0);
+                } else {
+                    data.append(key, formData[key]);
+                }
+            });
+
+            // Append additional data
+            // data.append('user_uuid', JSON.stringify(user.uuid));
+            data.append('editalId', editalId);
+
             const res = await fetch('/api/inscricao', {
                 method: 'post',
-                body: JSON.stringify({ ...formData, user, editalId: editalId }),
+                body: data,
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`, // Descomente se precisar de token
+                    'Authorization': `Bearer ${token}`,
                 },
             });
 

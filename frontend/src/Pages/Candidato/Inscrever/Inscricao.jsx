@@ -49,6 +49,8 @@ const Inscricao = () => {
     return <LoaderPages />;
   }
 
+  const date = new Date(formData.data_nascimento);
+
   return (
     <div className=" dark:bg-slate-800 min-h-screen  md:p-8 font-sans animate-fade-in">
       <div className="max-w-7xl mx-auto">
@@ -91,7 +93,7 @@ const Inscricao = () => {
                     <TextInput readOnly={true} value={formData.email || ''} />
                   </FormField>
                   <FormField label="Data de Nascimento">
-                    <TextInput readOnly={true} value={formData.data_nascimento || ''} />
+                    <TextInput readOnly={true} value={date.toLocaleDateString('pt-BR', { year: 'numeric', month: 'numeric', day: 'numeric' }) } />
                   </FormField>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-6">

@@ -24,6 +24,7 @@ class InscricaoController extends APIController
     {
         try {
             $validatedData = $request->validated();
+            // dd($validatedData);
             $inscricao = $this->inscricaoService->createInscricao($validatedData);
             return $this->sendResponse($inscricao, 'Inscrição realizada com sucesso! Redirecionando...',200);
         } catch (Exception $e) {

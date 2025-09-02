@@ -83,7 +83,7 @@ class InscricaoService
             'contexto_id' => $data['editalId'],
             'status' => $data['status'] ?? 'Em análise', 
             'motivo' => $data['motivo'] ?? null,
-            'user_uuid' => $data['user']['uuid'],
+            'user_uuid' => $data['user_uuid'],
             'edital_id' => $data['editalId'],
 
             //vaga
