@@ -144,13 +144,51 @@ class User extends Authenticatable
 
     public function scopeSearch($query, $request)
     {
-        // return $query->when($request->nome, function($query, $nome){
-        //     return $query->where('nome', 'like', '%'.$nome.'%');
-        // });
-        return $query->when($request->search, function($query, $searchTerm) {
-            return $query->where('nome', 'LIKE', "%{$searchTerm}%")
-                    ->orWhere('email', 'LIKE', "%{$searchTerm}%")
-                    ->orWhere('cpf', 'LIKE', "%{$searchTerm}%");
+        // Lógica para a busca GLOBAL (campo "Pesquisar")
+        $query->when($request->input('search'), function ($query, $searchTerm) {
+            return $query->where(function ($subQuery) use ($searchTerm) {
+                $subQuery->where('nome', 'LIKE', "%{$searchTerm}%")
+                        ->orWhere('email', 'LIKE', "%{$searchTerm}%")
+                        ->orWhere('cpf', 'LIKE', "%{$searchTerm}%");
+            });
         });
+
+        // Lógica para os filtros ESPECÍFICOS (o array `query`)
+        $query->when($request->input('query'), function ($query, $filters) {
+            $query->when($filters['nome'] ?? null, function ($query, $nome) {
+                return $query->where('nome', 'LIKE', "%{$nome}%");
+            });
+            $query->when($filters['email'] ?? null, function ($query, $email) {
+                return $query->where('email', 'LIKE', "%{$email}%");
+            });
+            $query->when($filters['cpf'] ?? null, function ($query, $cpf) {
+                return $query->where('cpf', 'LIKE', "%{$cpf}%");
+            });
+            $query->when($filters['level_access'] ?? null, function ($query, $levelAccess) {
+                if (strcasecmp($levelAccess, TipoUsuario::getDescription(TipoUsuario::ADMINISTRADOR)) === 0) {
+                    return $query->whereHas('roles', function ($q) {
+                        $q->where('name', 'super-Admin');
+                    });
+                }
+
+                if (strcasecmp($levelAccess, TipoUsuario::getDescription(TipoUsuario::MODERADOR)) === 0) {
+                    return $query->where(function ($q) {
+                        $q->whereHas('roles', fn($qr) => $qr->where('name', '!=', 'super-Admin'))
+                        ->orWhereHas('permissions')
+                        ->orWhereHas('editais');
+                    });
+                }
+
+                if (strcasecmp($levelAccess, TipoUsuario::getDescription(TipoUsuario::USUARIO)) === 0) {
+                    return $query->where(function ($q) {
+                        $q->whereDoesntHave('roles')
+                        ->whereDoesntHave('permissions')
+                        ->whereDoesntHave('editais');
+                    });
+                }
+            });
+        });
+
+        return $query;
     }
 }

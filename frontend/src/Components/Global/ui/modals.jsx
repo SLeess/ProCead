@@ -119,9 +119,10 @@ const MultiSelectTags = ({
     );
 };
 
-const SelectInput = ({ value, options, readOnly, onChange = null, defaultOption = false}) => (
+const SelectInput = ({ value, options, readOnly, onChange = null, defaultOption = false, name=""}) => (
     <div className="relative">
         <select
+            name={name}
             disabled={readOnly}
             value={value}
             onChange={onChange}

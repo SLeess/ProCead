@@ -2,7 +2,7 @@ import { Search } from "lucide-react";
 
 export default function SearchRowsTable({globalFilter, setGlobalFilter})
 {
-    return (
+    return (<>
         <div id="table-search">
             <input
             id="search-input"
@@ -15,5 +15,5 @@ export default function SearchRowsTable({globalFilter, setGlobalFilter})
                 <Search />
             </span>
         </div>
-    );
+    </>);
 }

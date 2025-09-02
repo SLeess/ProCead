@@ -18,6 +18,7 @@ import SearchRowsTable from "./Components/SearchRowsTable";
 import Loader from "../../Loader/Loader";
 import { useAppContext } from "@/Contexts/AppContext";
 import Swal from "sweetalert2";
+import AdvancedSearchRowsTable from "./Components/AdvancedSearchRowsTable";
 
 const AsyncMainTable = ({ 
     // ================== Props Essenciais ==================
@@ -28,11 +29,6 @@ const AsyncMainTable = ({
      * Ex: "/api/super-admin/users"
      */
       serverSideDataUrl = null,
-
-    /**
-     * (MODO FRONTEND) Array de dados para paginação e busca no cliente.
-     */
-    // 
     // ================== Props de Configuração Opcionais ==================
       pageSize = 15,
       subtitle = null,
@@ -45,7 +41,6 @@ const AsyncMainTable = ({
       enableDataFooter = true,
       className = ``,
 
-      
       // ================== Props para Controle Externo de Seleção ==================
       rowSelection: controlledRowSelection,
       setRowSelection: setControlledRowSelection,
@@ -61,6 +56,7 @@ const AsyncMainTable = ({
   // Estados da TanStack Table
   const [columnFilters, setColumnFilters] = useState([]);
   const [serverSearchTerm, setServerSearchTerm] = useState('');       // Para a busca no backend
+  const [advancedSearchTerm, setAdvancedSearchTerm] = useState({});   // Para a buscas avançadas no backend
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(''); // Termo "atrasado" para evitar muitas requisições
   
   const [columnVisibility, setColumnVisibility] = useState(() => {
@@ -93,7 +89,6 @@ const AsyncMainTable = ({
 
   const table = useReactTable({
     data,
-    // data: Object.values(pagesCache).flat(),
     columns,
     
     getRowId: (row) => row?.uuid || row?.id,
@@ -108,7 +103,6 @@ const AsyncMainTable = ({
     onSortingChange: setSorting,
 
     pageCount: pageCount,
-    // onPaginationChange: setPagination,
     onPaginationChange: (updater) => {
       if (typeof updater === 'function') {
           setPagination(updater);
@@ -157,13 +151,14 @@ const AsyncMainTable = ({
   // Efeito para debounce da busca (atraso na digitação e na ordenação)
   useEffect(() => {
     const timer = setTimeout(() => {
-        setDebouncedSearchTerm(serverSearchTerm);
+        setDebouncedSearchTerm((d) => ({...d, ...advancedSearchTerm, ["search"]: serverSearchTerm}));
+
         // Reseta para a primeira página ao fazer uma nova busca
         setPagination(p => ({ ...p, pageIndex: 0 })); 
         setPagesCache({}); // Limpa o cache ao fazer uma nova busca
     }, 500); // Espera 500ms após o usuário parar de digitar
     return () => clearTimeout(timer);
-  }, [serverSearchTerm, pagination.pageSize, sorting]);
+  }, [serverSearchTerm, advancedSearchTerm, pagination.pageSize, sorting]);
 
   // EFEITO PARA BUSCAR DADOS DO BACKEND
   useEffect(() => {
@@ -176,8 +171,15 @@ const AsyncMainTable = ({
             page: pagination.pageIndex + 1,
             per_page: pagination.pageSize,
         });
-        if (debouncedSearchTerm) {
-            params.append('search', debouncedSearchTerm);
+
+        if (debouncedSearchTerm && typeof debouncedSearchTerm === 'object' && Object.keys(debouncedSearchTerm).length > 0) {
+            const { search } = debouncedSearchTerm;
+            Object.entries(debouncedSearchTerm).filter(([key]) => key !== 'search').forEach(([key, value]) => {
+                if (value) {
+                    params.append(`query[${key}]`, value);
+                }
+            });
+            params.append('search', search);
         }
         if (sorting.length > 0) {
             params.append('sort_by', sorting[0].id);
@@ -244,6 +246,8 @@ const AsyncMainTable = ({
             />
           </div>
         </div>
+
+        <AdvancedSearchRowsTable columns={columns} setAdvancedSearchTerm={setAdvancedSearchTerm} advancedSearchTerm={advancedSearchTerm}/>
 
         <div id="table-data-container" style={{ position: 'relative', minHeight: '300px' }}>
           {/* Loader sobrepõe a tabela no modo backend */}

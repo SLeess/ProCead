@@ -21,9 +21,12 @@ class SuperAdminUserRequest extends FormRequest
      */
     public function rules(): array
     {
+        // dd($this);
         return [
             'per_page' => 'integer|min:1|max:999',
-            'search'   => 'string|max:255|nullable',
+            // 'search'   => 'string|max:255|nullable',
+            'query'      => 'array|nullable',        // Garante que 'query' seja um array, se enviado.
+            'query.*'    => 'string|nullable',
             'sort_by'  => ['nullable', 'string', \Illuminate\Validation\Rule::in(['nome', 'email', 'cpf', 'created_at', 'level_access'])],
             'sort_dir' => 'in:asc,desc|nullable',
         ];
