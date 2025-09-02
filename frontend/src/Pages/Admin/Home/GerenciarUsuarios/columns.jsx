@@ -76,7 +76,7 @@ export const GerenciarUsuariosColumns = (navigate) => [
       alignText: true,
       cell: ({row}) => (
         <div className="flex items-center space-x-2 justify-center">
-          <button onClick={() => navigate(`admin/usuarios/${row.original.uuid}/cargos-e-permissoes`)} className="p-1 hover:bg-gray-200 rounded-full">
+          <button onClick={() => navigate(`admin/usuarios/${row.original.uuid}/cargos-e-permissoes`)} id="acoes-icons">
               <List className="h-5 w-5 text-green-500" />
           </button>
           <UserShowProfileModal user={row.original}></UserShowProfileModal>

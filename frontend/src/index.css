@@ -53,7 +53,7 @@
         @apply mb-[60px] sm:mb-0;
     }
     main {
-        @apply mx-8 sm:mx-10 pb-10;
+        @apply mx-4 sm:mx-10 pb-10;
     }
     main section{
         @apply mx-auto min-h-[80vh];

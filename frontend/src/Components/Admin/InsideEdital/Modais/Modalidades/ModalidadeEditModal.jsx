@@ -112,7 +112,7 @@ const ModalidadeEditModal = ({ setNeedUpdate, modalidade }) => {
     };
     return (
         <>
-            <button onClick={() => setOpenModal(true)} className="p-1 hover:bg-gray-200 rounded-full">
+            <button onClick={() => setOpenModal(true)} id="acoes-icons">
                 <Pencil className="h-5 w-5 text-yellow-500" />
             </button>
             <Modal show={openModal} onClose={onCloseModal} popup>
