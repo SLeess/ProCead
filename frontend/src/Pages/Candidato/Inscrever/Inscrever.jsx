@@ -65,7 +65,7 @@ const Inscrever = () => {
         uf: defaultFormData ? 'SP' : '',
         vagas: [],
         termo_responsabilidade: false,
-        user_uuid: user?.uuid
+        user_uuid: user?.uuid,
     });
 
     const handleOnChangeAttr = (e, attr) => {

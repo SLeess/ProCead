@@ -12,24 +12,14 @@ const columns = [
       cell: (props) => <span>{props.getValue()}</span>
     },
     {
-      accessorKey: "inscricao",
-      header: "Inscrição",
+      accessorKey: "n_inscricao",
+      header: "Nº de Inscrição",
       // visibleInitially: false,
       cell: (props) => <span>{props.getValue()}</span>
     },
     {
-      accessorKey: "nome",
-      header:"Nome",
-      cell: (props) => <span>{props.getValue()}</span>
-    },
-    {
-      accessorKey: "curso",
-      header:"Curso",
-      cell: (props) => <span>{props.getValue()}</span>
-    },
-    {
-      accessorKey: "polo",
-      header:"Polo",
+      accessorKey: "nome_completo",
+      header:"Nome do Candidato",
       cell: (props) => <span>{props.getValue()}</span>
     },
     {
@@ -40,11 +30,6 @@ const columns = [
     {
       accessorKey: "cpf",
       header:"CPF",
-      cell: (props) => <span>{props.getValue()}</span>
-    },
-    {
-      accessorKey: "modalidade",
-      header:"Modalidade",
       cell: (props) => <span>{props.getValue()}</span>
     },
     {

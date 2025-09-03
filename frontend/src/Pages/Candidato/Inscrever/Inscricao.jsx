@@ -76,30 +76,40 @@ const Inscricao = () => {
             </nav>
           </div>
           */}
-          <div className="space-y-8 mt-5"> 
+          <div className="space-y-8 mt-5">
 
             {/* Informações Básicas */}
             <div>
               <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Informações Básicas</h2>
               <div className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-                  <FormField label="Nome Completo">
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+                  <FormField label="Nome Completo" className='col-span-6'>
                     <TextInput readOnly={true} value={formData.nome_completo || ''} />
                   </FormField>
-                  <FormField label="CPF">
+                  <FormField label="CPF" className='col-span-2'>
                     <TextInput readOnly={true} value={formData.cpf || ''} />
+                  </FormField>
+                  <FormField label="Data de Nascimento" className='col-span-2'>
+                    <TextInput readOnly={true} value={date.toLocaleDateString('pt-BR', { year: 'numeric', month: 'numeric', day: 'numeric' })} />
+                  </FormField>
+
+                  <FormField label="Nº de Inscrição" className='col-span-2'>
+                    <TextInput readOnly={true} value={formData.n_inscricao || ''} />
+                  </FormField>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <FormField label="RG">
+                    <TextInput readOnly={true} value="MG-00.000.000" />
                   </FormField>
                   <FormField label="E-mail">
                     <TextInput readOnly={true} value={formData.email || ''} />
                   </FormField>
-                  <FormField label="Data de Nascimento">
-                    <TextInput readOnly={true} value={date.toLocaleDateString('pt-BR', { year: 'numeric', month: 'numeric', day: 'numeric' }) } />
-                  </FormField>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                   <FormField label="Telefone">
                     <TextInput readOnly={true} value={formData.telefone || ''} />
                   </FormField>
+
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <FormField label="Gênero">
                     <TextInput readOnly={true} value={formData.genero || ''} />
                   </FormField>
@@ -109,11 +119,10 @@ const Inscricao = () => {
                   <FormField label="Identidade de Gênero">
                     <TextInput readOnly={true} value="Transgênero" />
                   </FormField>
+
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
-                  <FormField label="RG">
-                    <TextInput readOnly={true} value="MG-00.000.000" />
-                  </FormField>
+
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                   <FormField label="Estado Civil">
                     <TextInput readOnly={true} value="Solteiro" />
                   </FormField>
@@ -188,44 +197,44 @@ const Inscricao = () => {
             </div>
 
             {/* Anexos */}
-              <div className='mb-5'>
-                <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Anexos</h2>
-                <div className="grid grid-cols-2  gap-x-6 gap-y-2 border border-gray-200 dark:border-gray-600 rounded-lg p-4 space-y-3">
-                  <div className="space-y-1">
-                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">CPF:</label>
-                    <button className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                      <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
-                      Anexo
-                    </button>
-                  </div>
-                  <div className="space-y-1">
-                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Comprovante de Residência:</label>
-                    <button className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                      <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
-                      Anexo
-                    </button>
-                  </div>
-                  <div className="space-y-1">
-                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Histórico:</label>
-                    <button className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                      <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
-                      Anexo
-                    </button>
-                  </div>
-                  <div className="space-y-1">
-                    <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Auto declaração:</label>
-                    <button className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                      <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
-                      Anexo
-                    </button>
-                  </div>
+            <div className='mb-5'>
+              <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Anexos</h2>
+              <div className="grid grid-cols-2  gap-x-6 gap-y-2 border border-gray-200 dark:border-gray-600 rounded-lg p-4 space-y-3">
+                <div className="space-y-1">
+                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300">CPF:</label>
+                  <button className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+                    Anexo
+                  </button>
+                </div>
+                <div className="space-y-1">
+                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Comprovante de Residência:</label>
+                  <button className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+                    Anexo
+                  </button>
+                </div>
+                <div className="space-y-1">
+                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Histórico:</label>
+                  <button className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+                    Anexo
+                  </button>
+                </div>
+                <div className="space-y-1">
+                  <label className="text-sm font-medium text-gray-700 dark:text-gray-300">Auto declaração:</label>
+                  <button className="w-full flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+                    Anexo
+                  </button>
                 </div>
               </div>
             </div>
-
           </div>
+
         </div>
       </div>
+    </div>
   )
 }
 

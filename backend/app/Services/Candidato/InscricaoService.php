@@ -2,9 +2,11 @@
 
 namespace App\Services\Candidato;
 
+use App\Models\Edital;
 use App\Models\Inscricao;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Str;
 use Throwable;
 
 class InscricaoService
@@ -16,13 +18,27 @@ class InscricaoService
      * @return Inscricao The created Inscricao model instance.
      * @throws \Exception
      */
+
+    private function generateNumeroInscricao($editalId): string
+    {
+        $edital = Edital::find($editalId);
+        $lastInscricao = Inscricao::where('edital_id', $editalId)->orderBy('created_at', 'desc')->first();
+        if($lastInscricao){
+            $numeroInscricao = $lastInscricao->n_inscricao + 1;
+            return $numeroInscricao;
+        }
+        $numEdital = explode(' ',$edital->referencia)[0];
+        $numeroInscricao = Str::substr(  $numEdital, -2, 2).$edital->id.Str::substr($numEdital, 1, 1).'00001';
+        
+        return $numeroInscricao;
+    }
     public function createInscricao(array $data): Inscricao
     {
         DB::beginTransaction();
 
         try {
             $inscricaoData = $this->prepareDataForStorage($data);
-
+            $inscricaoData['n_inscricao'] = $this->generateNumeroInscricao($inscricaoData['edital_id']);
             $inscricao = Inscricao::create($inscricaoData);
 
             foreach($data['vagas'] as $vaga){
