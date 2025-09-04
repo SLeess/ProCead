@@ -50,6 +50,8 @@ const UserEditProfileModal = ({user}) => {
 
     function onCloseModal() {
         setOpenModal(false);
+        setPasswordData({password: '',confirm_password: '',});
+        setPersonalInfoData({"nome": user.nome, "email": user.email, "cpf": maskCPF(user.cpf)});
     }
     const tabs = [
         'Informações Pessoais', 
