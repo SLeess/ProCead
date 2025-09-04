@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('inscricoes', function (Blueprint $table) {
             // informações básicas
             $table->id();
+            $table->unsignedBigInteger('n_inscricao')->unique();
             $table->string('nome_completo');
             $table->string('cpf', 11);
             $table->string('email');
