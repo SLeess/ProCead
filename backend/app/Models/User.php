@@ -9,6 +9,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\Contracts\Activity;
+use App\Traits\LogsModelActivity;
 use Spatie\Permission\Traits\HasPermissions;
 use Spatie\Permission\Traits\HasRoles;
 use App\Notifications\UserResetPassword;
@@ -18,7 +22,9 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasApiTokens, HasUuids, HasRoles, HasPermissions, HasRolesAndPermissionsByEdital;
+    use HasFactory, Notifiable,
+    HasApiTokens, HasUuids, HasRoles, HasPermissions, HasRolesAndPermissionsByEdital,
+    LogsActivity, LogsModelActivity;
 
     protected $primaryKey = 'uuid';
     protected $keyType = 'string';
@@ -45,6 +51,20 @@ class User extends Authenticatable
         'level_access',
         'roles_and_permissions_by_edital',
     ];
+
+    // protected static $logAttributes = [
+    //     'nome',
+    //     'cpf',
+    //     'email',
+    //     'password',
+    // ];
+
+    // protected static $logName = 'Usuário';
+
+    // protected static $logOnlyDirty = true;
+
+    // protected static $submitEmptyLogs = false;
+
 
     /**
      * The attributes that should be hidden for serialization.
@@ -190,5 +210,51 @@ class User extends Authenticatable
         });
 
         return $query;
+    }
+
+    public function tapActivity(Activity $activity, string $eventName)
+    {
+        // $activity->description = "activity.logs.message. {$eventName}";
+        if ($this->isDirty('password')) {
+            if ($this->isDirty('password')) {
+                $properties = $activity->properties->toArray();
+
+                if (isset($properties['attributes']) && count($properties['attributes']) === 1) {
+                    unset($properties['attributes']);
+                }
+
+                if (isset($properties['old']) && count($properties['old']) === 1) {
+                    unset($properties['old']);
+                }
+
+
+                $properties['password_changed'] = true;
+
+                $activity->properties = collect($properties);
+            }
+        }
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logFillable()
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs()
+            ->useLogName('Usuário')
+            ->setDescriptionForEvent(fn(string $eventName) => "O usuário '{$this->nome}' foi {$this->formatEventName($eventName)}");
+    }
+
+    /**
+     * Função auxiliar para traduzir o nome do evento para português.
+     */
+    private function formatEventName(string $eventName): string
+    {
+        return match ($eventName) {
+            'created' => 'criado',
+            'updated' => 'atualizado',
+            'deleted' => 'deletado',
+            default => $eventName,
+        };
     }
 }
