@@ -40,11 +40,11 @@ const columns = [
     {
       id: "actions",
       header: "Ações",
-      cell: () => (
+      cell: ({ row, table}) => (
         <div className="flex items-center space-x-2 justify-center">
-          <InscricaoShowModal/>
-          <InscricaoEditModal/>
-          <InscricaoAvaliarModal/>
+          <InscricaoShowModal  inscricao={row.original} setNeedUpdate={table.options.meta.setNeedUpdate} />
+          <InscricaoEditModal  inscricao={row.original} setNeedUpdate={table.options.meta.setNeedUpdate} />
+          <InscricaoAvaliarModal  inscricao={row.original} setNeedUpdate={table.options.meta.setNeedUpdate} />
         </div>
       ),
       enableSorting: false,

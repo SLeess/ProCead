@@ -2,7 +2,6 @@ import MainTable from '../../../../Components/Global/Tables/MainTable/MainTable'
 import React, { useContext, useEffect, useState } from 'react'
 import { AppContext } from '@/Contexts/AppContext';
 import AccessDenied from '../../../../Components/Global/AccessDenied/AccessDenied';
-import data from './data'
 import columns from './columns';
 import { FileText } from 'lucide-react';
 import { useParams } from 'react-router-dom';
@@ -17,7 +16,7 @@ const Inscricoes = () => {
   const [needUpdate, setNeedUpdate] = useState(false);
 
   useEffect(() => {
-    const fetchCursos = async () => {
+    const fetchInscricoes = async () => {
       setLoading(true);
       try {
         const res = await fetch(`/api/admin/inscricoes/${editalId}`, {
@@ -44,8 +43,12 @@ const Inscricoes = () => {
         setLoading(false);
       }
     };
-    fetchCursos();
+    fetchInscricoes();
   }, [needUpdate]);
+
+  useEffect(() => {
+    console.log(inscricoes);
+  })
 
 
   if (hasPermissionForEdital('visualizar-inscricoes', editalId) || isSuperAdmin())

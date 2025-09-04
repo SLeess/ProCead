@@ -12,10 +12,11 @@ const FormField = ({ label, children, className = '', textWrap = true, obrigator
     </div>
 );
 
-const TextInput = ({ value, readOnly, placeholder, onChange = null, onBlur = null, type = 'text' }) => (
+const TextInput = ({ defaultValue, value, readOnly, placeholder, onChange = null, onBlur = null, type = 'text' }) => (
     <input
         type={type}
         value={value}
+        defaultValue={defaultValue}
         className={`${readOnly !== true ? 'bg-white': 'bg-gray-100'} border border-gray-50 rounded-md px-4 py-2 focus:outline-none w-full`}
         readOnly={readOnly}
         onChange={onChange}
@@ -65,11 +66,12 @@ const MultiSelectTags = () => {
     );
 };
 
-const SelectInput = ({ value, options, readOnly, onChange = null, defaultOption = false}) => (
+const SelectInput = ({ defaultValue, value, options, readOnly, onChange = null, defaultOption = false}) => (
     <div className="relative">
         <select
             disabled={readOnly}
             value={value}
+            defaultValue={defaultValue}
             onChange={onChange}
             className={`${readOnly !== true ? 'bg-white': 'bg-gray-100'} appearance-none border border-gray-200 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full`}
         >
