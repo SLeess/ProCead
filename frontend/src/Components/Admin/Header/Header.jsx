@@ -10,7 +10,10 @@ const Header = () => {
   return (<>
       <HeaderModel headerid={'admin'}>
         <NavLink end to="/admin" className={({ isActive }) => `link-page my-2 ${isActive ? "active-link md:border-b-2 border-secondary dark:border-primary" : ""}`}>Editais</NavLink>
-        <NavLink end to="/admin/edital/create" className={({ isActive }) => `link-page my-2 ${isActive ? "active-link md:border-b-2 border-secondary dark:border-primary" : ""}`}>Novo Edital</NavLink>
+        {
+          hasGlobalPermission('cadastrar-edital') &&
+          <NavLink end to="/admin/edital/create" className={({ isActive }) => `link-page my-2 ${isActive ? "active-link md:border-b-2 border-secondary dark:border-primary" : ""}`}>Novo Edital</NavLink>
+        }
         {
           isSuperAdmin() &&
           <NavLink end to="/admin/perfis" className={({ isActive }) => `link-page my-2 ${isActive ? "active-link md:border-b-2 border-secondary dark:border-primary" : ""}`}>Perfis</NavLink>
