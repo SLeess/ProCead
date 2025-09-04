@@ -56,7 +56,7 @@ const AnexoCreateModal = ({ setNeedUpdate }) => {
                     toast.error("Ocorreu um erro inesperado. Por favor, tente novamente.");
                 }
             } else {
-                toast.success(result.message || "Modalidade cadastrada com sucesso!");
+                toast.success(result.message || "Anexo cadastrado com sucesso!");
                 if (setNeedUpdate) {
                     setNeedUpdate(prev => !prev);
                 }
@@ -82,14 +82,6 @@ const AnexoCreateModal = ({ setNeedUpdate }) => {
                     <hr className='mb-3 mx-4'/>
 
                 <ModalBody >
-
-                    {/* Sub-header */}
-                    {/* {
-                        !enableGlobal &&
-                        <p id='subtitle-edital'>
-                            Edital Referente: Processo de Seleção de Discentes para os Cursos de Especialização da Unimontes – Modalidade Educação a Distância – Sistema Universidade Aberta do Brasil (UAB) – Edital Nº 08/2025
-                        </p>
-                    } */}
                     <form onSubmit={handleSubmit}>
                         <div>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 mb-6">
@@ -98,7 +90,8 @@ const AnexoCreateModal = ({ setNeedUpdate }) => {
                                     onChange={e => handleOnChangeAttr(e, 'nome')} />
                                 </FormField>
                                 <FormField label="Formato">
-                                    <SelectInput 
+                                    <SelectInput
+                                        value={formData.formato}
                                         className="md:col-span-2" 
                                         defaultOption={true}
                                         options={['Vídeo', 'PDF']}

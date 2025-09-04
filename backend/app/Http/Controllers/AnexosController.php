@@ -81,8 +81,17 @@ class AnexosController extends APIController
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Anexo $anexo)
     {
-        //
+        DB::beginTransaction();
+        try{
+            // $anexo = Anexo::find($id);
+            $anexo->delete();
+            DB::commit();
+            return $this->sendResponse($anexo,'Anexo deletado com sucesso',200);
+        }catch(Exception $e){
+            DB::rollBack();
+            return $this->sendError($e,"Não foi possível deletar o anexo",400);
+        }
     }
 }

@@ -43,8 +43,11 @@ Route::prefix("/super-admin")->name('super-Admin.')->middleware(['role:super-Adm
             Route::singleton('', ManageUserPermissionsController::class)->only(['show', 'update']);
         });
     });
+
     Route::prefix("/anexos")->name('anexos.')->group(function(){
         Route::resource('', AnexosController::class)
-            ->only(['index', 'store']);
+            ->only(['index', 'store', 'destroy'])
+            ->parameter('' , 'anexo');;
     });
+
 });

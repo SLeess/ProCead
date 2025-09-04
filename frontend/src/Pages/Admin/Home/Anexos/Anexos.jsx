@@ -8,12 +8,11 @@ import AnexoCreateModal from "./Modais/AnexoCreateModal";
 import { useAppContext } from "@/Contexts/AppContext";
 
 const Anexos = () => {
-    // const { token, verifyStatusRequest } = useContext(AppContext);
-    // const [needUpdate, setNeedUpdate] = useState(false);
     const { token } = useAppContext();
     const [anexos, setAnexos] = useState([]);
     const [loading, setLoading] = useState([]);
     const [error, setError] = useState(null);
+    const [needUpdate, setNeedUpdate] = useState(false);
 
     useEffect(() => {
         const fetchProcessos = async () => {
@@ -37,7 +36,7 @@ const Anexos = () => {
             }
         };
         fetchProcessos();
-    }, []);
+    }, [needUpdate]);
 
     return (
         <>
@@ -55,7 +54,7 @@ const Anexos = () => {
                                     <p className="text-2xl font-bold mb-1">{ anexos.length }</p>
                                     <Paperclip className="absolute top-4 right-4 text-gray-500" />
                                 </div>
-                                <AnexoCreateModal />
+                                <AnexoCreateModal setNeedUpdate={setNeedUpdate}/>
                             </div>
                             <MainTable
                                 data={anexos}
@@ -64,6 +63,7 @@ const Anexos = () => {
                                 canExport={false}
                                 canHiddenColumns={false}
                                 hasSelectForRows={false}
+                                setNeedUpdate={setNeedUpdate}
                             />
                         </div>
                     </div>

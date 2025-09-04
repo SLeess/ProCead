@@ -1,5 +1,6 @@
 import { List } from "lucide-react";
 import React from "react";
+import AnexoDeleteModal from "./Modais/AnexoDeleteModal";
 
 const columns = [
   
@@ -22,12 +23,10 @@ const columns = [
       id: "actions",
       header: "Ações",
       alignText: true,
-      cell: ({row}) => {
+      cell: ({row, table}) => {
         return (
         <div className="flex items-center space-x-2 justify-center">
-          {/* <button onClick={() => navigate(`admin/perfis/${row.original.id}/permissoes`)} id="acoes-icons">
-              <List id='avaliate-btn' />
-          </button> */}
+          <AnexoDeleteModal anexo={row.original} setNeedUpdate={table.options.meta.setNeedUpdate}/>
         </div>
       )},
       enableSorting: false,
