@@ -8,10 +8,11 @@ import './RecuperarSenha.css';
 import { recuperarSenhaSchema } from "./recuperarSenhaSchema";
 import z from "zod/v4";
 import { toast } from "react-toastify";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function RecuperarSenha()
 {
-    const { theme } = useAppContext();
+    const { theme, apiAsyncFetch } = useAppContext();
     const [ searchParams ] = useSearchParams();
     const { navigate } = useContext(NavigationContext);
     const inputRef = useRef(null);
@@ -56,28 +57,15 @@ export default function RecuperarSenha()
 
         setLoading(true);
         try{
-            const res = await fetch('/api/reset-password', {
-                method: 'post',
-                body: JSON.stringify(formData),
+            const result = await apiAsyncFetch({
+                url: `/api/reset-password`,
+                method: 'POST',
+                body: formData,
+                isProtected: false,
             });
 
-            const result = await res.json();
-            if (!result.success || !res.ok) {
-                if((typeof result.errors === 'object'), Object.values(result.errors).length > 0){
-                    Object.values(result.errors).forEach(errorArray => {
-                        errorArray.forEach(errorMessage => {
-                            toast.error(errorMessage);
-                        });
-                    });
-                } else{
-                    result.errors ? toast.error(result.message) : toast.warning(result.message);
-                }
-            } else {
-                toast.success(result.message  + " Redirecionando a página de Login...");
-                navigate('/login');
-            }
-        } catch (error) {
-            toast.error(error.toString());
+            toast.success(result.message  + " Redirecionando a página de Login...");
+            navigate('/login');
         } finally{
             setLoading(false);
         }
@@ -94,6 +82,15 @@ export default function RecuperarSenha()
                 return remainErrors;
             }
         )
+    };
+
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+    const [isConfirmPasswordVisible, setIsConfirmPasswordVisibility] = useState(false);
+    const togglePasswordVisibility = () => {
+        setIsPasswordVisible(!isPasswordVisible);
+    };
+    const toggleConfirmPasswordVisibility = () => {
+        setIsConfirmPasswordVisibility(!isConfirmPasswordVisible);
     };
 
     return (
@@ -118,7 +115,7 @@ export default function RecuperarSenha()
                         <div className="mb-3 mt-5">
                             <div className="mx-auto relative h-[45px] w-[332px] max-w-full">
                                 <input 
-                                    type="password" 
+                                    type={isPasswordVisible ? 'text' : 'password'} 
                                     id="password" 
                                     name="password"
                                     ref={inputRef} 
@@ -129,6 +126,17 @@ export default function RecuperarSenha()
                                     onFocus={() => setFocusedField('password')}
                                     onBlur={() => setFocusedField(null)}
                                 />
+                                <button
+                                    type="button"
+                                    className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
+                                    onClick={togglePasswordVisibility}
+                                >
+                                    {isPasswordVisible ? (
+                                        <EyeOff className="h-5 w-5 text-gray-400" />
+                                    ) : (
+                                        <Eye className="h-5 w-5 text-gray-400" />
+                                    )}
+                                </button>
                                 <label htmlFor="recoverPass" className={`${(focusedField === 'password' || formData.password.length > 0) 
                                         ? 'text-xs -translate-y-5 bg-gray-50 px-1' // ⬅️ Alteração aqui
                                         : 'text-[15px] font-medium'}`}>
@@ -139,7 +147,7 @@ export default function RecuperarSenha()
                         <div className="mb-3 mt-5">
                             <div className="mx-auto relative h-[45px] w-[332px] max-w-full">
                                 <input 
-                                    type="password" 
+                                    type={isConfirmPasswordVisible ? 'text' : 'password'}
                                     id="confirm_password" 
                                     name="confirm_password"
                                     ref={inputRef} 
@@ -150,6 +158,17 @@ export default function RecuperarSenha()
                                     onFocus={() => setFocusedField('confirm_password')}
                                     onBlur={() => setFocusedField(null)}
                                 />
+                                <button
+                                    type="button"
+                                    className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
+                                    onClick={toggleConfirmPasswordVisibility}
+                                >
+                                    {isConfirmPasswordVisible ? (
+                                        <EyeOff className="h-5 w-5 text-gray-400" />
+                                    ) : (
+                                        <Eye className="h-5 w-5 text-gray-400" />
+                                    )}
+                                </button>
                                 <label htmlFor="recoverPass" className={`${(focusedField === 'confirm_password' || formData.confirm_password.length > 0) 
                                         ? 'text-xs -translate-y-5 bg-gray-50 px-1' // ⬅️ Alteração aqui
                                         : 'text-[15px] font-medium'}`}>

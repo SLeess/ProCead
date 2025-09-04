@@ -26,7 +26,7 @@ export default function Registro(){
 
     const [errors, setErrors] = useState({});
 
-    const { setToken, theme } = useContext(AppContext);
+    const { setToken, theme, apiAsyncFetch } = useContext(AppContext);
 
     const handleRegister = async (e) => {
         if(loading == true) 
@@ -50,35 +50,18 @@ export default function Registro(){
             }
 
             setErrors({});
-
-            const response = await fetch('/api/register', {
-                method: 'post',
-                body: JSON.stringify(validatedData.data)
+            
+            const result = await apiAsyncFetch({
+                url: `/api/register`,
+                method: 'POST',
+                body: validatedData.data,
+                isProtected: false,
             });
 
-            const result = await response.json();   
-
-            if (!result.success || !response.ok) {
-                if (result.errors) {
-                    setErrors(e => ({...e, ...result.errors}));
-
-                    Object.values(result.errors).forEach(errorArray => {
-                        errorArray.forEach((errorMessage) => {
-                            return toast.error(errorMessage);
-                        });
-
-                    });
-                } else {
-                    toast.error(result.message || "Ocorreu um erro desconhecido.");
-                }
-            } else{
-                toast.success((result.message ||  "Registrado com sucesso!"));
-                localStorage.setItem('token', result.data.token);
-                setToken(result.data.token);
-                navigate("/");
-            }
-        } catch (error) {
-            toast.error(error.toString());
+            toast.success((result.message ||  "Registrado com sucesso!"));
+            localStorage.setItem('token', result.data.token);
+            setToken(result.data.token);
+            navigate("/");
         } finally {
             setLoading(false);
         }
