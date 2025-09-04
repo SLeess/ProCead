@@ -57,9 +57,7 @@ class AnexosController extends APIController
      */
     public function show(string $id)
     {
-        // $anexos = Anexo::all();
-
-        // return $this->sendResponse($anexos, 'Modalidades buscados com sucesso', 200);
+        //
     }
 
     /**
@@ -73,9 +71,27 @@ class AnexosController extends APIController
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(AnexoRequest $request, string $id)
     {
-        //
+        DB::beginTransaction();
+        $data = $request->validated();
+        try {
+            $anexo = Anexo::findOrFail($id);
+            $anexo->update([
+                "nome" => $data['nome'],
+                "formato" => $data['formato'],
+                "caminho" => null,
+                "edital_id" => null,
+                "modalidade_id" => null,
+                "vaga_id" => null,
+            ]);
+
+            DB::commit();
+            return $this->sendResponse($anexo, 'Anexo atualizado com sucesso.', 200);
+        } catch (Exception $e) {
+            DB::rollBack();
+            return $this->sendError($e, "Não foi possível atualizar o anexo. " . $e->getMessage(), 400);
+        }
     }
 
     /**

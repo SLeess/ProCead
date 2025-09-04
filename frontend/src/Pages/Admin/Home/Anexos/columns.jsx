@@ -1,6 +1,7 @@
 import { List } from "lucide-react";
 import React from "react";
 import AnexoDeleteModal from "./Modais/AnexoDeleteModal";
+import AnexoEditModal from "./Modais/AnexoEditModal";
 
 const columns = [
   
@@ -27,6 +28,7 @@ const columns = [
         return (
         <div className="flex items-center space-x-2 justify-center">
           <AnexoDeleteModal anexo={row.original} setNeedUpdate={table.options.meta.setNeedUpdate}/>
+          <AnexoEditModal anexo={row.original} setNeedUpdate={table.options.meta.setNeedUpdate} />
         </div>
       )},
       enableSorting: false,

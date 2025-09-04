@@ -46,7 +46,7 @@ Route::prefix("/super-admin")->name('super-Admin.')->middleware(['role:super-Adm
 
     Route::prefix("/anexos")->name('anexos.')->group(function(){
         Route::resource('', AnexosController::class)
-            ->only(['index', 'store', 'destroy'])
+            ->only(['index', 'store', 'destroy', 'update'])
             ->parameter('' , 'anexo');;
     });
 
