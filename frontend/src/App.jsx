@@ -71,6 +71,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Inscrever from './Pages/Candidato/Inscrever/Inscrever';
 import Inscricao from './Pages/Candidato/Inscrever/Inscricao';
 import Classificacao from './Pages/Admin/InsideEdital/Classificacao/Classificacao';
+import Anexos from './Pages/Admin/Home/Anexos/Anexos';
 
 
 function App() {
@@ -157,6 +158,7 @@ function App() {
               </Route>
             </Route>
             <Route path="relatorios-custom" element={<RelatoriosCustom/>} />
+            <Route path="anexos" element={<Anexos/>} />
             {/* <Route path='manejar-usuarios/:userId' element={<UserManagePage />} /> */}
           </Route>
 

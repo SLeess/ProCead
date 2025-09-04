@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\ManageUserController;
+use App\Http\Controllers\AnexosController;
 use App\Http\Controllers\SuperAdmin\ManageRolePermissionsController;
 use App\Http\Controllers\SuperAdmin\EditalController;
 use App\Http\Controllers\SuperAdmin\ManageUserPermissionsController;
@@ -52,5 +52,9 @@ Route::prefix("/super-admin")->name('super-Admin.')->middleware(['role:super-Adm
             Route::delete('/delete', [UserController::class, 'delete'])->name('delete');
             Route::delete('/destroy', [UserController::class, 'destroy'])->name('destroy');
         });
+    });
+    Route::prefix("/anexos")->name('anexos.')->group(function(){
+        Route::resource('', AnexosController::class)
+            ->only(['index', 'store']);
     });
 });
