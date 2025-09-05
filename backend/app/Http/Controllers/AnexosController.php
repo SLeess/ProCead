@@ -101,7 +101,6 @@ class AnexosController extends APIController
     {
         DB::beginTransaction();
         try{
-            // $anexo = Anexo::find($id);
             $anexo->delete();
             DB::commit();
             return $this->sendResponse($anexo,'Anexo deletado com sucesso',200);

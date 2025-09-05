@@ -27,8 +27,8 @@ const columns = [
       cell: ({row, table}) => {
         return (
         <div className="flex items-center space-x-2 justify-center">
-          <AnexoDeleteModal anexo={row.original} setNeedUpdate={table.options.meta.setNeedUpdate}/>
           <AnexoEditModal anexo={row.original} setNeedUpdate={table.options.meta.setNeedUpdate} />
+          <AnexoDeleteModal anexo={row.original} setNeedUpdate={table.options.meta.setNeedUpdate}/>
         </div>
       )},
       enableSorting: false,
