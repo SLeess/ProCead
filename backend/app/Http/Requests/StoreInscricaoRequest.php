@@ -24,7 +24,6 @@ class StoreInscricaoRequest extends FormRequest
      */
     public function rules(): array
     {
-        // dd($this->all(),$this['vagas']);
         $rules =  [
             // informações básicas
             'nome_completo' => 'required|string|max:255',
@@ -51,12 +50,11 @@ class StoreInscricaoRequest extends FormRequest
             'complemento' => 'nullable|string|max:255',
 
             // etc
-            'termo_responsabilidade' => 'required|accepted', 
+            'termo_responsabilidade' => 'required|accepted|boolean', 
             'editalId' => 'required|integer|exists:editais,id',
             'status' => 'nullable|string',
             'motivo' => 'nullable|string',
-            'user' => 'required|array',
-            'user.uuid' => 'required|string|uuid',
+            'user_uuid' => 'required|string',
 
             //vaga
             'vagas' => 'required|array',
@@ -64,6 +62,12 @@ class StoreInscricaoRequest extends FormRequest
             'vagas.*.polo' => 'required|exists:polos,id',
             'vagas.*.modalidade' => 'required|exists:modalidades,id',
             'vagas.*.categoria' => 'nullable|exists:categorias_vaga,id',
+
+            //anexos
+            'vagas.*.anexo_cpf' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
+            'vagas.*.anexo_historico' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
+            'vagas.*.anexo_comprovante_residencia' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
+            'vagas.*.anexo_autodeclaracao' => 'required|file|mimes:pdf,jpg,jpeg,png|max:2048',
         ];
         return $rules;
     }

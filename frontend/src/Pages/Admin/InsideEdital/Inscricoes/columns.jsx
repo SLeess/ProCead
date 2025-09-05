@@ -12,24 +12,14 @@ const columns = [
       cell: (props) => <span>{props.getValue()}</span>
     },
     {
-      accessorKey: "inscricao",
-      header: "Inscrição",
+      accessorKey: "n_inscricao",
+      header: "Nº de Inscrição",
       // visibleInitially: false,
       cell: (props) => <span>{props.getValue()}</span>
     },
     {
-      accessorKey: "nome",
-      header:"Nome",
-      cell: (props) => <span>{props.getValue()}</span>
-    },
-    {
-      accessorKey: "curso",
-      header:"Curso",
-      cell: (props) => <span>{props.getValue()}</span>
-    },
-    {
-      accessorKey: "polo",
-      header:"Polo",
+      accessorKey: "nome_completo",
+      header:"Nome do Candidato",
       cell: (props) => <span>{props.getValue()}</span>
     },
     {
@@ -43,11 +33,6 @@ const columns = [
       cell: (props) => <span>{props.getValue()}</span>
     },
     {
-      accessorKey: "modalidade",
-      header:"Modalidade",
-      cell: (props) => <span>{props.getValue()}</span>
-    },
-    {
       accessorKey: "status",
       header:"Status",
       cell: (props) => <span>{props.getValue()}</span>
@@ -55,11 +40,11 @@ const columns = [
     {
       id: "actions",
       header: "Ações",
-      cell: () => (
+      cell: ({ row, table}) => (
         <div className="flex items-center space-x-2 justify-center">
-          <InscricaoShowModal/>
-          <InscricaoEditModal/>
-          <InscricaoAvaliarModal/>
+          <InscricaoShowModal  inscricao={row.original} setNeedUpdate={table.options.meta.setNeedUpdate} />
+          <InscricaoEditModal  inscricao={row.original} setNeedUpdate={table.options.meta.setNeedUpdate} />
+          <InscricaoAvaliarModal  inscricao={row.original} setNeedUpdate={table.options.meta.setNeedUpdate} />
         </div>
       ),
       enableSorting: false,

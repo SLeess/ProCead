@@ -10,6 +10,7 @@ class Inscricao extends Model
     protected $fillable = [
         // informações básicas
         'nome_completo',
+        'n_inscricao',
         'cpf',
         'email',
         'data_nascimento',
@@ -43,6 +44,7 @@ class Inscricao extends Model
     protected static $logAttributes = [
         // informações básicas
         'nome_completo',
+        'n_inscricao',
         'cpf',
         'email',
         'data_nascimento',
