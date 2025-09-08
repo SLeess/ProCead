@@ -1,7 +1,7 @@
 
 import { Button, Checkbox, Label, Modal, ModalBody, ModalHeader } from "flowbite-react";
 import { Eye, Pencil } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FormField, SelectInput, AnexoButton, TextInput } from "@/Components/Global/ui/modals";
 import CabecalhoModal from "@/Components/Global/Modais/CabecalhoModal";
 import "./InscricaoModal.css";
@@ -17,27 +17,15 @@ export default function InscricaoEditModal({ inscricao, setNeedUpdate }) {
     const [loading, setLoading] = useState(false);
     const [activeTab, setActiveTab] = useState('Informações Básicas');
     const tabs = ['Informações Básicas', 'Endereço', 'Vaga', 'Anexos e Situação'];
-    const [formData, setFormData] = useState(inscricao);
-
-    const buscaCep = async (cep) => {
-        if (!cep) return;
-        setLoading(true);
-        try {
-          const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
-          if (!response.ok) {
-            throw new Error(`Response status: ${response.status}`);
-          }
-    
-          const result = await response.json();
-          if (!result.erro) {
-            setFormData(f => ({ ...f, rua: result.logradouro, bairro: result.bairro, cidade: result.localidade, uf: result.uf }));
-          }
-        } catch (error) {
-          console.error(error.message);
-        } finally {
-          setLoading(false);
+    const [formData, setFormData] = useState(() => {
+        const { data_nascimento } = inscricao;
+        if (data_nascimento && data_nascimento.includes('-')) {
+            const [year, month, day] = data_nascimento.split('T')[0].split('-');
+            const formattedDate = `${day}/${month}/${year}`;
+            return { ...inscricao, data_nascimento: formattedDate };
         }
-      }
+        return inscricao;
+    });
 
     const handleNext = () => {
         const currentIndex = tabs.indexOf(activeTab);
@@ -65,14 +53,23 @@ export default function InscricaoEditModal({ inscricao, setNeedUpdate }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        formData.cpf = formData.cpf.replace(/[.-]/g, "");
-        formData.telefone = formData.telefone.replace(/[().\s-]/g, "");
+
+        const dataToSend = { ...formData };
+
+        if (dataToSend.data_nascimento && dataToSend.data_nascimento.includes('/')) {
+            const [day, month, year] = dataToSend.data_nascimento.split('/');
+            dataToSend.data_nascimento = `${year}-${month}-${day}`;
+        }
+
+        dataToSend.cpf = dataToSend.cpf.replace(/[.-]/g, "");
+        dataToSend.telefone = dataToSend.telefone.replace(/[().\s-]/g, "");
+
         try {
             const response = await fetch(`/api/admin/inscricoes/${inscricao.id}`, {
 
                 method: 'PUT',
                 
-                body: JSON.stringify(formData),
+                body: JSON.stringify(dataToSend),
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`,
@@ -214,16 +211,7 @@ export default function InscricaoEditModal({ inscricao, setNeedUpdate }) {
                                 {activeTab === 'Endereço' && (
                                     <div>
                                         <div id='rows-3-input'>
-                                            <FormField label="CEP">
-                                                <IMaskInput
-                                                    mask="00000-000"
-                                                    value={formData.cep}
-                                                    onBlur={(e) => buscaCep(e.target.value)}
-                                                    onAccept={(value) => handleOnChangeAttr({ target: { value } }, "cep")}
-                                                    placeholder="ex: 39400-001"
-                                                    className="w-full py-[0.42rem] px-3 border-2 text-sm border-gray-300 rounded-md"
-                                                />
-                                            </FormField>
+                                            <FormField label="CEP"><TextInput id="cep" value={formData.cep} onChange={(e) => handleOnChangeAttr(e, 'cep')} /></FormField>
                                             <FormField label="Rua"><TextInput id="rua" value={formData.rua} onChange={(e) => handleOnChangeAttr(e, 'rua')} /></FormField>
                                             <FormField label="Número"><TextInput id="numero" value={formData.numero} onChange={(e) => handleOnChangeAttr(e, 'numero')} /></FormField>
                                             <FormField label="Complemento"><TextInput id="complemento" value={formData.complemento} onChange={(e) => handleOnChangeAttr(e, 'complemento')} /></FormField>

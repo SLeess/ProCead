@@ -14,7 +14,11 @@ class InscricaoController extends APIController
 {
     public function index($editalId){
         try{
-            $inscricoes = Inscricao::with(['vagas_inscricao.vaga.vaga.vagable','vagas_inscricao.modalidade','vagas_inscricao.categoria','vagas_inscricao.polo'])->where('edital_id', $editalId)->get();
+            $inscricoes = Inscricao::with(['vagas_inscricao.vaga.vaga.vagable','vagas_inscricao.modalidade','vagas_inscricao.categoria','vagas_inscricao.polo'])
+                ->where('edital_id', $editalId)
+                ->get();
+
+
             return $this->sendResponse(new InscricaoCollection($inscricoes), 'Inscrições retornadas com sucesso!',200);
         }catch(\Exception $e){
             return $this->sendError('Erro ao retornar as inscrições: '.$e->getMessage(), [], 500);
