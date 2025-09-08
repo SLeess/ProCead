@@ -1,7 +1,7 @@
 
-import { Button, Checkbox, Label, Modal, ModalBody, ModalHeader } from "flowbite-react";
-import { Eye, Pencil } from "lucide-react";
-import { useEffect, useState } from "react";
+import {  Modal, ModalBody,  } from "flowbite-react";
+import { Pencil } from "lucide-react";
+import { useState } from "react";
 import { FormField, SelectInput, AnexoButton, TextInput } from "@/Components/Global/ui/modals";
 import CabecalhoModal from "@/Components/Global/Modais/CabecalhoModal";
 import "./InscricaoModal.css";
