@@ -10,7 +10,6 @@ export default function InscricaoShowModal({ inscricao }) {
     const [openModal, setOpenModal] = useState(false);
     const [activeTab, setActiveTab] = useState('Informações Básicas');
     const tabs = ['Informações Básicas', 'Endereço', 'Vagas', 'Anexos e Situação'];
-    console.log(inscricao);
     const handleNext = () => {
         const currentIndex = tabs.indexOf(activeTab);
         if (currentIndex < tabs.length - 1) {

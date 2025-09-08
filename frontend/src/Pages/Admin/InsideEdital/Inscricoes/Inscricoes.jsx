@@ -46,10 +46,6 @@ const Inscricoes = () => {
     fetchInscricoes();
   }, [needUpdate]);
 
-  useEffect(() => {
-    console.log(inscricoes);
-  })
-
 
   if (hasPermissionForEdital('visualizar-inscricoes', editalId) || isSuperAdmin())
     return (
