@@ -24,10 +24,10 @@ export const columnsGerenciarUsuariosPerfisPermissoes = (navigate, userId) => [
         <div className="flex items-center space-x-2 justify-center">
           <button 
             onClick={() => navigate(`admin/usuarios/${userId}/cargos-e-permissoes/${row.original.id}`)} 
-            className="p-1 hover:bg-gray-200 rounded-full">
+            id="acoes-icons">
               <SquareArrowOutUpRight className="h-5 w-5 text-[#1A72DA]" />
           </button>
-          {/* <button onClick={() => {}} className="p-1 hover:bg-gray-200 rounded-full">
+          {/* <button onClick={() => {}} id="acoes-icons">
               <Eye className="h-5 w-5 text-blue-500" />
           </button> */}
           {/* <PerfilShowModal perfil={{name: row.original.nome, scope: row.original.escopo}}/>

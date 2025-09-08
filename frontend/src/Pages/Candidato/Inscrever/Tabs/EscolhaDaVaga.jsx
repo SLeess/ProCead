@@ -1,5 +1,6 @@
 import LoaderPages from '@/Components/Global/LoaderPages/LoaderPages';
 import { AppContext } from '@/Contexts/AppContext';
+import { Checkbox } from 'flowbite-react';
 import React, { useState, useEffect } from 'react';
 
 const EscolhaDaVaga = ({ formData, setFormData, handleBack, handleNext, setEnabledTabs, vagas }) => {
@@ -14,16 +15,19 @@ const EscolhaDaVaga = ({ formData, setFormData, handleBack, handleNext, setEnabl
 
   const VagaCard = ({ title, isSelected, onSelect, onCampusChange, selectedValue, campus }) => (
     <div
-      onClick={onSelect}
-      className={`cursor-pointer border-2 rounded-lg p-4 flex flex-col justify-between h-48 transition-colors ${isSelected ? 'bg-yellow-300 border-yellow-400' : 'bg-white border-gray-200 hover:border-blue-500'}`}
+      className={`border-2 rounded-lg p-4 flex flex-col justify-between h-48 transition-colors ${isSelected ? 'bg-yellow-300 border-yellow-400' : 'bg-white border-gray-200 hover:border-blue-500'}`}
     >
-      <p className="font-semibold text-gray-800">{title}</p>
+      <div className='flex gap-2 items-center'>
+        <Checkbox onChange={onSelect} checked={isSelected} />
+        <p className="font-semibold text-gray-800">{title}</p>
+      </div>
       <div className="relative mt-4">
         <select
           onClick={(e) => e.stopPropagation()}
           onChange={onCampusChange}
           value={selectedValue}
-          className="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 appearance-none"
+          className={`w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none appearance-none
+          ${isSelected ? 'bg-white text-black' : 'bg-gray-100 text-gray-400'}`}
           disabled={!isSelected}
         >
           <option value="" disabled>Selecione o Campus</option>
@@ -61,7 +65,7 @@ const EscolhaDaVaga = ({ formData, setFormData, handleBack, handleNext, setEnabl
   };
 
   useEffect(() => {
-    console.log(vagas)
+    // console.log(vagas)
   }, [vagas])
 
   return (

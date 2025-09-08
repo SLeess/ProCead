@@ -1,17 +1,45 @@
 @reference "@/index.css";
 
-div#Sidebar-admin ::-webkit-scrollbar { 
+div#sidebar-admin ::-webkit-scrollbar { 
     @apply w-[6px];
-    /* @apply my-[20px]; */
 }
-div#Sidebar-admin ::-webkit-scrollbar-track {
+
+div#sidebar-admin ::-webkit-scrollbar-track {
     @apply bg-transparent;
 }
-div#Sidebar-admin ::-webkit-scrollbar-thumb {
+
+div#sidebar-admin ::-webkit-scrollbar-thumb {
     @apply rounded-[10px];
 
     /* Light mode */
     @apply bg-[var(--sidebar)];
+    /* Dark mode */
+    @apply dark:bg-[white];
+}
+
+/* ---------- DESKTOP ---------- */
+div#sidebar-admin {
+    @apply hidden md:flex w-67 h-screen bg-[var(--admin-sidebar)] flex-col font-sans rounded-tr-[15px] rounded-br-[15px];
+}
+
+/* ---------- MOBILE ---------- */
+div#sidebar-admin-mobile {
+    @apply flex md:hidden flex-col fixed z-999 bg-[var(--admin-sidebar)] w-[60%] h-full rounded-tr-[15px] rounded-br-[15px] transition-transform duration-500 ease-in-out;
+}
+
+div#sidebar-admin-mobile ::-webkit-scrollbar { 
+    @apply w-[6px];
+}
+
+div#sidebar-admin-mobile ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+}
+
+div#sidebar-admin-mobile ::-webkit-scrollbar-thumb {
+    @apply rounded-[10px];
+
+    /* Light mode */
+    @apply bg-[var(--admin-sidebar-scroll)];
     /* Dark mode */
     @apply dark:bg-[white];
 }

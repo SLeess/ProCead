@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AnexosController;
 use App\Http\Controllers\SuperAdmin\ManageRolePermissionsController;
 use App\Http\Controllers\SuperAdmin\EditalController;
 use App\Http\Controllers\SuperAdmin\ManageUserPermissionsController;
@@ -42,4 +43,11 @@ Route::prefix("/super-admin")->name('super-Admin.')->middleware(['role:super-Adm
             Route::singleton('', ManageUserPermissionsController::class)->only(['show', 'update']);
         });
     });
+
+    Route::prefix("/anexos")->name('anexos.')->group(function(){
+        Route::resource('', AnexosController::class)
+            ->only(['index', 'store', 'destroy', 'update'])
+            ->parameter('' , 'anexo');;
+    });
+
 });

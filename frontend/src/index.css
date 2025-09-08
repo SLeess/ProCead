@@ -53,7 +53,7 @@
         @apply mb-[60px] sm:mb-0;
     }
     main {
-        @apply mx-8 sm:mx-10 pb-10;
+        @apply mx-4 sm:mx-10 pb-10;
     }
     main section{
         @apply mx-auto min-h-[80vh];
@@ -222,6 +222,7 @@ div.info-not-found-itens p#second{
     /* Sidebar */
     --admin-sidebar: #2A1670;
     --admin-sidebar-hover-and-select: #6C4BC3;
+    --admin-sidebar-scroll: #4D2F99;
 
     /* Topbar */
     --admin-topbar-flag: #F8F2FF;

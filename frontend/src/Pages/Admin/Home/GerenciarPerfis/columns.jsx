@@ -29,7 +29,7 @@ export const getColumns = (navigate) => [
       cell: ({row}) => {
         return (
         <div className="flex items-center space-x-2 justify-center">
-          <button onClick={() => navigate(`admin/perfis/${row.original.id}/permissoes`)} className="p-1 hover:bg-gray-200 rounded-full">
+          <button onClick={() => navigate(`admin/perfis/${row.original.id}/permissoes`)} id="acoes-icons">
               <List id='avaliate-btn' />
           </button>
           <PerfilShowModal perfil={{name: row.original.nome, scope: row.original.escopo}}/>
