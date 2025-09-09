@@ -25,6 +25,8 @@ class SuperAdminLogsRequest extends FormRequest
             'per_page' => 'integer|min:1|max:999',
             'query'      => 'array|nullable',
             'query.*'    => 'string|nullable',
+            "start_date" => 'nullable|date_format:Y-m-d H:i:s',
+            "end_date"   => 'nullable|date_format:Y-m-d H:i:s|after_or_equal:start_date',
             'sort_by'  => [
                 'nullable',
                 'string',
@@ -42,6 +44,13 @@ class SuperAdminLogsRequest extends FormRequest
                 ])
             ],
             'sort_dir' => 'in:asc,desc|nullable',
+        ];
+    }
+    public function attributes()
+    {
+        return [
+            'start_date' => 'Data de início',
+            'end_date' => 'Data de fim',
         ];
     }
 }

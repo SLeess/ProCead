@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Spatie\Activitylog\Models\Activity as SpatieActivity;
 
@@ -23,6 +24,13 @@ class Activity extends SpatieActivity
                 if(Str::title($searchTerm) === 'Sistema')
                     $subQuery->orWhere('causer_id', null);
             });
+        });
+        $query->when($request->input('start_date'), function ($query, $startDate) {
+            return $query->where('created_at', '>=', Carbon::parse($startDate));
+        });
+
+        $query->when($request->input('end_date'), function ($query, $endDate) {
+            return $query->where('created_at', '<=', Carbon::parse($endDate));
         });
 
         // Lógica para os filtros ESPECÍFICOS (o array `query`)

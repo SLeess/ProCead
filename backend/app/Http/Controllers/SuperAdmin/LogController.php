@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Schema;
 use Nette\NotImplementedException;
 use App\Models\Activity;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -22,7 +23,7 @@ class LogController extends __SuperAdminController
     {
         $validated = $request->validated();
 
-        $perPage = $validated['per_page'] ?? 4;
+        $perPage = $validated['per_page'] ?? 10;
         $query = Activity::with(['causer', 'subject'])->search($request);
 
         if (isset($validated['sort_by'])) {
@@ -37,10 +38,11 @@ class LogController extends __SuperAdminController
             $query->orderBy('created_at', 'desc');
         }
 
-        // $paginatedLogs = $query->paginate($perPage);
+        $query->where('event', '!=', 'Login');
+
         $currentPage = LengthAwarePaginator::resolveCurrentPage();
 
-        $logs = $query->get()->filter(fn($log) => $log->event !== 'Login');
+        $logs = $query->get();
 
         $currentPageItems = collect($logs->slice(($currentPage - 1) * $perPage, $perPage)->values());
 
@@ -67,7 +69,7 @@ class LogController extends __SuperAdminController
     {
         $validated = $request->validated();
 
-        $perPage = $validated['per_page'] ?? 4;
+        $perPage = $validated['per_page'] ?? 10;
         $query = Activity::with(['causer', 'subject'])->search($request);
 
         if (isset($validated['sort_by'])) {
@@ -82,13 +84,14 @@ class LogController extends __SuperAdminController
             $query->orderBy('created_at', 'desc');
         }
 
+        $query->where('event', '!=', 'Login');
+
         // $paginatedLogs = $query->paginate($perPage);
         $currentPage = LengthAwarePaginator::resolveCurrentPage();
 
         $logs = $query->where('subject_id', $user->uuid)
                       ->orWhere('causer_id', $user->uuid)
-                      ->get()
-                      ->filter(fn($log) => $log->event !== 'Login');
+                      ->get();
 
         $currentPageItems = collect($logs->slice(($currentPage - 1) * $perPage, $perPage)->values());
 
