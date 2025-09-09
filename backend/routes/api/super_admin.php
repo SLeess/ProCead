@@ -54,9 +54,11 @@ Route::prefix("/super-admin")->name('super-Admin.')->middleware(['role:super-Adm
             Route::delete('/destroy', [UserController::class, 'destroy'])->name('destroy');
         });
     });
+
     Route::prefix("/anexos")->name('anexos.')->group(function(){
         Route::resource('', AnexosController::class)
-            ->only(['index', 'store']);
+            ->only(['index', 'store', 'destroy', 'update'])
+            ->parameter('' , 'anexo');;
     });
 
     Route::prefix('/logs')->name('logs.')->group(function(){

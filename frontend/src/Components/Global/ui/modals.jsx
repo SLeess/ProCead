@@ -12,7 +12,7 @@ const FormField = ({ label, children, className = '', textWrap = true, obrigator
     </div>
 );
 
-const TextInput = ({ value, readOnly, placeholder, onChange = null, onBlur = null, type = 'text', name="", maxLength = null }) => {
+const TextInput = ({defaultValue, value, readOnly, placeholder, onChange = null, onBlur = null, type = 'text', name="", maxLength = null }) => {
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
     if (type !== 'password') {
         return (
@@ -20,7 +20,8 @@ const TextInput = ({ value, readOnly, placeholder, onChange = null, onBlur = nul
                 type={type}
                 name={name}
                 value={value}
-                className={`${readOnly ? 'bg-gray-100' : 'bg-white'} border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 w-full`}
+                defaultValue={defaultValue}
+                className={`${readOnly ? 'bg-gray-100' : 'bg-white'} border border-gray-50 rounded-md px-4 py-2 focus:outline-none w-full`}
                 readOnly={readOnly}
                 onChange={onChange}
                 onBlur={onBlur}
@@ -108,12 +109,13 @@ const MultiSelectTags = ({
     );
 };
 
-const SelectInput = ({ value, options, readOnly, onChange = null, defaultOption = false, name=""}) => (
+const SelectInput = ({ defaultValue, value, options, readOnly, onChange = null, defaultOption = false, name=""}) => (
     <div className="relative">
         <select
             name={name}
             disabled={readOnly}
             value={value}
+            defaultValue={defaultValue}
             onChange={onChange}
             className={`${readOnly !== true ? 'bg-white': 'bg-gray-100'} appearance-none border border-gray-200 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 w-full`}
         >

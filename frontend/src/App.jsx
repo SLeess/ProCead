@@ -16,6 +16,9 @@ import LayoutAdminInsideEdital from './Layouts/LayoutAdminInsideEdital';
   import MeusProcessos from './Pages/Candidato/Home/MeusProcessos/MeusProcessos';
   import EditalPage from './Pages/Test/EditalPage';
   import ProcessosAtivos from './Pages/Candidato/Home/ProcessosAtivos/ProcessosAtivos';
+  /** ------------------------------------ Páginas Candidato de Processo ---------------------------- */
+    import VisaoGeral from './Pages/Candidato/InsideProcesso/VisaoGeral';
+  /** ----------------------------------------------------------------------------------------------- */
 /** ------------------------------------------------------------------------------------------ */
 
 
@@ -130,6 +133,7 @@ function App() {
             <Route path="/edital/:editalId/inscrever" element={<Inscrever />} />
             <Route path="/inscricao/:editalId" element={<Inscricao />} />
             <Route path='meus-processos' element={<MeusProcessos />} />
+            <Route path='/edital/:editalId/geral' element={<VisaoGeral />} />
           </Route>
 
 
