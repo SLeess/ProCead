@@ -9,10 +9,10 @@
             font-size: .95rem;
         }
 
-        .table-content th,
-        .table-comtent td {
-            border-bottom: 2px solid #DDDDDD;
+        .table-content th, .table-comtent td {
+            /* border-bottom: 2px solid #DDDDDD; */
             border-top: 2px solid #DDDDDD;
+            word-wrap: break-word;
         }
 
         .title {
@@ -47,7 +47,7 @@
         @foreach ($data['rows'] as $key => $grupo)
             @include('cabecalho', ['title' => $data['titulo'], 'subtitle' => $data['subtitulo']])
 
-            <h1>{{ str_replace('_', ' ', ucwords($data['groupByFields'][0])) . ': ' . $key }}</h1>
+            <h1>{{ str_replace('_', ' ', ucwords($data['groupByFields'][0])) . ': ' . Str::upper($key) }}</h1>
             @foreach ($grupo as $subgroupKey => $subgroup)
                 <h2>{{ str_replace('_', ' ', ucwords($data['groupByFields'][1])) . ': ' . $subgroupKey }}</h2>
                 <table class="table-content" style="margin-bottom: 10px;width: 100%;text-align: center;table-layout: fixed;">
@@ -70,7 +70,8 @@
                                 @foreach ($data['columns'] as $column)
                                 @if ($column['id'] != $data['groupByFields'][0] && $column['id'] != $data['groupByFields'][1])
                                     <td
-                                        style="overflow-wrap: break-word; word-break: break-all; width: {{ floor($data['columnWidths'][$column['id']]) }}%;">
+                                        style=" border-top: 2px solid #DDDDDD;
+            word-wrap: break-word;overflow-wrap: break-word; word-break: break-all; width: {{ floor($data['columnWidths'][$column['id']]) }}%;">
                                         {{ $element[$column['id']] ?? "" }}
                                         </td>
                                         @endif
