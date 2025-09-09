@@ -72,6 +72,7 @@ import Inscrever from './Pages/Candidato/Inscrever/Inscrever';
 import Inscricao from './Pages/Candidato/Inscrever/Inscricao';
 import Classificacao from './Pages/Admin/InsideEdital/Classificacao/Classificacao';
 import Anexos from './Pages/Admin/Home/Anexos/Anexos';
+import VisaoGeral from './Pages/Candidato/InsideProcesso/VisaoGeral';
 
 
 function App() {
@@ -129,6 +130,7 @@ function App() {
             <Route path="/edital/:editalId/inscrever" element={<Inscrever />} />
             <Route path="/inscricao/:editalId" element={<Inscricao />} />
             <Route path='meus-processos' element={<MeusProcessos />} />
+            <Route path='/edital/:editalId/geral' element={<VisaoGeral />} />
           </Route>
 
 
