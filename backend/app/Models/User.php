@@ -216,22 +216,14 @@ class User extends Authenticatable
     {
         // $activity->description = "activity.logs.message. {$eventName}";
         if ($this->isDirty('password')) {
-            if ($this->isDirty('password')) {
-                $properties = $activity->properties->toArray();
+            $properties = $activity->properties->toArray();
 
-                if (isset($properties['attributes']) && count($properties['attributes']) === 1) {
-                    unset($properties['attributes']);
-                }
+            unset($properties['attributes']['password']);
+            unset($properties['old']['password']);
 
-                if (isset($properties['old']) && count($properties['old']) === 1) {
-                    unset($properties['old']);
-                }
+            $properties['password_changed'] = true;
 
-
-                $properties['password_changed'] = true;
-
-                $activity->properties = collect($properties);
-            }
+            $activity->properties = collect($properties);
         }
     }
 
@@ -239,6 +231,7 @@ class User extends Authenticatable
     {
         return LogOptions::defaults()
             ->logFillable()
+            ->logExcept(['remember_token'])
             ->logOnlyDirty()
             ->dontSubmitEmptyLogs()
             ->useLogName('Usuário')

@@ -35,6 +35,8 @@ import LayoutAdminInsideEdital from './Layouts/LayoutAdminInsideEdital';
   /** ------------------------------- Páginas de Gerência de Permissões e Perfis do Usuário ----------------------- */
 
   import RelatoriosCustom from './Pages/Admin/Home/RelatoriosCustom/RelatoriosCustom';
+  import Anexos from './Pages/Admin/Home/Anexos/Anexos';
+  import LogsGerais from './Pages/Admin/Home/Logs/Logs';
 
     /** ------------------------------------ Páginas Adm de Edital ---------------------------- */
     import Inscricoes from './Pages/Admin/InsideEdital/Inscricoes/Inscricoes';
@@ -71,7 +73,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import Inscrever from './Pages/Candidato/Inscrever/Inscrever';
 import Inscricao from './Pages/Candidato/Inscrever/Inscricao';
 import Classificacao from './Pages/Admin/InsideEdital/Classificacao/Classificacao';
-import Anexos from './Pages/Admin/Home/Anexos/Anexos';
 
 
 function App() {
@@ -159,6 +160,7 @@ function App() {
             </Route>
             <Route path="relatorios-custom" element={<RelatoriosCustom/>} />
             <Route path="anexos" element={<Anexos/>} />
+            <Route path="logs" element={<LogsGerais/>} />
             {/* <Route path='manejar-usuarios/:userId' element={<UserManagePage />} /> */}
           </Route>
 

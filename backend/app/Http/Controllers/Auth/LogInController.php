@@ -75,6 +75,7 @@ class LoginController extends APIController
         activity('Login')
             ->causedBy(Auth::user()) // Agora usamos o usuário correto
             ->withProperties($logProperties)
+            ->event('Login')
             ->log("O usuário '". Auth::user()->nome . "' acabou de fazer login.");
     }
 }

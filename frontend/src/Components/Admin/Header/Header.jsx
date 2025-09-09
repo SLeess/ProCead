@@ -24,6 +24,7 @@ const Header = () => {
         }
         <NavLink end to="/admin/relatorios-custom" className={({ isActive }) => `link-page my-2 ${isActive ? "active-link border-b-2 border-secondary dark:border-primary" : ""}`}>Relatórios</NavLink>
         <NavLink end to="/admin/anexos" className={({ isActive }) => `link-page my-2 ${isActive ? "active-link border-b-2 border-secondary dark:border-primary" : ""}`}>Anexos</NavLink>
+        <NavLink end to="/admin/logs" className={({ isActive }) => `link-page my-2 ${isActive ? "active-link border-b-2 border-secondary dark:border-primary" : ""}`}>Logs</NavLink>
       </HeaderModel>
   </>);
 };
