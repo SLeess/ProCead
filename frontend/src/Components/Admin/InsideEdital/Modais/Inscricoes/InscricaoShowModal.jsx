@@ -10,7 +10,15 @@ export default function InscricaoShowModal({ inscricao }) {
     const [openModal, setOpenModal] = useState(false);
     const [activeTab, setActiveTab] = useState('Informações Básicas');
     const tabs = ['Informações Básicas', 'Endereço', 'Vagas', 'Anexos e Situação'];
-    console.log(inscricao);
+
+    const formatarData = (data) => {
+        if (!data) return '';
+        if (data.includes('-')) {
+            const [year, month, day] = data.split('T')[0].split('-');
+            return `${day}/${month}/${year}`;
+        }
+        return data;
+    }
     const handleNext = () => {
         const currentIndex = tabs.indexOf(activeTab);
         if (currentIndex < tabs.length - 1) {
@@ -45,7 +53,7 @@ export default function InscricaoShowModal({ inscricao }) {
                         <ModalBody >
 
                             <div id="inscricao-data-e-status-div">
-                                <p id="date-inscricao">Data de Inscrição: {new Date(inscricao.created_at).toLocaleDateString()}</p>
+                                <p id="date-inscricao">Data de Inscrição: {formatarData(inscricao.created_at)}</p>
                                 <span id="inscricao-status-text">{inscricao.status}</span>
                             </div>
 
@@ -71,7 +79,7 @@ export default function InscricaoShowModal({ inscricao }) {
                                             <TextInput readOnly={true} value={inscricao.identidade} />
                                         </FormField>
                                         <FormField label="Data de Nascimento">
-                                            <TextInput readOnly={true} value={new Date(inscricao.data_nascimento).toLocaleDateString()} />
+                                            <TextInput readOnly={true} value={formatarData(inscricao.data_nascimento)} />
                                         </FormField>
 
                                         {/* Row 2 */}
