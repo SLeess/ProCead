@@ -27,4 +27,9 @@ class Modalidade extends Model
     public function tipo_avaliacao(){
         return $this->hasMany(ModalidadeTipoAvaliacao::class);
     }
+
+    public function anexos()
+    {
+        return $this->belongsToMany(Anexo::class, 'anexos_modalidade');
+    }
 }
