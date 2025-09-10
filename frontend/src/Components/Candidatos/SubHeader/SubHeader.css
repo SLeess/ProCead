@@ -1,0 +1,25 @@
+@reference "@/index.css";
+
+header#sub-header {
+    @apply text-black mx-4 sm:mx-10;
+}
+
+#sub-header nav {
+    @apply container relative flex mx-auto rounded-b-2xl;
+    @apply px-6 py-2 flex flex-nowrap justify-between;
+    @apply min-w-[310px] max-w-screen-xl h-[40px];
+    
+    @apply shadow-sm;
+    
+    /* Light mode */
+    @apply bg-white;
+    
+    /* Dark mode */
+
+    @apply md:rounded-b-xl;
+    
+}
+
+div#sub-nav-item {
+    @apply flex items-center justify-center lg:gap-12 md:gap-6;
+}

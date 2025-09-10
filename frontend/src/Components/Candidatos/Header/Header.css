@@ -6,7 +6,7 @@ header#user {
     @apply text-white mx-4 sm:mx-10 mt-2;
 }
 #user nav {
-    @apply container relative flex mx-auto rounded-2xl;
+    @apply container relative flex mx-auto;
     @apply px-6 py-2 flex flex-nowrap justify-between;
     @apply min-w-[310px] max-w-screen-xl mt-2.5;
 
@@ -15,10 +15,8 @@ header#user {
     /* Light mode */
     @apply md:bg-gradient-to-r from-[var(--header-candidato-primary-left)] to-[var(--header-candidato-primary-right)] transition-all duration-700 ease-in-out;
 
-    /* Dark modee */
+    /* Dark mode */
     @apply dark:bg-gradient-to-r dark:from-[var(--header-candidato-primary)] dark:to-[var(--header-candidato-primary)];
-    
-    @apply md:rounded-xl;
 }
 
 #user nav > div{

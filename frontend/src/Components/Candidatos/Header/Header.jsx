@@ -2,10 +2,10 @@ import { NavLink } from 'react-router-dom';
 import './Header.css';
 import HeaderModel from '@/Components/Global/HeaderModel/HeaderModel';
 
-export default function Header(){
+export default function Header({ showSubHeader }){
 
   return (
-    <HeaderModel headerid={'user'}>
+    <HeaderModel showSubHeader={showSubHeader} headerid={'user'}>
       <NavLink to="/" end className={({ isActive }) => `link-page my-2 ${isActive ? "active-link md:border-b-2 border-secondary dark:border-primary" : ""}`}>
         Processos Ativos
       </NavLink>

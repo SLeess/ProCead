@@ -5,15 +5,12 @@ import "./HeaderModel.css";
 
 import { useAppContext } from '@/Contexts/AppContext';
 
-export default function HeaderModel({ headerid, children }){
-    const { remainingTime } = useAppContext();
-
-
+export default function HeaderModel({ showSubHeader, headerid, children }){
 
     return(
             <header id={headerid}>
-                    <Navbar fluid rounded>
 
+                    <Navbar fluid rounded className={`${showSubHeader ? "rounded-t-2xl md:rounded-t-xl" : "rounded-2xl md:rounded-xl"}`}>
                         <NavbarBrand href="#">
                             <img src="/img/logo_cead_bg_white_full.png" alt="Logo CEAD" id="img-logo"/>
                         </NavbarBrand>
@@ -39,23 +36,8 @@ export default function HeaderModel({ headerid, children }){
                                 { children }
                             </div>
                         </NavbarCollapse>
-
-
                     </Navbar>
-                    <div className='flex flex-row-reverse min-w-[310px] max-w-screen-xl mt-2 text-black'>
-                        {
-                        remainingTime !== null && remainingTime !== 0 &&
-                        <p className="text-sm my-1">Sua sessão expira em {remainingTime} min.</p>
-                        }
-                        {
-                        remainingTime === 0 &&
-                        <p className="text-sm my-1">Sua sessão expirou!</p>
-                        }
-                        {
-                        remainingTime === null &&
-                        <p className="text-sm my-1">&nbsp;</p>
-                        }
-                    </div>
+
             </header>
     );
 
