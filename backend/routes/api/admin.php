@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\InscricaoController;
 use App\Http\Controllers\Admin\PolosController;
 use App\Http\Controllers\Admin\QuadroVagasController;
 use App\Http\Controllers\Admin\VagasController;
+use App\Http\Controllers\AnexosController;
 use App\Http\Controllers\ModalidadesController;
 use App\Models\QuadroVagas;
 use Illuminate\Support\Facades\Route;
@@ -44,4 +45,12 @@ Route::prefix('/admin')->name('admin.')->group(function () {
     Route::put('/inscricoes/{id}', [InscricaoController::class, 'update'])->name('inscricoes.update');
 
     Route::middleware(['throttle:heavy'])->post('/export', [RelatorioController::class, 'export'])->name('export');
+
+    Route::prefix("/anexos")->name('anexos.')->group(function () {
+        Route::resource('', AnexosController::class)
+            ->only(['index', 'store', 'destroy', 'update'])
+            ->parameter('', 'anexo');
+        ;
+    });
+
 });

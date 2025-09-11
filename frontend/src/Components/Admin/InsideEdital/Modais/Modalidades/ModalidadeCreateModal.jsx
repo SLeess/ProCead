@@ -66,7 +66,7 @@ const ModalidadeCreateModal = ({ setNeedUpdate }) => {
         const fetchAnexos = async () => {
             setLoading(true);
             try {
-                const res = await fetch('/api/super-admin/anexos', {
+                const res = await fetch('/api/admin/anexos', {
                     headers: {
                         'Accept': 'application/json',
                         'Authorization': `Bearer ${token}`,

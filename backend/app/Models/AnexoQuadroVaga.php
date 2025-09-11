@@ -19,4 +19,11 @@ class AnexoQuadroVaga extends Model
 
     protected $submitEmptyLogs = false;
     protected $logOnlyDirty = true;
+    public function anexo()
+    {
+        return $this->belongsTo(Anexo::class);
+    }
+    public function quadroVaga(){
+        return $this->belongsTo(QuadroVagas::class);
+    }
 }

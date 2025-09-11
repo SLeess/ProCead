@@ -21,6 +21,7 @@ export default function QuadroVagasEditModal({ quadroVaga, setNeedUpdate }) {
     const [modalidades, setModalidades] = useState([]);
     const [vagas, setVagas] = useState([]);
     const [polos, setPolos] = useState([]);
+    const [anexos, setAnexos] = useState([]);
     const [newCategoryName, setNewCategoryName] = useState("");
 
     const [formData, setFormData] = useState({
@@ -31,6 +32,7 @@ export default function QuadroVagasEditModal({ quadroVaga, setNeedUpdate }) {
         habilitacao: '',
         modalidades: [],
         categoriasCustomizadas: [],
+        anexos: []
     });
 
     useEffect(() => {
@@ -55,16 +57,22 @@ export default function QuadroVagasEditModal({ quadroVaga, setNeedUpdate }) {
             await fetchData(`/api/admin/vagas/${editalId}`, setVagas);
             await fetchData(`/api/admin/polos/${editalId}`, setPolos);
             await fetchData(`/api/admin/modalidades/${editalId}`, setModalidades);
+            await fetchData(`/api/admin/anexos`, setAnexos);
             setLoading(false);
         }
         fetchAllData();
     }, [openModal, token, editalId]);
-
     useEffect(() => {
-        if (quadroVaga) {
+        console.log(formData)
+    },[formData])
+    useEffect(() => {
+        if (quadroVaga && anexos.length > 0) {
             const initialModalidades = quadroVaga.vagas_por_modalidade.map(vpm => ({
                 [vpm.sigla]: vpm.quantidade
             }));
+
+            const selectedAnexoIds = (quadroVaga.anexos || []).map(anexo => anexo.id);
+            const selectedAnexoObjectsFromOptions = anexos.filter(option => selectedAnexoIds.includes(option.id));
 
             setFormData({
                 codigo: quadroVaga.codigo ? String(quadroVaga.codigo) : '',
@@ -74,15 +82,20 @@ export default function QuadroVagasEditModal({ quadroVaga, setNeedUpdate }) {
                 habilitacao: quadroVaga.habilitacao || '',
                 modalidades: initialModalidades || [],
                 categoriasCustomizadas: quadroVaga.categorias_customizadas || [],
+                anexos: selectedAnexoObjectsFromOptions
             });
         }
-    }, [quadroVaga]);
+    }, [quadroVaga, anexos]);
 
 
     const handleOnChangeAttr = (e, attr) => {
         if (attr === 'campus') {
             setFormData(f => ({ ...f, campus: e }));
-        } else {
+        }
+        if (attr === 'anexos') {
+            setFormData(f => ({ ...f, anexos: e }));
+        }
+        else {
             const { value } = e.target;
             setFormData(f => ({ ...f, [attr]: value }));
         }
@@ -218,6 +231,18 @@ export default function QuadroVagasEditModal({ quadroVaga, setNeedUpdate }) {
                                             id='multiselect-primereact'
                                         />
                                     </FormField>
+                                    <FormField label="Anexos" className="md:col-span-3">
+                                        <MultiSelect
+                                            value={formData.anexos}
+                                            onChange={(e) => handleOnChangeAttr(e.value, "anexos")}
+                                            options={anexos}
+                                            optionLabel="nome"
+                                            display="chip"
+                                            placeholder="Selecione os Anexos"
+                                            className=" items-center"
+                                            id='multiselect-primereact'
+                                        />
+                                    </FormField>
                                     <FormField label="Vaga" className="md:col-span-2">
                                         <SelectInput
                                             value={formData.vaga}
@@ -317,3 +342,4 @@ export default function QuadroVagasEditModal({ quadroVaga, setNeedUpdate }) {
         </>
     );
 }
+

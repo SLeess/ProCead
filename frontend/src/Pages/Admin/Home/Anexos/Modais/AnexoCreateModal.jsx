@@ -30,7 +30,7 @@ const AnexoCreateModal = ({ setNeedUpdate }) => {
         setLoading(true);
 
         try {
-            const res = await fetch(`/api/super-admin/anexos/`, {
+            const res = await fetch(`/api/admin/anexos/`, {
                 method: 'POST',
                 body: JSON.stringify({...formData}),
                 headers: {

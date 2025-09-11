@@ -48,7 +48,7 @@ const QuadroVagas = () => {
     };
     fetchQuadroVagas();
   }, [needUpdate]);
-
+  
 
   if (hasPermissionForEdital('visualizar-campi-cursos', editalId) || isSuperAdmin()) {
     const totalVagas = quadroVagas && quadroVagas.length > 0 ? quadroVagas.reduce((total, quadro) => {

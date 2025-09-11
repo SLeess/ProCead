@@ -77,7 +77,7 @@ const ModalidadeEditModal = ({ setNeedUpdate, modalidade }) => {
         const fetchAnexos = async () => {
             setLoading(true);
             try {
-                const res = await fetch('/api/super-admin/anexos', {
+                const res = await fetch('/api/admin/anexos', {
                     headers: {
                         'Accept': 'application/json',
                         'Authorization': `Bearer ${token}`,
@@ -100,10 +100,6 @@ const ModalidadeEditModal = ({ setNeedUpdate, modalidade }) => {
         fetchAnexos()
     }, [token])
 
-    useEffect(() => {
-        console.log(anexos)
-        console.log(formData)
-    }, [formData])
 
 
 
