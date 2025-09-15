@@ -16,7 +16,7 @@ export default function ProcessoCard({ processo }: ProcessoCardProps ){
         <li className={`ProcessoCard`}>
             <article>
                 <aside className={`lateralBar ${processo.status === 'Em andamento' ? `bg-[#28A745]`: `bg-[#6C757D]`}`}></aside>
-                <div>
+                <div className='content'>
                     <div className='flex justify-between'>
                         <h3 className={`descricao`}>
                             {processo.descricao}

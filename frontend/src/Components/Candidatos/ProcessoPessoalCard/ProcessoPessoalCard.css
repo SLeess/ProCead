@@ -6,7 +6,7 @@ li.ProcessoPessoalCard{
     drop-shadow(0px 0px 0px rgba(0, 0, 0, 0.08));
 }
 li.ProcessoPessoalCard article{
-  @apply flex flex-row border p-4 rounded-md shadow-md bg-gray-50 space-x-3 dark:bg-gray-800 dark:border-gray-700;
+  @apply flex flex-row border rounded-md shadow-md bg-gray-50 space-x-3 dark:bg-gray-800 dark:border-gray-700 p-1;
 }
 
 li.ProcessoPessoalCard article > div{
@@ -20,6 +20,10 @@ li.ProcessoPessoalCard h3.descricao{
 
 li.ProcessoPessoalCard aside.lateralBar{
    @apply w-2 min-h-11/12 shrink-0 rounded-[15px];
+}
+
+li.ProcessoPessoalCard div.content{
+   @apply p-3;
 }
 
 li.ProcessoPessoalCard p.edital{

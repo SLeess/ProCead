@@ -15,7 +15,7 @@ export default function ProcessoPessoalCard({ processo }: ProcessoPessoalCardPro
         <li className={`ProcessoPessoalCard`}>
             <article>
                 <aside className={`lateralBar ${processo.status === 'Em andamento' ? `bg-[#FFC107]`: `bg-[#6C757D]`}`}></aside>
-                <div>
+                <div className='content'>
                     <h3 className={`descricao`}>
                         {processo.descricao}
                     </h3>
