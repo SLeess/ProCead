@@ -6,7 +6,7 @@ use App\Models\Edital;
 use App\Models\Inscricao;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-use Str;
+use Illuminate\Support\Str;
 use Throwable;
 
 class InscricaoService
@@ -29,7 +29,7 @@ class InscricaoService
         }
         $numEdital = explode(' ',$edital->referencia)[0];
         $numeroInscricao = Str::substr(  $numEdital, -2, 2).$edital->id.Str::substr($numEdital, 1, 1).'00001';
-        
+
         return $numeroInscricao;
     }
     public function createInscricao(array $data): Inscricao
@@ -39,6 +39,7 @@ class InscricaoService
         try {
             $inscricaoData = $this->prepareDataForStorage($data);
             $inscricaoData['n_inscricao'] = $this->generateNumeroInscricao($inscricaoData['edital_id']);
+            // dd($inscricaoData);
             $inscricao = Inscricao::create($inscricaoData);
 
             foreach($data['vagas'] as $vaga){
@@ -97,7 +98,7 @@ class InscricaoService
             // etc
             'termo_responsabilidade' => $data['termo_responsabilidade'],
             'contexto_id' => $data['editalId'],
-            'status' => $data['status'] ?? 'Em análise', 
+            'status' => $data['status'] ?? 'Em análise',
             'motivo' => $data['motivo'] ?? null,
             'user_uuid' => $data['user_uuid'],
             'edital_id' => $data['editalId'],

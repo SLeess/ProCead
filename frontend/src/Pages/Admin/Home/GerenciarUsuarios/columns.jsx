@@ -81,7 +81,7 @@ export const GerenciarUsuariosColumns = (navigate) => [
           </button>
           <UserShowProfileModal user={row.original}></UserShowProfileModal>
           <UserEditProfileModal user={row.original}></UserEditProfileModal>
-          <PerfilDeleteModal perfil={{id: row.original.id}}/>
+          {/* <PerfilDeleteModal perfil={{id: row.original.id}}/> */}
         </div>
       ),
       enableSorting: false,

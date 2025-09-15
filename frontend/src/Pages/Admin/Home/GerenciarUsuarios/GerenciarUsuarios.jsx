@@ -61,7 +61,6 @@ export default function GerenciarUsuarios(){
                             // ===================
                             setMetaData={setMetaData}
                         />
-                        {/* <button className="border-2 px-4 py-2 rounded-sm mt-5 bg-amber-300" onClick={() => console.log(rowSelection)}>Mostrar Dados aqui</button> */}
                     </>
                 </div>
             </div>

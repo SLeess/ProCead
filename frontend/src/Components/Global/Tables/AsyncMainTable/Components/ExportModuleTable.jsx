@@ -38,13 +38,14 @@ export default function ExportModuleTable({
         // setRowSelection(allSelectedRows);
         setOpenModal(true);
     }
-
     return (<>
         {
-            canExport && <button id="export-button" className="bg-[var(--admin-button)] hover:bg-[var(--admin-button-hover)]" onClick={() => onOpenModal()}>
-                {'Gerar Relatório'}
-            </button>
+            canExport && <>
+                <button id="export-button" className="bg-[var(--admin-button)] hover:bg-[var(--admin-button-hover)]" onClick={() => onOpenModal()}>
+                    {'Gerar Relatório'}
+                </button>
+                <ModalExportarRelatorio openModal={openModal} onCloseModal={onCloseModal} table={table} title={title} selectedRowsData={rowSelection} />
+            </>
         }
-        <ModalExportarRelatorio openModal={openModal} onCloseModal={onCloseModal} table={table} title={title} selectedRowsData={rowSelection} />
     </>);
 }

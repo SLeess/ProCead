@@ -1,0 +1,5 @@
+@reference "@/index.css";
+
+#visao-geral-content {
+    @apply mt-10 px-4 py-2 bg-white rounded-md flex flex-col justify-center;
+}

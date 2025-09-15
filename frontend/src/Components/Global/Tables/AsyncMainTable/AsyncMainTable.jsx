@@ -24,6 +24,7 @@ const AsyncMainTable = ({
     // ================== Props Essenciais ==================
       columns,
       title,
+      typeData="users",
     /**
      * (MODO BACKEND) URL base para buscar os dados. Ativa a paginação e busca no servidor.
      * Ex: "/api/super-admin/users"
@@ -189,7 +190,7 @@ const AsyncMainTable = ({
         const url = `${serverSideDataUrl}?${params.toString()}`;
         const result = await apiAsyncFetch({ url });
 
-        setData(result.data.users);
+        setData(result.data[typeData]);
         setPageCount(result.data.meta.last_page);
         if (typeof setMetaData === 'function') {
             setMetaData(result.data.meta);
@@ -242,7 +243,6 @@ const AsyncMainTable = ({
               canExport={canExport} 
               pagesCached={pagesCache} 
               rowSelection={selectedRowsDataCache}
-              // setRowSelection={setSelectedRowsDataCache}
             />
           </div>
         </div>

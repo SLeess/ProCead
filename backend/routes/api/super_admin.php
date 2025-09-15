@@ -3,6 +3,7 @@
 use App\Http\Controllers\AnexosController;
 use App\Http\Controllers\SuperAdmin\ManageRolePermissionsController;
 use App\Http\Controllers\SuperAdmin\EditalController;
+use App\Http\Controllers\SuperAdmin\LogController;
 use App\Http\Controllers\SuperAdmin\ManageUserPermissionsController;
 use App\Http\Controllers\SuperAdmin\PermissionsController;
 use App\Http\Controllers\SuperAdmin\RoleController;
@@ -55,4 +56,12 @@ Route::prefix("/super-admin")->name('super-Admin.')->middleware(['role:super-Adm
     });
 
 
+    Route::prefix('/logs')->name('logs.')->group(function(){
+        Route::resource('', LogController::class)
+            ->only('index', 'show')
+            ->parameter('' , 'Activity');
+
+        Route::get('/user/{user}/{Activity}', [LogController::class, 'userShow']);
+        Route::get('/user/{user}', [LogController::class, 'userIndex']);
+    });
 });

@@ -111,8 +111,6 @@ const UserEditProfileModal = ({user}) => {
             });
             toast.success((response.message ||  "Dados do usuário foram atualizados com sucesso!"));
             onCloseModal();
-        } catch (error) {
-            toast.error(error.toString());
         } finally {
             setLoading(false);
         }

@@ -98,7 +98,7 @@ export default function Login() {
                                 type="text" 
                                 id="email" 
                                 name="email" 
-                                className="border-2 border-[#004da9] w-full h-full px-3 py-2 text-black bg-transparent input-field focus-within:outline-0 focus-within:outline-[#02397c]" 
+                                className="border-2 border-[#004da9] w-full h-full px-3 py-2 text-black bg-white input-field focus-within:outline-0 focus-within:outline-[#02397c]" 
                                 required
                                 onChange={updateAttr}
                                 onFocus={() => setFocusedField('email')}
@@ -118,7 +118,7 @@ export default function Login() {
                                 type={`${isPasswordVisible ? 'text' : 'password'}`} 
                                 id="password" 
                                 name="password" 
-                                className="border-2 border-[#004da9] w-full h-full px-3 py-2 text-black bg-transparent input-field focus-within:outline-0 focus-within:outline-[#02397c]" 
+                                className="border-2 border-[#004da9] w-full h-full px-3 py-2 text-black bg-white input-field focus-within:outline-0 focus-within:outline-[#02397c]" 
                                 required
                                 onChange={updateAttr}
                                 onFocus={() => setFocusedField('password')}
