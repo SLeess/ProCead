@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 class LogController extends __SuperAdminController
 {
     public function __construct(protected ISuperAdminUserManagerService $iSuperAdminUserManagerService){
-        $this->middleware('role:super-Admin');
+        parent::__construct();
     }
     public function index(SuperAdminLogsRequest $request)
     {
