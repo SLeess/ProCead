@@ -1,0 +1,69 @@
+@reference "@/index.css";
+
+section#gerenciar_logs_globais{
+    @apply mt-5 relative md:h-screen grid grid-cols-1 md:flex bg-gray-50 dark:bg-gray-900 md:max-h-[800px] p-[40px_0px_0px_0px];
+}
+
+section#gerenciar_logs_globais aside{
+    @apply md:w-1/4 min-w-[300px];
+    @apply rounded-l-2xl border-r;
+    @apply flex flex-col mt-5;
+
+    /* light mode */
+    @apply bg-white;
+    /* dark mode */
+    @apply dark:bg-gray-800 dark:border-gray-700;
+}
+section#gerenciar_logs_globais main{
+    @apply md:w-3/4 py-4 px-0 flex justify-between flex-col mt-2 md:mt-5;
+}
+
+section#gerenciar_logs_globais header h1{
+    @apply text-white text-[22px] not-italic font-bold leading-[normal] mx-0;
+    font-family: Sora;
+}
+section#gerenciar_logs_globais header{
+    @apply absolute top-0 left-0 w-full px-6 py-4 rounded-t-xl bg-[var(--header-admin-primary)];
+}
+
+section#gerenciar_logs_globais div#content{
+    /* @apply mt-8; */
+    @apply mt-10;
+}
+
+section#gerenciar_logs_globais div#paginate {
+    @apply flex items-center justify-center space-x-4
+}
+
+section#gerenciar_logs_globais button.paginate-buttons {
+    @apply px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed transition-colors
+}
+
+section#gerenciar_logs_globais span#paginate-text {
+    @apply text-sm font-medium text-gray-700
+}
+
+section#gerenciar_logs_globais div#pagesize {
+    @apply flex items-center gap-2 ml-5 justify-end
+}
+
+section#gerenciar_logs_globais span#pagesize-text {
+    @apply text-sm font-medium text-gray-700 hidden md:block
+}
+
+section#gerenciar_logs_globais input[type=date]{
+    @apply p-2 border rounded-md dark:bg-gray-700 dark:border-gray-600 dark:text-white;
+}
+section#gerenciar_logs_globais select#pagesize-selector {
+    @apply min-w-[80px] px-2 py-1 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none
+}
+
+section#gerenciar_logs_globais div#bottom-tools {
+    @apply flex flex-row md:space-y-0 space-y-2 items-center justify-between p-4
+}
+
+@media (max-width: 900px) {
+    section#gerenciar_logs_globais div#bottom-tools {
+        @apply flex-col gap-4
+    }
+}

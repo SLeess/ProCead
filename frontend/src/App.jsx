@@ -39,7 +39,7 @@ import LayoutAdminInsideEdital from './Layouts/LayoutAdminInsideEdital';
 
   import RelatoriosCustom from './Pages/Admin/Home/RelatoriosCustom/RelatoriosCustom';
   import Anexos from './Pages/Admin/Home/Anexos/Anexos';
-  import LogsGerais from './Pages/Admin/Home/Logs/Logs';
+  import LogsGerais from './Pages/Admin/Home/GerenciarLogs/Logs';
 
     /** ------------------------------------ Páginas Adm de Edital ---------------------------- */
     import Inscricoes from './Pages/Admin/InsideEdital/Inscricoes/Inscricoes';
