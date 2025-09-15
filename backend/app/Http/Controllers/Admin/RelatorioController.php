@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\API\ApiController;
+use App\Http\Controllers\API\APIController;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Exception;
 use Symfony\Component\HttpFoundation\Response;
 
-class RelatorioController extends ApiController
+class RelatorioController extends APIController
 {
     public function export(Request $request){
         $namePdf = $request->get('title') ?? 'template_download';
