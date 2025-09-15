@@ -16,3 +16,35 @@ export const formatCPF = (cpf) => {
     // Captura 4 grupos de dígitos e os remonta com a pontuação
     return cpfValue.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
 };
+
+
+export function toTitleCase(str) {
+  if (!str) {
+    return ""; // Handle empty or null strings
+  }
+
+  // Convert the entire string to lowercase first
+  const lowerCaseStr = str.toLowerCase();
+
+  // Split the string into an array of words
+  const words = lowerCaseStr.split(" ");
+
+  // Map over the array to capitalize the first letter of each word
+  const titleCasedWords = words.map(word => {
+    if (word.length === 0) {
+      return ""; // Handle empty words if any
+    }
+    return word.charAt(0).toUpperCase() + word.slice(1);
+  });
+
+  // Join the words back into a single string
+  return titleCasedWords.join(" ");
+}
+
+export const maskCPF = (value) => {
+    return value
+        .replace(/\D/g, "")
+        .replace(/(\d{3})(\d)/, "$1.$2")
+        .replace(/(\d{3})(\d)/, "$1.$2")
+        .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+};

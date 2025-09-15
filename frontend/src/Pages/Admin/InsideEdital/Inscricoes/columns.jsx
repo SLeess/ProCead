@@ -1,7 +1,7 @@
 import InscricaoAvaliarModal from "@/Components/Admin/InsideEdital/Modais/Inscricoes/InscricaoAvaliarModal";
 import InscricaoEditModal from "@/Components/Admin/InsideEdital/Modais/Inscricoes/InscricaoEditModal";
 import InscricaoShowModal from "@/Components/Admin/InsideEdital/Modais/Inscricoes/InscricaoShowModal";
-import CpfPill from "@/Components/Global/Tables/TestTable/CpfPill";
+// import CPFPill from "@/Components/Global/Tables/Components/Pills/CpfPill";
 import { ArrowUpDown } from "lucide-react";
 
 const columns = [

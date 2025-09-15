@@ -215,7 +215,7 @@ export default function QuadroVagasEditModal({ quadroVaga, setNeedUpdate }) {
 
                         {activeTab === 'Dados' && (
                             <div>
-                                <div id='rows-3-input'>
+                                <div className='rows-3-input'>
                                     <FormField label="Código"><TextInput value={formData.codigo} onChange={(e) => handleOnChangeAttr(e, "codigo")} /></FormField>
                                     <FormField label="Semestre"><SelectInput options={[1, 2]} value={formData.semestre} onChange={(e) => handleOnChangeAttr(e, "semestre")} /></FormField>
                                     <FormField label="Edital Referente"><TextInput disabled value={`Edital Nº ${editalId}`} /></FormField>

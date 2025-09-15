@@ -41,7 +41,7 @@ export default function CotaEditModal() {
                         </div>
 
                         <h2 id="cotas-situacao-title">Situação</h2>
-                        <div id='rows-3-input'>
+                        <div className='rows-3-input'>
                             <FormField label="Status" className="md:col-span-1">
                                 <SelectInput value="Em Análise" options={['Deferido', 'Indeferido', 'Em Análise']} />
                             </FormField>

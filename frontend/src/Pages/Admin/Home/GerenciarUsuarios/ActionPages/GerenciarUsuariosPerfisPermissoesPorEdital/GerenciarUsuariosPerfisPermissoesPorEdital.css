@@ -24,7 +24,7 @@ section#gerenciar_usuarios_perfis_permissoes_por_id div#content div#informacoes_
     @apply col-span-12 sm:col-span-6 md:col-span-4 lg:col-span-3 sm:max-w-[296px];
 }
 
-section#gerenciar_usuarios_perfis_permissoes_por_id div#content form{
+section#gerenciar_usuarios_perfis_permissoes_por_id div#content form div.btnActions{
     @apply space-x-4 flex md:justify-end justify-evenly;
 }
 

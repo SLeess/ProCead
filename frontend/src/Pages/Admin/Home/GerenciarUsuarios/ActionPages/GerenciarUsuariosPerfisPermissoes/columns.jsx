@@ -1,4 +1,4 @@
-import StatusEditalPill from "@/Components/Global/Tables/MainTable/Components/Pills/StatusEditalPill";
+import StatusEditalPill from "@/Components/Global/Tables/Components/Pills/StatusEditalPill";
 import { SquareArrowOutUpRight } from "lucide-react";
 import React from "react";
 

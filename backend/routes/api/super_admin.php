@@ -14,8 +14,11 @@ Route::prefix("/super-admin")->name('super-Admin.')->middleware(['role:super-Adm
 
     Route::name("roles.")->group(function(){
         Route::resource('/roles-with-permissions', ManageRolePermissionsController::class)
-                ->only(['show', 'update'])
+                ->only(['index','show', 'update'])
                 ->parameter('roles-with-permissions' , 'role');
+
+        Route::get('/roles-with-permissions-scope-local',[ ManageRolePermissionsController::class, 'indexLocal'])->name('index.local');
+        Route::get('/roles-with-permissions-scope-global',[ ManageRolePermissionsController::class, 'indexGlobal'])->name('index.global');
 
         Route::resource('/roles', RoleController::class)
                 ->only(['index', 'store', 'update', 'destroy'])
@@ -39,8 +42,15 @@ Route::prefix("/super-admin")->name('super-Admin.')->middleware(['role:super-Adm
 
     Route::prefix('/users')->name('usuarios.')->group(function(){
         Route::get("", [UserController::class, 'index'])->name('index');
-        Route::prefix('/{user}/permissions')->name('permissions.')->group(function () {
-            Route::singleton('', ManageUserPermissionsController::class)->only(['show', 'update']);
+        Route::post('/register', [UserController::class, 'store'])->name('store');
+
+        Route::prefix('/{user}')->name('permissions.')->group(function () {
+            Route::singleton('/permissions', ManageUserPermissionsController::class)->only(['show']);
+            Route::patch("/set-roles-and-permissions/global", [ManageUserPermissionsController::class, 'updateGlobal']);
+            Route::patch("/set-roles-and-permissions/local", [ManageUserPermissionsController::class, 'updateLocal']);
+            Route::patch('', [UserController::class, 'update'])->name('update');
+            Route::delete('/delete', [UserController::class, 'delete'])->name('delete');
+            Route::delete('/destroy', [UserController::class, 'destroy'])->name('destroy');
         });
     });
 

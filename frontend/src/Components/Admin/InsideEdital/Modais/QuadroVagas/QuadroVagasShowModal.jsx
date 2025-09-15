@@ -113,7 +113,7 @@ export default function QuadroVagasShowModal({ quadroVaga }) {
                     {/* Form Content - Only showing the active tab's content */}
                     {activeTab === 'Dados' && (
                         <div>
-                            <div id='rows-3-input'>
+                            <div className='rows-3-input'>
                                 {/* Row 1 */}
                                 <FormField label="Código"><TextInput readOnly={true} value={quadroVaga?.codigo || ''} /></FormField>
                                 <FormField label="Semestre"><TextInput readOnly={true} value={quadroVaga?.semestre || ''} /></FormField>

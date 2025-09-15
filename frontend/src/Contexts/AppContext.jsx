@@ -255,7 +255,7 @@ export default function AppProvider({ children }) {
 
         for (const editalId in permissionsWithRolesByEdital) {
             const data = permissionsWithRolesByEdital[editalId];
-            if ((data.roles && data.roles.length > 0) || (data.permissions && data.permissions.length > 0)) {
+            if ((data?.roles?.length > 0) || (data?.effective_permissions?.length > 0)) {
                 return true;
             }
         }
@@ -337,6 +337,7 @@ export default function AppProvider({ children }) {
         const headers = {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
+            'Accept-Language': 'pt-BR'
         };
 
         if (isProtected) {

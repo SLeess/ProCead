@@ -17,25 +17,38 @@ import ExportModuleTable from "./Components/ExportModuleTable";
 import SearchRowsTable from "./Components/SearchRowsTable";
 
 const MainTable = ({ 
-            data, 
-            columns, 
-            title, 
-            subtitle = null,
-            isClassificationTable = false,
-            hasShadowBorderStyle = true, 
-            hasPaddingStyle = true, 
-            canExport = true, 
-            canHiddenColumns = true, 
-            hasSelectForRows = true, 
-            hasCountSelectedLines = true, 
-            setNeedUpdate, 
-            enableDataFooter = true,
-            pageSize=10,
-            className = ``,
-  }) => {
+    data, 
+    columns, 
+    title, 
+    subtitle = null, 
+    isClassificationTable = false,
+    hasShadowBorderStyle = true, 
+    hasPaddingStyle = true, 
+    canExport = true, 
+    canHiddenColumns = true, 
+    hasSelectForRows = true, 
+    hasCountSelectedLines = true, 
+    setNeedUpdate, 
+    enableDataFooter = true,
+    pageSize=10,
+    className = ``,
+    // ==========================================================
+    // 1. RECEBA AS PROPS DE SELEÇÃO DO COMPONENTE PAI
+    // ==========================================================
+    rowSelection: controlledRowSelection,
+    setRowSelection: setControlledRowSelection,
+}) => {
   const [columnFilters, setColumnFilters] = useState([]);
-  const [rowSelection, setRowSelection] = useState({});
+  const [internalRowSelection, setInternalRowSelection] = useState({});
   const [globalFilter, setGlobalFilter] = useState('');
+
+  // ==========================================================
+  // DECIDA QUAL ESTADO USAR (O DO PAI OU O INTERNO)
+  // ==========================================================
+  const isControlled = controlledRowSelection !== undefined;
+  const rowSelection = isControlled ? controlledRowSelection : internalRowSelection;
+  const setRowSelection = isControlled ? setControlledRowSelection : setInternalRowSelection;
+  
   const [columnVisibility, setColumnVisibility] = useState(() => {
     const initialVisibility = columns.reduce((acc, column) => {
       if (column.accessorKey && column.columnVisibility !== undefined) {
@@ -48,10 +61,12 @@ const MainTable = ({
 
     return initialVisibility;
   });
+
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: pageSize,
   });
+
   const table = useReactTable({
     data,
     columns,

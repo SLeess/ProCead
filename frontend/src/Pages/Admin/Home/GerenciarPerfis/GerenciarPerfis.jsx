@@ -8,10 +8,11 @@ import { useContext, useEffect, useMemo, useState } from "react";
 import { toast } from "react-toastify";
 import { useAppContext } from "@/Contexts/AppContext";
 import LoaderPages from "@/Components/Global/LoaderPages/LoaderPages";
+import AccessDenied from "@/Components/Global/AccessDenied/AccessDenied";
 
 export default function GerenciarPerfis()
 {
-    const { apiAsyncFetch } = useAppContext();
+    const { apiAsyncFetch, isSuperAdmin } = useAppContext();
     const { navigate } = useContext(NavigationContext);
 
     const columns = useMemo(() => getColumns(navigate), [navigate]);
@@ -40,33 +41,43 @@ export default function GerenciarPerfis()
   }, []);
 
     return (
-        <section id="gerenciar_perfis">
+        <section id="gerenciar_perfis" className={`${!isSuperAdmin() ? 'flex justify-center items-center': ''}`}>
             <header>
                 <h1>Gerenciar Perfis</h1>
             </header>
-            <div id="content">
-                <div className="lg:px-4">
-                    <div className="flex items-center justify-between  mb-4">
-                        <div className="bg-white shadow-md rounded-md p-5 w-xs relative flex flex-col justify-between h-30">
-                            <p className="text-gray-600 mb-1">Nº de Perfis</p>
-                            <p className="text-2xl font-bold mb-1">{ perfis.length }</p>
-                            <UserRoundPen className="absolute top-4 right-4 text-gray-500" />
+            {
+                !isSuperAdmin() &&
+                <AccessDenied/>
+            }
+            {
+                isSuperAdmin() &&
+                <>
+                    <div id="content">
+                        <div className="lg:px-4">
+                    
+                            <div className="flex items-center justify-between  mb-4">
+                                <div className="bg-white shadow-md rounded-md p-5 w-xs relative flex flex-col justify-between h-30">
+                                    <p className="text-gray-600 mb-1">Nº de Perfis</p>
+                                    <p className="text-2xl font-bold mb-1">{ perfis.length }</p>
+                                    <UserRoundPen className="absolute top-4 right-4 text-gray-500" />
+                                </div>
+                                <PerfilCreateModal/>
+                            </div>
+                            {
+                                loading && <LoaderPages/>
+                            }
+                            <MainTable 
+                                data={perfis} 
+                                columns={columns} 
+                                title={"Perfis"}
+                                canExport={false}
+                                canHiddenColumns={false}
+                                hasSelectForRows={false}
+                            />
                         </div>
-                        <PerfilCreateModal/>
                     </div>
-                    {
-                        loading && <LoaderPages/>
-                    }
-                    <MainTable 
-                        data={perfis} 
-                        columns={columns} 
-                        title={"Perfis"}
-                        canExport={false}
-                        canHiddenColumns={false}
-                        hasSelectForRows={false}
-                    />
-                </div>
-            </div>
+                </>
+            }
         </section>
     );
 }

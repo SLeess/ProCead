@@ -44,15 +44,4 @@ class RegisterRequest extends FormRequest
             'email.unique' => 'O email já está em uso.',
         ];
     }
-
-    public function attributes()
-    {
-        return [
-            'confirm_password' => 'de Confirmação de Senha',
-            'cpf' => 'CPF',
-            'password' => 'de Senha',
-            'email' => 'Email',
-            'nome' => 'Nome'
-        ];
-    }
 }

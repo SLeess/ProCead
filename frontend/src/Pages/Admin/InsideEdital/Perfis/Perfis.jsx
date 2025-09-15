@@ -7,6 +7,7 @@ import { UserCheck } from 'lucide-react';
 import MainTable from '@/Components/Global/Tables/MainTable/MainTable';
 import { useParams } from 'react-router-dom';
 import StatsCard from '@/Components/Global/Cards/StatsCard';
+import AccessDenied from '@/Components/Global/AccessDenied/AccessDenied';
 
 const Perfis = () => {
   

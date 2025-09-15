@@ -152,7 +152,7 @@ const ModalidadeCreateModal = ({ setNeedUpdate }) => {
                     <form onSubmit={handleSubmit}>
 
                         <div>
-                            <div id='rows-2-input' className='mb-4'>
+                            <div className="mb-4 rows-2-input">
                                 <FormField label="Sigla">
                                     <TextInput
                                         className="md:col-span-1"

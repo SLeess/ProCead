@@ -7,6 +7,7 @@ import ModalidadeCreateModal from '@/Components/Admin/InsideEdital/Modais/Modali
 import { useParams } from 'react-router-dom';
 import StatsCard from '@/Components/Global/Cards/StatsCard';
 import LoaderPages from '@/Components/Global/LoaderPages/LoaderPages';
+import AccessDenied from '@/Components/Global/AccessDenied/AccessDenied';
 
 const Modalidades = () => {
   const { editalId } = useParams();

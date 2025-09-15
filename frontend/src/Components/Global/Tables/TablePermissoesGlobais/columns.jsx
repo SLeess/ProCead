@@ -16,6 +16,7 @@ function IndeterminateCheckbox({ indeterminate, className = '', ...rest }) {
       type="checkbox"
       ref={ref}
       className={className + ' cursor-pointer'}
+      // disabled={rest?.disabled}
       {...rest}
     />
   );
@@ -35,17 +36,18 @@ export const TabelaPermissoesGlobaisGlobais = () => [
         <span>Permissões</span>
       </div>
     ),
-    cell: ({ row }) => (
+    cell: ({ row }) => {
+      return (
       <div className='space-x-2'>
         <IndeterminateCheckbox
-          checked={row.getIsSelected()}
-          disabled={!row.getCanSelect()}
+          checked={row.getIsSelected() || row.original.disabled}
+          disabled={!row.getCanSelect() || row.original.disabled}
           indeterminate={row.getIsSomeSelected()}
           onChange={row.getToggleSelectedHandler()}
         />
         <span className="font-medium">{row.original.name}</span>
       </div>
-    ),
+    )},
     enableSorting: false,
   },
 

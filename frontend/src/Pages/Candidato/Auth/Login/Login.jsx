@@ -8,6 +8,7 @@ import z from 'zod/v4';
 import ThemeToggleBtn from "@/Components/Global/ThemeToggleBtn/ThemeToggleBtn";
 import LoaderPages from "@/Components/Global/LoaderPages/LoaderPages";
 import Loader from "@/Components/Global/Loader/Loader";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function Login() {
     const { theme, login, apiAsyncFetch } = useContext(AppContext);
@@ -66,6 +67,11 @@ export default function Login() {
         setFormData(f => ({...f, [attr]: e.target.value}));
     };
 
+    const [isPasswordVisible, setIsPasswordVisibility] = useState(false);
+    const togglePasswordVisibility = () => {
+        setIsPasswordVisibility(!isPasswordVisible);
+    };
+
     return (
         <>
             <div className={`absolute top-2 right-2`}>
@@ -107,7 +113,7 @@ export default function Login() {
                         <div className="mb-4">
                             <div className="mx-auto relative h-[45px] w-[352px]">
                                 <input 
-                                    type="password" 
+                                    type={`${isPasswordVisible ? 'text' : 'password'}`} 
                                     id="password" 
                                     name="password" 
                                     ref={inputRef}
@@ -124,6 +130,17 @@ export default function Login() {
                                         : ''}`}>
                                     Senha
                                 </label>
+                                <button
+                                    type="button"
+                                    className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
+                                    onClick={togglePasswordVisibility}
+                                >
+                                    {isPasswordVisible ? (
+                                        <EyeOff className="h-5 w-5 text-gray-400" />
+                                    ) : (
+                                        <Eye className="h-5 w-5 text-gray-400" />
+                                    )}
+                                </button>
                             </div>
                         </div>
 

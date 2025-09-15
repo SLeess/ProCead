@@ -1,6 +1,7 @@
 import { useAppContext } from "@/Contexts/AppContext";
 import { NavigationContext } from "@/Contexts/NavigationContext";
 import { Avatar, Dropdown, DropdownDivider, DropdownHeader, DropdownItem } from "flowbite-react";
+import { User } from "lucide-react";
 import { useContext } from "react";
 import { toast } from "react-toastify";
 
@@ -33,7 +34,8 @@ export default function UserDropdown()
             inline
             
             label={
-                <Avatar alt="User settings" img="https://flowbite.com/docs/images/people/profile-picture-5.jpg" rounded />
+                // <Avatar alt="User settings" img="https://flowbite.com/docs/images/people/profile-picture-5.jpg" rounded />
+                <User width={37} height={37} className="hover:cursor-pointer border-2 border-white dark:border-black dark:bg-black rounded-full bg-white p-[3px] text-[#000] dark:text-white" />
             }
         >
             <DropdownHeader className="w-[250px]">

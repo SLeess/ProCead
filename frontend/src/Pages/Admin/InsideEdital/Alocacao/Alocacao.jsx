@@ -6,6 +6,7 @@ import columns from './columns';
 import MainTable from '@/Components/Global/Tables/MainTable/MainTable';
 import { AlertTriangle, FileText, GraduationCap, ShieldCheck } from 'lucide-react';
 import StatsCard from '@/Components/Global/Cards/StatsCard';
+import AccessDenied from '@/Components/Global/AccessDenied/AccessDenied';
 
 const Alocacao = () => {
 

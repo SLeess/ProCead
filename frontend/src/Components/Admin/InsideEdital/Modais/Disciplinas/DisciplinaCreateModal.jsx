@@ -119,7 +119,7 @@ const DisciplinaCreateModal = ({ setNeedUpdate }) => {
                         </p>
                         {loading ? <LoaderPages /> : (
                             <div>
-                                <div id='rows-3-input'>
+                                <div className='rows-3-input'>
                                     <FormField className="md:col-span-2" label="Nome do Curso">
                                         <SelectInput
                                             value={formData.curso_id}

@@ -2,30 +2,41 @@ import PoloDeleteModal from "@/Components/Admin/InsideEdital/Modais/Polos/PoloDe
 import PoloEditModal from "@/Components/Admin/InsideEdital/Modais/Polos/PoloEditModal";
 import { ArrowUpDown } from "lucide-react";
 
-const columns = [
-  
+
+
+export const columnsPolos = (hasPermissionForEdital, editalId) => {
+  const columns = [
     {
-      accessorKey: "id",
-      header:"Id",
-      cell: (props) => <span>{props.getValue()}</span>
+        accessorKey: "id",
+        header: "Id",
+        cell: (props) => <span>{props.getValue()}</span>
     },
     {
-      accessorKey: "nome",
-      header:"Nome",
-      cell: (props) => <span>{props.getValue()}</span>
-    },
-    {
-      id: "actions",
-      header: "Ações",
-      cell: ({ row, table }) => (
-        <div className="flex items-center space-x-2 justify-center">
-          <PoloEditModal polo={row.original} setNeedUpdate={table.options.meta.setNeedUpdate}/>
-          <PoloDeleteModal polo={row.original} setNeedUpdate={table.options.meta.setNeedUpdate}/>
-        </div>
-      ),
-      enableSorting: false,
-      enableHiding: false,
+        accessorKey: "nome",
+        header: "Nome",
+        cell: (props) => <span>{props.getValue()}</span>,
     },
   ];
 
-export default columns;
+  if((hasPermissionForEdital('editar-campus', editalId) || hasPermissionForEdital('deletar-campus', editalId)))
+    columns.push({
+        id: "actions",
+        header: "Ações",
+        cell: ({ row, table }) => (
+          <div className="flex items-center space-x-2 justify-center">
+            {
+              hasPermissionForEdital('editar-campus', editalId) &&
+              <PoloEditModal polo={row.original} setNeedUpdate={table.options.meta.setNeedUpdate}/>
+            }
+            {
+              hasPermissionForEdital('deletar-campus', editalId) &&
+              <PoloDeleteModal polo={row.original} setNeedUpdate={table.options.meta.setNeedUpdate}/>
+            }
+          </div>
+        ),
+        enableSorting: false,
+        enableHiding: false,
+    });
+
+  return columns;
+};

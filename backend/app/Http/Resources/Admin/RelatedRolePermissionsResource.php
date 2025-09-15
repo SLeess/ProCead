@@ -17,7 +17,7 @@ class RelatedRolePermissionsResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => Str::title($this->name),
+            'name' => $this->name,
             'scope' => $this->scope,
             'related_permissions_names' => $this->getPermissionNames(),
             'related_permissions_ids' => $this->getAllPermissions()->pluck('id')->toArray(),

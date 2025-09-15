@@ -19,12 +19,26 @@
 }
 
 /* Body Inputs */
-#rows-2-input {
+#rows-2-input,
+.rows-2-input {
     @apply grid grid-cols-1 md:grid-cols-2 gap-x-3 gap-y-2;
 }
 
-#rows-3-input {
+#rows-3-input,
+.rows-3-input {
     @apply grid grid-cols-1 md:grid-cols-3 gap-x-3 gap-y-2;
+}
+#rows-4-input,
+.rows-4-input {
+    @apply grid grid-cols-1 md:grid-cols-4 gap-x-3 gap-y-2;
+}
+#rows-5-input,
+.rows-5-input {
+    @apply grid grid-cols-1 md:grid-cols-5 gap-x-3 gap-y-2;
+}
+#rows-6-input,
+.rows-6-input {
+    @apply grid grid-cols-1 md:grid-cols-6 gap-x-3 gap-y-2;
 }
 
 /* Buttons */
@@ -42,7 +56,22 @@
 
 /* Tabs */
 #tabs-container {
-    @apply border-b border-gray-200 mb-4;
+    @apply border-b border-gray-200 mb-4 overflow-x-auto overflow-y-hidden;
+}
+#tabs-container::-webkit-scrollbar {
+    height: 4px;
+}
+
+#tabs-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#tabs-container::-webkit-scrollbar-thumb {
+    @apply bg-purple-300 rounded-full;
+}
+
+#tabs-container::-webkit-scrollbar-thumb:hover {
+    @apply bg-blue-400;
 }
 
 #tabs-navs {
