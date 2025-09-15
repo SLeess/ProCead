@@ -38,10 +38,10 @@ class AnexosController extends APIController
             $anexo = Anexo::create([
                 "nome" => $data['nome'],
                 "formato" => $data['formato'],
-                "caminho" => null,
-                "edital_id" => null,
-                "modalidade_id" => null,
-                "vaga_id" => null,
+                // "caminho" => null,
+                // "edital_id" => null,
+                // "modalidade_id" => null,
+                // "vaga_id" => null,
             ]);
 
             DB::commit();
@@ -80,10 +80,10 @@ class AnexosController extends APIController
             $anexo->update([
                 "nome" => $data['nome'],
                 "formato" => $data['formato'],
-                "caminho" => null,
-                "edital_id" => null,
-                "modalidade_id" => null,
-                "vaga_id" => null,
+                // "caminho" => null,
+                // "edital_id" => null,
+                // "modalidade_id" => null,
+                // "vaga_id" => null,
             ]);
 
             DB::commit();

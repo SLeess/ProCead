@@ -18,10 +18,10 @@ return new class extends Migration
             $table->text('formato');
 
             // dados que serão inseridos depois.
-            $table->string('caminho')->nullable();
-            $table->foreignId('edital_id')->nullable()->references('id')->on('editais');
-            $table->foreignId('modalidade_id')->nullable()->references('id')->on('modalidades');
-            $table->foreignId('vaga_id')->nullable()->references('id')->on('vagas');
+            // $table->string('caminho')->nullable();
+            // $table->foreignId('edital_id')->nullable()->references('id')->on('editais');
+            // $table->foreignId('modalidade_id')->nullable()->references('id')->on('modalidades');
+            // $table->foreignId('vaga_id')->nullable()->references('id')->on('vagas');
 
             $table->timestamps();
         });

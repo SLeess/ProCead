@@ -32,6 +32,7 @@ class QuadroVagaUpdateRequest extends FormRequest
             'modalidades' => 'required|array|min:1',
             'categoriasCustomizadas' => 'nullable|array',
             'categoriasCustomizadas.*.nome' => 'required|string|max:255',
+            'anexos' => 'nullable|array'
         ];
     }
 }

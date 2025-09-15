@@ -11,17 +11,17 @@ class Anexo extends Model
         'nome',
         'formato',
         'caminho',
-        'edital_id', // null antes do edital.
-        'modalidade_id', // null antes do edital.
-        'vaga_id' // null antes do edital.
+        // 'edital_id', // null antes do edital.
+        // 'modalidade_id', // null antes do edital.
+        // 'vaga_id' // null antes do edital.
     ];
     protected $logAttributes = [
         'nome',
         'formato',
         'caminho',
-        'edital_id', // null antes do edital.
-        'modalidade_id', // null antes do edital.
-        'vaga_id' // null antes do edital.
+        // 'edital_id', // null antes do edital.
+        // 'modalidade_id', // null antes do edital.
+        // 'vaga_id' // null antes do edital.
     ];
 
     protected static $logOnlyDirty = true;

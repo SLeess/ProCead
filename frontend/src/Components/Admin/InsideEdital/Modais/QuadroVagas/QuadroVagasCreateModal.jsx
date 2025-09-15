@@ -21,6 +21,7 @@ export default function QuadroVagasCreateModal({ setNeedUpdate }) {
     const [modalidades, setModalidades] = useState([]);
     const [vagas, setVagas] = useState([]);
     const [polos, setPolos] = useState([]);
+    const [anexos, setAnexos] = useState([])
     const [newCategoryName, setNewCategoryName] = useState("");
 
     const [formData, setFormData] = useState({
@@ -31,6 +32,7 @@ export default function QuadroVagasCreateModal({ setNeedUpdate }) {
         habilitacao: '',
         modalidades: [],
         categoriasCustomizadas: [],
+        anexos: []
     });
 
     useEffect(() => {
@@ -62,9 +64,7 @@ export default function QuadroVagasCreateModal({ setNeedUpdate }) {
             }
         };
         fetchModalidades();
-    }, [token, editalId]);
 
-    useEffect(() => {
         const fetchVagas = async () => {
             try {
                 const res = await fetch(`/api/admin/vagas/${editalId}`, {
@@ -89,9 +89,7 @@ export default function QuadroVagasCreateModal({ setNeedUpdate }) {
             }
         };
         fetchVagas();
-    }, [token, editalId]);
 
-    useEffect(() => {
         const fetchPolos = async () => {
             try {
                 const res = await fetch(`/api/admin/polos/${editalId}`, {
@@ -116,12 +114,34 @@ export default function QuadroVagasCreateModal({ setNeedUpdate }) {
             }
         };
         fetchPolos();
+
+        const fetchAnexos = async () => {
+            try {
+                const res = await fetch('/api/admin/anexos', {
+                    headers: {
+                        'Content-Type': "application/json",
+                        'Authorization': `Bearer ${token}`
+                    },
+                    method: 'GET'
+                })
+                const result = await res.json();
+                setAnexos(result.data)
+                console.log(result.data)
+            } catch (error) {
+                setAnexos([])
+                throw new Error(`Erro ao buscar Anexos: ${error}`)
+            }
+        }
+        fetchAnexos();
     }, [token, editalId]);
 
 
     const handleOnChangeAttr = (e, attr) => {
         if (attr === 'campus') {
             setFormData(f => ({ ...f, campus: e }));
+        }
+        if (attr === 'anexos') {
+            setFormData(f => ({ ...f, anexos: e }));
         } else {
             const { value } = e.target;
             setFormData(f => ({ ...f, [attr]: value }));
@@ -275,7 +295,7 @@ export default function QuadroVagasCreateModal({ setNeedUpdate }) {
                                     <FormField label="Semestre"><SelectInput options={[1, 2]} value={formData.semestre} onChange={(e) => handleOnChangeAttr(e, "semestre")} /></FormField>
                                     <FormField label="Edital Referente"><TextInput value="Edital Nº 08/2025" /></FormField>
                                     <FormField label="Campus" className="md:col-span-3">
-                                        
+
                                         <MultiSelect
                                             value={formData.campus}
                                             onChange={(e) => handleOnChangeAttr(e.value, "campus")}
@@ -283,6 +303,19 @@ export default function QuadroVagasCreateModal({ setNeedUpdate }) {
                                             optionLabel="nome"
                                             display="chip"
                                             placeholder="Selecione os Cursos"
+                                            className=" items-center"
+                                            id='multiselect-primereact'
+                                        />
+                                    </FormField>
+                                    <FormField label="Anexos" className="md:col-span-3">
+
+                                        <MultiSelect
+                                            value={formData.anexos}
+                                            onChange={(e) => handleOnChangeAttr(e.value, "anexos")}
+                                            options={(anexos)}
+                                            optionLabel="nome"
+                                            display="chip"
+                                            placeholder="Selecione os Anexos"
                                             className=" items-center"
                                             id='multiselect-primereact'
                                         />

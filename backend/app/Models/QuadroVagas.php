@@ -32,4 +32,8 @@ class QuadroVagas extends Model
     {
         return $this->hasMany(PolosVaga::class,'quadro_vaga_id');
     }
+    public function anexos()
+    {
+        return $this->belongsToMany(Anexo::class, 'anexos_quadro_vaga', 'quadro_vaga_id', 'anexo_id');
+    }
 }

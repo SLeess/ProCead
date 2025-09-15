@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\API\APIController;
 use App\Http\Requests\ModalidadeRequest;
+use App\Models\AnexoModalidade;
 use App\Models\Modalidade;
 use App\Models\ModalidadeTipoAvaliacao;
 use App\Models\TipoAvaliacao;
@@ -23,6 +24,7 @@ class ModalidadesController extends APIController
     {
         DB::beginTransaction();
         $data = $request->validated();
+        // dd($data);
         try {
             $modalidade = Modalidade::create([
                 "sigla" => $data['sigla'],
@@ -41,6 +43,14 @@ class ModalidadesController extends APIController
                     }
                 }
             }
+            if (isset($data['anexos'])) {
+                foreach ($data['anexos'] as $anexo) {
+                    AnexoModalidade::create([
+                        "anexo_id" => $anexo['id'],
+                        "modalidade_id" => $modalidade->id,
+                    ]);
+                }
+            }
 
             DB::commit();
             return $this->sendResponse($modalidade, 'Modalidade cadastrada com sucesso.', 200);
@@ -55,7 +65,7 @@ class ModalidadesController extends APIController
      */
     public function show(string $id)
     {
-        $modalidades = Modalidade::with('tipo_avaliacao.tipo_avaliacao')
+        $modalidades = Modalidade::with(['tipo_avaliacao.tipo_avaliacao', 'anexos'])
             ->where('edital_id', $id)
             ->get();
 
@@ -95,6 +105,17 @@ class ModalidadesController extends APIController
                     }
                 }
             }
+
+            AnexoModalidade::where('modalidade_id',$modalidade->id)->delete();
+            if (isset($data['anexos'])) {
+                foreach ($data['anexos'] as $anexo) {
+                    AnexoModalidade::create([
+                        "anexo_id" => $anexo['id'],
+                        "modalidade_id" => $modalidade->id,
+                    ]);
+                }
+            }
+
 
             DB::commit();
             return $this->sendResponse($modalidade->load('tipo_avaliacao.tipo_avaliacao'), "Modalidade atualizada com sucesso!", 200);

@@ -16,7 +16,7 @@ const AnexoDeleteModal = ({ anexo, setNeedUpdate }) => {
     const handleDelete = async () => {
         setLoading(true);
         try {
-            const res = await fetch(`/api/super-admin/anexos/${anexo.id}`, {
+            const res = await fetch(`/api/admin/anexos/${anexo.id}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`,

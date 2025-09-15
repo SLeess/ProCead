@@ -4,6 +4,7 @@ import { FormField, TextInput, Checkbox } from '@/Components/Global/ui/modals';
 import { useAppContext } from '@/Contexts/AppContext';
 import { Modal, ModalBody } from 'flowbite-react';
 import { Pencil } from 'lucide-react';
+import { MultiSelect } from 'primereact/multiselect';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -19,27 +20,37 @@ const availableTiposAvaliacao = [
 const ModalidadeEditModal = ({ setNeedUpdate, modalidade }) => {
     const [openModal, setOpenModal] = useState(false);
     const [loading, setLoading] = useState(false);
-    const { token } = useAppContext();
-    const {editalId} = useParams();
+    const { token, verifyStatusRequest } = useAppContext();
+    const { editalId } = useParams();
+
     const [formData, setFormData] = useState({
         sigla: '',
         descricao: '',
+        anexos: []
     });
+    const [anexos, setAnexos] = useState([])
     const [selectedTipos, setSelectedTipos] = useState([]);
 
     useEffect(() => {
         if (openModal && modalidade) {
+            // 'anexos' state holds all possible anexo objects (the options)
+            // 'modalidade.anexos' holds the selected anexo objects from the backend
+            const selectedAnexoIds = (modalidade.anexos || []).map(anexo => anexo.id);
+            const selectedAnexoObjectsFromOptions = anexos.filter(option => selectedAnexoIds.includes(option.id));
+
             setFormData({
                 sigla: modalidade.sigla || '',
                 descricao: modalidade.descricao || '',
+                anexos: selectedAnexoObjectsFromOptions
             });
+
             if (modalidade.tipos_avaliacoes && Array.isArray(modalidade.tipos_avaliacoes)) {
                 setSelectedTipos(modalidade.tipos_avaliacoes);
             } else {
                 setSelectedTipos([]);
             }
         }
-    }, [modalidade, openModal]);
+    }, [modalidade, openModal, anexos]);
 
 
     function onCloseModal() {
@@ -60,6 +71,37 @@ const ModalidadeEditModal = ({ setNeedUpdate, modalidade }) => {
             }
         });
     };
+
+
+    useEffect(() => {
+        const fetchAnexos = async () => {
+            setLoading(true);
+            try {
+                const res = await fetch('/api/admin/anexos', {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Authorization': `Bearer ${token}`,
+                    },
+                    method: 'GET'
+                })
+                if (!res.ok) {
+                    verifyStatusRequest(res);
+                    throw new Error(`Erro ao buscar processos: ${res.status} ${res.statusText}`);
+                }
+                const result = await res.json();
+                setAnexos(result.data)
+            } catch (error) {
+                setAnexos([]);
+                throw new Error(`Erro : ${error}`);
+            } finally {
+                setLoading(false);
+            }
+        }
+        fetchAnexos()
+    }, [token])
+
+
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -159,6 +201,25 @@ const ModalidadeEditModal = ({ setNeedUpdate, modalidade }) => {
                                     ))}
                                 </div>
                             </div>
+
+
+                            <div className='mt-3'>
+                                <FormField label="Anexos da Vaga" className="md:col-span-3">
+
+                                    <MultiSelect
+                                        value={formData.anexos}
+                                        onChange={(e) => setFormData(f => ({ ...f, anexos: e.value }))}
+                                        options={(anexos)}
+                                        optionLabel="nome"
+                                        display="chip"
+                                        placeholder="Selecione os Anexos"
+                                        className=" items-center"
+                                        id='multiselect-primereact'
+                                    />
+                                </FormField>
+                            </div>
+
+
                         </div>
 
                         {/* Action Buttons */}
@@ -179,7 +240,7 @@ const ModalidadeEditModal = ({ setNeedUpdate, modalidade }) => {
                         </div>
                     </form>
                 </ModalBody>
-            </Modal>
+            </Modal >
         </>
     )
 }
