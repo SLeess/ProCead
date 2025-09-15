@@ -36,7 +36,7 @@ const QuadroVagas = () => {
           verifyStatusRequest(res.status, result);
           throw new Error(`Erro ao buscar Quadro de Vagas: ${res.status} ${res.statusText}`);
         }
-
+        console.log(result.data)
         setQuadroVagas(result.data);
       } catch (error) {
 
@@ -48,7 +48,7 @@ const QuadroVagas = () => {
     };
     fetchQuadroVagas();
   }, [needUpdate]);
-
+  
 
   if (hasPermissionForEdital('visualizar-campi-cursos', editalId) || isSuperAdmin()) {
     const totalVagas = quadroVagas && quadroVagas.length > 0 ? quadroVagas.reduce((total, quadro) => {

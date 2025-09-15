@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\API\APIController;
 use App\Http\Requests\QuadroVagaRequest;
 use App\Http\Requests\QuadroVagaUpdateRequest;
+use App\Models\AnexoQuadroVaga;
 use App\Models\Modalidade;
 use App\Models\QuadroVagas;
 use DB;
@@ -19,7 +20,7 @@ class QuadroVagasController extends APIController
     public function index($id)
     {
         try {
-            $quadroVagas = QuadroVagas::where('edital_id', $id)->get();
+            $quadroVagas = QuadroVagas::with('anexos')->where('edital_id', $id)->get();
             $quadroVagas->map(function ($vaga) {
                 $vaga->campus = $vaga->polos->map(function ($poloVaga) {
                     return $poloVaga->polo;
@@ -55,7 +56,6 @@ class QuadroVagasController extends APIController
                 'vaga_id' => $data['vaga'],
                 'habilitacao' => $data['habilitacao'],
             ]);
-
             foreach ($data['modalidades'] as $modalidade) {
                 foreach ($modalidade as $key => $value) {
                     if ($value && $value > 0) {
@@ -76,8 +76,12 @@ class QuadroVagasController extends APIController
 
             foreach ($data['campus'] as $poloId) {
                 $quadro->polos()->create([
+                    'quadro_vaga_id' => $quadro->id,
                     'polo_id' => $poloId,
                 ]);
+            }
+            foreach ($data['anexos'] as $anexo) {
+                AnexoQuadroVaga::create(['quadro_vaga_id' => $quadro->id, 'anexo_id' => $anexo['id']]);
             }
 
             DB::commit();
@@ -131,6 +135,11 @@ class QuadroVagasController extends APIController
                 $quadro->polos()->create([
                     'polo_id' => $poloId,
                 ]);
+            }
+
+            AnexoQuadroVaga::where('quadro_vaga_id',$quadro->id)->delete();
+            foreach ($data['anexos'] as $anexo) {
+                AnexoQuadroVaga::create(['quadro_vaga_id' => $quadro->id, 'anexo_id' => $anexo['id']]);
             }
 
             DB::commit();

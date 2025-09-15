@@ -18,7 +18,7 @@ const Anexos = () => {
         const fetchProcessos = async () => {
             setLoading(true);
             try {
-                const res = await fetch("/api/super-admin/anexos",{
+                const res = await fetch("/api/admin/anexos",{
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',

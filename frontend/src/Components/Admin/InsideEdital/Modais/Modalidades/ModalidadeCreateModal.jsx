@@ -4,20 +4,23 @@ import { FormField, TextInput, Checkbox } from '@/Components/Global/ui/modals';
 import { useAppContext } from '@/Contexts/AppContext';
 import { Modal, ModalBody } from 'flowbite-react';
 import { Plus } from 'lucide-react';
-import React, { useState } from 'react';
+import { MultiSelect } from 'primereact/multiselect';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 const ModalidadeCreateModal = ({ setNeedUpdate }) => {
     const [openModal, setOpenModal] = useState(false);
     const [loading, setLoading] = useState(false);
-    const { token } = useAppContext();
-    const {editalId} = useParams();
+    const { token, verifyStatusRequest } = useAppContext();
+    const { editalId } = useParams();
     const [formData, setFormData] = useState({
         sigla: '',
         descricao: '',
         tipos_avaliacao: [],
-        });
+        anexos: []
+    });
+    const [anexos, setAnexos] = useState([])
 
     const availableTiposAvaliacao = [
         "Socioeconômica",
@@ -32,7 +35,8 @@ const ModalidadeCreateModal = ({ setNeedUpdate }) => {
         setFormData({
             sigla: '',
             descricao: '',
-            tipos_avaliacao: []
+            tipos_avaliacao: [],
+            anexos: []
         });
     }
 
@@ -58,6 +62,33 @@ const ModalidadeCreateModal = ({ setNeedUpdate }) => {
         });
     };
 
+    useEffect(() => {
+        const fetchAnexos = async () => {
+            setLoading(true);
+            try {
+                const res = await fetch('/api/admin/anexos', {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Authorization': `Bearer ${token}`,
+                    },
+                    method: 'GET'
+                })
+                if (!res.ok) {
+                    verifyStatusRequest(res);
+                    throw new Error(`Erro ao buscar processos: ${res.status} ${res.statusText}`);
+                }
+                const result = await res.json();
+                setAnexos(result.data)
+            } catch (error) {
+                setAnexos([]);
+                throw new Error(`Erro : ${error}`);
+            } finally {
+                setLoading(false);
+            }
+        }
+        fetchAnexos()
+    }, [token])
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -65,7 +96,7 @@ const ModalidadeCreateModal = ({ setNeedUpdate }) => {
         try {
             const res = await fetch(`/api/admin/modalidades/`, {
                 method: 'POST',
-                body: JSON.stringify({...formData, editalId}),
+                body: JSON.stringify({ ...formData, editalId }),
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`,
@@ -108,7 +139,7 @@ const ModalidadeCreateModal = ({ setNeedUpdate }) => {
                 <span className='ml-1'>Cadastrar Modalidade</span>
             </button>
             <Modal show={openModal} onClose={onCloseModal} popup>
-            {loading && <LoaderPages/>}
+                {loading && <LoaderPages />}
                 <CabecalhoModal titleModal={"Criar Modalidade"} />
 
                 <hr className='mb-3 mx-4' />
@@ -150,6 +181,21 @@ const ModalidadeCreateModal = ({ setNeedUpdate }) => {
                                         />
                                     ))}
                                 </div>
+                            </div>
+                            <div className='mt-3'>
+                                <FormField label="Anexos da Vaga" className="md:col-span-3">
+
+                                    <MultiSelect
+                                        value={formData.anexos}
+                                        onChange={(e) => setFormData(f => ({ ...f, anexos: e.value }))}
+                                        options={(anexos)}
+                                        optionLabel="nome"
+                                        display="chip"
+                                        placeholder="Selecione os Anexos"
+                                        className=" items-center"
+                                        id='multiselect-primereact'
+                                    />
+                                </FormField>
                             </div>
                         </div>
 

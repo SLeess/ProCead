@@ -26,6 +26,7 @@ class ModalidadeRequest extends FormRequest
             'descricao' => 'required|string|max:255',
             'editalId' => 'required|integer|exists:editais,id',
             'tipos_avaliacao' => 'sometimes|array',
+            'anexos' => 'sometimes|array',
             'tipos_avaliacao.*' => 'string|exists:tipos_avaliacao,tipo'
         ];
     }

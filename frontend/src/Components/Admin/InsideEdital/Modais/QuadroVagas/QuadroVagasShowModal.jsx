@@ -17,6 +17,7 @@ export default function QuadroVagasShowModal({ quadroVaga }) {
     const { token } = useAppContext();
     const { editalId } = useParams();
     const [polos, setPolos] = useState([]);
+    const [anexos, setAnexos] = useState([]);
 
 
 
@@ -45,6 +46,26 @@ export default function QuadroVagasShowModal({ quadroVaga }) {
             }
         };
         if(openModal) fetchPolos();
+
+        const fetchAnexos = async () => {
+            try {
+                const res = await fetch('/api/admin/anexos', {
+                    headers: {
+                        'Content-Type': "application/json",
+                        'Authorization': `Bearer ${token}`
+                    },
+                    method: 'GET'
+                })
+                const result = await res.json();
+                setAnexos(result.data)
+                console.log(result.data)
+            } catch (error) {
+                setAnexos([])
+                throw new Error(`Erro ao buscar Anexos: ${error}`)
+            }
+        }
+        fetchAnexos();
+
     }, [token, editalId, openModal]);
 
 
@@ -106,6 +127,18 @@ export default function QuadroVagasShowModal({ quadroVaga }) {
                                         optionLabel="nome"
                                         display="chip"
                                         placeholder="Nenhum campus selecionado"
+                                        className=" items-center"
+                                        id='multiselect-primereact'
+                                        readOnly={true}
+                                    />
+                                </FormField>
+                                <FormField label="Anexos" className="md:col-span-3">
+                                    <MultiSelect
+                                        value={quadroVaga?.anexos}
+                                        options={anexos}
+                                        optionLabel="nome"
+                                        display="chip"
+                                        placeholder="Nenhum Anexo selecionado"
                                         className=" items-center"
                                         id='multiselect-primereact'
                                         readOnly={true}

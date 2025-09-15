@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('polos_vaga', function (Blueprint $table) {
+        Schema::create('anexos_quadro_vaga', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('quadro_vaga_id')->constrained('quadro_vagas')->onDelete('cascade');
-            $table->foreignId('polo_id')->constrained('polos')->onDelete('cascade');
+            $table->foreignId('anexo_id')->constrained('anexos');
+            $table->foreignId('quadro_vaga_id')->constrained('quadro_vagas');
             $table->timestamps();
         });
     }
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('polos_vaga');
+        Schema::dropIfExists('anexos_quadro_vaga');
     }
 };

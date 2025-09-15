@@ -24,10 +24,10 @@ class AnexoRequest extends FormRequest
         return [
             'nome' => 'required|string|max:255',
             'formato' => 'required|string|max:255',
-            'caminho' => 'nullable|text',
-            'editalId' => 'nullable|integer|exists:editais,id',
-            'modalidadeId' => 'nullable|integer|exists:modalidades,id',
-            'vagaId' => 'nullable|integer|exists:cursos,id',
+            // 'caminho' => 'nullable|text',
+            // 'editalId' => 'nullable|integer|exists:editais,id',
+            // 'modalidadeId' => 'nullable|integer|exists:modalidades,id',
+            // 'vagaId' => 'nullable|integer|exists:cursos,id',
         ];
     }
 }

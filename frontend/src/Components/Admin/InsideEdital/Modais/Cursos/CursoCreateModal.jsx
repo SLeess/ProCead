@@ -4,7 +4,7 @@ import { FormField, TextInput } from '@/Components/Global/ui/modals';
 import { useAppContext } from '@/Contexts/AppContext';
 import { Modal, ModalBody, ModalHeader } from 'flowbite-react';
 import { Pencil, Plus } from 'lucide-react';
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
