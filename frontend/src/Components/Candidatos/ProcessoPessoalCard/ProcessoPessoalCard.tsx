@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import "./ProcessoPessoalCard.css";
 import { HiOutlineArchiveBoxXMark } from "react-icons/hi2";
 import { HiOutlineCheckCircle } from 'react-icons/hi';
+import { NavigationContext } from '@/Contexts/NavigationContext';
 
 export default function ProcessoPessoalCard({ processo }: ProcessoPessoalCardProps ){
+    const { navigate } = useContext(NavigationContext);
+    
+    const onClickBtnEntrar = (editalId) => {
+        navigate(`/edital/${editalId}/geral`);
+    };
 
     return (
         <li className={`ProcessoPessoalCard`}>
             <article>
                 <aside className={`lateralBar ${processo.status === 'Em andamento' ? `bg-[#FFC107]`: `bg-[#6C757D]`}`}></aside>
-                <div>
+                <div className='content'>
                     <h3 className={`descricao`}>
                         {processo.descricao}
                     </h3>
@@ -35,7 +41,7 @@ export default function ProcessoPessoalCard({ processo }: ProcessoPessoalCardPro
                             </>
                         }
                         <div>
-                            <button className={`entrarBtn`}>
+                            <button className={`entrarBtn`} onClick={() => onClickBtnEntrar(processo.id)}>
                                 Entrar no edital
                             </button>
                         </div>

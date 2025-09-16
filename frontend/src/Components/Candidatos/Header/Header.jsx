@@ -3,10 +3,10 @@ import './Header.css';
 import HeaderModel from '@/Components/Global/HeaderModel/HeaderModel';
 import { useAppContext } from '@/Contexts/AppContext';
 
-export default function Header(){
+export default function Header({ showSubHeader }){
   const { canAccessAdminArea } = useAppContext();
   return (
-    <HeaderModel headerid={'user'}>
+    <HeaderModel showSubHeader={showSubHeader} headerid={'user'}>
       <NavLink to="/" end className={({ isActive }) => `link-page my-2 ${isActive ? "active-link md:border-b-2 border-secondary dark:border-primary" : ""}`}>
         Processos Ativos
       </NavLink>
