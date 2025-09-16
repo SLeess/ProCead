@@ -1,11 +1,11 @@
 import { Link, Outlet } from "react-router-dom";
 import Header from "@/Components/Admin/Header/Header";
 import { useContext } from "react";
-import { AppContext } from "@/Contexts/AppContext";
+import { AppContext, useAppContext } from "@/Contexts/AppContext";
 
 export default function LayoutAdmin()
 {
-    const { user } = useContext(AppContext);
+    const { user } = useAppContext();
 
     return (
         <>

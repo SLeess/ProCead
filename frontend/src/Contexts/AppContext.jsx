@@ -179,7 +179,13 @@ export default function AppProvider({ children }) {
                 } else {
                     const millisecondsLeft = expirationTimestamp - now;
                     const minutesLeft = Math.ceil(millisecondsLeft / 1000 / 60);
-                    setRemainingTime(minutesLeft);
+
+                    if(minutesLeft === 10)
+                        toast.warning(`Sua sessão irá expirar em ${minutesLeft} minutos.`, {
+                            autoClose: false,
+                            closeOnClick: true,
+                        });
+                    // setRemainingTime(minutesLeft);
                 }
             }
         };
@@ -187,7 +193,7 @@ export default function AppProvider({ children }) {
         checkExpiration();
 
         // const interval = setInterval(checkExpiration, 30000);
-        const interval = setInterval(checkExpiration, 300);
+        const interval = setInterval(checkExpiration, 57000);
 
         return () => clearInterval(interval);
 
@@ -389,8 +395,8 @@ export default function AppProvider({ children }) {
         setUser, 
         token, 
         setToken,
-        remainingTime,
-        setRemainingTime,
+        // remainingTime,
+        // setRemainingTime,
         changeExpireTime,
         apiAsyncFetch,
         // expireTime,
