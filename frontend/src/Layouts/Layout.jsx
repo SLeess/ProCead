@@ -23,18 +23,18 @@ export default function Layout()
                     )}
                 </>
             )}
-            <div className='flex flex-row-reverse min-w-[310px] max-w-screen-xl mt-2 text-black'>
+            <div className='flex justify-end min-w-[310px] max-w-screen-xl mr-10 mt-2 text-black'>
                 {
                     remainingTime !== null && remainingTime !== 0 &&
-                    <p className="text-sm my-1">Sua sessão expira em {remainingTime} min.</p>
+                    <p className="text-sm">Sua sessão expira em {remainingTime} min.</p>
                 }
                 {
                     remainingTime === 0 &&
-                    <p className="text-sm my-1">Sua sessão expirou!</p>
+                    <p className="text-sm">Sua sessão expirou!</p>
                 }
                 {
                     remainingTime === null &&
-                    <p className="text-sm my-1">&nbsp;</p>
+                    <p className="text-sm">&nbsp;</p>
                 }
             </div>
 

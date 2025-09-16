@@ -10,26 +10,16 @@ export default function SubHeader(){
     <header id='sub-header'>
 
         <Navbar fluid rounded>
-
             <div id="sub-nav-item">
                 <NavLink to={`/edital/${editalId}/geral`} end className={({ isActive }) => `link-page ${isActive ? "text-blue-500" : ""}`}>
                     Visão Geral
                 </NavLink>
+                <NavLink to={`/inscricao/${editalId}`} end className={({ isActive }) => `link-page ${isActive ? "text-blue-500" : ""}`}>
+                    Inscrição
+                </NavLink>
             </div>
-
-            {/* <div id="mobile-buttons-div">
-                <ThemeToggleBtn />
-                <UserDropdown/>
-                <NavbarToggle className="ml-1 navbar-toggle"/>
-            </div> */}
-
-            {/* <NavbarCollapse className="md:hidden">
-                <div id="menu-responsive">
-                    { children }
-                </div>
-            </NavbarCollapse> */}
         </Navbar>
 
     </header>
   );
-};
+}; 

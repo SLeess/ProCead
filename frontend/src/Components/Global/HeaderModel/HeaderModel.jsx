@@ -5,7 +5,7 @@ import "./HeaderModel.css";
 
 import { useAppContext } from '@/Contexts/AppContext';
 
-export default function HeaderModel({ showSubHeader, headerid, children }){
+export default function HeaderModel({ showSubHeader, headerid, children, remainingTime}){
 
     return(
         <header id={headerid}>
@@ -17,7 +17,6 @@ export default function HeaderModel({ showSubHeader, headerid, children }){
                 <div id="nav-item">
                     { children }
                 </div>
-
 
                 <div id="desktop-buttons-div">
                     <ThemeToggleBtn />
@@ -35,39 +34,7 @@ export default function HeaderModel({ showSubHeader, headerid, children }){
                         { children }
                     </div>
                 </NavbarCollapse>
-
-
-                    <div id="desktop-buttons-div">
-                        <ThemeToggleBtn />
-                        <UserDropdown/>
-                    </div>
-
-                    <div id="mobile-buttons-div">
-                        <ThemeToggleBtn />
-                        <UserDropdown/>
-                        <NavbarToggle className="ml-1 navbar-toggle"/>
-                    </div>
-
-                    <NavbarCollapse className="md:hidden">
-                        <div id="menu-responsive">
-                            { children }
-                        </div>
-                    </NavbarCollapse>
             </Navbar>
-            <div className='flex flex-row-reverse max-w-screen-xl mx-auto mt-2 text-black'>
-                {
-                remainingTime !== null && remainingTime !== 0 &&
-                <p className="text-sm my-1 w-full text-end mr-5">Sua sessão expira em {remainingTime} min.</p>
-                }
-                {
-                remainingTime === 0 &&
-                <p className="text-sm my-1 w-full text-end mr-5">Sua sessão expirou!</p>
-                }
-                {
-                remainingTime === null &&
-                <p className="text-sm my-1 w-full text-end mr-5">&nbsp;</p>
-                }
-            </div>
         </header>
     );
 
