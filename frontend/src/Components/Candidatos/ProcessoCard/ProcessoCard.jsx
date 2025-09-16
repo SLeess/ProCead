@@ -28,7 +28,7 @@ export default function ProcessoCard({ processo }){
         )
       }
       <div className={`cardContentWrapper`}>
-        <h3 className={`cardName`}>{edital}</h3>
+        <h3 className={`cardName`}><span className={`cardNameEdital`}>EDITAL Nº</span> {edital}</h3>
         <p className={`cardContent`} >{ limitarString(descricao, 115) }</p>
       </div>
 
