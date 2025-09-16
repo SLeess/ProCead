@@ -104,12 +104,14 @@ class AuthService implements IAuthService
     public function logoutUser(User $user): void
     {
         $user->currentAccessToken()->delete();
+        Auth::logout();
     }
 
     public function sendResetLinkEmail(array $data): array
     {
         DB::beginTransaction();
 
+        $user = User::where('email', $data['email'])->first();
         try {
             $status = Password::broker()->sendResetLink(
                 ['email' => $data['email']]
@@ -117,6 +119,15 @@ class AuthService implements IAuthService
 
             if($status == Password::RESET_LINK_SENT){
                 DB::commit();
+
+                activity('Reset de Senha')
+                    ->causedBy(null)
+                    ->event('created')
+                    ->withProperties([
+                        "uuid" => $user->uuid
+                    ])
+                    ->log('Link de Reset de Senha foi criado para o usuário "'. $user->nome. '".');
+                    
                 return ['status' => $status];
             }
 

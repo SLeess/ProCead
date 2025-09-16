@@ -1,8 +1,9 @@
 import PerfilDeleteModal from "@/Components/Admin/InsideEdital/Modais/Perfis/PerfilDeleteModal";
-import PerfilEditModal from "@/Components/Admin/InsideEdital/Modais/Perfis/PerfilEditModal";
-import PerfilShowModal from "@/Components/Admin/InsideEdital/Modais/Perfis/PerfilShowModal";
-import CPFPill from "@/Components/Global/Tables/MainTable/Components/Pills/CPFPill";
-import NivelDeAcessoPill from "@/Components/Global/Tables/MainTable/Components/Pills/NivelDeAcessoPill";
+import UserEditProfileModal from "@/Components/Admin/InsideEdital/Modais/Usuario/UserEditProfileModal";
+import UserShowProfileModal from "@/Components/Admin/InsideEdital/Modais/Usuario/UserShowProfileModal";
+import CPFPill from "@/Components/Global/Tables/Components/Pills/CPFPill";
+import NivelDeAcessoPill from "@/Components/Global/Tables/Components/Pills/NivelDeAcessoPill";
+import { SelectInput, TextInput } from "@/Components/Global/ui/modals";
 import { Eye, Pencil, Trash, List, TriangleAlert } from "lucide-react";
 import React from "react";
 
@@ -19,42 +20,70 @@ export const GerenciarUsuariosColumns = (navigate) => [
       accessorKey: "nome",
       header:"Nome Completo",
       cell: ({row}) => <span>{row.original.nome}</span>,
+      aditionalSearchInput: ({advancedSearchTerm, updateAttr}) => (
+        <TextInput 
+          name={"nome"} 
+          className="" 
+          value={advancedSearchTerm["nome"]}
+          onChange={updateAttr}
+        />
+      ),
       enableHiding: false,
     },
     {
       accessorKey: "email",
       header:"E-mail",
-      cell: ({row}) => <span>{row.original.email}</span>
+      cell: ({row}) => <span>{row.original.email}</span>,
+      aditionalSearchInput: ({advancedSearchTerm, updateAttr}) => (
+        <TextInput 
+          name={"email"} 
+          className="" 
+          value={advancedSearchTerm["email"]}
+          onChange={updateAttr}
+        />
+      ),
     },
     {
       accessorKey: "level_access",
       header:"Nível de Acesso",
-      cell: ({row}) => <NivelDeAcessoPill>{row.original.level_access}</NivelDeAcessoPill>
+      cell: ({row}) => <NivelDeAcessoPill>{row.original.level_access}</NivelDeAcessoPill>,
+      aditionalSearchInput: ({advancedSearchTerm, updateAttr}) => (
+        <SelectInput 
+          name={"level_access"} 
+          value={advancedSearchTerm.level_access} 
+          onChange={updateAttr} 
+          options={['', 'Administrador', 'Moderador', 'Usuário']} 
+        />
+      ),
     },
     {
       accessorKey: "cpf",
       header:"CPF",
       cell: ({row}) => <CPFPill>{row.original.cpf}</CPFPill>,
-      enableSorting: false,
+      aditionalSearchInput: ({advancedSearchTerm, updateAttr}) => (
+        <TextInput 
+          name={"cpf"} 
+          className="" 
+          // className="md:col-span-4" 
+          value={advancedSearchTerm["cpf"]}
+          onChange={updateAttr}
+        />
+      ),
     },
     {
       id: "actions",
       header: "Ações",
       alignText: true,
-      cell: ({row}) => {
-        return (
+      cell: ({row}) => (
         <div className="flex items-center space-x-2 justify-center">
           <button onClick={() => navigate(`admin/usuarios/${row.original.uuid}/cargos-e-permissoes`)} id="acoes-icons">
               <List className="h-5 w-5 text-green-500" />
           </button>
-          {/* <button onClick={() => {}} id="acoes-icons">
-              <Eye className="h-5 w-5 text-blue-500" />
-          </button> */}
-          <PerfilShowModal perfil={{name: row.original.nome, scope: row.original.escopo}}/>
-          <PerfilEditModal perfil={{name: row.original.nome, scope: row.original.escopo, id: row.original.id}}/>
-          <PerfilDeleteModal perfil={{id: row.original.id}}/>
+          <UserShowProfileModal user={row.original}></UserShowProfileModal>
+          <UserEditProfileModal user={row.original}></UserEditProfileModal>
+          {/* <PerfilDeleteModal perfil={{id: row.original.id}}/> */}
         </div>
-      )},
+      ),
       enableSorting: false,
       enableHiding: false,
     },

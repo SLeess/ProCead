@@ -8,6 +8,8 @@ import PrazosIniciais from "./Tabs/PrazosIniciais";
 import InformacoesBasicas from "./Tabs/InformacoesBasicas";
 import PrazosFinais from "./Tabs/PrazosFinais";
 import './NovoEdital.css';
+import { useAppContext } from "@/Contexts/AppContext";
+import AccessDenied from "@/Components/Global/AccessDenied/AccessDenied";
 
 const Step = ({ icon: IconComponent, label, isActive, isCompleted }) => {
     const statusClass = isActive
@@ -28,6 +30,7 @@ const Step = ({ icon: IconComponent, label, isActive, isCompleted }) => {
 
 export default function NovoEdital()
 {
+    const { hasGlobalPermission } = useAppContext();
     const [activeTabIndex, setActiveTabIndex] = useState(0);
     const [formData, setFormData] = useState({
         referencia: '',
@@ -96,13 +99,19 @@ export default function NovoEdital()
         { label: 'Prazos Finais', icon: <FaRegCalendarCheck /> },
     ];
 
+    // if(hasGlobalPermission('cadastrar-edital')){
     return (
-    <section id='novoEdital'>
+    <section id='novoEdital' className={`${!hasGlobalPermission('cadastrar-edital') ? 'flex justify-center items-center': ''}`}>
 
         <header>
             <h1>Etapas de Criação do Edital</h1>
         </header>
-
+        {
+            !hasGlobalPermission('cadastrar-edital') &&
+            <AccessDenied/>
+        }
+         {
+        hasGlobalPermission('cadastrar-edital') &&
         <form onSubmit={handleOnSubmit} id="content">
             <nav aria-label="Tabs" className="timeline-nav">
                 <Stepper tabsData={tabsData} activeTabIndex={activeTabIndex} setActiveTabIndex={setActiveTabIndex}/>
@@ -139,6 +148,12 @@ export default function NovoEdital()
                 </button>
             </div>
         </form>    
+         }
     </section>
     );
+    // } else{
+    // return (
+    //     <AccessDenied />
+    // )
+    // }
 }

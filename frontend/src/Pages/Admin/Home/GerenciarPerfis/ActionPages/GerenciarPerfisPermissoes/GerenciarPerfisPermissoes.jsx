@@ -12,7 +12,7 @@ import TableSetPermissionsToRole from "@/Components/Global/Tables/TableSetPermis
 export default function GerenciarPerfisPermissoes()
 {
     const { perfilId } = useParams();
-    const { token, verifyStatusRequest } = useAppContext();
+    const { token, verifyStatusRequest, apiAsyncFetch } = useAppContext();
     const { navigate } = useContext(NavigationContext);
     
     const [role, setRole] = useState({});
@@ -105,7 +105,6 @@ export default function GerenciarPerfisPermissoes()
         };
         fetchProcessos();
     }, [perfilId, token, hasBeenUpdated]);
-
     
     const handleOnSubmit = async (e) => {
         e.preventDefault();
@@ -118,41 +117,19 @@ export default function GerenciarPerfisPermissoes()
         }
 
         try {
-            
-            const formData = {
-                role_id: role.id,
-                permissions: selectedPermissions.permissions,
-                // role_data: {
-                //     name: role.nome,
-                //     scope: role.escopo,
-                // },
-                _method: 'PUT',
-            };
 
-            const res = await fetch(`/api/super-admin/roles-with-permissions/${role.id}`, {
-                method: 'POST',
-                body: JSON.stringify(formData),
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`,
-                },
+            const result = await apiAsyncFetch({
+                url: `/api/super-admin/roles-with-permissions/${role.id}`,
+                method: "POST",
+                body: {
+                    role_id: role.id,
+                    permissions: selectedPermissions.permissions,
+                    _method: 'PUT',
+                }
             });
             
-            const result = await res.json();
-
-            if (!result.success || !res.ok) {
-                if (result.errors) {
-                    Object.values(result.errors).forEach(errorArray => {
-                        errorArray.forEach((errorMessage) => toast.error(errorMessage));
-                    });
-                } else {
-                    verifyStatusRequest(res.status, result);
-                    throw new Error(`Erro ao atualizar o cargo e suas permissões: ${res.status} ${res.statusText}`);
-                }
-            } else {
-                toast.success(`${result.data.message || "Os dados e permissões do cargo foram atualizados."}`);
-                setHasBeenUpdated((h) => !h);
-            }
+            toast.success(`${result.data.message || "Os dados e permissões do cargo foram atualizados."}`);
+            setHasBeenUpdated((h) => !h);
         } catch (err) {
             toast.error("Não foi atualizar os dados do cargo. " + (err.message ? ` (${err.message})` : ''))
         } finally {
@@ -173,11 +150,11 @@ export default function GerenciarPerfisPermissoes()
                     <InformacoesGerais role={role} setRole={setRole} readOnly={true}/>
                 </div>
                 <TableSetPermissionsToRole 
-                    allPermissions={allPermissions} 
-                    hasBeenUpdated={hasBeenUpdated}
-                    initialSelectedPermissions={initialSelectedPermissions}
-                    setTableData={setTableData}
                     tableData={tableData}
+                    setTableData={setTableData}
+                    allPermissions={allPermissions} 
+                    initialSelectedPermissions={initialSelectedPermissions}
+                    hasBeenUpdated={hasBeenUpdated}
                     setSelectedPermissions={setSelectedPermissions}
                 />
                 <form onSubmit={handleOnSubmit}>

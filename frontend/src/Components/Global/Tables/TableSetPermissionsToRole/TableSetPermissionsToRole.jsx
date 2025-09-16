@@ -4,19 +4,6 @@ import getColumns from "./columns";
 
 export default function TableSetPermissionsToRole({tableData, setTableData, allPermissions, initialSelectedPermissions, setSelectedPermissions = () => {}, hasBeenUpdated})
 {
-    /**
-     * Opcional -- é uma função pra ordenar os grupos de permissões para exibir primeiro as linhas
-     * com mais permissões e por ultimo as que tem menos
-     * @param {*} a 
-     * @param {*} b 
-     * @returns 
-     */
-    const sortDataByQtdOfInputs = (a, b) => {
-        const qtdInputsA = Object.values(a).filter((e) => e=== true || e=== false).length;
-        const qtdInputsB = Object.values(b).filter((e) => e=== true || e=== false).length;
-        return qtdInputsB - qtdInputsA;
-    };
-    
     useEffect(() => {
         if (Object.keys(allPermissions).length === 0) {
             setTableData([]);
@@ -46,7 +33,12 @@ export default function TableSetPermissionsToRole({tableData, setTableData, allP
             };
         });
 
-        setTableData(formattedData.sort((a, b) => sortDataByQtdOfInputs(a, b)));
+        setTableData(
+            /**
+            //  * Opcional -- é uma função pra ordenar os grupos de permissões para exibir em ordem alfabética
+            */
+            formattedData.sort((a,b) => String(a.name_permission).toLowerCase().localeCompare(String(b.name_permission)))
+        );
 
     }, [allPermissions, initialSelectedPermissions, hasBeenUpdated]); // Depende dos dados brutos
 

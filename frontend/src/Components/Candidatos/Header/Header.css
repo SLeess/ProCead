@@ -8,6 +8,8 @@ header#user {
 #user nav {
     @apply container relative flex mx-auto;
     @apply px-6 py-2 flex flex-nowrap justify-between;
+    /* @apply container relative flex mx-auto rounded-2xl;
+    @apply flex flex-nowrap justify-between; */
     @apply min-w-[310px] max-w-screen-xl mt-2.5;
 
     @apply shadow-sm;

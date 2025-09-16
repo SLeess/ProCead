@@ -36,10 +36,12 @@ section#gerenciar_usuarios_perfis_permissoes div#table-data-container{
 
 section#gerenciar_usuarios_perfis_permissoes div#content div#relacoes_globais
 {
-    /* @apply grid md:flex justify-between md:space-x-4 space-y-4 md:space-y-2; */
-    /* @apply flex flex-wrap gap-4 justify-between; */
-    @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-12 gap-6 mb-8 xl:flex lg:justify-between lg:space-x-4
+    @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-12 gap-6 mb-8;
 }
+/* section#gerenciar_usuarios_perfis_permissoes div#content div#relacoes_globais div
+{
+    @apply max-w-[480px];
+} */
 
 /* grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-8
 md:col-span-1 */

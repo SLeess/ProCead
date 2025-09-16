@@ -47,12 +47,4 @@ class SyncRolePermissionsRequest extends FormRequest
             ]
         ];
     }
-
-    public function attributes(): array
-    {
-        return [
-            'role_id' => 'Cargo',
-            'permissions' => 'Permissões',
-        ];
-    }
 }

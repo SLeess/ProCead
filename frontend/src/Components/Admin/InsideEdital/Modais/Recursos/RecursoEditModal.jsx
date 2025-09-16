@@ -35,7 +35,7 @@ export default function RecursoEditModal() {
                     <div>
                         <h2 id='recurso-situacao-text'>Situação</h2>
 
-                        <div id='rows-2-input'>
+                        <div className="rows-2-input">
                             <FormField label="Tipo de recurso" className="col-span-1">
                                 <SelectInput readOnly={false} value="Interposição de Classificação" options={['Interposição de Classificação', 'Recurso de Prova', 'Recurso de Cota']} />
                             </FormField>

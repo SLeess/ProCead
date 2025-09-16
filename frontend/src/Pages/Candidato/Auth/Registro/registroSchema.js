@@ -11,12 +11,3 @@ export const registerSchema = z.object({
     message: "As senhas não coincidem.",
     path: ["confirm_password"],
 });
-
-
-export const maskCPF = (value) => {
-    return value
-        .replace(/\D/g, "")
-        .replace(/(\d{3})(\d)/, "$1.$2")
-        .replace(/(\d{3})(\d)/, "$1.$2")
-        .replace(/(\d{3})(\d{1,2})$/, "$1-$2");
-};

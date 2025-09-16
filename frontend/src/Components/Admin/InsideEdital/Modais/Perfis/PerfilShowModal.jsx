@@ -36,7 +36,7 @@ const PerfilShowModal = ({perfil = {name: '', scope: ''}}) => {
                         Edital Referente: Processo de Seleção de Discentes para os Cursos de Especialização da Unimontes – Modalidade Educação a Distância – Sistema Universidade Aberta do Brasil (UAB) – Edital Nº 08/2025
                     </p> */}
                     <div>
-                        <div id='rows-2-input'>
+                        <div className="rows-2-input">
                             <FormField label="Nome do Perfil">
                                 <TextInput readOnly={true} className="md:col-span-1" value={perfil.name} />
                             </FormField>

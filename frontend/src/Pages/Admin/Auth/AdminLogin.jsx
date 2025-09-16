@@ -4,6 +4,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { loginSchema } from "@/Pages/Candidato/Auth/Login/loginSchema";
 import { NavigationContext } from "@/Contexts/NavigationContext";
 import LoaderPages from "@/Components/Global/LoaderPages/LoaderPages";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function Login() {
     const { login, apiAsyncFetch } = useContext(AppContext);
@@ -59,6 +60,11 @@ export default function Login() {
         }
     };
 
+    const [isPasswordVisible, setIsPasswordVisibility] = useState(false);
+    const togglePasswordVisibility = () => {
+        setIsPasswordVisibility(!isPasswordVisible);
+    };
+
     const updateAttr = (e) => {
         const attr = e.target.name;
         setFormData(f => ({...f, [attr]: e.target.value}));
@@ -92,7 +98,7 @@ export default function Login() {
                                 type="text" 
                                 id="email" 
                                 name="email" 
-                                className="border-2 border-[#004da9] w-full h-full px-3 py-2 text-black bg-transparent input-field focus-within:outline-0 focus-within:outline-[#02397c]" 
+                                className="border-2 border-[#004da9] w-full h-full px-3 py-2 text-black bg-white input-field focus-within:outline-0 focus-within:outline-[#02397c]" 
                                 required
                                 onChange={updateAttr}
                                 onFocus={() => setFocusedField('email')}
@@ -109,10 +115,10 @@ export default function Login() {
                     <div className="mb-4">
                         <div className="mx-auto relative h-[45px] w-[352px]">
                             <input 
-                                type="password" 
+                                type={`${isPasswordVisible ? 'text' : 'password'}`} 
                                 id="password" 
                                 name="password" 
-                                className="border-2 border-[#004da9] w-full h-full px-3 py-2 text-black bg-transparent input-field focus-within:outline-0 focus-within:outline-[#02397c]" 
+                                className="border-2 border-[#004da9] w-full h-full px-3 py-2 text-black bg-white input-field focus-within:outline-0 focus-within:outline-[#02397c]" 
                                 required
                                 onChange={updateAttr}
                                 onFocus={() => setFocusedField('password')}
@@ -124,6 +130,17 @@ export default function Login() {
                                     : ''}`}>
                                 Senha
                             </label>
+                            <button
+                                type="button"
+                                className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
+                                onClick={togglePasswordVisibility}
+                            >
+                                {isPasswordVisible ? (
+                                    <EyeOff className="h-5 w-5 text-gray-400" />
+                                ) : (
+                                    <Eye className="h-5 w-5 text-gray-400" />
+                                )}
+                            </button>
                         </div>
                     </div>
 

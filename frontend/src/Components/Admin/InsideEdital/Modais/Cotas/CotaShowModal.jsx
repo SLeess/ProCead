@@ -39,7 +39,7 @@ export default function CotaShowModal() {
                         </div>
 
                         <h2 id="cotas-situacao-title">Situação</h2>
-                        <div id='rows-3-input'>
+                        <div className='rows-3-input'>
                             <FormField label="Status" className="md:col-span-1">
                                 <SelectInput readOnly={true} value="Em Análise" options={['Deferido', 'Indeferido', 'Em Análise']} />
                             </FormField>

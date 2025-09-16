@@ -14,8 +14,7 @@ class UserDataPermissionsAndRoles extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $user = $request->user();
-
+        $user = $this ?? $request->user();
         $permissionsByEdital = $user->getAllRolesAndPermissionsByEdital();
 
         $global_roles = $user->getRoleNames();

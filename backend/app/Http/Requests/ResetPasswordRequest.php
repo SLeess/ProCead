@@ -37,10 +37,4 @@ class ResetPasswordRequest extends FormRequest
         ];
     }
 
-    public function attributes(): array
-    {
-        return [
-            'email' => 'Email',
-        ];
-    }
 }

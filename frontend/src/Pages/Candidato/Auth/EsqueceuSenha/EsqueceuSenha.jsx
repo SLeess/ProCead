@@ -10,7 +10,7 @@ import ThemeToggleBtn from '@/Components/Global/ThemeToggleBtn/ThemeToggleBtn';
 
 export default function EsqueceuSenha(){
     const { navigate } = useContext(NavigationContext);
-    const { theme } = useAppContext();
+    const { theme, apiAsyncFetch } = useAppContext();
     const [ loading, setLoading ] = useState(false);
     const [ email, setEmail ] = useState("");
     const [ focusedField, setFocusedField ] = useState(null);
@@ -35,25 +35,14 @@ export default function EsqueceuSenha(){
         
         setLoading(true);
         try{
-            const res = await fetch('/api/forgot-password', {
-                method: 'post',
-                body: JSON.stringify({'email': email}),
+            const result = await apiAsyncFetch({
+                url: `/api/forgot-password`,
+                method: 'POST',
+                body: {'email': email},
+                isProtected: false,
             });
 
-            const result = await res.json();
-            if (!result.success || !res.ok) {
-                if((typeof result.errors === 'object'), Object.values(result.errors).length > 0){
-                    result.errors.forEach(errorMessage => {
-                        toast.error(errorMessage);
-                    });
-                } else{
-                    result.errors ? toast.error(result.message) : toast.warning(result.message);
-                }
-            } else {
-                toast.success(result.message);
-            }
-        } catch (error) {
-            toast.error(error.toString());
+            toast.success(result.message);
         } finally{
             setLoading(false);
         }

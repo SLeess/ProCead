@@ -9,6 +9,7 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Jenssegers\Agent\Agent;
 use Symfony\Component\HttpFoundation\Response;
 
 class LoginController extends APIController
@@ -30,6 +31,9 @@ class LoginController extends APIController
     {
         try {
             $result = $this->authService->loginUser($request->validated());
+
+            $this->assignDataFromAtemptUser($request);
+
             return $this->sendResponse($result, 'Login efetuado com sucesso.');
         } catch (AuthenticationException $e) {
             return $this->sendError('Erro de Autenticação.', [0 => $e->getMessage()], Response::HTTP_UNAUTHORIZED);
@@ -41,6 +45,9 @@ class LoginController extends APIController
     public function loginAdmin(LoginRequest $request){
         try {
             $result = $this->authService->loginAdmin($request->validated());
+
+            $this->assignDataFromAtemptUser($request);
+
             return $this->sendResponse($result, 'Login efetuado com sucesso.', Response::HTTP_OK);
         } catch (AuthenticationException $e) {
             return $this->sendError('Erro de Autenticação.', [0 => $e->getMessage()], Response::HTTP_UNAUTHORIZED);
@@ -49,5 +56,26 @@ class LoginController extends APIController
         } catch (\Exception $e) {
             return $this->sendError('Erro genérico.', [$e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+    }
+
+    private function assignDataFromAtemptUser(Request $request)
+    {
+        $agent = new Agent();
+        $agent->setUserAgent($request->userAgent());
+
+        $logProperties = [
+            'ip_address'   => $request->ip(),
+            'user_agent'   => $request->userAgent(),
+            'browser'      => $agent->browser() . ' (' . $agent->version($agent->browser()) . ')',
+            'platform'     => $agent->platform() . ' (' . $agent->version($agent->platform()) . ')',
+            'device'       => $agent->device(),
+            'is_robot'     => $agent->isRobot(),
+        ];
+
+        activity('Login')
+            ->causedBy(Auth::user()) // Agora usamos o usuário correto
+            ->withProperties($logProperties)
+            ->event('Login')
+            ->log("O usuário '". Auth::user()->nome . "' acabou de fazer login.");
     }
 }

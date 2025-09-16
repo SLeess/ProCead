@@ -8,37 +8,67 @@ import { useAppContext } from '@/Contexts/AppContext';
 export default function HeaderModel({ showSubHeader, headerid, children }){
 
     return(
-            <header id={headerid}>
+        <header id={headerid}>
+            <Navbar fluid rounded className={`${showSubHeader ? "rounded-t-2xl md:rounded-t-xl" : "rounded-2xl md:rounded-xl"}`}>
+                    <NavbarBrand href="#">
+                        <img src="/img/logo_cead_bg_white_full.png" alt="Logo CEAD" id="img-logo"/>
+                    </NavbarBrand>
 
-                    <Navbar fluid rounded className={`${showSubHeader ? "rounded-t-2xl md:rounded-t-xl" : "rounded-2xl md:rounded-xl"}`}>
-                        <NavbarBrand href="#">
-                            <img src="/img/logo_cead_bg_white_full.png" alt="Logo CEAD" id="img-logo"/>
-                        </NavbarBrand>
+                <div id="nav-item">
+                    { children }
+                </div>
 
-                        <div id="nav-item">
+
+                <div id="desktop-buttons-div">
+                    <ThemeToggleBtn />
+                    <UserDropdown/>
+                </div>
+
+                <div id="mobile-buttons-div">
+                    <ThemeToggleBtn />
+                    <UserDropdown/>
+                    <NavbarToggle className="ml-1 navbar-toggle"/>
+                </div>
+
+                <NavbarCollapse className="md:hidden">
+                    <div id="menu-responsive">
+                        { children }
+                    </div>
+                </NavbarCollapse>
+
+
+                    <div id="desktop-buttons-div">
+                        <ThemeToggleBtn />
+                        <UserDropdown/>
+                    </div>
+
+                    <div id="mobile-buttons-div">
+                        <ThemeToggleBtn />
+                        <UserDropdown/>
+                        <NavbarToggle className="ml-1 navbar-toggle"/>
+                    </div>
+
+                    <NavbarCollapse className="md:hidden">
+                        <div id="menu-responsive">
                             { children }
                         </div>
-
-
-                        <div id="desktop-buttons-div">
-                            <ThemeToggleBtn />
-                            <UserDropdown/>
-                        </div>
-
-                        <div id="mobile-buttons-div">
-                            <ThemeToggleBtn />
-                            <UserDropdown/>
-                            <NavbarToggle className="ml-1 navbar-toggle"/>
-                        </div>
-
-                        <NavbarCollapse className="md:hidden">
-                            <div id="menu-responsive">
-                                { children }
-                            </div>
-                        </NavbarCollapse>
-                    </Navbar>
-
-            </header>
+                    </NavbarCollapse>
+            </Navbar>
+            <div className='flex flex-row-reverse max-w-screen-xl mx-auto mt-2 text-black'>
+                {
+                remainingTime !== null && remainingTime !== 0 &&
+                <p className="text-sm my-1 w-full text-end mr-5">Sua sessão expira em {remainingTime} min.</p>
+                }
+                {
+                remainingTime === 0 &&
+                <p className="text-sm my-1 w-full text-end mr-5">Sua sessão expirou!</p>
+                }
+                {
+                remainingTime === null &&
+                <p className="text-sm my-1 w-full text-end mr-5">&nbsp;</p>
+                }
+            </div>
+        </header>
     );
 
 }

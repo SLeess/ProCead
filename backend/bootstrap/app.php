@@ -8,6 +8,7 @@ use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -65,6 +66,29 @@ return Application::configure(basePath: dirname(__DIR__))
                     'message' => $errorMessage,
                     'success' => false,
                 ], Response::HTTP_NOT_FOUND);
+            }
+        });
+        // ==========================================================
+        //    (Manipulador para erros de validação)
+        // ==========================================================
+        $exceptions->renderable(function (ValidationException $e, $request) {
+            if ($request->is('api/*') || $request->wantsJson()) {
+
+                $firstError = collect($e->errors())->first()[0];
+
+                $errorCount = collect($e->errors())->flatten()->count();
+                $remainingErrors = $errorCount - 1;
+
+                $message = $firstError;
+                if ($remainingErrors > 0) {
+                    $message .= " (e mais {$remainingErrors} erro" . ($remainingErrors > 1 ? 's' : '') . ")";
+                }
+
+                return response()->json([
+                    'success' => false,
+                    'message' => $message,
+                    'errors'  => $e->errors(),
+                ], 422);
             }
         });
 

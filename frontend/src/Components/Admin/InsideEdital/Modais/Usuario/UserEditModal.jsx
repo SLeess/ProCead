@@ -1,10 +1,13 @@
 import CabecalhoModal from '@/Components/Global/Modais/CabecalhoModal';
 import { FormField, TextInput, Checkbox, SelectInput, MultiSelectTags } from '@/Components/Global/ui/modals';
+import { formatCPF } from '@/Utils/formatters';
 import { Modal, ModalBody, ModalHeader } from 'flowbite-react';
 import { Eye, Pencil, Plus } from 'lucide-react';
 import React, { useState } from 'react'
 
-const UserEditModal = () => {
+const UserEditModal = ({
+    user = {}
+}) => {
     const [openModal, setOpenModal] = useState(false);
     function onCloseModal() {
         setOpenModal(false);
@@ -23,35 +26,37 @@ const UserEditModal = () => {
                 <ModalBody >
 
                     {/* Sub-header */}
-                    <p id='subtitle-edital'>
+                    {/* <p id='subtitle-edital'>
                         Edital Referente: Processo de Seleção de Discentes para os Cursos de Especialização da Unimontes – Modalidade Educação a Distância – Sistema Universidade Aberta do Brasil (UAB) – Edital Nº 08/2025
-                    </p>
+                    </p> */}
                     <div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-3 mb-2">
                             <FormField label="Nome Completo">
-                                <TextInput className="md:col-span-1" value="João da Silva" />
+                                <TextInput className="md:col-span-1" value={user.nome || ""} />
+                            </FormField>
+                            <FormField label="CPF">
+                                <TextInput className="md:col-span-2" value={formatCPF(user.cpf || "")} />
+                            </FormField>
+                        </div>
+                    </div>
+                    <div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-3 mb-2">
+                            <FormField label="Nível de Acesso">
+                                <TextInput className="md:col-span-2" value={user.level_access || ""} />
                             </FormField>
                             <FormField label="E-mail">
-                                <TextInput className="md:col-span-2" value="joao.silva@edu.unimontes.br" />
+                                <TextInput className="md:col-span-2" value={user.email || ""} />
                             </FormField>
                         </div>
                     </div>
-                    <div>
+                    <div className='mt-10'>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-3 mb-2">
-                            <FormField label="Perfil">
-                                <SelectInput value="Perfil" options={['admin', 'super-admin', 'candidato']} />
+                            <FormField label="Senha">
+                                <TextInput className="md:col-span-2" value={""} />
                             </FormField>
-                            <FormField label="Tipo">
-                                <TextInput className="md:col-span-2" value="Administrador" />
+                            <FormField label="Confirmar Senha">
+                                <TextInput className="md:col-span-2" value={""} />
                             </FormField>
-                        </div>
-                    </div>
-                    <div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-3 mb-2">
-                            <FormField label="Editais" className="md:col-span-2">
-                                <MultiSelectTags />
-                            </FormField>
-
                         </div>
                     </div>
 

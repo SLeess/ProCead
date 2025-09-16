@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { toast } from "react-toastify";
 import Swal from 'sweetalert2';
 
@@ -8,7 +8,6 @@ export default function AppProvider({ children }) {
     const [token, setToken] = useState(localStorage.getItem('token'));
     const [expireTime, setExpireTime] = useState(localStorage.getItem('expireTime'))
     const [remainingTime, setRemainingTime] = useState(() => {
-        
         const expirationTimestamp = Number(expireTime);
         const now = new Date().getTime();
         const millisecondsLeft = expirationTimestamp - now;
@@ -72,7 +71,19 @@ export default function AppProvider({ children }) {
      * Função utilizada para tratar casos de exceção de resposta do servidor, dar um alerta e fazer o logout da aplicação
      * @param {*} response 
      */
-    const verifyStatusRequest = async (status, data, enableToast = true) => {
+    const logout = useCallback(() => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('expireTime');
+        setToken(null);
+        setUser(null);
+        setRemainingTime(null);
+        setExpireTime(null);
+        setGlobalPermissions([]);
+        setGlobalRoles([]);
+        setPermissionsWithRolesByEdital({});
+    }, []);
+
+    const verifyStatusRequest = useCallback(async (status, data, enableToast = true) => {
         switch (status) {
             case 401:
                 if(enableToast)
@@ -98,9 +109,9 @@ export default function AppProvider({ children }) {
                 }
                 break;
         }
-    }
+    }, [logout]);
 
-    const login = (apiResponse) => {
+    const login = useCallback((apiResponse) => {
         const { token, expires_at } = apiResponse.data;
 
         const expirationTimestamp = new Date(expires_at).getTime();
@@ -110,13 +121,13 @@ export default function AppProvider({ children }) {
 
         setToken(token);
         setExpireTime(expirationTimestamp); 
-    };
+    }, []);
 
     /**
      * Função para aparecer o alerta custom de que o usuário teve sua sessão encerrada, solicitando que ele refaça o login
      */
     const [swalLogoutVisible, setSwalLogoutVisible] = useState(false);
-    const requestLogout = () => {
+    const requestLogout = useCallback(() => {
         setSwalLogoutVisible(true); 
 
         Swal.fire({
@@ -133,22 +144,12 @@ export default function AppProvider({ children }) {
                 window.location.reload();
             }
         });
-    }
+    }, [logout]);
 
     /**
      * Função para fazer o logout da aplicação em todos os esquemas e useStates
      */
-    const logout = () => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('expireTime');
-        setToken(null);
-        setUser(null);
-        setRemainingTime(null);
-        setExpireTime(null);
-        setGlobalPermissions([]);
-        setGlobalRoles([]);
-        setPermissionsWithRolesByEdital({});
-    };
+
 
     // ==========================================================
     // EFEITO "VIGIA" PARA EXPIRAÇÃO AUTOMÁTICA
@@ -185,16 +186,17 @@ export default function AppProvider({ children }) {
 
         checkExpiration();
 
-        const interval = setInterval(checkExpiration, 30000);
+        // const interval = setInterval(checkExpiration, 30000);
+        const interval = setInterval(checkExpiration, 300);
 
         return () => clearInterval(interval);
 
-    }, [token, swalLogoutVisible]);
+    }, [token, swalLogoutVisible, requestLogout]);
 
-    const changeExpireTime = (expires_at) => {
+    const changeExpireTime = useCallback((expires_at) => {
         const expirationTimestamp = new Date(expires_at).getTime();
         localStorage.setItem('expireTime', expirationTimestamp);
-    }
+    }, []);
 
     /////////------------------------------------------------------------------------------------------------------------------------/////////
 
@@ -205,18 +207,22 @@ export default function AppProvider({ children }) {
      * @param {string} roleName
      * @returns {boolean}
      */
-    function hasGlobalRole(roleName) {
+    const hasGlobalRole = useCallback((roleName) => {
         return globalRoles.includes(roleName);
-    }
+    }, [globalRoles]);
 
     /**
      * Verifica se o usuário tem uma permissão global específica ou se ele é um super-Admin.
      * @param {string} permissionName
      * @returns {boolean}
      */
-    function hasGlobalPermission(permissionName) {
+    const isSuperAdmin = useCallback(() => {
+        return hasGlobalRole('super-Admin');
+    }, [hasGlobalRole]);
+
+    const hasGlobalPermission = useCallback((permissionName) => {
         return globalPermissions.includes(permissionName) || isSuperAdmin();
-    }
+    }, [globalPermissions, isSuperAdmin]);
 
     /**
      * Verifica se o usuário tem um cargo para um edital específico.
@@ -224,9 +230,9 @@ export default function AppProvider({ children }) {
      * @param {number} editalId
      * @returns {boolean}
      */
-    function hasRoleForEdital(roleName, editalId) {
+    const hasRoleForEdital = useCallback((roleName, editalId) => {
         return (permissionsWithRolesByEdital[editalId]?.roles || []).includes(roleName);
-    }
+    }, [permissionsWithRolesByEdital]);
 
      /**
      * Verifica se o usuário tem uma permissão para um edital específico ou se ele é um super-Admin.
@@ -235,49 +241,47 @@ export default function AppProvider({ children }) {
      * @param {number} editalId
      * @returns {boolean}
      */
-    function hasPermissionForEdital(permissionName, editalId) {
+    const hasPermissionForEdital = useCallback((permissionName, editalId) => {
         const editalData = permissionsWithRolesByEdital[editalId];
 
         if (!editalData) return false;
 
         return (editalData.effective_permissions || []).includes(permissionName) || isSuperAdmin();
-    }
+    }, [permissionsWithRolesByEdital, isSuperAdmin]);
 
     /**
      * Determina se o usuário tem acesso administrativo a *algum* edital ou permissão global de admin.
      * Isso define se ele pode acessar a área administrativa.
      * @returns {boolean}
      */
-    function canAccessAdminArea() {
+    const canAccessAdminArea = useCallback(() => {
         if (globalPermissions.length > 0 || globalRoles.length > 0) {
             return true;
         }
 
         for (const editalId in permissionsWithRolesByEdital) {
             const data = permissionsWithRolesByEdital[editalId];
-            if ((data.roles && data.roles.length > 0) || (data.permissions && data.permissions.length > 0)) {
+            if ((data?.roles?.length > 0) || (data?.effective_permissions?.length > 0)) {
                 return true;
             }
         }
         return false;
-    }
+    }, [globalPermissions, globalRoles, permissionsWithRolesByEdital]);
 
     /**
      * Função para verificar se o usuário é 'super-Admin' globalmente.
      * @returns {boolean}
      */
-    function isSuperAdmin() {
-        return hasGlobalRole('super-Admin');
-    }
+
 
     /////////-------------------------------------------------------------------------------------------------------------------------/////////
 
     /**
      * Função para trocar o tema da aplicação de modo global
      */
-    const toggleTheme = () => {
+    const toggleTheme = useCallback(() => {
         setTheme((prevTheme) => (prevTheme === 'light' ? 'dark' : 'light'));
-    };
+    }, []);
 
     useEffect(() => {
         const root = window.document.documentElement;
@@ -292,7 +296,7 @@ export default function AppProvider({ children }) {
      * @param {any} errorObject - O objeto ou array de erros.
      * @returns {string[]} - Um array plano com todas as mensagens de erro encontradas.
      */
-    const extractErrorMessages = (errorObject) => {
+    const extractErrorMessages = useCallback((errorObject) => {
 
         const findMessages = (value) => {
             if (typeof value === 'string') {
@@ -308,7 +312,7 @@ export default function AppProvider({ children }) {
 
         findMessages(errorObject);
         // return messages;
-    };
+    }, []);
     /**
      * Realiza uma requisição assíncrona para a API com tratamento de erros centralizado.
      * @param {object} options As opções da requisição.
@@ -321,7 +325,7 @@ export default function AppProvider({ children }) {
      * @throws {Error} Lança um erro em caso de falha na requisição.
      */
     
-    async function apiAsyncFetch(params) {
+    const apiAsyncFetch = useCallback(async (params) => {
         const {
             url,
             method = 'GET',
@@ -337,6 +341,7 @@ export default function AppProvider({ children }) {
         const headers = {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
+            'Accept-Language': 'pt-BR'
         };
 
         if (isProtected) {
@@ -377,9 +382,9 @@ export default function AppProvider({ children }) {
         }
 
         return responseData;
-    }
+    }, [token, changeExpireTime, extractErrorMessages, verifyStatusRequest]);
 
-    const contextValue = { 
+    const contextValue = useMemo(() => ({ 
         user, 
         setUser, 
         token, 
@@ -403,7 +408,25 @@ export default function AppProvider({ children }) {
         canAccessAdminArea,
         isSuperAdmin,
         verifyStatusRequest,
-    };
+    }), [
+        user,
+        token,
+        remainingTime,
+        changeExpireTime,
+        apiAsyncFetch,
+        loading,
+        theme,
+        toggleTheme,
+        login,
+        logout,
+        hasGlobalRole,
+        hasGlobalPermission,
+        hasRoleForEdital,
+        hasPermissionForEdital,
+        canAccessAdminArea,
+        isSuperAdmin,
+        verifyStatusRequest
+    ]);
 
     return (
         <AppContext.Provider value={contextValue}>
