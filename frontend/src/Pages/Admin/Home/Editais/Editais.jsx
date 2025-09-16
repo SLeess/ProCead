@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useAppContext } from '@/Contexts/AppContext';
 import { toast } from 'react-toastify';
 import ListaEditais from '@/Components/Global/ListaEditais/ListaEditais';
+import CursoCreateModal from '@/Components/Admin/InsideEdital/Modais/Cursos/CursoCreateModal';
 
 function Editais() {
   const { token, verifyStatusRequest } = useAppContext();
@@ -11,6 +12,7 @@ function Editais() {
   /** ------------------ Lidando com Filtros ------------------ **/
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [needUpdate, setNeedUpdate] = useState(false);
 
   /** Buscar na API os processos seletivos que o usuário participa ou participou **/
 
@@ -43,7 +45,7 @@ function Editais() {
         }
       };
     fetchProcessos();
-  }, []);
+  }, [needUpdate]);
 
   useEffect(() => {
     toast.error(error);

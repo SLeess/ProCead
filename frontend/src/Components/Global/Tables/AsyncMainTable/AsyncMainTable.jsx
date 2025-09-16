@@ -224,7 +224,12 @@ const AsyncMainTable = ({
   }, [pagination, debouncedSearchTerm, apiAsyncFetch, serverSideDataUrl, setMetaData]);
 
   return (
-      <div className={`async-main-table ${hasShadowBorderStyle ? "rounded-md border border-gray-200 shadow-md" : ""} ${hasPaddingStyle ? "px-5 sm:px-7.5" : ""} bg-white pt-6 pb-2.5 xl:pb-1 ${className}`}>
+      <div className={`
+          async-main-table 
+          ${hasShadowBorderStyle ? "rounded-md border border-gray-200 shadow-md" : ""} 
+          ${hasPaddingStyle ? "px-5 sm:px-7.5" : ""} bg-white pt-6 pb-2.5 xl:pb-1 
+          ${className}
+        `}>
         <h4 className="table-title">{title}</h4>
         {subtitle && <h5 className="table-subtitle">{subtitle}</h5>}
         

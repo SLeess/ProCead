@@ -22,7 +22,7 @@ export default defineConfig(({mode}) => {
           changeOrigin: true,
           headers: {
             Accept: 'application/json',
-            // "Content-Type": 'application/json',
+            // "Content-Type": 'multipart',
           },
         }
       }

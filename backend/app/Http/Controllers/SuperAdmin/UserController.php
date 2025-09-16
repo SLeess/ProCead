@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 class UserController extends __SuperAdminController
 {
     public function __construct(protected ISuperAdminUserManagerService $iSuperAdminUserManagerService){
-        $this->middleware('role:super-Admin');
+        parent::__construct();
     }
     public function index(SuperAdminUserRequest $request)
     {

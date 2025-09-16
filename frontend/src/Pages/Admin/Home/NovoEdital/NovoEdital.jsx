@@ -1,5 +1,5 @@
 import { LucideCalendarCheck } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { CiCircleInfo } from "react-icons/ci";
 import { FaRegCalendarCheck } from "react-icons/fa";
 import Stepper from "@/Components/Global/Stepper/Stepper";
@@ -10,6 +10,9 @@ import PrazosFinais from "./Tabs/PrazosFinais";
 import './NovoEdital.css';
 import { useAppContext } from "@/Contexts/AppContext";
 import AccessDenied from "@/Components/Global/AccessDenied/AccessDenied";
+import Swal from "sweetalert2";
+import { toast } from "react-toastify";
+import { NavigationContext } from "@/Contexts/NavigationContext";
 
 const Step = ({ icon: IconComponent, label, isActive, isCompleted }) => {
     const statusClass = isActive
@@ -30,8 +33,10 @@ const Step = ({ icon: IconComponent, label, isActive, isCompleted }) => {
 
 export default function NovoEdital()
 {
-    const { hasGlobalPermission } = useAppContext();
+    const { hasGlobalPermission, apiAsyncFetch } = useAppContext();
+    const { navigate } = useContext(NavigationContext);
     const [activeTabIndex, setActiveTabIndex] = useState(0);
+    const [metaData, setMetaData] = useState({});
     const [formData, setFormData] = useState({
         referencia: '',
         descricao: '',
@@ -42,7 +47,7 @@ export default function NovoEdital()
         max_itens_posse: '',
         remanejamento: '',
         has_categorias: '',
-        tipo_avaliacao_cotas: '',
+        // tipo_avaliacao_cotas: '',
 
         inicio_inscricoes: '',
         fim_inscricoes: '',
@@ -59,14 +64,62 @@ export default function NovoEdital()
         inicio_avaliacao_identidade_genero: '',
         fim_avaliacao_identidade_genero: '',
 
+        momentosDeRecursos: [],
+
         resultado_preliminar_inscricao: '',
         resultado_preliminar_geral: '',
         resultado_final: '',
     });
 
-    const handleOnSubmit = async (e) => {
-        e.preventDefault();
-    };
+    function confirmSubmit(){
+        Swal.fire({
+            icon: "question",
+            title: "Criação de edital em andamento.",
+            text: `Atenção! Você confirma o registro do edital com as respectivas informações repassadas?`,
+            // text: "Essa ação não poderá ser reversível!",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Confirma',
+            cancelButtonText: 'Cancelar',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                handleOnSubmit();
+            }
+        });
+    }
+    async function handleOnSubmit() 
+    {
+        try {
+
+            // const validation = perfilEditSchema.safeParse({ ...role });
+                    
+            // if (!validation.success) {
+            //     const formattedErrors = z.treeifyError(validation.error);
+                
+            //     Object.values(formattedErrors.properties).forEach(fieldErrors => {
+            //         if(fieldErrors.errors) {
+            //             fieldErrors.errors.forEach(err => toast.error(err));
+            //         }
+            //     });
+    
+            //     return;
+            // }
+
+            const response = await apiAsyncFetch({
+                url: `/api/admin/editais`,
+                method: 'POST',
+                body: formData,
+            });
+            
+            toast.success(response.message);
+            navigate("/admin");
+            window.location.reload();
+        } 
+        catch (error) {
+            // toast.error(error);
+        }
+    }
 
     const [loading, setLoading] = useState(true);
 
@@ -75,21 +128,43 @@ export default function NovoEdital()
         setFormData(f => ({...f, [attr]: value}));
     };
 
-    useEffect(() => 
-        setLoading(false)
-    , [activeTabIndex]);
+    useEffect(() => {
+        if (!hasGlobalPermission('cadastrar-edital')) return;
+        const fetchMetaDataNewEdital = async () => {
+            setLoading(true);
+            try {
+                const result = await apiAsyncFetch({ url: `/api/admin/editais/create` });
 
-    const handleNext = () => {
+                setMetaData(result.data[0]);
+            } finally {
+                setLoading(false);
+            }
+        }
+        fetchMetaDataNewEdital();
+    }, []);
+
+    useEffect(() => {
+        setLoading(false);
+    }, [activeTabIndex]);
+
+    const handleNext = (e) => {
+        e.preventDefault();
         if (activeTabIndex < tabsData.length - 1) {
             setLoading(true);
             setActiveTabIndex(prevIndex => prevIndex + 1);
         }
+        if(activeTabIndex === tabsData.length -1){
+            confirmSubmit();
+        }
     };
 
-    const handleBack = () => {
+    const handleBack = (e) => {
+        e.preventDefault();
         if (activeTabIndex > 0) {
             setLoading(true);
             setActiveTabIndex(prevIndex => prevIndex - 1);
+        } else{
+            navigate(-1);
         }
     };
 
@@ -99,7 +174,6 @@ export default function NovoEdital()
         { label: 'Prazos Finais', icon: <FaRegCalendarCheck /> },
     ];
 
-    // if(hasGlobalPermission('cadastrar-edital')){
     return (
     <section id='novoEdital' className={`${!hasGlobalPermission('cadastrar-edital') ? 'flex justify-center items-center': ''}`}>
 
@@ -112,22 +186,22 @@ export default function NovoEdital()
         }
          {
         hasGlobalPermission('cadastrar-edital') &&
-        <form onSubmit={handleOnSubmit} id="content">
+        <form id="content">
             <nav aria-label="Tabs" className="timeline-nav">
                 <Stepper tabsData={tabsData} activeTabIndex={activeTabIndex} setActiveTabIndex={setActiveTabIndex}/>
             </nav>
             {
-                loading && <LoaderPages/>
+                (loading && Object.keys(metaData).length > 1 ) && <LoaderPages/>
             }
             {
-                activeTabIndex === 0 && <InformacoesBasicas formData={formData} handleOnChangeAttr={handleOnChangeAttr}/>
+                activeTabIndex === 0 && <InformacoesBasicas formData={formData} handleOnChangeAttr={handleOnChangeAttr} metaData={metaData}/>
             }
             {
                 activeTabIndex === 1 && <PrazosIniciais formData={formData} handleOnChangeAttr={handleOnChangeAttr}/>
             }
 
             {
-                activeTabIndex === 2 && <PrazosFinais formData={formData} handleOnChangeAttr={handleOnChangeAttr}/>
+                activeTabIndex === 2 && <PrazosFinais formData={formData} handleOnChangeAttr={handleOnChangeAttr} setFormData={setFormData}/>
             }
             
             {/* Botões de Prosseguimento */}
