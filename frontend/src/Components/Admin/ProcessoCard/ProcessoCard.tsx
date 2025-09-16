@@ -1,9 +1,8 @@
 import React, { useContext } from 'react';
 import "./ProcessoCard.css";
-import { HiOutlineArchiveBoxXMark } from "react-icons/hi2";
-import { HiOutlineCheckCircle } from 'react-icons/hi';
 import { AlignJustify } from 'lucide-react';
 import { NavigationContext } from '@/Contexts/NavigationContext';
+import CardDropdown from './CardDropdown';
 
 export default function ProcessoCard({ processo }: ProcessoCardProps ){
     const { navigate } = useContext(NavigationContext);
@@ -21,10 +20,11 @@ export default function ProcessoCard({ processo }: ProcessoCardProps ){
                         <h3 className={`descricao`}>
                             {processo.descricao}
                         </h3>
-                        <AlignJustify className='w-[28px] h-[34px] flex-shrink-0 ml-2 dark:text-black'/>
+                        {/* <AlignJustify className='w-[24px] h-[24px] flex-shrink-0 ml-2 dark:text-black'/> */}
+                        <CardDropdown />
                     </div>
                     <p className={`edital`}>
-                        {processo.edital}
+                        EDITAL N.° {processo.edital}
                     </p>
                     <div className="flex-grow"></div>
                     <div className={`status`}>
