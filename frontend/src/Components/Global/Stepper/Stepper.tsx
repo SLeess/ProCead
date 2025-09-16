@@ -17,7 +17,7 @@ const Step = ({ icon: IconComponent, label, isActive, isCompleted, onClick }: St
             : 'step-future';
 
     return (
-        <button onClick={onClick} className={`step-item ${statusClass}`}> {/* Mudado para button para ser clicável */}
+        <button onClick={(e) => {e.preventDefault(); onClick()}} className={`step-item ${statusClass}`}> {/* Mudado para button para ser clicável */}
             <div className="step-icon-wrapper">
                 {IconComponent}
             </div>

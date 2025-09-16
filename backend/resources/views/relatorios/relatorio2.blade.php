@@ -70,8 +70,7 @@
                                 @foreach ($data['columns'] as $column)
                                 @if ($column['id'] != $data['groupByFields'][0] && $column['id'] != $data['groupByFields'][1])
                                     <td
-                                        style=" border-top: 2px solid #DDDDDD;
-            word-wrap: break-word;overflow-wrap: break-word; word-break: break-all; width: {{ floor($data['columnWidths'][$column['id']]) }}%;">
+                                        style=" border-top: 2px solid #DDDDDD; padding-top: 12px; padding-bottom: 12px;word-wrap: break-word;overflow-wrap: break-word; word-break: break-all; width: {{ floor($data['columnWidths'][$column['id']]) }}%;">
                                         {{ $element[$column['id']] ?? "" }}
                                         </td>
                                         @endif
