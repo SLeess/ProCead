@@ -76,7 +76,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Inscrever from './Pages/Candidato/Inscrever/Inscrever';
 import Inscricao from './Pages/Candidato/Inscrever/Inscricao';
 import Classificacao from './Pages/Admin/InsideEdital/Classificacao/Classificacao';
-import Welcome from './Pages/Admin/InsideEdital/welcome';
+import Welcome from './Pages/Admin/InsideEdital/Welcome/Welcome';
 
 
 function App() {

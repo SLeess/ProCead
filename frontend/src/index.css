@@ -216,6 +216,9 @@ div.info-not-found-itens p#second{
     
     /* ----- Dentro do Edital ----- */
 
+    /* Welcome */
+    --admin-welcome-style: #8A64D4;
+
     /* Página de Edital */
     --admin-manage-edital-header: #6C4BC3;
 
