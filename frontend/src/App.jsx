@@ -24,7 +24,8 @@ import LayoutAdminInsideEdital from './Layouts/LayoutAdminInsideEdital';
 
 /** ------------------------------------ Páginas de Admin ------------------------------------ */
   import Editais from './Pages/Admin/Home/Editais/Editais';
-  import NovoEdital from './Pages/Admin/Home/NovoEdital/NovoEdital';
+  import NovoEdital from './Pages/Admin/Home/Editais/NovoEdital/NovoEdital';
+  import AlterarEdital from './Pages/Admin/Home/Editais/AlterarEdital/AlterarEdital';
   
   import GerenciarPerfis from './Pages/Admin/Home/GerenciarPerfis/GerenciarPerfis';
   /** ------------------------------------ Páginas de Gerência de Permissões do Perfil ---------------------------- */
@@ -151,6 +152,7 @@ function App() {
           >
             <Route index element={<Editais />} />
             <Route path='edital/create' element={<NovoEdital />} />
+            <Route path='edital/update/:editalId' element={<AlterarEdital />} />
             <Route path="perfis" element={<GerenciarPerfis/>} />
             <Route path="perfis/:perfilId/">
               <Route path='permissoes' element={<GerenciarPerfisPermissoes/>}></Route>
