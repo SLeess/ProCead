@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import "./ProcessoCard.css";
-import { AlignJustify } from 'lucide-react';
 import { NavigationContext } from '@/Contexts/NavigationContext';
 import { EditalCardProps } from './interfaces';
 import CardDropdown from './CardDropdown';
@@ -12,8 +11,6 @@ export default function ProcessoCard({ processo }: EditalCardProps ){
         navigate(`/admin/edital/${editalId}/`);
     };
 
-    console.log(processo);
-
     return (
         <li className={`ProcessoCard`}>
             <article>
@@ -23,11 +20,10 @@ export default function ProcessoCard({ processo }: EditalCardProps ){
                         <h3 className={`descricao`}>
                             {processo.descricao}
                         </h3>
-                        {/* <AlignJustify className='w-[24px] h-[24px] flex-shrink-0 ml-2 dark:text-black'/> */}
-                        <CardDropdown />
+                        <CardDropdown editalId={processo.id}/>
                     </div>
                     <p className={`edital`}>
-                        EDITAL N.º {processo.referencia}
+                        EDITAL N.º {processo.edital}
                     </p>
                     <div className="flex-grow"></div>
                     <div className={`status`}>
