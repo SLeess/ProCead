@@ -55,7 +55,7 @@ export default function GerenciarUsuariosPerfisPermissoesPorEdital()
                     url: `/api/super-admin/permissions-scope/local`, 
                 });
                 const resEditais = await apiAsyncFetch({
-                    url: `/api/admin/editais/${editalId}`,
+                    url: `/api/admin/editais/${editalId}/show`,
                     enableToast: false,
                 });
 
