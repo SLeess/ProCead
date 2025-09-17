@@ -1,7 +1,7 @@
 const StatusEditalPill = ({ children }) => {
     let bgColor, textColor;
 
-    if (children == 'Em andamento') {
+    if (children == 'Em andamento' || children == 'Em Avaliação') {
         bgColor = 'bg-[#D5ECDA] dark:bg-[#D5ECDA]';
         textColor = 'text-[#124F00] dark:text-[#124F00]';
     } else if (children == 'Finalizado') {

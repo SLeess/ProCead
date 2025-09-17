@@ -29,7 +29,7 @@ type StatusEdital =
 
 interface processo {
   id: number;
-  referencia: string;
+  edital: string;
   descricao: string;
   status: StatusEdital;
   

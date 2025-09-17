@@ -15,7 +15,7 @@ import CustomPagination from "./Components/CustomPagination";
 import HideColumnsDropdown from "./Components/HideColumnsDropdown";
 import ExportModuleTable from "./Components/ExportModuleTable";
 import SearchRowsTable from "./Components/SearchRowsTable";
-import AdvancedSearchRowsTable from "./Components/AdvancdSearchRowsTable";
+import AdvancedSearchRowsTable from "./Components/AdvancedSearchRowsTable";
 
 const MainTable = ({ 
     data, 
@@ -28,6 +28,7 @@ const MainTable = ({
     canExport = true, 
     canHiddenColumns = true, 
     hasSelectForRows = true, 
+    hasAdvancedSearch = false,
     hasCountSelectedLines = true, 
     setNeedUpdate, 
     enableDataFooter = true,
@@ -92,7 +93,7 @@ const MainTable = ({
       rowSelection,
       columnVisibility,
     },
-    autoResetPageIndex: false,
+    autoResetPageIndex: true,
   });
 
   return (
@@ -135,8 +136,10 @@ const MainTable = ({
         </>
       }
 
-      <AdvancedSearchRowsTable columns={columns} setAdvancedSearchTerm={setAdvancedSearchTerm} advancedSearchTerm={advancedSearchTerm}/>
-
+      {
+        hasAdvancedSearch && 
+        <AdvancedSearchRowsTable columns={columns} setAdvancedSearchTerm={setAdvancedSearchTerm} advancedSearchTerm={advancedSearchTerm}/>
+      }
 
       <div id="table-data-container" className={data.length > 10 ? 'h-[60vh]' : ''}>
         <Table>

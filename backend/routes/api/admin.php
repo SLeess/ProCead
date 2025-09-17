@@ -25,10 +25,10 @@ Route::prefix('/admin')->name('admin.')->group(function () {
     Route::prefix('/editais')->name('editais.')->group(function () {
         Route::get('', [EditalController::class, 'index'])->name('index');
 
-        // Route::prefix('/show/{edital}')->group(function () {
-        //     Route::get('', [EditalController::class, 'show'])->name('show');
+        Route::prefix('/{edital}')->group(function () {
+            Route::get('', [EditalController::class, 'show'])->name('show');
             // Route::get('inscricoes', [InscricaoController::class, 'index'])->name('.manage.inscricoes.index');
-        // });
+        });
         Route::resource('', EditalController::class)
                     ->only(['create', 'store', 'update', 'destroy', 'edit'])
                     ->parameter('', 'edital');
