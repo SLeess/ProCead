@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\API\APIController;
-use App\Http\Requests\UpdateProfileRequest;
+use App\Http\Requests\Auth\UpdateProfileRequest;
 use Symfony\Component\HttpFoundation\Response;
 use App\Interfaces\User\IUserService;
 use Illuminate\Http\JsonResponse;

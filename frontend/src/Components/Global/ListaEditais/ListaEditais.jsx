@@ -1,38 +1,40 @@
 import './ListaEditais.css'
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { CiInboxIn } from "react-icons/ci";
 import { getCoreRowModel, getFilteredRowModel, getPaginationRowModel, useReactTable } from '@tanstack/react-table';
 import LoaderPages from '@/Components/Global/LoaderPages/LoaderPages';
 import ProcessoCard from '@/Components/Admin/ProcessoCard/ProcessoCard';
-import { SlidersHorizontal } from 'lucide-react';
+import { Plus, SlidersHorizontal } from 'lucide-react';
 import NavLinkTables from '@/Components/Global/NavLinkTables/NavLinkTables';
 import ProcessoPessoalCard from '@/Components/Candidatos/ProcessoPessoalCard/ProcessoPessoalCard';
+import { NavigationContext } from '@/Contexts/NavigationContext';
 
-function ListaEditais({type, processos, loading }) {
+function ListaEditais({ type, processos, loading }) {
+  const { navigate } = useContext(NavigationContext);
   const [search, setSearch] = useState('');
-  
+
   /** ------------------ Lidando com Filtros ------------------ **/
   const [filtro, setFiltro] = useState("Todos");
   const [filterOpen, setFilterOpen] = useState(false);
-  const filterDropdownRef  = useRef(null);
+  const filterDropdownRef = useRef(null);
 
   /**Atualizar e aparecer o dropdown de filtros */
   useEffect(() => {
-      if (!filterOpen) return;
+    if (!filterOpen) return;
 
-      const handleClickOutside = (event) => {
-          if (filterDropdownRef.current && !filterDropdownRef.current.contains(event.target)) {
-              setFilterOpen(false);
-          }
-      };
-      document.addEventListener("mousedown", handleClickOutside);
-      return () => {
-          document.removeEventListener("mousedown", handleClickOutside);
-      };
+    const handleClickOutside = (event) => {
+      if (filterDropdownRef.current && !filterDropdownRef.current.contains(event.target)) {
+        setFilterOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, [filterOpen]);
 
-  function handleChangeFilters(e){
+  function handleChangeFilters(e) {
     setFiltro(e.target.value);
   }
 
@@ -40,17 +42,17 @@ function ListaEditais({type, processos, loading }) {
 
   /** ------------------ Lidando com Tabelação dos componentes cards para permitir paginação ------------------ **/
   const [pagination, setPagination] = useState({
-      pageIndex: 0,
-      pageSize: 3,
+    pageIndex: 0,
+    pageSize: 3,
   });
   const data = useMemo(() => processos, [processos]);
   const columns = useMemo(() => [
-      { accessorKey: 'descricao', header: 'Descrição', cell: info => info.getValue() },
-      { accessorKey: 'edital', header: 'Edital', cell: info => info.getValue() },
-      { accessorKey: 'status', header: 'Status', cell: info => info.getValue() },
-      { accessorKey: 'obs', header: 'Observação', cell: info => info.getValue() },
+    { accessorKey: 'descricao', header: 'Descrição', cell: info => info.getValue() },
+    { accessorKey: 'edital', header: 'Edital', cell: info => info.getValue() },
+    { accessorKey: 'status', header: 'Status', cell: info => info.getValue() },
+    { accessorKey: 'obs', header: 'Observação', cell: info => info.getValue() },
   ], []);
-  
+
   /** */
   const memoizedGlobalFilter = useMemo(() => ({
     search,
@@ -58,33 +60,33 @@ function ListaEditais({type, processos, loading }) {
   }), [search, filtro]);
 
   const table = useReactTable({
-      data,
-      columns,
-      getCoreRowModel: getCoreRowModel(),
-      getPaginationRowModel: getPaginationRowModel(),
-      getFilteredRowModel: getFilteredRowModel(),
-      state: {
-          globalFilter: memoizedGlobalFilter,
-          // globalFilter: search || filtro,
-          pagination,
-      },
-      onPaginationChange: setPagination,
-      //  filtro de coluna personalizado pelo status e pelo campo de Pesquisa
-      globalFilterFn: (row, columnId, filterValue) => {
-            const searchTerm = filterValue.search  ? filterValue.search.toLowerCase() : '';
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    state: {
+      globalFilter: memoizedGlobalFilter,
+      // globalFilter: search || filtro,
+      pagination,
+    },
+    onPaginationChange: setPagination,
+    //  filtro de coluna personalizado pelo status e pelo campo de Pesquisa
+    globalFilterFn: (row, columnId, filterValue) => {
+      const searchTerm = filterValue.search ? filterValue.search.toLowerCase() : '';
 
-            // Lógica para busca textual (se houver um termo de busca)
-            let textMatches = true;
-            if (searchTerm) {
-                const rowValues = Object.values(row.original).join(' ').toLowerCase();
-                textMatches = rowValues.includes(searchTerm);
-            }
+      // Lógica para busca textual (se houver um termo de busca)
+      let textMatches = true;
+      if (searchTerm) {
+        const rowValues = Object.values(row.original).join(' ').toLowerCase();
+        textMatches = rowValues.includes(searchTerm);
+      }
 
-            // Lógica para filtro de status
-            const statusMatches = (filterValue.filtro === 'Todos' || row.original.status === filterValue.filtro);
+      // Lógica para filtro de status
+      const statusMatches = (filterValue.filtro === 'Todos' || row.original.status === filterValue.filtro);
 
-            return textMatches && statusMatches;
-      },
+      return textMatches && statusMatches;
+    },
   });
 
   /** --------------------------------------------------------------------------------------------------------- **/
@@ -144,26 +146,32 @@ function ListaEditais({type, processos, loading }) {
                 </div>
               )}
             </div>
+            <button
+              onClick={() => navigate('/admin/edital/create')} 
+              id='create-btn' className='flex text-nowrap'>
+              <Plus className="inline" />
+              <span className='ml-1'>Novo Edital</span>
+            </button>
 
           </div>
         </header>
         {
-        loading ?
-            <LoaderPages/> : 
+          loading ?
+            <LoaderPages /> :
             table.getRowModel().rows.length > 0 ?
-              (           
+              (
                 <ul className='grid grid-cols-1 gap-6'>
                   {
                     table.getRowModel().rows.map((processo) => {
 
-                        return (type === 'Admin') ? 
-                        <ProcessoCard 
-                            key={processo.original.id} 
-                            processo={processo.original}
+                      return (type === 'Admin') ?
+                        <ProcessoCard
+                          key={processo.original.id}
+                          processo={processo.original}
                         /> :
-                        <ProcessoPessoalCard 
-                            key={processo.original.id} 
-                            processo={processo.original}
+                        <ProcessoPessoalCard
+                          key={processo.original.id}
+                          processo={processo.original}
                         />;
                     }
                     )
@@ -172,17 +180,17 @@ function ListaEditais({type, processos, loading }) {
               )
               :
               <div className='info-not-found-itens'>
-                  <CiInboxIn className="ICON" />
-                  <p id='first'>Nenhum processo foi encontrado.</p>
-                  <p id='second'>
-                      Não encontramos nenhum processo seletivo que corresponda aos seus critérios de busca ou filtros os quais você tenha participado.
-                      Tente ajustar sua pesquisa ou limpar os filtros para ver mais opções.
-                  </p>
+                <CiInboxIn className="ICON" />
+                <p id='first'>Nenhum processo foi encontrado.</p>
+                <p id='second'>
+                  Não encontramos nenhum processo seletivo que corresponda aos seus critérios de busca ou filtros os quais você tenha participado.
+                  Tente ajustar sua pesquisa ou limpar os filtros para ver mais opções.
+                </p>
               </div>
         }
-        { 
+        {
           !loading && table.getRowModel().rows.length > 0 &&
-          <NavLinkTables table={table}/>
+          <NavLinkTables table={table} />
         }
       </form>
     </>

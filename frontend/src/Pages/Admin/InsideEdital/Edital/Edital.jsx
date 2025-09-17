@@ -50,10 +50,10 @@ const Edital = () => {
 
                 <div className="edital-forms">
                     <FormField label="Edital referente" className="sm:col-span-2 lg:col-span-2">
-                        <TextInput value={formData.referencia} readOnly={true} onChange={(e) => handleOnChangeAttr(e, "referencia")} placeholder="Ex: 00/0000" />
+                        <TextInput value={formData.referencia} readOnly={true} onChange={(e) => handleOnChangeAttr(e, "referencia")} placeholder="Ex: 00/0000" maxLength={255}/>
                     </FormField>
                     <FormField label="Nome do Edital" className="sm:col-span-4 lg:col-span-4">
-                        <TextInput value={formData.descricao} readOnly={true} onChange={(e) => handleOnChangeAttr(e, "descricao")} placeholder="Ex: Processo de Seleção de Discente..." />
+                        <TextInput value={formData.descricao} readOnly={true} onChange={(e) => handleOnChangeAttr(e, "descricao")} placeholder="Ex: Processo de Seleção de Discente..." maxLength={255}/>
                     </FormField>
                     <FormField label="Público alvo" className="sm:col-span-2 lg:col-span-3">
                         <SelectInput value={formData.publico_alvo} readOnly={true} onChange={(e) => handleOnChangeAttr(e, "publico_alvo")} options={['...', 'teste']} />

@@ -18,6 +18,10 @@ section#novoEdital form#content{
 
 
 /* --------------------------------------------------------- BOTÕES --------------------------------------------------------- */
+section#novoEdital nav.timeline-nav{
+    @apply mb-10 mt-15;
+}
+
 section#novoEdital button.prosseguir_and_finalizar{
     @apply px-6 py-2.5 text-sm font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500;
 }

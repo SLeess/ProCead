@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\API\APIController;
-use App\Http\Requests\LoginRequest;
+use App\Http\Requests\Auth\LoginRequest;
 use App\Interfaces\Auth\IAuthService;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Auth\Access\AuthorizationException;

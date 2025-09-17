@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\API\APIController;
-use App\Http\Requests\ForgotPasswordRequest;
+use App\Http\Requests\Auth\ForgotPasswordRequest;
 use App\Interfaces\Auth\IAuthService;
 use Symfony\Component\HttpFoundation\Response;
 

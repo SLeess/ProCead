@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\SuperAdmin;
 
-use App\Http\Requests\SuperAdminStoreUserRequest;
-use App\Http\Requests\SuperAdminUpdateUserRequest;
-use App\Http\Requests\SuperAdminUserRequest;
+use App\Http\Requests\SuperAdmin\StoreUserRequest;
+use App\Http\Requests\SuperAdmin\UpdateUserRequest;
+use App\Http\Requests\SuperAdmin\ReadUserRequest;
 use App\Http\Resources\Admin\UserCollection;
 use App\Interfaces\SuperAdmin\ISuperAdminUserManagerService;
 use App\Models\User;
@@ -16,9 +16,9 @@ use Symfony\Component\HttpFoundation\Response;
 class UserController extends __SuperAdminController
 {
     public function __construct(protected ISuperAdminUserManagerService $iSuperAdminUserManagerService){
-        $this->middleware('role:super-Admin');
+        parent::__construct();
     }
-    public function index(SuperAdminUserRequest $request)
+    public function index(ReadUserRequest $request)
     {
         $validated = $request->validated();
 
@@ -63,7 +63,7 @@ class UserController extends __SuperAdminController
         }
     }
 
-    public function store(SuperAdminStoreUserRequest $request)
+    public function store(StoreUserRequest $request)
     {
         $validated = $request->validated();
         try {
@@ -77,7 +77,7 @@ class UserController extends __SuperAdminController
             return $this->sendError("Erro inesperado.", [0 => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
-    public function update(SuperAdminUpdateUserRequest $request, User $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
         $validated = $request->validated();
         try {

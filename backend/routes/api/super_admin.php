@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\AnexosController;
 use App\Http\Controllers\SuperAdmin\ManageRolePermissionsController;
 use App\Http\Controllers\SuperAdmin\EditalController;
 use App\Http\Controllers\SuperAdmin\LogController;
@@ -11,8 +10,6 @@ use App\Http\Controllers\SuperAdmin\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix("/super-admin")->name('super-Admin.')->middleware(['role:super-Admin'])->group(function(){
-    Route::resource('/editais', EditalController::class)->only(['store', 'update', 'destroy']);
-
     Route::name("roles.")->group(function(){
         Route::resource('/roles-with-permissions', ManageRolePermissionsController::class)
                 ->only(['index','show', 'update'])

@@ -1,0 +1,143 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\API\APIController;
+use App\Http\Requests\Admin\StoreUpdateModalidadeRequest;
+use App\Models\AnexoModalidade;
+use App\Models\Modalidade;
+use App\Models\ModalidadeTipoAvaliacao;
+use App\Models\TipoAvaliacao;
+use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+class ModalidadesController extends APIController
+{
+
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(StoreUpdateModalidadeRequest $request)
+    {
+        DB::beginTransaction();
+        $data = $request->validated();
+        // dd($data);
+        try {
+            $modalidade = Modalidade::create([
+                "sigla" => $data['sigla'],
+                "descricao" => $data['descricao'],
+                "edital_id" => $data['editalId']
+            ]);
+
+            if (isset($data['tipos_avaliacao'])) {
+                foreach ($data['tipos_avaliacao'] as $tipo) {
+                    $tipoModel = TipoAvaliacao::where("tipo", $tipo)->first();
+                    if ($tipoModel) {
+                        ModalidadeTipoAvaliacao::create([
+                            "modalidade_id" => $modalidade->id,
+                            "tipo_avaliacao_id" => $tipoModel->id
+                        ]);
+                    }
+                }
+            }
+            if (isset($data['anexos'])) {
+                foreach ($data['anexos'] as $anexo) {
+                    AnexoModalidade::create([
+                        "anexo_id" => $anexo['id'],
+                        "modalidade_id" => $modalidade->id,
+                    ]);
+                }
+            }
+
+            DB::commit();
+            return $this->sendResponse($modalidade, 'Modalidade cadastrada com sucesso.', 200);
+        } catch (Exception $e) {
+            DB::rollBack();
+            return $this->sendError($e, "Não foi possível cadastrar a modalidade. " . $e->getMessage(), 400);
+        }
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        $modalidades = Modalidade::with(['tipo_avaliacao.tipo_avaliacao', 'anexos'])
+            ->where('edital_id', $id)
+            ->get();
+
+        $modalidades->each(function ($modalidade) {
+            $tipos = $modalidade->tipo_avaliacao->pluck('tipo_avaliacao.tipo');
+            $modalidade->tipos_avaliacoes = $tipos;
+            unset($modalidade->tipo_avaliacao);
+        });
+
+        return $this->sendResponse($modalidades, 'Modalidades buscados com sucesso', 200);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(StoreUpdateModalidadeRequest $request, string $id)
+    {
+        DB::beginTransaction();
+        $data = $request->validated();
+        try {
+            $modalidade = Modalidade::findOrFail($id);
+            $modalidade->update([
+                'sigla' => $data['sigla'],
+                'descricao' => $data['descricao']
+            ]);
+
+            $modalidade->tipo_avaliacao()->delete();
+
+            if (isset($data['tipos_avaliacao'])) {
+                foreach ($data['tipos_avaliacao'] as $tipo) {
+                    $tipoModel = TipoAvaliacao::where("tipo", $tipo)->first();
+                    if ($tipoModel) {
+                        ModalidadeTipoAvaliacao::create([
+                            "modalidade_id" => $modalidade->id,
+                            "tipo_avaliacao_id" => $tipoModel->id
+                        ]);
+                    }
+                }
+            }
+
+            AnexoModalidade::where('modalidade_id',$modalidade->id)->delete();
+            if (isset($data['anexos'])) {
+                foreach ($data['anexos'] as $anexo) {
+                    AnexoModalidade::create([
+                        "anexo_id" => $anexo['id'],
+                        "modalidade_id" => $modalidade->id,
+                    ]);
+                }
+            }
+
+
+            DB::commit();
+            return $this->sendResponse($modalidade->load('tipo_avaliacao.tipo_avaliacao'), "Modalidade atualizada com sucesso!", 200);
+        } catch (Exception $e) {
+            DB::rollBack();
+            return $this->sendError($e, "Não foi possível atualizar a modalidade. " . $e->getMessage(), 400);
+        }
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        DB::beginTransaction();
+        try {
+            $modalidade = Modalidade::find($id);
+            $modalidade->tipo_avaliacao()->delete();
+            $modalidade->delete();
+            DB::commit();
+            return $this->sendResponse($modalidade, "Modalidade deletada com sucesso.", 200);
+        } catch (Exception $e) {
+            return $this->sendError($e, "Não foi possível deletar a modalidade.", 400);
+        }
+    }
+}

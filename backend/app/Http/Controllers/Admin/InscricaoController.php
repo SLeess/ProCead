@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\API\APIController;
-use App\Http\Requests\UpdateInscricaoRequest;
+use App\Http\Requests\Admin\UpdateInscricaoRequest;
 use App\Http\Resources\Admin\InscricaoCollection;
 use App\Models\Inscricao;
 use Date;

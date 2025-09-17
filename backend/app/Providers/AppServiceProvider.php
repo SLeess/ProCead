@@ -23,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind( \App\Interfaces\Admin\SyncRolePermissions\ISyncRolePermissionsService::class,  \App\Services\Admin\SyncRolePermissions\SyncRolePermissionsService::class);
         $this->app->bind( \App\Interfaces\Admin\RoleService\IRoleService::class,  \App\Services\Admin\RoleService\RoleService::class);
+        $this->app->bind( \App\Interfaces\Admin\EditalService\IEditalService::class,  \App\Services\Admin\EditalService\EditalService::class);
     }
 
     /**

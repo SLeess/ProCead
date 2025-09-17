@@ -92,6 +92,21 @@ return Application::configure(basePath: dirname(__DIR__))
             }
         });
 
+        // ==========================================================
+        //    (Manipulador para erros de autentiacação)
+        // ==========================================================
+        $exceptions->renderable(function (\Illuminate\Auth\AuthenticationException $e, $request) {
+            if ($request->is('api/*') || $request->wantsJson()){
+
+                $message = "Usuário não autenticado! Favor realizar o Login/Cadastro.";
+
+                return response()->json([
+                    'success' => false,
+                    'message' => $message,
+                ], 401);
+            }
+        });
+
         // ===================================================================
         // 2. Manipulador Genérico para TODAS as outras exceções da API
         //    (Atua como um "catch-all" para o resto)

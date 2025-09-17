@@ -58,7 +58,7 @@ Route::prefix('/candidato')->name('candidato.')->group(function(){
                     [
                         "id" => 6,
                         "edital" => 'EDITAL N.° 05/2024',
-                        "descricao" => 'Processo Seletivo Simplificado para Coordenador de Curso de Engenharia Civil',
+                        "descricao" => 'Processo Seletivo Simplificado para Coordenador de Curso de Engenharia Civil Processo Seletivo Simplificado para Coordenador de Curso de Engenharia Civil Processo Seletivo Simplificado para Coordenador de Curso de Engenharia Civil',
                         "status" => "Encerrado",
                         // "obs" => "Candidato aprovado e empossado.",
                         "obs" => "",

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\SuperAdmin;
 
-use App\Http\Requests\SuperAdminLogsRequest;
+use App\Http\Requests\SuperAdmin\StoreUpdateLogsRequest;
 use App\Http\Resources\Admin\LogCollection;
 use App\Interfaces\SuperAdmin\ISuperAdminUserManagerService;
 use Illuminate\Support\Facades\Log;
@@ -19,7 +19,7 @@ class LogController extends __SuperAdminController
     public function __construct(protected ISuperAdminUserManagerService $iSuperAdminUserManagerService){
         parent::__construct();
     }
-    public function index(SuperAdminLogsRequest $request)
+    public function index(StoreUpdateLogsRequest $request)
     {
         $validated = $request->validated();
 
@@ -65,7 +65,7 @@ class LogController extends __SuperAdminController
         }
     }
 
-    public function userIndex(SuperAdminLogsRequest $request, User $user)
+    public function userIndex(StoreUpdateLogsRequest $request, User $user)
     {
         $validated = $request->validated();
 

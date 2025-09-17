@@ -5,8 +5,9 @@ namespace App\Models;
 use App\Traits\LogsModelActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Spatie\Activitylog\LogOptions;
-use Spatie\Activitylog\Models\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
 
 class Edital extends Model
@@ -27,6 +28,26 @@ class Edital extends Model
         'categorias',
         'tipo_avaliacao_reserva_vagas'
     ];
+
+    protected $casts = [
+        'publico_alvo' => \App\Enums\Editais\EditalPublicoAlvo::class,
+        'formato_notas' => \App\Enums\Editais\EditalFormatoNotas::class,
+        'tipo_inscricao' => \App\Enums\Editais\EditalTipoInscricao::class,
+        'categorias' => \App\Enums\Editais\EditalCategorias::class,
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+        'remanejamento' => 'boolean', // Boa prática para colunas TINYINT(1)
+    ];
+
+    public function datas(): HasOne
+    {
+        return $this->hasOne(Datas::class);
+    }
+
+    public function momentosRecurso(): HasMany
+    {
+        return $this->hasMany(MomentoRecurso::class);
+    }
 
     public function getActivitylogOptions(): LogOptions
     {

@@ -7,8 +7,8 @@ use App\Http\Controllers\Admin\InscricaoController;
 use App\Http\Controllers\Admin\PolosController;
 use App\Http\Controllers\Admin\QuadroVagasController;
 use App\Http\Controllers\Admin\VagasController;
-use App\Http\Controllers\AnexosController;
-use App\Http\Controllers\ModalidadesController;
+use App\Http\Controllers\Admin\AnexosController;
+use App\Http\Controllers\Admin\ModalidadesController;
 use App\Models\QuadroVagas;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\ManageUserController;
@@ -25,10 +25,13 @@ Route::prefix('/admin')->name('admin.')->group(function () {
     Route::prefix('/editais')->name('editais.')->group(function () {
         Route::get('', [EditalController::class, 'index'])->name('index');
 
-        Route::prefix('{edital}')->group(function () {
-            Route::get('', [EditalController::class, 'show'])->name('show');
+        // Route::prefix('/show/{edital}')->group(function () {
+        //     Route::get('', [EditalController::class, 'show'])->name('show');
             // Route::get('inscricoes', [InscricaoController::class, 'index'])->name('.manage.inscricoes.index');
-        });
+        // });
+        Route::resource('', EditalController::class)
+                    ->only(['create', 'store', 'update', 'destroy', 'edit'])
+                    ->parameter('', 'edital');
     });
 
     Route::resource('/polos', PolosController::class)->except(['index', 'create', 'edit']);

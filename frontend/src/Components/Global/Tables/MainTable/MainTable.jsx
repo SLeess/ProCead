@@ -15,6 +15,7 @@ import CustomPagination from "./Components/CustomPagination";
 import HideColumnsDropdown from "./Components/HideColumnsDropdown";
 import ExportModuleTable from "./Components/ExportModuleTable";
 import SearchRowsTable from "./Components/SearchRowsTable";
+import AdvancedSearchRowsTable from "./Components/AdvancdSearchRowsTable";
 
 const MainTable = ({ 
     data, 
@@ -47,6 +48,7 @@ const MainTable = ({
   // ==========================================================
   const isControlled = controlledRowSelection !== undefined;
   const rowSelection = isControlled ? controlledRowSelection : internalRowSelection;
+  const [advancedSearchTerm, setAdvancedSearchTerm] = useState({});
   const setRowSelection = isControlled ? setControlledRowSelection : setInternalRowSelection;
   
   const [columnVisibility, setColumnVisibility] = useState(() => {
@@ -116,7 +118,7 @@ const MainTable = ({
       }
 
       {
-        isClassificationTable !== true &&
+        isClassificationTable !== true && <>
         <div id="table-tools">
           <div id="table-search-container">
               <SearchRowsTable globalFilter={globalFilter} setGlobalFilter={setGlobalFilter}/>
@@ -130,7 +132,10 @@ const MainTable = ({
             <ExportModuleTable table={table} title={title} canExport={canExport}/>
           </div>
         </div>
+        </>
       }
+
+      <AdvancedSearchRowsTable columns={columns} setAdvancedSearchTerm={setAdvancedSearchTerm} advancedSearchTerm={advancedSearchTerm}/>
 
 
       <div id="table-data-container" className={data.length > 10 ? 'h-[60vh]' : ''}>

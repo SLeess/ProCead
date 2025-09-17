@@ -5,7 +5,7 @@
 /* ------------------------------------- TIMELINE STYLES ------------------------------------- */
 
 .timeline-nav {
-    @apply flex items-center justify-start mb-10 mt-15 max-w-3xl mx-5 lg:mx-auto; /* Garantir que é um flex container centralizado */
+    @apply flex items-center justify-start max-w-3xl mx-5 lg:mx-auto; /* Garantir que é um flex container centralizado */
 }
 
 .step-item {
