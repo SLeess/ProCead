@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\AnexosController;
 use App\Http\Controllers\SuperAdmin\ManageRolePermissionsController;
 use App\Http\Controllers\SuperAdmin\EditalController;
 use App\Http\Controllers\SuperAdmin\LogController;

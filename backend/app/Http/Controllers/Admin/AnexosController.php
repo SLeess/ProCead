@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\API\APIController;
-use App\Http\Requests\AnexoRequest;
+use App\Http\Requests\Admin\StoreUpdateAnexoRequest;
 use App\Models\Anexo;
-use DB;
 use Exception;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
 
 class AnexosController extends APIController
@@ -30,7 +29,7 @@ class AnexosController extends APIController
     /**
      * Store a newly created resource in storage.
      */
-    public function store(AnexoRequest $request)
+    public function store(StoreUpdateAnexoRequest $request)
     {
         DB::beginTransaction();
         $data = $request->validated();
@@ -71,7 +70,7 @@ class AnexosController extends APIController
     /**
      * Update the specified resource in storage.
      */
-    public function update(AnexoRequest $request, string $id)
+    public function update(StoreUpdateAnexoRequest $request, string $id)
     {
         DB::beginTransaction();
         $data = $request->validated();

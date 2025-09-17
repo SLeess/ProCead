@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\API\APIController;
-use App\Http\Requests\DisciplinaRequest;
+use App\Http\Requests\Admin\StoreUpdateDisciplinaRequest;
 use App\Models\Disciplina;
-use DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DisciplinaController extends APIController
 {
@@ -25,7 +25,7 @@ class DisciplinaController extends APIController
         }
     }
 
-    public function store(DisciplinaRequest $request)
+    public function store(StoreUpdateDisciplinaRequest $request)
     {
         $data = $request->validated();
         DB::beginTransaction();
@@ -48,7 +48,7 @@ class DisciplinaController extends APIController
         }
     }
 
-    public function update(DisciplinaRequest $request, string $id)
+    public function update(StoreUpdateDisciplinaRequest $request, string $id)
     {
         $data = $request->validated();
         DB::beginTransaction();

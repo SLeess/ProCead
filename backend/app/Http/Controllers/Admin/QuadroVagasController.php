@@ -3,14 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\API\APIController;
-use App\Http\Requests\QuadroVagaRequest;
-use App\Http\Requests\QuadroVagaUpdateRequest;
+use App\Http\Requests\Admin\StoreQuadroVagaRequest;
+use App\Http\Requests\Admin\UpdateQuadroVagaRequest;
 use App\Models\AnexoQuadroVaga;
 use App\Models\Modalidade;
 use App\Models\QuadroVagas;
-use DB;
 use Exception;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class QuadroVagasController extends APIController
 {
@@ -42,7 +41,7 @@ class QuadroVagasController extends APIController
     /**
      * Store a newly created resource in storage.
      */
-    public function store(QuadroVagaRequest $request)
+    public function store(StoreQuadroVagaRequest $request)
     {
         $data = $request->validated();
         // dd($data);
@@ -96,7 +95,7 @@ class QuadroVagasController extends APIController
     /**
      * Update the specified resource in storage.
      */
-    public function update(QuadroVagaUpdateRequest $request, string $id)
+    public function update(UpdateQuadroVagaRequest $request, string $id)
     {
         $data = $request->validated();
         DB::beginTransaction();

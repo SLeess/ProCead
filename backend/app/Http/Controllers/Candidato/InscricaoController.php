@@ -1,15 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Candidato;
 
 use App\Http\Controllers\API\APIController;
-use App\Http\Requests\StoreInscricaoRequest;
+use App\Http\Requests\Candidato\StoreInscricaoRequest;
 use App\Models\Edital;
 use App\Models\Inscricao;
 use App\Services\Candidato\InscricaoService;
-use DB;
 use Exception;
-use Illuminate\Http\Request;
 
 class InscricaoController extends APIController
 {
@@ -56,11 +54,9 @@ class InscricaoController extends APIController
                 'vagas_inscricao.categoria'
                 ])->where('user_uuid', $userUuid)->where('edital_id', $editalId)->first();
                 return $this->sendResponse($inscricao, "Inscrição buscada com sucesso.", 200);
-            }catch(Exception $e){
-                return $this->sendError('Erro ao buscar inscrição.', $e->getMessage(), 400);
-            }
-
-
+        }catch(Exception $e){
+            return $this->sendError('Erro ao buscar inscrição.', $e->getMessage(), 400);
+        }
 
     }
 }

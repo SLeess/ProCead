@@ -3,18 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\API\APIController;
-use App\Http\Requests\CursoRequest;
+use App\Http\Requests\Admin\StoreUpdateCursoRequest;
 use App\Models\Curso;
-use DB;
 use Exception;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CursosController extends APIController
 {
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CursoRequest $request)
+    public function store(StoreUpdateCursoRequest $request)
     {
         $data = $request->validated();
         DB::beginTransaction();
@@ -44,7 +43,7 @@ class CursosController extends APIController
     /**
      * Update the specified resource in storage.
      */
-    public function update(CursoRequest $request, string $id)
+    public function update(StoreUpdateCursoRequest $request, string $id)
     {
         $data = $request->validated();
         DB::beginTransaction();
@@ -55,7 +54,7 @@ class CursosController extends APIController
             return $this->sendResponse($curso,'Curso atualizado com sucesso!',200);
         }catch(Exception $e){
             DB::rollBack();
-            return $this->sendError($curso,'Não foi possível atualizar o curso',400);
+            return $this->sendError($e,'Não foi possível atualizar o curso',400);
         }
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Admin;
 
 use App\Enums\Editais\EditalCategorias;
 use App\Enums\Editais\EditalFormatoNotas;
@@ -70,7 +70,8 @@ class StoreEditalRequest extends FormRequest
 
             // Resultados
             'resultado_preliminar_geral' => 'required|date_format:d/m/Y H:i:s',
-            'resultado_final' => 'required|date_format:d/m/Y H:i:s|after:resultado_preliminar_geral',
+            'resultado_preliminar_inscricao' => 'required|date_format:d/m/Y H:i:s',
+            'resultado_final' => 'required|date_format:d/m/Y H:i:s|after:resultado_preliminar_geral|after:resultado_preliminar_inscricao',
         ];
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ModalidadeRequest extends FormRequest
+class StoreUpdatePoloRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,12 +22,8 @@ class ModalidadeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'sigla' => 'required|string|max:10',
-            'descricao' => 'required|string|max:255',
+            'nome' => 'required|string|max:255',
             'editalId' => 'required|integer|exists:editais,id',
-            'tipos_avaliacao' => 'sometimes|array',
-            'anexos' => 'sometimes|array',
-            'tipos_avaliacao.*' => 'string|exists:tipos_avaliacao,tipo'
         ];
     }
 }

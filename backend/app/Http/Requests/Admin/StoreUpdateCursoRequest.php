@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PoloRequest extends FormRequest
+class StoreUpdateCursoRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +23,7 @@ class PoloRequest extends FormRequest
     {
         return [
             'nome' => 'required|string|max:255',
-            'editalId' => 'required|integer|exists:editais,id',
+            'editalId' => 'required|integer|exists:editais,id'
         ];
     }
 }

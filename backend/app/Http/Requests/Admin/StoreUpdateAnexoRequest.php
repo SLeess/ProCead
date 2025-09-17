@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class LoginRequest extends FormRequest
+class StoreUpdateAnexoRequest extends FormRequest
 {
-     /**
+    /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
@@ -23,8 +22,12 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'email' => ['required', 'email'],
-            'password' => ['required', 'string'],
+            'nome' => 'required|string|max:255',
+            'formato' => 'required|string|max:255',
+            // 'caminho' => 'nullable|text',
+            // 'editalId' => 'nullable|integer|exists:editais,id',
+            // 'modalidadeId' => 'nullable|integer|exists:modalidades,id',
+            // 'vagaId' => 'nullable|integer|exists:cursos,id',
         ];
     }
 }

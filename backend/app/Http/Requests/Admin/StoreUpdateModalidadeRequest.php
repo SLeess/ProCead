@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AnexoRequest extends FormRequest
+class StoreUpdateModalidadeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,12 +22,12 @@ class AnexoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nome' => 'required|string|max:255',
-            'formato' => 'required|string|max:255',
-            // 'caminho' => 'nullable|text',
-            // 'editalId' => 'nullable|integer|exists:editais,id',
-            // 'modalidadeId' => 'nullable|integer|exists:modalidades,id',
-            // 'vagaId' => 'nullable|integer|exists:cursos,id',
+            'sigla' => 'required|string|max:10',
+            'descricao' => 'required|string|max:255',
+            'editalId' => 'required|integer|exists:editais,id',
+            'tipos_avaliacao' => 'sometimes|array',
+            'anexos' => 'sometimes|array',
+            'tipos_avaliacao.*' => 'string|exists:tipos_avaliacao,tipo'
         ];
     }
 }

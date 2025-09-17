@@ -1,17 +1,16 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\API\APIController;
-use App\Http\Requests\ModalidadeRequest;
+use App\Http\Requests\Admin\StoreUpdateModalidadeRequest;
 use App\Models\AnexoModalidade;
 use App\Models\Modalidade;
 use App\Models\ModalidadeTipoAvaliacao;
 use App\Models\TipoAvaliacao;
-use DB;
 use Exception;
 use Illuminate\Http\Request;
-use function PHPUnit\Framework\returnArgument;
+use Illuminate\Support\Facades\DB;
 
 class ModalidadesController extends APIController
 {
@@ -20,7 +19,7 @@ class ModalidadesController extends APIController
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ModalidadeRequest $request)
+    public function store(StoreUpdateModalidadeRequest $request)
     {
         DB::beginTransaction();
         $data = $request->validated();
@@ -81,7 +80,7 @@ class ModalidadesController extends APIController
     /**
      * Update the specified resource in storage.
      */
-    public function update(ModalidadeRequest $request, string $id)
+    public function update(StoreUpdateModalidadeRequest $request, string $id)
     {
         DB::beginTransaction();
         $data = $request->validated();

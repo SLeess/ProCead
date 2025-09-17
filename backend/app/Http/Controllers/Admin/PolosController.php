@@ -3,18 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\API\APIController;
-use App\Http\Requests\PoloRequest;
+use App\Http\Requests\Admin\StoreUpdatePoloRequest;
 use App\Models\Polo;
-use DB;
 use Exception;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PolosController extends APIController
 {
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PoloRequest $request)
+    public function store(StoreUpdatePoloRequest $request)
     {
         $data = $request->validated();
         DB::beginTransaction();
@@ -40,7 +39,7 @@ class PolosController extends APIController
     /**
      * Update the specified resource in storage.
      */
-    public function update(PoloRequest $request, string $id)
+    public function update(StoreUpdatePoloRequest $request, string $id)
     {
         DB::beginTransaction();
         $data = $request->validated();
@@ -51,7 +50,7 @@ class PolosController extends APIController
             return $this->sendResponse($polo,'Polo atualizado com sucesso!',200);
         }catch(Exception $e){
             DB::rollBack();
-            return $this->sendError($polo,'Não foi possível atualizar o polo',400);
+            return $this->sendError($e,'Não foi possível atualizar o polo',400);
         }
     }
 
@@ -70,6 +69,6 @@ class PolosController extends APIController
             DB::rollBack();
             return $this->sendError($e,"Não foi possível deletar o polo",400);
         }
-        
+
     }
 }

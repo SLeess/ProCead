@@ -32,7 +32,7 @@ class RoleController extends __SuperAdminController
         }
     }
 
-    public function store(\App\Http\Requests\StoreRoleRequest $request)
+    public function store(\App\Http\Requests\SuperAdmin\StoreRoleRequest $request)
     {
         $roleData = $request->validated();
 
@@ -43,7 +43,7 @@ class RoleController extends __SuperAdminController
             return $this->sendError("Erro inesperado.", [0 => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
-    public function update(\App\Http\Requests\UpdateRoleRequest $request)
+    public function update(\App\Http\Requests\SuperAdmin\UpdateRoleRequest $request)
     {
         $roleData = $request->validated();
 

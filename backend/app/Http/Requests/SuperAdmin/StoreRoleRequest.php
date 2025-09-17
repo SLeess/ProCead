@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\SuperAdmin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateRoleRequest extends FormRequest
+class StoreRoleRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,16 +23,12 @@ class UpdateRoleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "id" => [
-                'required',
-                'integer',
-                'exists:roles,id'
-            ],
             "name" => [
                 'required',
                 'string',
                 'min:2',
                 'max:255',
+                'unique:roles,name'
             ],
             "scope" => [
                 'required',

@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\InscricaoController;
+use App\Http\Controllers\Candidato\InscricaoController;
 use Illuminate\Support\Facades\Route;
 
 

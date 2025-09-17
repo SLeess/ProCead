@@ -4,7 +4,7 @@ namespace App\Http\Controllers\SuperAdmin;
 
 use App\Exceptions\DifferentScopeException;
 use App\Http\Controllers\SuperAdmin\__SuperAdminController;
-use App\Http\Requests\SyncRolePermissionsRequest;
+use App\Http\Requests\SuperAdmin\SyncRolePermissionsRequest;
 use App\Http\Resources\Admin\RelatedRolePermissionsCollection;
 use App\Http\Resources\Admin\RelatedRolePermissionsResource;
 use App\Interfaces\Admin\SyncRolePermissions\ISyncRolePermissionsService;
