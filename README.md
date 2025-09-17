@@ -13,8 +13,8 @@ O sistema é construído sobre uma arquitetura moderna de API REST e SPA (Single
 
 ### Backend (PHP)
 
-  * **Framework:** Laravel 11
-  * **Autenticação:** Laravel Sanctum
+  * **Framework:** `Laravel 11`
+  * **Autenticação:** `Laravel Sanctum`
   * **Cargos e Permissões:** `spatie/laravel-permission`
   * **Logs de Atividade:** `spatie/laravel-activitylog`
   * **Enums:** `bensampo/laravel-enum`
@@ -22,15 +22,15 @@ O sistema é construído sobre uma arquitetura moderna de API REST e SPA (Single
 
 ### Frontend (JavaScript/React)
 
-  * **Framework:** React
-  * **Estilização:** Tailwind CSS
-  * **Componentes de UI:** Flowbite React
-  * **Tabelas:** TanStack Table (React Table)
-  * **Roteamento:** React Router
-  * **Requisições HTTP:** JS Fetch
-  * **Validação de Formulários:** Zod
-  * **Manipulação de Datas:** date-fns
-  * **Ícones:** Lucide React
+  * **Framework:** `React`
+  * **Estilização:** `Tailwind CSS`
+  * **Componentes de UI:** `Flowbite React`
+  * **Tabelas:** `TanStack Table (React Table)`
+  * **Roteamento:** `React Router`
+  * **Requisições HTTP:** `JS Fetch`
+  * **Validação de Formulários:** `Zod`
+  * **Manipulação de Datas:** `date-fns`
+  * **Ícones:** `Lucide React`
 
 ### Banco de Dados
 
