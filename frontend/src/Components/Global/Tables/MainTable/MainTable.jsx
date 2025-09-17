@@ -90,7 +90,7 @@ const MainTable = ({
       rowSelection,
       columnVisibility,
     },
-    autoResetPageIndex: false,
+    autoResetPageIndex: true,
   });
 
   return (

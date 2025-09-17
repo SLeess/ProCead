@@ -1,8 +1,12 @@
 <?php
 
+use App\Http\Controllers\Candidato\CursosController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('/candidato')->name('candidato.')->group(function(){
+
+    Route::get('/cursos/{editalId}', [CursosController::class, 'index']);
+
     /** --------------------- Inicio Rotas de Teste -------------------- */
     Route::name('home.')->group(function(){
         Route::get('/meus-processos', function(){
