@@ -7,12 +7,14 @@ import LoaderPages from "@/Components/Global/LoaderPages/LoaderPages";
 import PrazosIniciais from "./Tabs/PrazosIniciais";
 import InformacoesBasicas from "./Tabs/InformacoesBasicas";
 import PrazosFinais from "./Tabs/PrazosFinais";
-import './NovoEdital.css';
+import './AlterarEdital.css';
 import { useAppContext } from "@/Contexts/AppContext";
 import AccessDenied from "@/Components/Global/AccessDenied/AccessDenied";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
 import { NavigationContext } from "@/Contexts/NavigationContext";
+import { useParams } from "react-router-dom";
+import { editalUpdateSchema } from "./editalUpdateSchema";
 
 const Step = ({ icon: IconComponent, label, isActive, isCompleted }) => {
     const statusClass = isActive
@@ -31,9 +33,11 @@ const Step = ({ icon: IconComponent, label, isActive, isCompleted }) => {
     );
 };
 
-export default function NovoEdital()
+export default function AlterarEdital()
 {
     const { hasGlobalPermission, apiAsyncFetch } = useAppContext();
+    const {editalId} = useParams();
+
     const { navigate } = useContext(NavigationContext);
     const [activeTabIndex, setActiveTabIndex] = useState(0);
     const [metaData, setMetaData] = useState({});
@@ -64,7 +68,7 @@ export default function NovoEdital()
         inicio_avaliacao_identidade_genero: '',
         fim_avaliacao_identidade_genero: '',
 
-        momentosDeRecursos: [],
+        momentos_de_recurso: [],
 
         resultado_preliminar_inscricao: '',
         resultado_preliminar_geral: '',
@@ -74,8 +78,8 @@ export default function NovoEdital()
     function confirmSubmit(){
         Swal.fire({
             icon: "question",
-            title: "Criação de edital em andamento.",
-            text: `Atenção! Você confirma o registro do edital com as respectivas informações repassadas?`,
+            title: `Atualização do edital '${formData.referencia}' em andamento.`,
+            text: `Atenção! Você confirma a atualização dos dados do edital com as respectivas informações repassadas?`,
             // text: "Essa ação não poderá ser reversível!",
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -88,37 +92,44 @@ export default function NovoEdital()
             }
         });
     }
-    async function handleOnSubmit() 
+    async function handleOnSubmit()
     {
+        const validation = editalUpdateSchema.safeParse(formData);
         try {
 
-            // const validation = perfilEditSchema.safeParse({ ...role });
-                    
-            // if (!validation.success) {
-            //     const formattedErrors = z.treeifyError(validation.error);
-                
-            //     Object.values(formattedErrors.properties).forEach(fieldErrors => {
-            //         if(fieldErrors.errors) {
-            //             fieldErrors.errors.forEach(err => toast.error(err));
-            //         }
-            //     });
-    
-            //     return;
-            // }
+            if (!validation.success) {
+                const formattedErrors = validation.error.flatten().fieldErrors;
 
-            const response = await apiAsyncFetch({
-                url: `/api/admin/editais`,
-                method: 'POST',
-                body: formData,
-            });
-            
-            toast.success(response.message);
-            navigate("/admin");
-            window.location.reload();
-        } 
+                Object.values(formattedErrors).forEach(fieldErrors => {
+                    if(fieldErrors) {
+                        fieldErrors.forEach(err => toast.error(err));
+                    }
+                });
+
+                return;
+            }
+        }
         catch (error) {
+            console.error(error);
+            toast.error(error);
+        }
+
+        try {
+
+            // const response = await apiAsyncFetch({
+            //     url: `/api/admin/editais`,
+            //     method: 'POST',
+            //     body: validation.data,
+            // });
+            console.log(validation.data);
+
+            // toast.success(response.message);
+            // navigate("/admin");
+            window.location.reload();
+        } catch (error) {
             // toast.error(error);
         }
+
     }
 
     const [loading, setLoading] = useState(true);
@@ -135,7 +146,61 @@ export default function NovoEdital()
             try {
                 const result = await apiAsyncFetch({ url: `/api/admin/editais/create` });
 
+                const res = await apiAsyncFetch({ url: `/api/admin/editais/${editalId}/edit`})
+
+                const keysToNotKeep = [
+                    'datas',
+                    'updated_at',
+                    'created_at',
+                ];
                 setMetaData(result.data[0]);
+                const initialSetVals = Object.fromEntries(
+                    Object.entries(res.data).filter(([key]) => !keysToNotKeep.includes(key))
+                );
+
+                /**
+                 * Transforma isso:
+                    {
+                        "inscricoes": {
+                            "inicio": "01/09/2025 00:00:00",
+                            "fim": "02/09/2025 00:00:00"
+                        },
+                        "alteracao_dados": {
+                            "inicio": "03/09/2025 00:00:00",
+                            "fim": "04/09/2025 00:00:00"
+                        },
+                        "resultados": {
+                            "preliminar": "23/09/2025 00:00:00",
+                            "final": "29/09/2025 00:00:00"
+                        },
+                        ...
+                        "avaliacao_genero": {
+                            "inicio": "07/09/2025 00:00:00",
+                            "fim": "08/09/2025 00:00:00"
+                        }
+                    }
+
+                    em isso:
+                    {
+                        "inicio_inscricoes": "01/09/2025 00:00:00",
+                        "fim_inscricoes": "02/09/2025 00:00:00",
+                        "inicio_alteracao_dados": "03/09/2025 00:00:00",
+                        "fim_alteracao_dados": "04/09/2025 00:00:00",
+                        "inicio_avaliacao_genero": "07/09/2025 00:00:00",
+                        "fim_avaliacao_genero": "08/09/2025 00:00:00",
+                    }
+                    */
+                const initialDateTimes = Object.entries(res.data.datas)
+                    .flatMap(
+                        val => Object.keys(val[1])
+                                     .map(v =>
+                                        ({[v + "_" + val[0]]: val[1][v] })
+                                    )
+                    );
+
+                setFormData((f) =>
+                    ({...f, ...initialSetVals, ...initialDateTimes, ...Object.assign(...initialDateTimes)})
+                );
             } finally {
                 setLoading(false);
             }
@@ -173,12 +238,12 @@ export default function NovoEdital()
         { label: 'Prazos Iniciais', icon: <LucideCalendarCheck /> },
         { label: 'Prazos Finais', icon: <FaRegCalendarCheck /> },
     ];
-
+console.log(formData.referencia.length);
     return (
-    <section id='novoEdital' className={`${!hasGlobalPermission('cadastrar-edital') ? 'flex justify-center items-center': ''}`}>
+    <section id='alterarEdital' className={`${!hasGlobalPermission('cadastrar-edital') ? 'flex justify-center items-center': ''}`}>
 
         <header>
-            <h1>Etapas de Criação do Edital</h1>
+            <h1>Alterar Configurações do Edital</h1>
         </header>
         {
             !hasGlobalPermission('cadastrar-edital') &&
@@ -191,7 +256,7 @@ export default function NovoEdital()
                 <Stepper tabsData={tabsData} activeTabIndex={activeTabIndex} setActiveTabIndex={setActiveTabIndex}/>
             </nav>
             {
-                (loading && Object.keys(metaData).length > 1 ) && <LoaderPages/>
+                (loading && Object.keys(metaData).length > 1 || formData.referencia === '') && <LoaderPages/>
             }
             {
                 activeTabIndex === 0 && <InformacoesBasicas formData={formData} handleOnChangeAttr={handleOnChangeAttr} metaData={metaData}/>
@@ -203,7 +268,7 @@ export default function NovoEdital()
             {
                 activeTabIndex === 2 && <PrazosFinais formData={formData} handleOnChangeAttr={handleOnChangeAttr} setFormData={setFormData}/>
             }
-            
+
             {/* Botões de Prosseguimento */}
             <div id="buttons-container">
                 <button onClick={handleBack} className="voltar_and_cancelar">
@@ -214,20 +279,15 @@ export default function NovoEdital()
                 <button onClick={handleNext} className="prosseguir_and_finalizar">
                     {
                         (tabsData[activeTabIndex + 1] != undefined)
-                            ? 
+                            ?
                         `Próximo: ${tabsData[activeTabIndex + 1].label}`
                         :
-                        'Finalizar'
+                        'Salvar alterações'
                     }
                 </button>
             </div>
-        </form>    
+        </form>
          }
     </section>
     );
-    // } else{
-    // return (
-    //     <AccessDenied />
-    // )
-    // }
 }
