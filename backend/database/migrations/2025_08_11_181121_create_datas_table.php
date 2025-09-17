@@ -20,7 +20,8 @@ return new class extends Migration
             $table->dateTime('end_inscricao');
             $table->dateTime('start_alteracao_dados');
             $table->dateTime('end_alteracao_dados');
-            $table->dateTime('resultado_preliminar');
+            $table->dateTime('resultado_preliminar_geral');
+            $table->dateTime('resultado_preliminar_inscricao');
             $table->dateTime('resultado_final');
 
             // datas de avaliacao
@@ -32,6 +33,8 @@ return new class extends Migration
             $table->dateTime('end_avaliacao_hid')->nullable();
             $table->dateTime('start_avaliacao_etnica')->nullable();
             $table->dateTime('end_avaliacao_etnica')->nullable();
+            $table->dateTime('start_avaliacao_junta_medica')->nullable();
+            $table->dateTime('end_avaliacao_junta_medica')->nullable();
             $table->dateTime('start_avaliacao_genero')->nullable();
             $table->dateTime('end_avaliacao_genero')->nullable();
 

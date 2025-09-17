@@ -10,9 +10,9 @@ class MomentoRecursoResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'descricao' => $this->descricao,
-            'inicio' => $this->data_inicio->format('d/m/Y H:i:s'),
-            'fim' => $this->data_fim->format('d/m/Y H:i:s'),
+            'description' => $this->descricao,
+            'start' => $this->data_inicio->format('d/m/Y H:i:s'),
+            'end' => $this->data_fim->format('d/m/Y H:i:s'),
         ];
     }
 }

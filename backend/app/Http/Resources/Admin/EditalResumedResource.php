@@ -2,13 +2,11 @@
 
 namespace App\Http\Resources\Admin;
 
-use App\Http\Resources\DatasResource;
-use App\Http\Resources\MomentoRecursoResource;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class EditalResource extends JsonResource
+class EditalResumedResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -20,28 +18,19 @@ class EditalResource extends JsonResource
         $datas = $this->whenLoaded('datas');
         return [
             'id' => $this->id,
-            'referencia' => $this->referencia,
+            'edital' => $this->referencia,
             'descricao' => $this->descricao,
 
             'status' => $this->calcularStatus($datas),
 
-            'publico_alvo' => $this->publico_alvo->getLabel(),
-            'formato_notas' => $this->formato_notas->getLabel(),
-            'tipo_inscricao' => $this->tipo_inscricao->getLabel(),
-            'has_categorias' => $this->categorias->getLabel(),
-
-            'max_itens_inscricao' => $this->max_itens_inscricao,
-            'max_itens_posse' => $this->max_itens_posse,
-            'remanejamento' => (bool) $this->remanejamento,
-
-
-            'datas' => new DatasResource($datas),
-            'resultado_preliminar_geral' => $this->datas->resultado_preliminar_geral->format('d/m/Y H:i:s'),
-            'resultado_preliminar_inscricao' => $this->datas->resultado_preliminar_inscricao->format('d/m/Y H:i:s'),
-            'resultado_final' => $this->datas->resultado_final->format('d/m/Y H:i:s'),
-
-
-            'momentos_de_recurso' => MomentoRecursoResource::collection($this->whenLoaded('momentosRecurso')),
+            'datas' => [
+                'inscricoes' => [
+                    'inicio' => $this->datas->start_inscricao->format('d/m/Y H:i:s'),
+                ],
+                'resultados' => [
+                    'final' => $this->datas->resultado_final->format('d/m/Y H:i:s'),
+                ],
+            ],
 
             'created_at' => $this->created_at->format('d/m/Y H:i:s'),
             'updated_at' => $this->updated_at->format('d/m/Y H:i:s'),

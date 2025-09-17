@@ -12,7 +12,7 @@ class EditalCollection extends ResourceCollection
      *
      * @var string
      */
-    public $collects = EditalResource::class;
+    public $collects = EditalResumedResource::class;
 
     /**
      * Transform the resource collection into an array.

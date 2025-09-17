@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\API\APIController;
-use App\Http\Requests\StoreEditalRequest;
+use App\Http\Requests\Admin\StoreEditalRequest;
 use App\Http\Resources\Admin\EditalAttributesResource;
 use App\Http\Resources\Admin\EditalCollection;
 use App\Http\Resources\Admin\EditalResource;
+use App\Http\Resources\Admin\EditalResumedResource;
 use App\Interfaces\Admin\EditalService\IEditalService;
 use App\Models\Edital;
 use Exception;
@@ -30,13 +31,13 @@ class EditalController extends APIController
         );
     }
     /**
-     * Display the specified edital.
+     * Display the specified edital and leave him edit.
      */
     public function show(Edital $edital)
     {
         try {
             return $this->sendResponse(
-                EditalResource::make($edital),
+                EditalResumedResource::make($edital->load(['datas', 'momentosRecurso'])),
                 "Edital enviada com sucesso."
             );
         } catch (Exception $e) {
@@ -71,5 +72,25 @@ class EditalController extends APIController
             Log::error('Erro ao criar edital: ' . $e->getMessage());
             return response()->json(['error' => 'Ocorreu um erro interno ao processar a requisição.'], 500);
         }
+    }
+
+    public function edit(Edital $edital)
+    {
+        try {
+            return $this->sendResponse(
+                EditalResource::make($edital->load(['datas', 'momentosRecurso'])),
+                "Edital enviada com sucesso."
+            );
+        } catch (Exception $e) {
+            return $this->sendError("Erro inesperado.", [0 => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        //
     }
 }
