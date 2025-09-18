@@ -4,8 +4,8 @@
     @apply flex justify-between items-center my-1;
 }
 
-#inscricao-status-text {
-    @apply ml-4 bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full;
+.inscricao-status-text {
+    @apply ml-4 text-xs font-semibold px-3 py-1 rounded-full;
 }
 
 #inscricao-vaga-content {
