@@ -8,6 +8,9 @@ import LoaderPages from '@/Components/Global/LoaderPages/LoaderPages';
 import { useAppContext } from '@/Contexts/AppContext';
 import ThemeToggleBtn from '@/Components/Global/ThemeToggleBtn/ThemeToggleBtn';
 
+import logo1 from '@/assets/img/img_logo.png';
+import logo2 from '@/assets/img/logo_cead_bg_white_full.png';
+
 export default function EsqueceuSenha(){
     const { navigate } = useContext(NavigationContext);
     const { theme, apiAsyncFetch } = useAppContext();
@@ -62,7 +65,7 @@ export default function EsqueceuSenha(){
             }
             <div className="flex min-w-[300px] min-h-[95vh] flex-col px-6 py-5 lg:px-8 justify-center">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm mt-14 sm:mt-0">
-                    <img className="mx-auto h-25 w-auto" src={`${theme === 'light' ? "/img/img_logo.png" : '/img/logo_cead_bg_white_full.png'}`} alt="Unimontes logo"/>
+                    <img className="mx-auto h-25 w-auto" src={`${theme === 'light' ? logo1 : logo2}`} alt="Unimontes logo"/>
                 </div>
                 <div id="container-forget-pass-form">
                     <div id="alert-forget-password-form" role="alert">

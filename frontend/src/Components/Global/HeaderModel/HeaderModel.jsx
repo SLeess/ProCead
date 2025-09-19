@@ -5,6 +5,8 @@ import "./HeaderModel.css";
 
 import { useAppContext } from '@/Contexts/AppContext';
 
+import logo from "@/assets/img/logo_cead_bg_white_full.png";
+
 export default function HeaderModel({ headerid, children }){
     const { remainingTime } = useAppContext();
 
@@ -15,7 +17,7 @@ export default function HeaderModel({ headerid, children }){
                 <Navbar fluid rounded>
 
                     <NavbarBrand href="#">
-                        <img src="/img/logo_cead_bg_white_full.png" alt="Logo CEAD" id="img-logo"/>
+                        <img src={logo} alt="Logo CEAD" id="img-logo"/>
                     </NavbarBrand>
 
                     <div id="nav-item">
