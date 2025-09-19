@@ -12,6 +12,8 @@ import {
 } from 'react-icons/fi';
 import { AlignJustify, List } from 'lucide-react';
 
+import logo from '@/assets/img/logo_cead_bg_white.png';
+
 const Sidebar = ({openSidebar, setOpenSidebar}) => {
   
   const { hasGlobalPermission } = useContext(AppContext);
@@ -103,7 +105,7 @@ const Sidebar = ({openSidebar, setOpenSidebar}) => {
           className="p-5 text-2xl font-bold text-white flex items-center flex-shrink-0 cursor-pointer"
           onClick={() => navigate(`/admin`)}
           >
-          <img src="/img/logo_cead_bg_white.png" className="mr-2.5" width="50px" />
+          <img src={logo} className="mr-2.5" width="50px" />
           <span className='text-lg'>PRO<span className='italic font-medium'>CEAD</span></span>
         </div>
         <div className="flex-grow overflow-y-auto scrollbar scrollbar-thumb-white scrollbar-track-transparent scrollbar-w-[6px]">
@@ -150,7 +152,7 @@ const Sidebar = ({openSidebar, setOpenSidebar}) => {
               className="p-5 text-2xl font-bold text-white flex items-center flex-shrink-0 cursor-pointer"
               onClick={() => navigate(`/admin`)}
               >
-              <img src="/img/logo_cead_bg_white.png" className="mr-2.5" width="40px" />
+              <img src={logo} className="mr-2.5" width="40px" />
               <span className='text-lg'>PRO<span className='italic font-medium'>CEAD</span></span>
             </div>
             <button onClick={() => setOpenSidebar(false)} className='px-4'>

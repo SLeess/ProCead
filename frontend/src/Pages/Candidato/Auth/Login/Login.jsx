@@ -10,6 +10,9 @@ import LoaderPages from "@/Components/Global/LoaderPages/LoaderPages";
 import Loader from "@/Components/Global/Loader/Loader";
 import { Eye, EyeOff } from "lucide-react";
 
+import logo1 from '@/assets/img/img_logo.png';
+import logo2 from '@/assets/img/logo_cead_bg_white_full.png';
+
 export default function Login() {
     const { theme, login, apiAsyncFetch } = useContext(AppContext);
     const { navigate } = useContext(NavigationContext);
@@ -84,7 +87,7 @@ export default function Login() {
                         loading == true && <LoaderPages></LoaderPages>
                     }
                     <div className="mb-12">
-                        <img src={`${theme === 'light' ? "/img/img_logo.png" : '/img/logo_cead_bg_white_full.png'}`} alt="CEAD Unimontes Logo" className="h-[155px] w-[345px]"/>
+                        <img src={`${theme === 'light' ? logo1 : logo2 }`} alt="CEAD Unimontes Logo" className="h-[155px] w-[345px]"/>
                     </div>
 
                     <form className="w-full" id="loginForm" onSubmit={handleLogin}>

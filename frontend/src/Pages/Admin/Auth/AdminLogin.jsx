@@ -6,6 +6,8 @@ import { NavigationContext } from "@/Contexts/NavigationContext";
 import LoaderPages from "@/Components/Global/LoaderPages/LoaderPages";
 import { Eye, EyeOff } from "lucide-react";
 
+import logo from "@/assets/img/img_logo.png";
+
 export default function Login() {
     const { login, apiAsyncFetch } = useContext(AppContext);
     const { navigate } = useContext(NavigationContext);
@@ -88,7 +90,7 @@ export default function Login() {
             }
             <div className="login-container flex flex-col items-center">
                 <div className="mb-12">
-                    <img src="/img/img_logo.png" alt="CEAD Unimontes Logo" className="h-[155px] w-[345px]"/>
+                    <img src={logo} alt="CEAD Unimontes Logo" className="h-[155px] w-[345px]"/>
                 </div>
 
                 <form className="w-full" id="loginForm" onSubmit={handleLogin}>
