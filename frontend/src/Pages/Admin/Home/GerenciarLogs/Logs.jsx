@@ -36,13 +36,19 @@ export default function Logs() {
 
     // Debounce para a busca de usuários
     useEffect(() => {
-        const timer = setTimeout(() => setDebouncedUserSearch(userSearchTerm), 500);
+        const timer = setTimeout(() => {
+            setDebouncedUserSearch(userSearchTerm);
+            setUserPagination((p) => ({...p, pageIndex: 1}));
+        }, 500);
         return () => clearTimeout(timer);
     }, [userSearchTerm]);
     
     // Debounce para a busca de logs
     useEffect(() => {
-        const timer = setTimeout(() => setDebouncedLogSearch(logSearchTerm), 500);
+        const timer = setTimeout(() => {
+            setDebouncedLogSearch(logSearchTerm)
+            setLogPagination((p) => ({...p, pageIndex: 1}));
+        }, 500);
         return () => clearTimeout(timer);
     }, [logSearchTerm]);
 
