@@ -10,6 +10,8 @@ import { useState } from "react";
 import "./TopBar.css";
 import AdminProfileModal from "../Modais/AdminProfile/AdminProfileModal";
 
+import logo from "@/assets/img/logo_cead_bg.png";
+
 export default function TopBar({setOpenSidebar}) {
     const { user, token, logout } = useAppContext();
     const { navigate } = useContext(NavigationContext);
@@ -96,7 +98,7 @@ export default function TopBar({setOpenSidebar}) {
                 </div>
 
                 <div className="ml-8" onClick={() => navigate(`/admin`)}>
-                    <img src="/img/logo_cead_bg.png" width="80px" />
+                    <img src={logo} width="80px" />
                 </div>
 
                 <div>
