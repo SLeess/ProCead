@@ -1,2 +1,9 @@
 @reference "@/index.css";
 
+#processosAtivos-title {
+    @apply text-4xl font-bold text-gray-800 dark:text-white;
+}
+
+#processosAtivos-subtitle {
+    @apply text-lg text-gray-600 mt-2 dark:text-white;
+}

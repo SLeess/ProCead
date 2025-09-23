@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { CiInboxIn } from "react-icons/ci";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import "./ProcessosAtivos.css"
 
 // const processosData = [
 //   {
@@ -94,8 +95,12 @@ export default function ProcessosAtivos() {
     }
     <section>
       <div className="text-center mb-12">
-        <h1 className="text-3xl sm:text-4xl text-gray-800 dark:text-white font-normal">Processos em Andamento</h1>
-        <p className="text-gray-600 mt-2">Confira aqui todos os processo em andamento atualmente.</p>
+        <h1 id="processosAtivos-title">
+          Bem-vindo(a) ao <span className="text-[var(--welcome-text-color)]">PROCEAD</span>!
+        </h1>
+        <p id="processosAtivos-subtitle">
+          Confira aqui todos os Processos Seletivos em andamento atualmente.
+        </p>
       </div>
       {processosData != null && processosData.length > 0 ?
         (

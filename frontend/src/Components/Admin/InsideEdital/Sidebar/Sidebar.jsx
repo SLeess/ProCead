@@ -1,6 +1,6 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { AppContext } from '@/Contexts/AppContext'; // Importando a função can do contexto
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import './Sidebar.css';
 // Ícones importados para os MENUS e submenus
 import {
@@ -87,6 +87,29 @@ const Sidebar = ({openSidebar, setOpenSidebar}) => {
 
 
   const [activeItem, setActiveItem] = useState();
+  const location = useLocation();
+
+  useEffect(() => {
+    const currentPath = location.pathname;
+    let foundActiveItem = false;
+
+    for (const section of menuData) {
+      const foundItem = section.items.find(item => item && item.href === currentPath);
+
+      if (foundItem) {
+        setActiveItem(foundItem.name);
+
+        setOpenSections(prev => ({ ...prev, [section.title]: true }));
+        foundActiveItem = true;
+        break;
+      }
+    }
+
+    if (!foundActiveItem) {
+      setActiveItem(null);
+    }
+
+  },[location.pathname]);
 
   const handleToggleSection = title => {
     setOpenSections(prev => ({ ...prev, [title]: !prev[title] }));

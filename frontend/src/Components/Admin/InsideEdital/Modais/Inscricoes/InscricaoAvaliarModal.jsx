@@ -25,6 +25,20 @@ export default function InscricaoAvaliarModal({ inscricao, setNeedUpdate }) {
         motivo: inscricao ? inscricao.motivo : '',
     });
 
+    function renderizarStatus() {
+        const statusInscricao = {
+            "Deferido": "bg-green-100 text-green-700",
+            "Indeferido": "bg-red-100 text-red-700",
+            "Em análise": "bg-yellow-100 text-yellow-700"
+        };
+
+        const statusColor = statusInscricao[inscricao.status] || "bg-gray-100 text-gray-700";
+            
+        return (
+            <span className={`inscricao-status-text ${statusColor}`}>{inscricao.status}</span>
+        );
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -39,7 +53,6 @@ export default function InscricaoAvaliarModal({ inscricao, setNeedUpdate }) {
                 body: JSON.stringify(formData),
             });
             const result = await res.json();
-            console.log(res.data);
 
             if (!result.success || !res.ok) {
                 if (result.errors) {
@@ -88,7 +101,7 @@ return (
 
                             <div id="subtitle-inscricao">
                                 <p id="date-inscricao">Data de Inscrição: {new Date(inscricao.created_at).toLocaleDateString()}</p>
-                                <span id="inscricao-status-text">{inscricao.status}</span>
+                                {renderizarStatus()}
                             </div>
                             <div>
                                 <h2 id="inscricao-documentos-title">Anexos</h2>

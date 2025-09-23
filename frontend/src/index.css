@@ -203,6 +203,8 @@ div.info-not-found-itens p#second{
     --header-candidato-responsive-hover-nav-item: #749FF4;
     --header-candidato-toggle-btn: #3475DA;
 
+    --welcome-text-color: #2A83ED;
+
     /* ------------------ FIM CANDIDATO ------------------ */
     
     /* ---------------------- ADMIN ---------------------- */
@@ -215,6 +217,9 @@ div.info-not-found-itens p#second{
     --header-admin-toggle-btn: #4D2F99;
     
     /* ----- Dentro do Edital ----- */
+
+    /* Welcome */
+    --admin-welcome-style: #8A64D4;
 
     /* Página de Edital */
     --admin-manage-edital-header: #6C4BC3;

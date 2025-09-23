@@ -1,22 +1,86 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./VisaoGeral.css";
 import { TabPanel, TabView } from "primereact/tabview";
 import { Bell, CircleCheck, UserRoundPlus } from "lucide-react";
+import { useParams } from "react-router-dom";
+import { AppContext } from "@/Contexts/AppContext";
 
 const VisaoGeral = () => {
-    const vagasTabs = [
-        {title: "Alfabetização e Multiletramentos"},
-        {title: "Arte e Cultura Visual"}
-    ];
+    const [loading, setLoading] = useState([]);
+    const { editalId } = useParams();
+    const { token, verifyStatusRequest } = useContext(AppContext);
+    const [cursos, setCursos] = useState([]);
+    const [inscricoes, setInscricoes] = useState([]);
+
+    async function fecthCursos() {
+        setLoading(true);
+        try {
+            const res = await fetch(`/api/candidato/cursos/${editalId}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+
+            const result = await res.json();
+
+            if (!res.ok) {
+                verifyStatusRequest(res.status, result);
+                throw new Error(`Erro ao buscar processos: ${res.status} ${res.statusText}`);
+            }
+
+            setCursos(result.data);
+        } catch (error) {
+
+            setCursos([]);
+            throw new Error(`Erro ao buscar cursos: ${error}`)
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    // async function fecthInscricao() {
+    //     setLoading(true);
+    //     try {
+    //         const res = await fetch(`/api/candidato/inscricoes/${editalId}`, {
+    //             method: 'GET',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 'Authorization': `Bearer ${token}`,
+    //             },
+    //         });
+
+    //         const result = await res.json();
+
+    //         if (!res.ok) {
+    //             verifyStatusRequest(res.status, result);
+    //             throw new Error(`Erro ao buscar processos: ${res.status} ${res.statusText}`);
+    //         }
+
+    //         setInscricoes(result.data);
+    //     } catch (error) {
+
+    //         setInscricoes([]);
+    //         throw new Error(`Erro ao buscar inscrições: ${error}`)
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // }
+
+    useEffect(() => {
+        fecthCursos();
+        // fecthInscricao();
+    },[]);
 
     return(
         <>
             <div id="visao-geral-content">
                 <TabView scrollable>
-                    {vagasTabs.map((tab) => {
+                    {cursos.map((curso) => {
                         return (
-                            <TabPanel className="text-md" header={tab.title}>
-                                <h1 className="text-2xl mb-6">Detalhes da Vaga "{tab.title}"</h1>
+                            <TabPanel className="text-md" header={curso.nome}>
+                                <h1 className="text-2xl mb-6">Detalhes da Vaga "{curso.nome}"</h1>
                             </TabPanel>
                         );
                     })}

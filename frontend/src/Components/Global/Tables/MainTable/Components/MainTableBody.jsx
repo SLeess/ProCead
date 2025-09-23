@@ -24,11 +24,34 @@ export default function MainTableBody({table, hasSelectForRows, columns, isClass
                     </TableCell>
                     }
 
-                    {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className="whitespace-nowrap px-4 py-2">
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </TableCell>
-                    ))}
+                    {row.getVisibleCells().map((cell) => {
+                        if (cell.getValue('status') == "Deferido") {
+                            return (
+                                <TableCell key={cell.id} className="whitespace-nowrap px-4 py-2">
+                                    <span className="bg-green-200 p-2 rounded-md">{flexRender(cell.column.columnDef.cell, cell.getContext())}</span>
+                                </TableCell>
+                            );
+                        } 
+                        else if (cell.getValue('status') == "Indeferido") {
+                            return (
+                                <TableCell key={cell.id} className="whitespace-nowrap px-4 py-2">
+                                    <span className="bg-red-200 p-2 rounded-md">{flexRender(cell.column.columnDef.cell, cell.getContext())}</span>
+                                </TableCell>
+                            );
+                        } 
+                        else if (cell.getValue('status') == "Em análise") {
+                            return (
+                                <TableCell key={cell.id} className="whitespace-nowrap px-4 py-2">
+                                    <span className="bg-yellow-200 p-2 rounded-md">{flexRender(cell.column.columnDef.cell, cell.getContext())}</span>
+                                </TableCell>
+                            );
+                        }
+                        return (
+                            <TableCell key={cell.id} className="whitespace-nowrap px-4 py-2">
+                                <span className="bg-white">{flexRender(cell.column.columnDef.cell, cell.getContext())}</span>
+                            </TableCell>
+                        );
+                    })}
                 </TableRow>
                 ))
             ) : (

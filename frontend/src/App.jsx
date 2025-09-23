@@ -77,6 +77,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Inscrever from './Pages/Candidato/Inscrever/Inscrever';
 import Inscricao from './Pages/Candidato/Inscrever/Inscricao';
 import Classificacao from './Pages/Admin/InsideEdital/Classificacao/Classificacao';
+import Welcome from './Pages/Admin/InsideEdital/Welcome/Welcome';
 
 
 function App() {
@@ -177,7 +178,7 @@ function App() {
               </ProtectedRoute>
             }
           >
-            <Route index element={<Inscricoes />} />
+            <Route index element={<Welcome />} />
             <Route path='configuracoes' element={<Edital />} />
             <Route path='inscricoes' element={<Inscricoes />} />
             <Route path='quadro-vagas' element={<QuadroVagas />} />
