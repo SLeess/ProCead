@@ -51,7 +51,7 @@ export default function PrazosFinais({formData, handleOnChangeAttr, setFormData}
                 <h1 className="text-black text-2xl not-italic font-normal leading-[normal]" style={{fontFamily : "Sora, sans-serif"}}>
                     Momentos para Recursos (Envio e Avaliação)
                 </h1>
-                <div className="grid grid-cols-12 gap-x-8 gap-y-6">
+                <div className="grid grid-cols-12 gap-x-8 gap-y-6 overflow-x-auto">
                     <div className="flex items-end gap-2 mb-4 col-span-10 md:col-span-6 lg:col-span-5 xl:col-span-4">
                         <div className="flex-grow">
                             <FormField label="Momento de Recurso">

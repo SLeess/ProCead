@@ -16,23 +16,6 @@ import { NavigationContext } from "@/Contexts/NavigationContext";
 import { useParams } from "react-router-dom";
 import { editalUpdateSchema } from "./editalUpdateSchema";
 
-const Step = ({ icon: IconComponent, label, isActive, isCompleted }) => {
-    const statusClass = isActive
-        ? 'step-active'
-        : isCompleted
-            ? 'step-completed'
-            : 'step-future';
-
-    return (
-        <div className={`step-item ${statusClass}`}>
-            <div className="step-icon-wrapper">
-                {IconComponent} {/* Renderiza o componente de ícone diretamente */}
-            </div>
-            <p className="step-label">{label}</p>
-        </div>
-    );
-};
-
 export default function AlterarEdital()
 {
     const { hasGlobalPermission, apiAsyncFetch } = useAppContext();
@@ -75,63 +58,6 @@ export default function AlterarEdital()
         resultado_final: '',
     });
 
-    function confirmSubmit(){
-        Swal.fire({
-            icon: "question",
-            title: `Atualização do edital '${formData.referencia}' em andamento.`,
-            text: `Atenção! Você confirma a atualização dos dados do edital com as respectivas informações repassadas?`,
-            // text: "Essa ação não poderá ser reversível!",
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Confirma',
-            cancelButtonText: 'Cancelar',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                handleOnSubmit();
-            }
-        });
-    }
-    async function handleOnSubmit()
-    {
-        const validation = editalUpdateSchema.safeParse(formData);
-        try {
-
-            if (!validation.success) {
-                const formattedErrors = validation.error.flatten().fieldErrors;
-
-                Object.values(formattedErrors).forEach(fieldErrors => {
-                    if(fieldErrors) {
-                        fieldErrors.forEach(err => toast.error(err));
-                    }
-                });
-
-                return;
-            }
-        }
-        catch (error) {
-            console.error(error);
-            toast.error(error);
-        }
-
-        try {
-
-            // const response = await apiAsyncFetch({
-            //     url: `/api/admin/editais`,
-            //     method: 'POST',
-            //     body: validation.data,
-            // });
-            console.log(validation.data);
-
-            // toast.success(response.message);
-            // navigate("/admin");
-            window.location.reload();
-        } catch (error) {
-            // toast.error(error);
-        }
-
-    }
-
     const [loading, setLoading] = useState(true);
 
     const handleOnChangeAttr = (e, attr) => {
@@ -140,7 +66,7 @@ export default function AlterarEdital()
     };
 
     useEffect(() => {
-        if (!hasGlobalPermission('cadastrar-edital')) return;
+        if (!hasGlobalPermission('editar-edital')) return;
         const fetchMetaDataNewEdital = async () => {
             setLoading(true);
             try {
@@ -238,7 +164,7 @@ export default function AlterarEdital()
         { label: 'Prazos Iniciais', icon: <LucideCalendarCheck /> },
         { label: 'Prazos Finais', icon: <FaRegCalendarCheck /> },
     ];
-console.log(formData.referencia.length);
+
     return (
     <section id='alterarEdital' className={`${!hasGlobalPermission('cadastrar-edital') ? 'flex justify-center items-center': ''}`}>
 
@@ -252,7 +178,7 @@ console.log(formData.referencia.length);
          {
         hasGlobalPermission('cadastrar-edital') &&
         <form id="content">
-            <nav aria-label="Tabs" className="timeline-nav">
+            <nav aria-label="Tabs" className="timeline-nav" >
                 <Stepper tabsData={tabsData} activeTabIndex={activeTabIndex} setActiveTabIndex={setActiveTabIndex}/>
             </nav>
             {
@@ -290,4 +216,73 @@ console.log(formData.referencia.length);
          }
     </section>
     );
+
+
+    function confirmSubmit(){
+        Swal.fire({
+            icon: "question",
+            title: `Atualização do edital '${formData.referencia}' em andamento.`,
+            text: `Atenção! Você confirma a atualização dos dados do edital com as respectivas informações repassadas?`,
+            // text: "Essa ação não poderá ser reversível!",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Confirma',
+            cancelButtonText: 'Cancelar',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                handleOnSubmit();
+            }
+        });
+    }
+    async function handleOnSubmit()
+    {
+        const handleFormData = {...formData, ['momentosDeRecursos']: formData.momentos_de_recurso};
+        Reflect.deleteProperty(handleFormData, 'momentos_de_recurso');
+
+        const entries = Object.entries(handleFormData);
+        const filteredEntries = entries.filter(([chave, _]) => isNaN(chave))
+        const preparedFormData = Object.fromEntries(filteredEntries);
+
+        const validation = editalUpdateSchema.safeParse(preparedFormData);
+        try {
+
+            if (!validation.success) {
+                const formattedErrors = validation.error.flatten().fieldErrors;
+                Object.values(formattedErrors).forEach(fieldErrors => {
+                    if(fieldErrors) {
+                        fieldErrors.forEach(err => 
+                        {
+                            console.error(err);
+                            return toast.error(err)
+                        }
+                        );
+                    }
+                });
+
+                return;
+            }
+        }
+        catch (error) {
+            console.error(error);
+            toast.error(error);
+        }
+
+        try {
+
+            const response = await apiAsyncFetch({
+                url: `/api/admin/editais/${editalId}`,
+                method: 'PUT',
+                body: validation.data,
+            });
+            // console.log(validation.data);
+
+            toast.success(response.message);
+            // navigate("/admin");
+            window.location.reload();
+        } catch (error) {
+            toast.error(error);
+        }
+
+    }
 }

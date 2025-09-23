@@ -12,6 +12,11 @@ function parseDate(dateStr: string): Date | null {
     return new Date(`${year}-${month}-${day}T${timePart}`);
 }
 
+const stringMessages = (description) => ({
+    required_error: `A ${description} é obrigatória.`,
+    invalid_type_error: `A ${description} não pode ser nula.`, 
+});
+
 const momento_de_recurso = z.object({
     description: z.string().min(1, { message: "A descrição do momento de recurso é obrigatória." }),
     start: z.string().regex(dateRegex, { message: `Data de início inválida. ${invalidDateMessage}` }),
@@ -27,32 +32,31 @@ const momento_de_recurso = z.object({
 
 export const editalUpdateSchema = z.object({
     // --- Informações Básicas ---
-    descricao: z.string().min(1, { message: "A descrição é obrigatória." }).max(255),
+    descricao:                              z.string().min(1, { message: "A descrição é obrigatória." }).max(255),
 
     // --- Prazos ---
-    inicio_inscricoes: z.string().regex(dateRegex, { message: `Início das inscrições: ${invalidDateMessage}` }),
-    fim_inscricoes: z.string().regex(dateRegex, { message: `Fim das inscrições: ${invalidDateMessage}` }),
+    inicio_inscricoes:                      z.string(stringMessages('data de início das inscrições')).regex(dateRegex, { message: `${invalidDateMessage}` }),
+    fim_inscricoes:                         z.string(stringMessages('data de término das inscrições')).regex(dateRegex, { message: `${invalidDateMessage}` }),
 
-    inicio_alteracao_dados: z.string().regex(dateRegex, { message: `Início alteração de dados: ${invalidDateMessage}` }),
-    fim_alteracao_dados: z.string().regex(dateRegex, { message: `Fim alteração de dados: ${invalidDateMessage}` }),
+    inicio_alteracao_dados:                 z.string(stringMessages('data de início da alteração de dados pelos Administradores')).regex(dateRegex, { message: `${invalidDateMessage}` }),
+    fim_alteracao_dados:                    z.string(stringMessages('data de término da alteração de dados pelos Administradores')).regex(dateRegex, { message: `${invalidDateMessage}` }),
 
-    // (Adicione as outras datas de avaliação com o mesmo padrão .regex())
-    inicio_avaliacao_socioeconomico: z.string().regex(dateRegex, { message: `Início avaliação socioeconômica: ${invalidDateMessage}` }),
-    fim_avaliacao_socioeconomico: z.string().regex(dateRegex, { message: `Fim avaliação socioeconômica: ${invalidDateMessage}` }),
-    inicio_avaliacao_junta_medica: z.string().regex(dateRegex, { message: `Início junta médica: ${invalidDateMessage}` }),
-    fim_avaliacao_junta_medica: z.string().regex(dateRegex, { message: `Fim junta médica: ${invalidDateMessage}` }),
-    inicio_avaliacao_heteroidentificacao: z.string().regex(dateRegex, { message: `Início heteroidentificação: ${invalidDateMessage}` }),
-    fim_avaliacao_heteroidentificacao: z.string().regex(dateRegex, { message: `Fim heteroidentificação: ${invalidDateMessage}` }),
-    inicio_avaliacao_etnica: z.string().regex(dateRegex, { message: `Início avaliação étnica: ${invalidDateMessage}` }),
-    fim_avaliacao_etnica: z.string().regex(dateRegex, { message: `Fim avaliação étnica: ${invalidDateMessage}` }),
-    inicio_avaliacao_identidade_genero: z.string().regex(dateRegex, { message: `Início identidade de gênero: ${invalidDateMessage}` }),
-    fim_avaliacao_identidade_genero: z.string().regex(dateRegex, { message: `Fim identidade de gênero: ${invalidDateMessage}` }),
+    inicio_avaliacao_socioeconomico:        z.string(stringMessages('data de início da avaliação Socioeconômica')).regex(dateRegex, { message: `${invalidDateMessage}` }),
+    fim_avaliacao_socioeconomico:           z.string(stringMessages('data de término da avaliação Socioeconômica')).regex(dateRegex, { message: `${invalidDateMessage}` }),
+    inicio_avaliacao_junta_medica:          z.string(stringMessages('data de início da avaliação Médica')).regex(dateRegex, { message: `${invalidDateMessage}` }),
+    fim_avaliacao_junta_medica:             z.string(stringMessages('data de término da avaliação Médica')).regex(dateRegex, { message: `${invalidDateMessage}` }),
+    inicio_avaliacao_heteroidentificacao:   z.string(stringMessages('data de início da avaliação Heteroidentificatória')).regex(dateRegex, { message: `${invalidDateMessage}` }),
+    fim_avaliacao_heteroidentificacao:      z.string(stringMessages('data de término da avaliação Heteroidentificatória')).regex(dateRegex, { message: `${invalidDateMessage}` }),
+    inicio_avaliacao_etnica:                z.string(stringMessages('data de início da avaliação Étnica')).regex(dateRegex, { message: `${invalidDateMessage}` }),
+    fim_avaliacao_etnica:                   z.string(stringMessages('data de término da avaliação Étnica')).regex(dateRegex, { message: `${invalidDateMessage}` }),
+    inicio_avaliacao_identidade_genero:     z.string(stringMessages('data de início da avaliação de identidade de gênero')).regex(dateRegex, { message: `${invalidDateMessage}` }),
+    fim_avaliacao_identidade_genero:        z.string(stringMessages('data de término da avaliação de identidade de gênero')).regex(dateRegex, { message: `${invalidDateMessage}` }),
     
     // --- Prazos Finais ---
-    momentos_de_recurso: z.array(momento_de_recurso),
-    resultado_preliminar_inscricao: z.string().regex(dateRegex, { message: `Resultado preliminar (inscrição): ${invalidDateMessage}` }),
-    resultado_preliminar_geral: z.string().regex(dateRegex, { message: `Resultado preliminar (geral): ${invalidDateMessage}` }),
-    resultado_final: z.string().regex(dateRegex, { message: `Resultado final: ${invalidDateMessage}` }),
+    momentosDeRecursos:                     z.array(momento_de_recurso),
+    resultado_preliminar_inscricao:         z.string(stringMessages('resultado_preliminar_inscricao')).regex(dateRegex, { message: ` ${invalidDateMessage}` }),
+    resultado_preliminar_geral:             z.string(stringMessages('resultado_preliminar_geral')).regex(dateRegex, { message: ` ${invalidDateMessage}` }),
+    resultado_final:                        z.string(stringMessages('resultado_final')).regex(dateRegex, { message: `${invalidDateMessage}` }),
 
 // Validações que dependem de mais de um campo
 }).refine(data => parseDate(data.fim_inscricoes)! > parseDate(data.inicio_inscricoes)!, {

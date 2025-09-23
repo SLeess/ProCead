@@ -80,7 +80,7 @@
 
     /* START ------------------------------------- TABELAS CANDIDATO ------------------------------------- */
     table {
-        @apply w-full text-sm text-left rounded-md shadow-lg overflow-hidden  table-auto bg-white;
+        @apply w-full text-sm text-left rounded-md shadow-lg overflow-hidden table-auto bg-white;
     }
     thead {
         @apply text-xs uppercase font-medium border-b border-slate-100 text-slate-600;
